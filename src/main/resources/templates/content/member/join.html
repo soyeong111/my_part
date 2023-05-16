@@ -4,14 +4,124 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/public_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/content/member/join.css">
 </th:block>
 <th:block layout:fragment="content">
-	<div class="join-div">
-		join
+	<div class="join-div w-50 m-auto">
+		<form action="/member/join" method="post">
+			<div class="row">
+				<div class="col">
+					<h2>회원가입</h2>
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-id" class="form-label m-0">아이디</label>
+				</div>
+				<div class="col-7">
+					<input type="text" name="memId" id="join-mem-id" class="form-control" onkeyup="id_validation(this);" placeholder="아이디">
+				</div>
+				<div class="col-3 d-grid">
+					<button type="button" class="btn btn-primary">아이디 확인</button>
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-pw" class="form-label m-0">패스워드</label>
+				</div>
+				<div class="col-5">
+					<input type="password" name="memPw" id="join-mem-pw" class="form-control" placeholder="패스워드">
+				</div>
+				<div class="col-5">
+					<input type="password" id="join-mem-pw-check" class="form-control" placeholder="패스워드 확인">
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-name" class="form-label m-0">이름</label>
+				</div>
+				<div class="col-10">
+					<input type="text" name="memName" id="join-mem-name" class="form-control" placeholder="이름">
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-email-0" class="form-label m-0">이메일</label>
+				</div>
+				<div class="col-10">
+					<div class="input-group">
+						<input type="text" name="memEmail" id="join-mem-email-0" class="form-control">
+						<span class="input-group-text">@</span>
+						<select name="memEmail" id="join-mem-email-1" class="form-select">
+							<option>naver.com</option>
+							<option>gmail.com</option>
+							<option>직접입력</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-tell-1" class="form-label m-0">전화번호</label>
+				</div>
+				<div class="col-10">
+					<div class="input-group">
+						<select name="memTell" id="join-mem-tell-0" class="form-select">
+							<option>010</option>
+							<option>011</option>
+						</select>
+						<span class="input-group-text">-</span>
+						<input type="text" name="memTell" id="join-mem-tell-1" class="form-control">
+						<span class="input-group-text">-</span>
+						<input type="text" name="memTell" id="join-mem-tell-2" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-birthday" class="form-label m-0">생년월일</label>
+				</div>
+				<div class="col-5">
+					<input type="date" name="memBirthday" id="join-mem-birthday" class="form-control">
+				</div>
+				<div class="col-2 text-end">
+					<label class="form-label m-0">성별</label>
+				</div>
+				<div class="col-3">
+					<input type="radio" name="memGender" id="join-mem-gender-m" class="form-check-input ms-2" checked>
+					<label for="join-mem-gender-m" class="form-check-label mb-0 ms-1">남</label>
+					<input type="radio" name="memGender" id="join-mem-gender-f" class="form-check-input ms-4">
+					<label for="join-mem-gender-f" class="form-check-label mb-0 ms-1">여</label>
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-addr" class="form-label m-0">주소</label>
+				</div>
+				<div class="col-7">
+					<input type="text" name="memAddr" id="join-mem-addr" class="form-control" placeholder="주소 검색 클릭" readonly>
+				</div>
+				<div class="col-3 d-grid">
+					<button type="button" class="btn btn-primary">주소 검색</button>
+				</div>
+			</div>
+			<div class="row d-flex align-items-center mt-4">
+				<div class="col-2 text-end">
+					<label for="join-mem-addr-detail" class="form-label m-0">상세주소</label>
+				</div>
+				<div class="col-10">
+					<input type="text" name="memAddrDetail" id="join-mem-addr-detail" class="form-control" placeholder="상세 주소 입력">
+				</div>
+			</div>
+			<div class="row mt-4">
+				<div class="col-4 offset-4 d-grid">
+					<button type="button" class="btn btn-primary">회원 가입</button>
+				</div>
+			</div>
+		</form>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<script type="text/javascript" src="/js/content/member/join.js"></script>
 </th:block>
 </html>
