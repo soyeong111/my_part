@@ -3,39 +3,21 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="headerFragment">
 	<div class="public-header-div">
-		<div class="row">
-			<div class="col-1 offset-10">
-				<a href="#">로그인</a>
-			</div>
-			<div class="col-1">
-				<a href="#">회원가입</a>
-			</div>
-		</div>
 		<div class="row d-flex align-items-center">
-			<div class="col-3">
+			<div class="col-3 text-center">
 				<h1>
 					<a href="/">한울도서관</a>
 				</h1>
 			</div>
-			<div class="col-2">
-				<select class="form-select">
-					<option>제목</option>
-					<option>저자</option>
-				</select>
-			</div>
-			<div class="col-6">
-				<input class="form-control">
-			</div>
-			<div class="col-1">
-				<button type="button" class="btn btn-secondary">검색</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col hstack gap-5 justify-content-center">
+			<div class="col-7 d-flex justify-content-evenly">
 				<a href="/info/libraryIntro">이용안내</a>
 				<a href="/book/bookList">도서</a>
 				<a href="/goods/goodsList">상품</a>
 				<a href="/club/clubInfo">북클럽</a>
+			</div>
+			<div class="col-2 d-flex justify-content-evenly">
+				<a href="/member/joinForm">로그인</a>
+				<a href="/member/loginForm">회원가입</a>
 			</div>
 		</div>
 	</div>
