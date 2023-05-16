@@ -11,7 +11,7 @@
 		<result column="GOODS_INTRO"					property="goodsIntro"/>
 		<result column="GOODS_STATUS_NO"			property="goodsStatusNo"/>
 		<result column="GOODS_CATE_NO"				property="goodsCateNo"/>
-		<collection property="GoodsCategoryVO" resultMap="goodsCategory"></collection>
+		<association property="goodsCategoryVO" resultMap="goodsCategory"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.goods.vo.GoodsStatusVO" id="goodsStatus">
@@ -24,7 +24,6 @@
 		<result column="GOODS_CATE_STR" 				property="goodsCateStr"  />
 		<result column="GOODS_CATE_IS_USE"  		property="goodsCateIsUse"  />
 		<result column="GOODS_CATE_ORDER_NO"  	property="goodsCateOrderNo"  />
-		<association property="GoodsStatusVO" resultMap="goodsStatus"></association>
 	</resultMap>
 	
 	<select id="selectGoods" resultMap="goods">
