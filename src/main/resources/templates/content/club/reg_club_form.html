@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/public_layout}">
+
+<!-- 연결해야 할 외부 css파일 -->
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href=""> -->
+</th:block>
+
+<!-- 본문 내용 -->
+<th:block layout:fragment="content">
+	<div class="reg-club-form-div">
+		<div class="row">
+			<div class="col">
+				<form th:action="@{/club/regClub}" method="post">
+					<input type="text" name="clubName" placeholder="클럽 이름을 작성해주세요."><br>
+					<textarea rows="5" cols="50" name="clubIntro" placeholder="클럽 소개를 작성해주세요."></textarea><br>
+					<input type="button" value="클럽 만들기">
+				</form>
+			</div>
+		</div>  
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<!-- <script type="text/javascript" src=""></script> -->
+</th:block>
+
+</html>
