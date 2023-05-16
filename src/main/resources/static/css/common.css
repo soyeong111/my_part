@@ -1,8 +1,20 @@
 @charset "UTF-8";
 
+
+@font-face {
+     font-family: 'S-CoreDream-3Light';
+     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+     font-weight: normal;
+     font-style: normal;
+}
 body {
+	font-family: 'S-CoreDream-3Light';
 	margin: 0;
 	padding: 0;
+}
+
+.header-menu-div {
+	font-weight: 500;
 }
 
 a {
@@ -13,3 +25,4 @@ a {
 h1 {
 	margin: 0
 }
+

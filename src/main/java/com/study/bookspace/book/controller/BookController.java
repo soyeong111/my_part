@@ -1,4 +1,4 @@
-package com.study.bookspace.book;
+package com.study.bookspace.book.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +10,7 @@ public class BookController {
 	
 	@GetMapping("/bookList")
 	public String bookList() {
-		return "content/book/book_list";
+		return "content/book/book_reg";
 	}
 
 }
