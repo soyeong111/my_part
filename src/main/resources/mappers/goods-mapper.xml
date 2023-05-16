@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="goodsMapper">
+	<resultMap type="com.study.bookspace.goods.vo.GoodsVO" id="goods">
+		<id		 column="GOODS_CODE"					property="goodsCode"/>
+		<result column="GOODS_NAME"					property="goodsName"/>
+		<result column="GOODS_PRICE"					property="goodsPrice"/>
+		<result column="GOODS_STOCK_CNT"			property="goodsStockCnt"/>
+		<result column="GOODS_REG_DATE"			property="goodsRegDate"/>
+		<result column="GOODS_INTRO"					property="goodsIntro"/>
+		<result column="GOODS_STATUS_NO"			property="goodsStatusNo"/>
+		<result column="GOODS_CATE_NO"				property="goodsCateNo"/>
+		<collection property="GoodsCategoryVO" resultMap="goodsCategory"></collection>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.goods.vo.GoodsStatusVO" id="goodsStatus">
+		<id		  column="GOODS_STATUS_NO" 		property="goodsStatusNo"/>
+		<result  column="GOODS_STATUS_STR"  	property="goodsStatusStr"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.goods.vo.GoodsCategoryVO" id="goodsCategory">
+		<id		 column="GOODS_CATE_NO"  				property="goodsCateNo"  />
+		<result column="GOODS_CATE_STR" 				property="goodsCateStr"  />
+		<result column="GOODS_CATE_IS_USE"  		property="goodsCateIsUse"  />
+		<result column="GOODS_CATE_ORDER_NO"  	property="goodsCateOrderNo"  />
+		<association property="GoodsStatusVO" resultMap="goodsStatus"></association>
+	</resultMap>
+	
+	<select id="selectGoods" resultMap="goods">
+		SELECT GOODS_CODE
+			, GOODS_NAME
+			, GOODS_PRICE
+			, GOODS_STOCK_CNT
+			, GOODS_REG_DATE
+			, GOODS_INTRO
+			, GOODS_STATUS_NO
+			, C.GOODS_CATE_NO
+		FROM GOODS G, GOODS_CATEGORY C
+		WHERE G.GOODS_CATE_NO = C.GOODS_CATE_NO
+	</select>
+	
+	
+	
+</mapper>

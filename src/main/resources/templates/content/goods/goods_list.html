@@ -8,7 +8,10 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="goods-list-div">
-		goods_list
+		<th:block th:each=" goods : ${goodsList} ">
+		<div>[[${goods.goodsName}]]</div>
+		[[${goods.goodsIntro}]]
+		</th:block>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">

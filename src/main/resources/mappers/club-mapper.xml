@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="clubMapper">
+	<resultMap type="com.study.bookspace.club.vo.BookClubVO" id="bookClub">
+		<result column="CLUB_CODE" 			property="club_code"/>
+		<result column="CLUB_NAME" 			property="club_name"/>
+		<result column="CLUB_INTRO"		 	property="club_intro"/>
+		<result column="CLUB_CREATE_DATE" 	property="club_create_date"/>
+		<result column="CLUB_STATUS_NO" 	property="club_status_no"/>
+		<result column="MEM_ID" 			property="mem_id"/>
+	</resultMap>
+</mapper>
