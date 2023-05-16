@@ -1,4 +1,4 @@
-package com.study.bookspace.club;
+package com.study.bookspace.club.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
