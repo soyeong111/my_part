@@ -10,7 +10,7 @@ public class BookController {
 	
 	@GetMapping("/bookList")
 	public String bookList() {
-		return "content/book/book_list";
+		return "content/book/book_reg";
 	}
 
 }
