@@ -8,7 +8,7 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="join-div w-50 m-auto">
-		<form action="/member/join" method="post">
+		<form id="join-form">
 			<div class="row">
 				<div class="col">
 					<h2>회원가입</h2>
@@ -22,7 +22,7 @@
 					<input type="text" name="memId" id="join-mem-id" class="form-control" onkeyup="id_validation(this);" placeholder="아이디">
 				</div>
 				<div class="col-3 d-grid">
-					<button type="button" class="btn btn-primary">아이디 확인</button>
+					<button type="button" class="btn btn-primary" onclick="id_duplicate_check(this);" disabled>아이디 확인</button>
 				</div>
 			</div>
 			<div class="row d-flex align-items-center mt-4">
@@ -30,10 +30,10 @@
 					<label for="join-mem-pw" class="form-label m-0">패스워드</label>
 				</div>
 				<div class="col-5">
-					<input type="password" name="memPw" id="join-mem-pw" class="form-control" placeholder="패스워드">
+					<input type="password" name="memPw" id="join-mem-pw" class="form-control" onkeyup="pw_validation(this);" placeholder="패스워드">
 				</div>
 				<div class="col-5">
-					<input type="password" id="join-mem-pw-check" class="form-control" placeholder="패스워드 확인">
+					<input type="password" id="join-mem-pw-check" class="form-control" onkeyup="pw_check_validation(this);" placeholder="패스워드 확인" disabled>
 				</div>
 			</div>
 			<div class="row d-flex align-items-center mt-4">
@@ -50,12 +50,12 @@
 				</div>
 				<div class="col-10">
 					<div class="input-group">
-						<input type="text" name="memEmail" id="join-mem-email-0" class="form-control">
+						<input type="text" name="memEmail" id="join-mem-email-0" class="form-control" placeholder="이메일">
 						<span class="input-group-text">@</span>
-						<select name="memEmail" id="join-mem-email-1" class="form-select">
-							<option>naver.com</option>
-							<option>gmail.com</option>
-							<option>직접입력</option>
+						<select name="memEmail" id="join-mem-email-1" class="form-select" onchange="email_input_change(this);">
+							<option value="naver.com">naver.com</option>
+							<option value="gmail.com">gmail.com</option>
+							<option value="self">직접입력</option>
 						</select>
 					</div>
 				</div>
@@ -67,8 +67,8 @@
 				<div class="col-10">
 					<div class="input-group">
 						<select name="memTell" id="join-mem-tell-0" class="form-select">
-							<option>010</option>
-							<option>011</option>
+							<option value="010">010</option>
+							<option value="011">011</option>
 						</select>
 						<span class="input-group-text">-</span>
 						<input type="text" name="memTell" id="join-mem-tell-1" class="form-control">
@@ -88,7 +88,7 @@
 					<label class="form-label m-0">성별</label>
 				</div>
 				<div class="col-3">
-					<input type="radio" name="memGender" id="join-mem-gender-m" class="form-check-input ms-2" checked>
+					<input type="radio" name="memGender" id="join-mem-gender-m" class="form-check-input ms-2">
 					<label for="join-mem-gender-m" class="form-check-label mb-0 ms-1">남</label>
 					<input type="radio" name="memGender" id="join-mem-gender-f" class="form-check-input ms-4">
 					<label for="join-mem-gender-f" class="form-check-label mb-0 ms-1">여</label>
@@ -99,10 +99,10 @@
 					<label for="join-mem-addr" class="form-label m-0">주소</label>
 				</div>
 				<div class="col-7">
-					<input type="text" name="memAddr" id="join-mem-addr" class="form-control" placeholder="주소 검색 클릭" readonly>
+					<input type="text" name="memAddr" id="join-mem-addr" class="form-control" onclick="search_addr();" placeholder="주소 검색 클릭" readonly>
 				</div>
 				<div class="col-3 d-grid">
-					<button type="button" class="btn btn-primary">주소 검색</button>
+					<button type="button" class="btn btn-primary" onclick="search_addr();">주소 검색</button>
 				</div>
 			</div>
 			<div class="row d-flex align-items-center mt-4">
@@ -115,7 +115,7 @@
 			</div>
 			<div class="row mt-4">
 				<div class="col-4 offset-4 d-grid">
-					<button type="button" class="btn btn-primary">회원 가입</button>
+					<button type="button" class="btn btn-primary" onclick="join_btn_click();">회원 가입</button>
 				</div>
 			</div>
 		</form>
