@@ -24,24 +24,21 @@ public class SecurityConfig {
 									, "/club/**"
 									, "/member/**").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
-					.anyRequest().authenticated();
-//				.and()
-//					.formLogin()
-//					.loginPage("/member/loginForm")
-//					.loginProcessingUrl("/member/login")
-//					.usernameParameter("memId")
-//					.passwordParameter("memPw")
-//					.successHandler(getSucessHandler())
-//					.failureHandler(getFailureHandler())
-//					.permitAll()
-//				.and()
-//					.logout()
-//					.logoutUrl("/member/logout")
-//					.invalidateHttpSession(true)
-//					.logoutSuccessUrl("/")
-//				.and()
-//					.exceptionHandling()
-//					.accessDeniedPage("/accessDeny");
+					.anyRequest().authenticated()
+				.and()
+					.formLogin()
+					.loginPage("/member/loginForm")
+					.loginProcessingUrl("/member/loginAjax")
+					.usernameParameter("memId")
+					.passwordParameter("memPw")
+					.successHandler(getSucessHandler())
+					.failureHandler(getFailureHandler())
+					.permitAll()
+				.and()
+					.logout()
+					.logoutUrl("/member/logout")
+					.invalidateHttpSession(true)
+					.logoutSuccessUrl("/");
 		return security.build();
 	}
 	
@@ -55,14 +52,14 @@ public class SecurityConfig {
 		return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/images/**");
 	}
 	
-//	@Bean
-//	public FailureHandler getFailureHandler() {
-//		return new FailureHandler();
-//	}
+	@Bean
+	public FailureHandler getFailureHandler() {
+		return new FailureHandler();
+	}
 	
-//	@Bean
-//	public SucessHandler getSucessHandler() {
-//		return new SucessHandler();
-//	}
+	@Bean
+	public SucessHandler getSucessHandler() {
+		return new SucessHandler();
+	}
 	
 }

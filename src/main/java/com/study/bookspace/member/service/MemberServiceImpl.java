@@ -24,4 +24,10 @@ public class MemberServiceImpl implements MemberService {
 		return sqlSession.insert("memberMapper.join", memberVO);
 	}
 
+	// 로그인 회원 정보 조회
+	@Override
+	public MemberVO getUserInfoForLogin(String memId) {
+		return sqlSession.selectOne("memberMapper.getUserInfoForLogin", memId);
+	}
+
 }

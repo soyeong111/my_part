@@ -59,5 +59,14 @@
 			, #{memAddrDetail}
 		)
 	</insert>
+	
+	<!-- 로그인 회원 정보 조회 -->
+	<select id="getUserInfoForLogin" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, MEM_ROLE
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
 
 </mapper>

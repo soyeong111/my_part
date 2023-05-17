@@ -9,5 +9,8 @@ public interface MemberService {
 	
 	// 회원가입
 	int join(MemberVO memberVO);
+	
+	// 로그인 회원 정보 조회
+	MemberVO getUserInfoForLogin(String memId);
 
 }
