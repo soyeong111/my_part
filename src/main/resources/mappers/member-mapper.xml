@@ -26,5 +26,38 @@
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join">
+		INSERT INTO MEMBER (
+			MEM_ID
+			, MEM_PW
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_TELL
+			<if test='!memBirthday.equals("")'>
+			, MEM_BIRTHDAY
+			</if>
+			<if test="memGender != null">
+			, MEM_GENDER
+			</if>
+			, MEM_ADDR
+			, MEM_ADDR_DETAIL
+		) VALUES (
+			#{memId}
+			, #{memPw}
+			, #{memName}
+			, #{memEmail}
+			, #{memTell}
+			<if test='!memBirthday.equals("")'>
+			, #{memBirthday}
+			</if>
+			<if test="memGender != null">
+			, #{memGender}
+			</if>
+			, #{memAddr}
+			, #{memAddrDetail}
+		)
+	</insert>
 
 </mapper>

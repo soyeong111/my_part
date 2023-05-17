@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.study.bookspace.member.vo.MemberVO;
+
 @Service("memberService")
 public class MemberServiceImpl implements MemberService {
 	
@@ -14,6 +16,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String idDuplicateCheck(String memId) {
 		return sqlSession.selectOne("memberMapper.idDuplicateCheck", memId);
+	}
+
+	// 회원가입
+	@Override
+	public int join(MemberVO memberVO) {
+		return sqlSession.insert("memberMapper.join", memberVO);
 	}
 
 }

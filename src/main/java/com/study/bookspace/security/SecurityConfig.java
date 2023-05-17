@@ -45,21 +45,21 @@ public class SecurityConfig {
 		return security.build();
 	}
 	
-//	@Bean
-//	public PasswordEncoder getPasswordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-//	
+	@Bean
+	public PasswordEncoder getPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/images/**");
 	}
-//	
+	
 //	@Bean
 //	public FailureHandler getFailureHandler() {
 //		return new FailureHandler();
 //	}
-//	
+	
 //	@Bean
 //	public SucessHandler getSucessHandler() {
 //		return new SucessHandler();

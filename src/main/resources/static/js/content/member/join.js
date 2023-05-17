@@ -49,6 +49,8 @@ function id_duplicate_check(btn) {
 function pw_validation(pw_input) {
 	const pw_check_input = document.querySelector('#join-mem-pw-check');
 	pw_check_input.value = '';
+	pw_check_input.classList.remove('is-invalid');
+	pw_check_input.classList.remove('is-valid');
 	pw_input.value = pw_input.value.replaceAll(' ', '');
 	const invalid_div = document.querySelector('#join-mem-pw-invalid');
 	if (invalid_div != null) {
@@ -90,9 +92,22 @@ function pw_check_validation(pw_check_input) {
 /* 이메일 select 직접입력 선택시 input으로 */
 function email_input_change(select_tag) {
 	if (select_tag.value == 'self') {
-		const str = '<input type="text" name="memEmail" id="join-mem-email-1" class="form-control" placeholder="직접입력">';
+		const str = '<input type="text" name="memEmailArr" id="join-mem-email-1" class="form-control" placeholder="직접입력">';
 		select_tag.closest('.input-group').insertAdjacentHTML('beforeend', str);
 		select_tag.remove();
+	}
+}
+
+/* 전화번호 유효성 검사 */
+function tell_validation(tell_input) {
+	tell_input.value = tell_input.value.replaceAll(' ', '');
+	const regExp = /^\d{3,4}$/;
+	if (regExp.test(tell_input.value)) {
+		tell_input.classList.remove('is-invalid');
+		tell_input.classList.add('is-valid');
+	} else {
+		tell_input.classList.remove('is-valid');
+		tell_input.classList.add('is-invalid');
 	}
 }
 
@@ -108,14 +123,90 @@ function search_addr() {
 
 /* 회원가입 버튼 클릭시 */
 function join_btn_click() {
-	
-	const mem_id = document.querySelector('#join-mem-id');
-	if (mem_id == '') {
-		
+	const mem_id_input = document.querySelector('#join-mem-id');
+	if (mem_id_input.value == '') {
+		mem_id_input.focus();
+		return;
 	}
-	
-	alert(`//${mem_id.value}//`)
-	
+	const mem_pw_input = document.querySelector('#join-mem-pw');
+	if (mem_pw_input.value == '') {
+		mem_pw_input.focus();
+		return;
+	}
+	const mem_pw_check_input = document.querySelector('#join-mem-pw-check');
+	if (mem_pw_check_input.value == '') {
+		if (mem_pw_check_input.disabled) {
+			mem_pw_input.focus();
+		} else {
+			mem_pw_check_input.focus();
+		}
+		return;
+	}
+	const mem_name_input = document.querySelector('#join-mem-name');
+	mem_name_input.value = mem_name_input.value.trim();
+	if (mem_name_input.value == '') {
+		mem_name_input.focus();
+		return;
+	}
+	const mem_email_0_input = document.querySelector('#join-mem-email-0');
+	mem_email_0_input.value = mem_email_0_input.value.replaceAll(' ', '');
+	if (mem_email_0_input.value == '') {
+		mem_email_0_input.focus();
+		return;
+	}
+	const mem_email_1_input = document.querySelector('#join-mem-email-1');
+	mem_email_1_input.value = mem_email_1_input.value.replaceAll(' ', '');
+	if (mem_email_1_input.value == '') {
+		mem_email_1_input.focus();
+		return;
+	}
+	const mem_tell_1_input = document.querySelector('#join-mem-tell-1');
+	if (mem_tell_1_input.value == '') {
+		mem_tell_1_input.focus();
+		return;
+	}
+	const mem_tell_2_input = document.querySelector('#join-mem-tell-2');
+	if (mem_tell_2_input.value == '') {
+		mem_tell_2_input.focus();
+		return;
+	}
+	const mem_addr_input = document.querySelector('#join-mem-addr');
+	if (mem_addr_input.value == '') {
+		mem_addr_input.focus();
+		return;
+	}
+	const mem_addr_detail_input = document.querySelector('#join-mem-addr-detail');
+	if (mem_addr_detail_input.value == '') {
+		mem_addr_detail_input.focus();
+		return;
+	}
+	const is_valid_list = document.querySelectorAll('#join-form .is-valid');
+	if (is_valid_list.length != 5) {
+		document.querySelector('#join-form .is-invalid').focus();
+		return;
+	}
+	go_join();
+}
+
+/* 회원가입 */
+function go_join() {
+	$.ajax({
+		url: '/member/joinAjax',
+		type: 'post',
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: $('#join-form').serialize(),
+		success: function(result) {
+			if (result) {
+				alert('회원 가입 되었습니다!\n로그인 페이지로 이동합니다.\n가입 성공 메일 보내기!!!');
+				location.href = '/member/loginForm';
+			} else {
+				alert('회원 가입 실패');
+			}
+		},
+		error: function() {
+			alert('ajax 통신 실패');
+		}
+	});
 }
 
 

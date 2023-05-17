@@ -1,5 +1,7 @@
 package com.study.bookspace.member.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,9 @@ public class MemberController {
 	@Resource(name = "memberService")
 	private MemberService memberService;
 	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	// 회원가입 화면으로
 	@GetMapping("/joinForm")
 	public String joinForm() {
@@ -28,15 +33,17 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/idDuplicateCheckAjax")
 	public boolean idDuplicateCheckAjax(String memId) {
+		System.out.println(memId);
 		return memberService.idDuplicateCheck(memId) == null;
 	}
 	
 	// 회원가입
-	@PostMapping("/join")
-	public String join(MemberVO memberVO) {
+	@ResponseBody
+	@PostMapping("/joinAjax")
+	public boolean joinAjax(MemberVO memberVO) {
 		System.out.println(memberVO);
-		
-		return "/";
+		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		return memberService.join(memberVO) == 1;
 	}
 	
 	// 로그인 화면으로
