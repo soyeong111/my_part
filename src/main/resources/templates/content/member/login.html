@@ -7,10 +7,29 @@
 	<!-- <link rel="stylesheet" href="/css/.css"> -->
 </th:block>
 <th:block layout:fragment="content">
-	<div class="login-div">
-		login
+	<div class="login-div w-25 m-auto">
+		<div class="row">
+			<div class="col">
+				<h2>로그인</h2>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col">
+				<input type="text" id="login-mem-id" class="form-control" placeholder="아이디">
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col">
+				<input type="password" id="login-mem-pw" class="form-control" placeholder="패스워드">
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col d-grid">
+				<button type="button" class="btn btn-primary custom-btn" onclick="login();">로그인</button>
+			</div>
+		</div>
 	</div>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<script type="text/javascript" src="/js/content/member/login.js"></script>
 </th:block>
 </html>

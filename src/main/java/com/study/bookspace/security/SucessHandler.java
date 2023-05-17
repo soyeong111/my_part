@@ -16,11 +16,11 @@ public class SucessHandler extends SimpleUrlAuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		
 //		super.onAuthenticationSuccess(request, response, authentication);
-//		
-//		PrintWriter p = response.getWriter();
-//		p.write("success");
-//		p.flush();
-//		
+		
+		PrintWriter p = response.getWriter();
+		p.write("success");
+		p.flush();
+		
 //		response.getWriter().print(true);
 //		response.getWriter().flush();
 		

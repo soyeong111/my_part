@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.message-is-invalid {
+   font-size: 0.7rem;
+   color: red;
+   margin-top: 2px;
+}
