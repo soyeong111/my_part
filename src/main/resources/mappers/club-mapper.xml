@@ -3,11 +3,98 @@
 
 <mapper namespace="clubMapper">
 	<resultMap type="com.study.bookspace.club.vo.BookClubVO" id="bookClub">
-		<result column="CLUB_CODE" 			property="club_code"/>
-		<result column="CLUB_NAME" 			property="club_name"/>
-		<result column="CLUB_INTRO"		 	property="club_intro"/>
-		<result column="CLUB_CREATE_DATE" 	property="club_create_date"/>
-		<result column="CLUB_STATUS_NO" 	property="club_status_no"/>
-		<result column="MEM_ID" 			property="mem_id"/>
+		<id		 column="CLUB_CODE" 		property="clubCode"/>
+		<result column="CLUB_NAME" 			property="clubName"/>
+		<result column="CLUB_INTRO"		 	property="clubIntro"/>
+		<result column="CLUB_CREATE_DATE" 	property="clubCreateDate"/>
+		<result column="CLUB_STATUS_NO" 	property="clubStatusNo"/>
+		<result column="MEM_ID" 			property="memId"/>
+		<association property="bookClubImageVO" resultMap="bookClubImage"></association>
 	</resultMap>
+	
+	<resultMap type="com.study.bookspace.club.vo.BookClubImageVO" id="bookClubImage">
+		<id		 column="CLUB_IMG_CODE" 		property="clubImgCode"/>
+		<result column="CLUB_CODE"			 	property="clubCode"/>
+		<result column="BC_ORIGIN_FILE_NAME" 	property="bcOriginFileName"/>
+		<result column="BC_ATTACHED_FILE_NAME"	property="bcAttachedFileName"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.club.vo.BookClubMemberVO" id="bookClubMember">
+		<result column="CLUB_CODE" 			property="clubCode"/>
+		<result column="MEM_ID" 			property="memId"/>
+		<result column="CLUB_REG_DATE" 		property="clubRegDate"/>
+		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
+	</resultMap>
+	
+	<select id="isDuplicateClubName" resultType="int">
+		SELECT COUNT(CLUB_NAME)
+		FROM BOOK_CLUB
+		WHERE CLUB_NAME = #{clubName}
+	</select>
+	
+	<insert id="regClub">
+		INSERT INTO BOOK_CLUB (
+			CLUB_CODE
+			, CLUB_NAME
+			, CLUB_INTRO
+			, MEM_ID
+		) VALUES (
+			(SELECT 'CLUB_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CLUB_CODE, 6))), 0) + 1,3 , '0') 
+			FROM BOOK_CLUB)
+			, #{clubName}
+			, #{clubIntro}
+			, #{memId}
+		)
+	</insert>
+	
+	<insert id="insertImg">
+		INSERT INTO BOOK_CLUB_IMAGE (
+			CLUB_IMG_CODE
+			, CLUB_CODE
+			, BC_ORIGIN_FILE_NAME
+			, BC_ATTACHED_FILE_NAME
+		) VALUES (
+			(SELECT 'CLUB_IMG_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(CLUB_IMG_CODE, 10))), 0) + 1,3 , '0') 
+			FROM BOOK_CLUB_IMAGE)
+			, #{clubCode}
+			, #{bcOriginFileName}
+			, #{bcAttachedFileName}
+		)
+	</insert>
+	
+	<select id="getClubList" resultMap="bookClub">
+		SELECT CLUB.CLUB_CODE
+			, CLUB_NAME
+			, CLUB_INTRO
+			, BC_ATTACHED_FILE_NAME
+		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
+		WHERE CLUB.CLUB_CODE = IMG.CLUB_CODE
+		ORDER BY CLUB_CODE
+	</select>
+	
+	<select id="getClubDetail" resultMap="bookClub">
+		SELECT CLUB_CODE
+			, CLUB_NAME
+			, CLUB_INTRO
+			, BC_ATTACHED_FILE_NAME
+		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
+		WHERE CLUB.CLUB_CODE = IMG.CLUB_CODE
+		AND CLUB.CLUB_CODE = #{clubCode}
+	</select>
+	
+	<insert id="joinClub">
+		INSERT INTO BOOK_CLUB_MEMBER (
+			CLUB_CODE
+			, MEM_ID
+		) VALUES (
+			#{clubCode}
+			, #{memId}
+		)
+	</insert>
+	
+
+	
+	
+	
+	
 </mapper>
