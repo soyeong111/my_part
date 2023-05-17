@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="bookMapper">
+	<resultMap type="com.study.bookspace.book.vo.CategoryVO" id="category">
+		<id 	column="BOOK_CATE_NO" 						 property="bookCateNo"/>
+		<result column="BOOK_CATE_STR" 						 property="bookCateStr"/>
+		<result column="BOOK_CATE_IS_USE" 					 property="bookCateIsUse"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.book.vo.BookVO" 	id="book">
+		<id 	column="BOOK_CODE" 							property="booKCode"/>
+		<result column="BOOK_TITLE" 						property="booKTitle"/>
+		<result column="BOOK_AUTHOR" 						property="bookAuthor"/>
+		<result column="BOOK_PUBLICATION_DATE"			 	property="bookPublicationDate"/>
+		<result column="BOOK_PUBLISHER" 					property="bookpublisher"/>
+		<result column="BOOK_INTRO" 						property="bookIntro"/>
+		<result column="BOOK_CATE_NO" 						property="bookCateNo"/>
+		<result column="BOOK_STOCK_CNT" 					property="bookStockCnt"/>
+		<result column="ISBN" 								property="isbn"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.book.vo.ImgVO" 	id="img">
+		<result column="BOOK_IMG_CODE" 						property="bookImgCode"/>
+		<result column="BOOK_CODE" 							property="bookCode"/>
+		<result column="ORIGIN_FILE_NAME" 					property="originFileName"/>
+		<result column="ATTACHED_FILE_NAME" 				property="attachedFileName"/>
+		<result column="IS_MAIN_IMG" 						property="isMainImg"/>
+	</resultMap>
+	
+
+	
+	<!-- 사용 중인 카테고리 목록 -->
+	<select id="getCateListInUse" resultMap="category">
+		SELECT BOOK_CATE_NO
+			, BOOK_CATE_STR
+		FROM BOOK_CATEGORY
+		WHERE IS_USE = 'Y'
+		ORDER BY BOOK_CATE_NO
+	</select>
+	
+	
+	
+	<!-- 목록조회 (이미지 없음!!!!!)-->
+	<select id="getBookListForUser" resultMap="book">
+		SELECT BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, ISBN
+			, ATTACHED_FILE_NAME
+		FROM BOOK BOOK, BOOK_IMAGE IMG
+		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		AND IS_MAIN_IMG" = 'Y'
+	</select>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
+
+

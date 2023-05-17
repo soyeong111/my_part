@@ -6,19 +6,48 @@
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/club/reg_club_form.css">
 </th:block>
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	<div class="reg-club-form-div">
+	<div class="reg-club-form-div w-75 m-auto">
 		<div class="row">
 			<div class="col">
-				<form th:action="@{/club/regClub}" method="post">
-					<input type="text" name="clubName" placeholder="클럽 이름을 작성해주세요."><br>
-					<textarea rows="5" cols="50" name="clubIntro" placeholder="클럽 소개를 작성해주세요."></textarea><br>
-					<input type="button" value="클럽 만들기">
-				</form>
+			
+				<div class="row">
+					<div class="col">
+						<h3>북클럽 생성페이지</h3>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<form class="row g-2" id="regClubForm" th:action="@{/club/regClub}" method="post">
+							<div class="col-9">
+								<label for="clubName" class="form-label">클럽명</label> 
+								<input type="text" class="form-control" id="clubName" name="clubName" placeholder="클럽 이름을 작성해주세요."
+								onkeyup="setDisabled();">
+							</div>
+							<div class="col-3 d-grid">
+								<label for="check_club_name" class="form-label">&nbsp;</label> 
+								<input type="button" class="btn btn-primary" id="check_club_name"
+									value="클럽명 중복확인" onclick="isDuplicateClubName();">
+							</div>
+							<div class="col-12">
+								<input type="file" class="form-control" name="clubImg"><br>
+							</div>
+							<div class="col-12">
+								<label for="clubIntro" class="form-label">클럽 소개</label> 
+								<textarea rows="15" cols="50" name="clubIntro" id=clubIntro class="form-control"
+									placeholder="클럽 소개를 작성해주세요."></textarea>
+							</div>
+							<div class="offset-4 col-4 d-grid">
+								<input type="button" id="regClubBtn" class="btn btn-primary" value="클럽 만들기" onclick="regClub();" disabled>
+							</div>
+						</form>
+					</div>
+				</div>
+				
 			</div>
 		</div>  
 	</div>
@@ -26,7 +55,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/club/reg_club_form.js"></script>
 </th:block>
 
 </html>

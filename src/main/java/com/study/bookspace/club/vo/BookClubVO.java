@@ -14,4 +14,5 @@ public class BookClubVO {
 	private String clubCreateDate;
 	private int clubStatusNo;
 	private String memId;
+	private BookClubImageVO bookClubImageVO;
 }

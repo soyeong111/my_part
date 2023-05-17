@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.infoTitle{
+	margin-bottom: 4rem; 
+	margin-top: 3rem; 
+	margin-left: 2rem;  
+	font-size: 20px; 
+	font-weight: bold;
+}
+
+.qnaTable{
+	width: 90%;
+	text-align: center;
+	align-content: center;
+	margin-top: 5rem;
+	margin-right: 0%;
+}
