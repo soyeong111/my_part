@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/public_layout}">
+
+<!--연결해야 할 외부 css파일  -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/info/q_n_a.css">
+</th:block>
+
+<th:block layout:fragment="content">
+   <div class="library-intro-div">
+   	<div class="infoTitle">
+   		Q&A 게시판
+   	</div>
+   	<div>
+   		<table class="qnaTable">
+   		<colgroup>
+   			<col width="10%">
+   			<col width="*">
+   			<col width="15%">
+   			<col width="20%">
+   			<col width="15%">
+   		</colgroup>
+   			<thead>
+	   			<tr>
+	   				<td>No</td>
+	   				<td>제목</td>
+	   				<td>답변상태</td>
+	   			</tr>
+   			</thead>
+   			<tbody>
+				<tr>
+					<td colspan="3" style="text-align: right;">
+						<span>작성자</span>
+						<span>게시일</span>
+					</td>
+				</tr>   			
+	   			<tr>
+	   				<td colspan="3">
+	   					내용
+	   				</td>
+	   			</tr>
+   			</tbody>
+   		</table>	
+   	</div>
+   	<div>
+   		이전 페이지
+   	</div>
+   	<div>
+   		다음 페이지
+   	</div>
+   	<div>
+   		목록 보기/ <a th:href="@{/info/questionForm}">질문 작성하기</a>
+   	</div>
+   </div>
+</th:block>
+
+<!--연결해야 할 외부 js 파일  -->
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src=""></script> -->
+</th:block>
+
+</html>

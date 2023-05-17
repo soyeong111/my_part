@@ -8,7 +8,11 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="book-list-div">
-		book_list
+		<th:block th:each="book : ${bookList}">
+			<div class="col">
+				<span th:text="${book.booKTitle}"></span> 
+			</div>		
+		</th:block>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
