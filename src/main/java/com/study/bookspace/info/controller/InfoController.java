@@ -12,5 +12,10 @@ public class InfoController {
 	public String libraryIntro() {
 		return "content/info/library_intro";
 	}
+	
+	@GetMapping("/qna")
+	public String qna() {
+		return"content/info/q_n_a";
+	}
 
 }
