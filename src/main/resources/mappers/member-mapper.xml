@@ -3,4 +3,70 @@
 
 <mapper namespace="memberMapper">
 
+	<resultMap type="com.study.bookspace.member.vo.MemberVO" id="member">
+		<id		column="MEM_ID"						property="memId"/>
+		<result column="MEM_PW"						property="memPw"/>
+		<result column="MEM_NAME"					property="memName"/>
+		<result column="MEM_STATUS"					property="memStatus"/>
+		<result column="MEM_ROLE"					property="memRole"/>
+		<result column="MEM_EMAIL"					property="memEmail"/>
+		<result column="MEM_TELL"					property="memTell"/>
+		<result column="MEM_BIRTHDAY"				property="memBirthday"/>
+		<result column="MEM_GENDER"					property="memGender"/>
+		<result column="MEM_ADDR"					property="memAddr"/>
+		<result column="MEM_ADDR_DETAIL"			property="memAddrDetail"/>
+		<result column="MEM_JOIN_DATE"				property="memJoinDate"/>
+		<result column="BORROW_RESTRICT_DUEDATE"	property="borrowRestrictDuedate"/>
+		<result column="MEM_IMG_URL"				property="memImgUrl"/>
+	</resultMap>
+
+	<!-- 아이디 중복 체크 -->
+	<select id="idDuplicateCheck" resultType="String">
+		SELECT MEM_ID
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 회원가입 -->
+	<insert id="join">
+		INSERT INTO MEMBER (
+			MEM_ID
+			, MEM_PW
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_TELL
+			<if test='!memBirthday.equals("")'>
+			, MEM_BIRTHDAY
+			</if>
+			<if test="memGender != null">
+			, MEM_GENDER
+			</if>
+			, MEM_ADDR
+			, MEM_ADDR_DETAIL
+		) VALUES (
+			#{memId}
+			, #{memPw}
+			, #{memName}
+			, #{memEmail}
+			, #{memTell}
+			<if test='!memBirthday.equals("")'>
+			, #{memBirthday}
+			</if>
+			<if test="memGender != null">
+			, #{memGender}
+			</if>
+			, #{memAddr}
+			, #{memAddrDetail}
+		)
+	</insert>
+	
+	<!-- 로그인 회원 정보 조회 -->
+	<select id="getUserInfoForLogin" resultMap="member">
+		SELECT MEM_ID
+			, MEM_PW
+			, MEM_ROLE
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+
 </mapper>

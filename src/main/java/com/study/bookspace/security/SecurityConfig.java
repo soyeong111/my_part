@@ -18,51 +18,44 @@ public class SecurityConfig {
 		security.csrf().disable()
 				.authorizeHttpRequests()
 					.requestMatchers("/"
-									, "/info/**"
-									, "/book/**"
-									, "/goods/**"
-									, "/club/**"
-									, "/member/**").permitAll()
+									, "/**").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
-					.anyRequest().authenticated();
-//				.and()
-//					.formLogin()
-//					.loginPage("/member/loginForm")
-//					.loginProcessingUrl("/member/login")
-//					.usernameParameter("memId")
-//					.passwordParameter("memPw")
-//					.successHandler(getSucessHandler())
-//					.failureHandler(getFailureHandler())
-//					.permitAll()
-//				.and()
-//					.logout()
-//					.logoutUrl("/member/logout")
-//					.invalidateHttpSession(true)
-//					.logoutSuccessUrl("/")
-//				.and()
-//					.exceptionHandling()
-//					.accessDeniedPage("/accessDeny");
+					.anyRequest().authenticated()
+				.and()
+					.formLogin()
+					.loginPage("/member/loginForm")
+					.loginProcessingUrl("/member/loginAjax")
+					.usernameParameter("memId")
+					.passwordParameter("memPw")
+					.successHandler(getSucessHandler())
+					.failureHandler(getFailureHandler())
+					.permitAll()
+				.and()
+					.logout()
+					.logoutUrl("/member/logout")
+					.invalidateHttpSession(true)
+					.logoutSuccessUrl("/");
 		return security.build();
 	}
 	
-//	@Bean
-//	public PasswordEncoder getPasswordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
-//	
+	@Bean
+	public PasswordEncoder getPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
 		return (web) -> web.ignoring().requestMatchers("/js/**", "/css/**", "/image/**");
 	}
-//	
-//	@Bean
-//	public FailureHandler getFailureHandler() {
-//		return new FailureHandler();
-//	}
-//	
-//	@Bean
-//	public SucessHandler getSucessHandler() {
-//		return new SucessHandler();
-//	}
+	
+	@Bean
+	public FailureHandler getFailureHandler() {
+		return new FailureHandler();
+	}
+	
+	@Bean
+	public SucessHandler getSucessHandler() {
+		return new SucessHandler();
+	}
 	
 }
