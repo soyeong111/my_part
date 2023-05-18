@@ -52,7 +52,12 @@
    		다음 페이지
    	</div>
    	<div>
-   		목록 보기/ <a th:href="@{/info/questionForm}">질문 작성하기</a>
+   		목록 보기/ 
+   		<button sec:authorize="isAnonymous()" type="button" 
+   		onclick="location.href='/member/login'">로그인 후 질문 작성</button>
+   		
+   		<button sec:authorize="isAuthenticated()" type="button" 
+   		onclick="location.href='/info/questionForm'">질문 작성</button>
    	</div>
    </div>
 </th:block>

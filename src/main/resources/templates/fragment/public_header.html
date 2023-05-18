@@ -15,9 +15,13 @@
 				<a href="/goods/goodsList">상품</a>
 				<a href="/club/clubInfo">북클럽</a>
 			</div>
-			<div class="col-2 d-flex justify-content-evenly">
+			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAnonymous()">
 				<a href="/member/loginForm">로그인</a>
 				<a href="/member/joinForm">회원가입</a>
+			</div>
+			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAuthenticated()">
+				<a href="javascript:void(0);">[[${#authentication.name}]]님</a>
+				<a href="/member/logout">로그아웃</a>
 			</div>
 		</div>
 	</div>
