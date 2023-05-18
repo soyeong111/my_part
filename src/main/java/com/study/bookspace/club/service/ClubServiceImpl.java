@@ -18,10 +18,10 @@ public class ClubServiceImpl implements ClubService{
 
 	//북클럽 생성 + 이미지 삽입
 	@Override
-	//@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = Exception.class)
 	public void regClub(BookClubVO bookClubVO) {
 		sqlSession.insert("clubMapper.regClub", bookClubVO);
-		//sqlSession.insert("clubMapper.insertImg", bookClubVO);
+		sqlSession.insert("clubMapper.insertImg", bookClubVO);
 	}
 	
 	
@@ -49,5 +49,13 @@ public class ClubServiceImpl implements ClubService{
 		int result = sqlSession.selectOne("clubMapper.isDuplicateClubName", clubName);
 		return result != 0 ? true : false;
 	}
+
+
+
+
+	//@Override
+	//public void insertImg(BookClubImageVO bookClubImageVO) {
+	//	sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
+	//}
 
 }

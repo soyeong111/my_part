@@ -2,6 +2,7 @@ package com.study.bookspace.club.service;
 
 import java.util.List;
 
+import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 
@@ -21,4 +22,6 @@ public interface ClubService {
 	
 	//회원 북클럽 가입
 	void joinClub(BookClubMemberVO bookClubMemberVO);
+	
+	//void insertImg(BookClubImageVO bookClubImageVO);
 }
