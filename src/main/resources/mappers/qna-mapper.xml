@@ -5,31 +5,79 @@
 	<resultMap type="com.study.bookspace.info.vo.QnaVO" id="qna">
 		<id	 column="QNA_CODE"   				 	 property="qnaCode"/>
 		<result column="QNA_TITLE"   					 property="qnaTitle"/>
+		<result column="QNA_NUM"   					 property="qnaNum"/>
 		<result column="QNA_CONTENT"   		 	 property="qnaContent"/>
 		<result column="QNA_CREATE_DATE"  	 property="qnaCreateDate"/>
 		<result column="QNA_VIEW_CNT"   			 property="qnaViewCnt"/>
 		<result column="MEM_ID"  						 property="memId"/>
+		<result column="ROW_NUM"  					 property="rowNum"/>
+		<result column="ROW_NUMBER"  			property="rowNumber"/>
 	</resultMap>	
 	
+	<!-- qna 질문 등록 -->
 	<insert id="insertQna">
 		INSERT INTO QNA (
-			QNA_CODE
+			QNA_NUM
+			, QNA_CODE
 			, QNA_TITLE
 			, QNA_CONTENT
 			, MEM_ID		
 			, QNA_VIEW_CNT
 		
 		) VALUES (
-()SELECT 'QNA_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(QNA_CODE, 5))), 0) + 1, 3, '0') AS QNA_CODE
-FROM QNA)
+			(SELECT NVL(MAX(ROW_NUM), 0) + 1 FROM QNA)
+			,(SELECT 'QNA_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(QNA_CODE, 5))), 0) + 1, 3, '0') AS QNA_CODE
+			FROM QNA)
 			, #{qnaTitle}
 			, #{qnaContent}
 			, #{memId}
 			, 1
-		
-			
 		)
 	</insert>
+	
+	<update id="updateQnaViewCnt">
+        UPDATE QNA
+        SET QNA_VIEW_CNT = QNA_VIEW_CNT + 1
+        WHERE QNA_CODE = #{qnaCode}
+</update>
+	
+	<!-- qna 목록 조회 -->
+	<select id="selectQna" resultMap="qna">
+	SELECT (SELECT COUNT(QNA_NUM) 
+				FROM QNA) - ROW_NUM + 1 AS ROW_NUMBER 
+			, QNA_NUM
+		    , QNA_TITLE
+		    , MEM_ID
+		    , QNA_CREATE_DATE
+		    , QNA_VIEW_CNT
+		    , ROW_NUM
+		FROM
+		(
+		    SELECT QNA_NUM
+		        , QNA_TITLE
+		        , MEM_ID
+		        , QNA_CREATE_DATE
+		        , QNA_VIEW_CNT
+		        , ROWNUM ROW_NUM
+		    FROM
+		    (
+		        SELECT QNA_NUM
+		            , QNA_TITLE
+		            , MEM_ID
+		            , TO_CHAR(QNA_CREATE_DATE, 'YY-MM-DD') AS QNA_CREATE_DATE
+		            , QNA_VIEW_CNT
+		            , ROWNUM AS INNER_ROWNUM
+		        FROM QNA
+		        ORDER BY QNA_NUM DESC
+		    )
+		)
+		WHERE ROW_NUM &gt;= #{startDataNum} AND ROW_NUM &lt;= #{endDataNum}
+	</select>
+	
+	<select id="selectQnaCnt" resultType="int">
+		SELECT COUNT(QNA_NUM)
+		FROM QNA
+	</select>
 
 	
 	
