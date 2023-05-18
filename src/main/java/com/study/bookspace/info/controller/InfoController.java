@@ -30,33 +30,9 @@ public class InfoController {
 		return "content/info/library_intro";
 	}
 	
-	//문의사항 첫페이지(가장 최근 질문 나옴)
-	@GetMapping("/qna")
-	public String qna() {
-		
-	
-		return"content/info/q_n_a";
-	}
-	
-	//문의사항 목록 페이지에서 질문하기 클릭시(로그인 성공했다는 가정) 가는 질문 작성 페이지
-	@GetMapping("/questionForm")
-	public String questionForm() {
-		
-	
-		return "content/info/question_form";
-	}
-	
-	//질문 등록 후 문의사항 첫페이지로 간다
-	@PostMapping("/sendQuestion")
-	public String sendQuestion(QnaVO qnaVO) {
-		
-		qnaService.insertQna(qnaVO);
-		
-		return "redirect:/info/qna";
-	}
-	
+
 	//문의사항 리스트
-	@GetMapping ("/qnaList")
+	@GetMapping ("/qna")
 	public String qnaList(Model model, PageVO pageVO) {
 		//전체 게시글 수 조회
 		int totalDataCnt = qnaService.selectQnaCnt();
@@ -72,6 +48,25 @@ public class InfoController {
 		
 		return "content/info/qna_list";
 	}
+	
+	
+	//문의사항 목록 페이지에서 질문하기 클릭시(로그인 성공했다는 가정) 가는 질문 작성 페이지
+	@GetMapping("/questionForm")
+	public String questionForm() {
+		
+	
+		return "content/info/question_form";
+	}
+	
+	//질문 등록 후 문의사항 리스트로 간다
+	@PostMapping("/sendQuestion")
+	public String sendQuestion(QnaVO qnaVO) {
+		
+		qnaService.insertQna(qnaVO);
+		
+		return "redirect:/info/qna";
+	}
+	
 	
 
 

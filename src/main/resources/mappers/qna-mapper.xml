@@ -64,7 +64,7 @@
 		        SELECT QNA_NUM
 		            , QNA_TITLE
 		            , MEM_ID
-		            , TO_CHAR(QNA_CREATE_DATE, 'YY-MM-DD') AS QNA_CREATE_DATE
+		            , TO_CHAR(QNA_CREATE_DATE, 'MM-DD HH24:MI') AS QNA_CREATE_DATE
 		            , QNA_VIEW_CNT
 		            , ROWNUM AS INNER_ROWNUM
 		        FROM QNA

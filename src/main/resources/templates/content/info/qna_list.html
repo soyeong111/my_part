@@ -14,6 +14,9 @@
    <div class="library-intro-div">
    	<table>
    		<thead>
+   		
+   		<!--답변 상태 추가해야 됨  -->
+   		
    			<tr>
    				<td>No</td>
    				<td>제목</td>
@@ -29,8 +32,9 @@
    			</tr>
    		</th:block>
    		<th:block th:if="${#lists.size(qnaList) != 0}">
-   		<tr th:each=" qna, state : ${qnaList} ">
-   			<td><span th:text="${qna.rowNum}"></span></td>
+   		
+   		<tr th:each=" qna, detailState : ${qnaList} ">
+   			<td>[[${#lists.size(qnaList) - detailState.index}]]</td>
    			<td>[[${qna.qnaTitle}]]</td>
    			<td>[[${qna.memId}]]</td>
    			<td>[[${qna.qnaCreateDate}]]</td>
@@ -38,15 +42,29 @@
    		</tr>
    		
    		</th:block>
-   		<th:block th:each=" qna : ${qnaList} ">
-   			<tr>
-   				
-   				<td></td>
-   				<td></td>
-   			</tr>
-   		</th:block>
+   			
    		</tbody>
    	</table>
+   	
+   	<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+			<th:block th:if="${pageVO.prevPageFlag}">
+				<a th:href="@{/info/qna(nowPage=${pageVO.startPageNum - 1})}">이전</a>
+			</th:block>			
+			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.startPageNum, pageVO.endPageNum)}">
+				<a th:href="@{/info/qna(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a> 
+			</th:block>
+			<th:block th:if="${pageVO.nextPageFlag}">
+				<a th:href="@{/info/qna(nowPage=${pageVO.endPageNum + 1})}">다음</a>
+			</th:block>
+		</div>
+		 	<div>
+   		
+   		<button sec:authorize="isAnonymous()" type="button" 
+   		onclick="location.href='/member/loginForm'">로그인 후 질문 작성</button>
+   		
+   		<button sec:authorize="isAuthenticated()" type="button" 
+   		onclick="location.href='/info/questionForm'">질문 작성</button>
+   	</div>
    </div>
 </th:block>
 
