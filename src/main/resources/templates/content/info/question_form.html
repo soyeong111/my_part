@@ -11,9 +11,14 @@
 
 <th:block layout:fragment="content">
   <div>
-	  <form th:action="@{/info/sendQuestion}" method="post">
+	  <form th:action="@{/info/sendQuestion}" method="post" >
 	  		<div>문의합니다</div>
-	  		id<input type="text" name="memId">
+	 		id:
+	  		<span sec:authorize="isAuthenticated()" sec:authentication="name">
+	  		</span>
+	  		
+	  		<input type="hidden" name="memId">
+	  		
 	  		<div>제목<input type="text" name="qnaTitle"></div>
 		  	<div>
 		  		<textarea rows="10" cols="50" name="qnaContent"></textarea>

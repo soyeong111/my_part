@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.study.bookspace.info.service.QnaService;
 import com.study.bookspace.info.vo.QnaVO;
+import com.study.bookspace.member.vo.MemberVO;
 
 import jakarta.annotation.Resource;
 
@@ -32,16 +33,17 @@ public class InfoController {
 	
 	//문의사항 목록 페이지에서 질문하기 클릭시(로그인 성공했다는 가정) 가는 질문 작성 페이지
 	@GetMapping("/questionForm")
-	public String questionForm() {
+	public String questionForm(MemberVO memberVO) {
 		
 		return "content/info/question_form";
 	}
 	
 	//질문 등록 후 문의사항 목록으로 간다
 	@PostMapping("/sendQuestion")
-	public String sendQuestion(QnaVO qnaVO) {
+	public String sendQuestion(QnaVO qnaVO, MemberVO memId) {
 		
 		qnaService.insertQna(qnaVO);
+		System.out.println(memId);
 		
 		return "redirect:/info/qna";
 	}
