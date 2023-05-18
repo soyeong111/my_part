@@ -41,6 +41,32 @@
 	
 	
 	
+	<!-- 도서 등록  -->
+	<insert id="regBook">
+		INSERT INTO BOOK (
+			BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, ISBN
+		) VALUES (
+			#{bookCode}
+			, #{bookTitle}
+			, #{bookAuthor}
+			, #{bookPublicationDate}
+			, #{bookpublisher}
+			, #{bookIntro}
+			, #{bookStockCnt}
+		)
+	</insert>
+	
+	
+	
+	
 	<!-- 목록조회 (이미지 없음!!!!!)-->
 	<select id="getBookListForUser" resultMap="book">
 		SELECT BOOK.BOOK_CODE
@@ -58,6 +84,7 @@
 		AND IS_MAIN_IMG = 'Y'
 	</select>
 
+	
 	
 	
 	
