@@ -2,6 +2,7 @@ package com.study.bookspace.info.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.study.bookspace.info.service.QnaService;
@@ -36,7 +37,7 @@ public class InfoController {
 	}
 	
 	//질문 등록 후 문의사항 목록으로 간다
-	@GetMapping("/sendQuestion")
+	@PostMapping("/sendQuestion")
 	public String sendQuestion() {
 		
 		qnaService.insertQna();
