@@ -27,7 +27,7 @@ public class UploadUtil {
 			String attachedFileName = uuid + extension;
 
 			try {
-				File file = new File(ConstVariable.UPLOAD_PATH + attachedFileName);
+				File file = new File(ConstVariable.BOOK_UPLOAD_PATH + attachedFileName);
 				img.transferTo(file);
 				
 				imgVO.setOriginFileName(originFileName);
