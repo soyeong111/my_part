@@ -9,11 +9,14 @@ import lombok.ToString;
 @ToString
 public class QnaVO {
 	private String qnaCode;
+	private int qnaNum;
 	private String qnaTitle;
 	private String qnaContent;
 	private String qnaCreateDate;
 	private int qnaViewCnt;
 	private String memId;
+	private int rowNum;
+	private int rowNumber;
 	
 
 }
