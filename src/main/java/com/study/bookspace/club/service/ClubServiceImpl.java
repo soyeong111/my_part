@@ -50,4 +50,28 @@ public class ClubServiceImpl implements ClubService{
 		return result != 0 ? true : false;
 	}
 
+
+
+
+	@Override
+	public String getNextClubCode() {
+		return sqlSession.selectOne("clubMapper.getNextClubCode");
+	}
+
+
+
+
+	@Override
+	public void insertImg(BookClubImageVO bookClubImageVO) {
+		sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
+	}
+
+
+
+
+	//@Override
+	//public void insertImg(BookClubImageVO bookClubImageVO) {
+	//	sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
+	//}
+
 }

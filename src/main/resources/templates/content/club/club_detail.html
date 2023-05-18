@@ -17,11 +17,14 @@
 				<div class="row">
 					<div class="col">
 						<h3>북클럽 이름</h3>
+						<input type="button" class="btn custom-btn" value="가입 신청하기" onclick="joinClub();">
 					</div>
 				</div>			
 				<div class="row">
 					<div class="col">
-						북클럽 정보
+						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="400px;"></div>
+						<div>[[${club.clubName}]]</div>
+						<div>[[${club.clubIntro}]]</div>
 					</div>
 				</div>		
 				<div class="row">
@@ -36,7 +39,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/club/club_detail.js"></script>
 </th:block>
 
 </html>

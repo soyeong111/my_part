@@ -7,11 +7,23 @@
 	<!-- <link rel="stylesheet" href="/css/.css"> -->
 </th:block>
 <th:block layout:fragment="content">
+
 	<div class="book-list-div">
 		<th:block th:each="book : ${bookList}">
 			<div class="col">
-				<span th:text="${book.booKTitle}"></span> 
+				<div class="card">
+
+				
+			<img th:src="${'/image/book/' + book.imgList[0].attachedFileName}"> 
+					
+				<span th:text="${book.bookAuthor}"></span> 
+				<span th:text="${book.bookPublicationDate}"></span> 
+				<span th:text="${book.bookpublisher}"></span> 
+				<span th:text="${book.bookIntro}"></span> 
+				<span th:text="${book.bookStockCnt}"></span> 
+				<span th:text="${book.isbn}"></span> 
 			</div>		
+		</div>
 		</th:block>
 	</div>
 </th:block>
@@ -19,3 +31,4 @@
 	<!-- <script type="text/javascript" src="/js/.js"></script> -->
 </th:block>
 </html>
+
