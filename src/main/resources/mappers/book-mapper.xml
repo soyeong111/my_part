@@ -35,11 +35,17 @@
 		SELECT BOOK_CATE_NO
 			, BOOK_CATE_STR
 		FROM BOOK_CATEGORY
-		WHERE IS_USE = 'Y'
+		WHERE BOOK_CATE_IS_USE = 'Y' 
 		ORDER BY BOOK_CATE_NO
 	</select>
 	
 	
+	<!-- 등록될 북코드 -->
+	<select id="getNextBookCode" resultType="String">
+		SELECT 'BK_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BK, 4))), 0) + 1, 3, '0') 
+	    FROM BOOK
+	</select>
+
 	
 	<!-- 도서 등록  -->
 	<insert id="regBook">
@@ -64,7 +70,28 @@
 		)
 	</insert>
 	
+
+
 	
+	<!-- 이미지 등록 --> 
+	<insert id="insertImges">
+		INSERT INTO BOOK_IMAGE (
+			BOOK_IMG_CODE
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_CODE 
+		)
+		<foreach collection="imgList" item="img" index="i" separator="UNION ALL">
+		SELECT (SELECT 'BK_IMG_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(IMG_CODE, 8))), 0) + 1 + #{i}, 3, '0')
+  				  FROM BOOK_IMAGE)
+			, #{img.originFileName}
+			, #{img.attachedFileName}
+			, #{img.isMainImg}
+			, #{img.bookCode}
+		FROM DUAL  
+		</foreach>
+	</insert>
 	
 	
 	<!-- 목록조회 (이미지 없음!!!!!)-->
