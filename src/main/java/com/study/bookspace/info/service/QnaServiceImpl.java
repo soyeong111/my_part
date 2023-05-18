@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.study.bookspace.info.vo.QnaVO;
+
 @Service("qnaService")
 public class QnaServiceImpl implements QnaService {
 	@Autowired
@@ -11,8 +13,8 @@ public class QnaServiceImpl implements QnaService {
 
 	//질문 작성
 	@Override
-	public void insertQna() {
-		sqlSession.insert("qnaMpper.insertQna");
+	public void insertQna(QnaVO qnaVO) {
+		sqlSession.insert("qnaMapper.insertQna",qnaVO);
 		
 	}
 
