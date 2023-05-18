@@ -26,6 +26,7 @@ public class BookController {
 	@GetMapping("/bookList")
 	public String bookList(Model model) {
 		
+		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
 		
 		model.addAttribute("bookList", bookService.getBookListForUser());
 		
@@ -46,7 +47,7 @@ public class BookController {
 
 //	    등록될 도서코드 조회
 	    String bookCode = bookService.getNextBookCode();
-	    bookVO.setBooKCode(bookCode);
+	    bookVO.setBookCode(bookCode);
 	    
 	    
 		
@@ -75,7 +76,7 @@ public class BookController {
 	
 //	도서 등록 페이지
 	@GetMapping("/regBook")
-	public String regBook(Model model) {
+	public String regBook(Model model, BookVO bookVO) {
 		
 		model.addAttribute("categoryList", bookService.getCateListInUse());
 		
