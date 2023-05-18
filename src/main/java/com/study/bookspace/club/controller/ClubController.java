@@ -47,36 +47,49 @@ public class ClubController {
 	
 	//북 클럽 생성
 	@PostMapping("/regClub")
-	public String regClub(BookClubVO bookClubVO, MultipartFile clubImg, Authentication authentication) {
+	public String regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, MultipartFile clubImg, Authentication authentication) {
 		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
 		bookClubVO.setMemId(memId);
 		
-		// 파일 첨부 //
+		// -- 파일 첨부 -- //
 		BookClubImageVO attachedClubImageVO = UploadUtil.uploadFileClub(clubImg);
 		
-		bookClubVO.setBookClubImageVO(attachedClubImageVO);
+		// -- 클럽 등록 -- //
+		//등록될 클럽코드 조회
+		String clubCode = clubService.getNextClubCode();
+		bookClubVO.setClubCode(clubCode);
+		
+		// -- 클럽 이미지 등록 -- //
+		bookClubImageVO.setClubCode(clubCode);
+		bookClubImageVO.setBcOriginFileName(attachedClubImageVO.getBcOriginFileName());
+		bookClubImageVO.setBcAttachedFileName(attachedClubImageVO.getBcAttachedFileName());
+		//bookClubVO.setBookClubImageVO(attachedClubImageVO);
 		
 		clubService.regClub(bookClubVO);
-		//clubService.insertImg(bookClubImageVO);
+		clubService.insertImg(bookClubImageVO);
 		
 		return "redirect:/club/clubInfo";
 	}
 	
 	//북클럽 상세페이지
-	@PostMapping("/clubDetail")
+	@GetMapping("/clubDetail")
 	public String clubDetail(Model model, String clubCode) {
 		//클럽 상세 조회
-		//model.addAttribute("club", clubService.getClubDetail(clubCode));
+		model.addAttribute("club", clubService.getClubDetail(clubCode));
 		
 		return "content/club/club_detail";
 	}
 	
 	//회원 북클립 가입(js사용예정)
-	@PostMapping("/joinClub")
-	public String joinClub() {
+	@PostMapping("/joinClubAjax")
+	public String joinClubAjax(Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
 		
 		return "redirect:/club/clubInfo";
 	}

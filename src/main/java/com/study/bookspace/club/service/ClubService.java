@@ -23,5 +23,9 @@ public interface ClubService {
 	//회원 북클럽 가입
 	void joinClub(BookClubMemberVO bookClubMemberVO);
 	
-	//void insertImg(BookClubImageVO bookClubImageVO);
+	//이미지 삽입
+	void insertImg(BookClubImageVO bookClubImageVO);
+	
+	//다음 등록 클럽 코드 조회
+	String getNextClubCode();
 }
