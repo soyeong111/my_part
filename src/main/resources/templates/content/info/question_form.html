@@ -17,7 +17,8 @@
 	  		<span sec:authorize="isAuthenticated()" sec:authentication="name">
 	  		</span>
 	  		
-	  		<input type="hidden" name="memId">
+	  		<input type="hidden" th:value="${#authentication.name}" name="memId">
+
 	  		
 	  		<div>제목<input type="text" name="qnaTitle"></div>
 		  	<div>

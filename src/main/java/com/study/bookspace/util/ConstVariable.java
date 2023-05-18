@@ -9,7 +9,13 @@ public class ConstVariable {
     // 클럽 이미지 첨부 파일 경로
     public static final String CLUB_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\club\\";
 
-	
+    // info(QNA 이미지)
+    public static final String QNA_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\info";
+ 
+    //상품 이미지
+    public static final String GOODS_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\goods";
+
+    
 	// ASCII 범위 – 영숫자(0-9, a-z, A-Z)
 	public static final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
