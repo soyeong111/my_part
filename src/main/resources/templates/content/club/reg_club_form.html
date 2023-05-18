@@ -22,7 +22,7 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						<form class="row g-2" id="regClubForm" th:action="@{/club/regClub}" method="post">
+						<form class="row g-2" id="regClubForm" th:action="@{/club/regClub}" method="post" enctype="multipart/form-data">
 							<div class="col-9">
 								<label for="clubName" class="form-label">클럽명</label> 
 								<input type="text" class="form-control" id="clubName" name="clubName" placeholder="클럽 이름을 작성해주세요."
@@ -30,7 +30,7 @@
 							</div>
 							<div class="col-3 d-grid">
 								<label for="check_club_name" class="form-label">&nbsp;</label> 
-								<input type="button" class="btn btn-primary" id="check_club_name"
+								<input type="button" class="btn custom-btn" id="check_club_name"
 									value="클럽명 중복확인" onclick="isDuplicateClubName();">
 							</div>
 							<div class="col-12">
@@ -42,7 +42,7 @@
 									placeholder="클럽 소개를 작성해주세요."></textarea>
 							</div>
 							<div class="offset-4 col-4 d-grid">
-								<input type="button" id="regClubBtn" class="btn btn-primary" value="클럽 만들기" onclick="regClub();" disabled>
+								<input type="button" id="regClubBtn" class="btn custom-btn" value="클럽 만들기" onclick="regClub();" disabled>
 							</div>
 						</form>
 					</div>
