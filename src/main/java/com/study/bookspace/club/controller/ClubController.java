@@ -1,5 +1,7 @@
 package com.study.bookspace.club.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.study.bookspace.club.service.ClubService;
+import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
 
@@ -43,9 +47,20 @@ public class ClubController {
 	
 	//북 클럽 생성
 	@PostMapping("/regClub")
-	public String regClub(BookClubVO bookClubVO, MultipartFile clubImg) {
-		//bookClubVO.setMemId("java");
+	public String regClub(BookClubVO bookClubVO, MultipartFile clubImg, Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
+		bookClubVO.setMemId(memId);
+		
+		// 파일 첨부 //
+		BookClubImageVO attachedClubImageVO = UploadUtil.uploadFileClub(clubImg);
+		
+		bookClubVO.setBookClubImageVO(attachedClubImageVO);
+		
 		clubService.regClub(bookClubVO);
+		//clubService.insertImg(bookClubImageVO);
 		
 		return "redirect:/club/clubInfo";
 	}
