@@ -43,7 +43,7 @@
 	
 	<!-- 목록조회 (이미지 없음!!!!!)-->
 	<select id="getBookListForUser" resultMap="book">
-		SELECT BOOK_CODE
+		SELECT BOOK.BOOK_CODE
 			, BOOK_TITLE
 			, BOOK_AUTHOR
 			, BOOK_PUBLICATION_DATE
@@ -55,7 +55,7 @@
 			, ATTACHED_FILE_NAME
 		FROM BOOK BOOK, BOOK_IMAGE IMG
 		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
-		AND IS_MAIN_IMG" = 'Y'
+		AND IS_MAIN_IMG = 'Y'
 	</select>
 
 	
