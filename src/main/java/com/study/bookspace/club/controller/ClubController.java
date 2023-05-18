@@ -43,7 +43,7 @@ public class ClubController {
 	
 	//북 클럽 생성
 	@PostMapping("/regClub")
-	public String regClub(BookClubVO bookClubVO) {
+	public String regClub(BookClubVO bookClubVO, MultipartFile clubImg) {
 		//bookClubVO.setMemId("java");
 		clubService.regClub(bookClubVO);
 		
