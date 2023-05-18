@@ -18,11 +18,7 @@ public class SecurityConfig {
 		security.csrf().disable()
 				.authorizeHttpRequests()
 					.requestMatchers("/"
-									, "/info/**"
-									, "/book/**"
-									, "/goods/**"
-									, "/club/**"
-									, "/member/**").permitAll()
+									, "/**").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
 					.anyRequest().authenticated()
 				.and()
