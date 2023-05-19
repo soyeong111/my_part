@@ -8,25 +8,31 @@
 </th:block>
 <th:block layout:fragment="content">
 
-	<div class="book-list-div">
-		<th:block th:each="book : ${bookList}">
-			<div class="col">
-				<div class="card">
+<div class="book-list-div">
+  <div class="row row-cols-5 g-4">
+    <th:block th:each="book, iterStat : ${bookList}">
+      <div class="col-4">
+        <div class="card" style="width: 18rem; height: 100%;">
+          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}">
+          <div class="card-body">
+            <h5 class="card-title">
+              [[${book.bookTitle}]]
+            </h5>
+          </div>
+          <div class="card-body">
+            <a href="#" class="card-link">대여하기</a> 
+            <a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}" class="card-link">자세히 보기</a>
+          </div>	
+        </div>
+      </div>
+    </th:block>
+     </div>
+</div>
+    
+    
+ </th:block>
 
-				
-			<img th:src="${'/image/book/' + book.imgList[0].attachedFileName}"> 
-					
-				<span th:text="${book.bookAuthor}"></span> 
-				<span th:text="${book.bookPublicationDate}"></span> 
-				<span th:text="${book.bookpublisher}"></span> 
-				<span th:text="${book.bookIntro}"></span> 
-				<span th:text="${book.bookStockCnt}"></span> 
-				<span th:text="${book.isbn}"></span> 
-			</div>		
-		</div>
-		</th:block>
-	</div>
-</th:block>
+
 <th:block layout:fragment="content_js">
 	<!-- <script type="text/javascript" src="/js/.js"></script> -->
 </th:block>

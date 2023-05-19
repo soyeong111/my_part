@@ -20,4 +20,7 @@ public interface BookService {
 //	도서 등록
 	void regBook(BookVO bookVO);
 	
+//	도서 상세 조회
+	BookVO getBookDetail(String bookCode);
+	
 }

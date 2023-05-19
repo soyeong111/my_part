@@ -37,6 +37,13 @@ public class BookServiceImpl implements BookService {
 		sqlSession.insert("bookMapper.regBook", bookVO);
 		sqlSession.insert("bookMapper.insertImges", bookVO);
 	}
+
+	@Override
+	public BookVO getBookDetail(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getBookDetail", bookCode);
+	}
+	
+	
 	
 	
 }

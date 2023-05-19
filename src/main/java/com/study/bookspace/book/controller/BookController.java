@@ -15,6 +15,7 @@ import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/book")
@@ -84,5 +85,37 @@ public class BookController {
 		
 	}
 	
+
+//	도서 상세 페이지
+	@GetMapping("/bookDetail")
+	public String bookDetail(Model model, String bookCode, HttpServletRequest request) {
+		
+		 String data = request.getHeader("Referer");
+		 System.out.println("@@@@@@@@" + data);
+		 
+//		 도서 상세 정보
+		 model.addAttribute("book", bookService.getBookDetail(bookCode));
+		 
+		return "content/book/book_detail";
+		
+	}
+	
+	
+	
+//	신작도서
+	@GetMapping("/newBook")
+	public String newBook() {
+		
+		return "content/book/new_book";
+	}
+	
+	
+	
+//	베스트 셀러
+	@GetMapping("/bestBook")
+	public String bestBook() {
+		
+		return "content/book/best_book";
+	}
 	
 }

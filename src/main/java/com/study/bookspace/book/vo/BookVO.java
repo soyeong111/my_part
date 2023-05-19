@@ -16,7 +16,7 @@ public class BookVO {
 	private String bookTitle;
 	private String bookAuthor;
 	private String bookPublicationDate;
-	private String bookpublisher;
+	private String bookPublisher;
 	private String bookIntro;
 	private String bookCateNo;
 	private String bookStockCnt;

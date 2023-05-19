@@ -13,12 +13,13 @@
 		<result column="BOOK_TITLE" 						property="bookTitle"/>
 		<result column="BOOK_AUTHOR" 						property="bookAuthor"/>
 		<result column="BOOK_PUBLICATION_DATE"			 	property="bookPublicationDate"/>
-		<result column="BOOK_PUBLISHER" 					property="bookpublisher"/>
+		<result column="BOOK_PUBLISHER" 					property="bookPublisher"/>
 		<result column="BOOK_INTRO" 						property="bookIntro"/>
 		<result column="BOOK_CATE_NO" 						property="bookCateNo"/>
 		<result column="BOOK_STOCK_CNT" 					property="bookStockCnt"/>
 		<result column="ISBN" 								property="isbn"/>
-		<collection property="imgList" resultMap="img">		</collection>
+		<association property="categoryVO" 					resultMap="category"></association> 		
+		<collection property="imgList" 						resultMap="img"></collection>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.book.vo.ImgVO" 	id="img">
@@ -115,8 +116,23 @@
 
 	
 	
-	
-	
+	<!-- 도서 상세조회  -->
+	<select id="getBookDetail" resultMap="book">
+		SELECT BOOK.BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, ISBN
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+		FROM BOOK BOOK, BOOK_IMAGE IMG
+		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		AND BOOK.BOOK_CODE = #{bookCode}
+	</select>
 	
 	
 	
