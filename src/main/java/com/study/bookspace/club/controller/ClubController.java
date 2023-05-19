@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
+import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.util.UploadUtil;
 
@@ -83,17 +84,25 @@ public class ClubController {
 		return "content/club/club_detail";
 	}
 	
-	//회원 북클립 가입(js사용예정)
+	//회원 북클립 가입
 	@PostMapping("/joinClubAjax")
-	public String joinClubAjax(Authentication authentication) {
+	public String joinClubAjax(BookClubMemberVO bookClubMemberVO, Authentication authentication) {
 		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
+		bookClubMemberVO.setMemId(memId);
+		
+		clubService.joinClub(bookClubMemberVO);
 		
 		return "redirect:/club/clubInfo";
 	}
 	
+	//북클럽 커뮤니티 페이지
+	@GetMapping("/community")
+	public String community() {
+		return "content/club/community";
+	}
 	
 	
 }
