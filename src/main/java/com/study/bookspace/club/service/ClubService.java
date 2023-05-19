@@ -12,7 +12,7 @@ public interface ClubService {
 	//클럽명 중복확인
 	boolean isDuplicateClubName(String clubName);
 	
-	//북클럽 생성
+	//북클럽 생성 @@ 
 	void regClub(BookClubVO bookClubVO);
 	
 	//북클럽 목록 조회

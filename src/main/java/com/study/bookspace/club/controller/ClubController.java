@@ -15,6 +15,7 @@ import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -107,6 +108,23 @@ public class ClubController {
 		model.addAttribute("boardList", clubService.getBoardList());
 		
 		return "content/club/community";
+	}
+	
+	//글 작성 페이지 이동
+	@GetMapping("/regBoard")
+	public String regBoardForm() {
+		
+		
+		return "content/club/board_write";
+	}
+	
+	//글 작성
+	@PostMapping("/regBoard")
+	public String regBoard(CommunityVO communityVO) {
+		
+		clubService.regBoard(communityVO);
+		
+		return "redirect:/club/community";
 	}
 	
 	
