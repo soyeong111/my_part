@@ -81,6 +81,17 @@ public class InfoController {
 		return "content/info/qna_detail";
 	}
 	
-
+	@GetMapping("/wayToLibrary")
+	public String wayToLibrary() {
+		
+		return "content/info/way_to_library";
+	}
+	@GetMapping("/notice")
+	public String notice() {
+		
+		return "content/info/notice";
+	}
+	
+	
 
 }
