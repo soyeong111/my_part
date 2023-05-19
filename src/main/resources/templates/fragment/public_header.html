@@ -9,10 +9,22 @@
 					<a href="/">한울도서관</a>
 				</h1>
 			</div>
-			<div class="col-7 d-flex justify-content-evenly header-menu-div">
-				<div th:each="mainMenu : ${headerMenuList}">
-					<a th:href="${mainMenu.mainMenuUrl}" th:text="${mainMenu.mainMenuName}"></a>
-					<!-- <a th:if="${mainMenu.mainMenuRole == ''}"  th:href="${mainMenu.mainMenuUrl}" th:text="${mainMenu.mainMenuName}"></a> -->
+			<div class="col-7 header-menu-div">
+				<div class="header-main-menu-div d-flex justify-content-evenly">
+					<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
+						<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
+							th:text="${mainMenu.mainMenuName}"></a>
+					</div>
+				</div>
+				<div class="header-sub-menu-div">
+					<div class="d-flex justify-content-evenly">
+						<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
+							<div th:each="subMenu : ${mainMenu.subMenuList}" class="mt-2">
+								<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
+									th:text="${subMenu.subMenuName}"></a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAnonymous()">
@@ -20,7 +32,21 @@
 				<a href="/member/joinForm">회원가입</a>
 			</div>
 			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAuthenticated()">
-				<a href="javascript:void(0);">[[${#authentication.name}]]님</a>
+				<div class="dropdown">
+					<a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[[${#authentication.name}]]님</a>
+					<ul class="dropdown-menu">
+						<th:block th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole == 'USER' or mainMenu.mainMenuRole == 'ADMIN'}">
+							<li><a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
+								th:text="${mainMenu.mainMenuName}"></a></li>
+							<li><hr class="dropdown-divider"></li>
+							<th:block th:each="subMenu : ${mainMenu.subMenuList}">
+								<li><a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
+									th:text="${subMenu.subMenuName}"></a></li>
+							</th:block>
+							<li th:if="${!mainMenuStat.last}"><hr class="dropdown-divider"></li>
+						</th:block>
+					</ul>
+				</div>
 				<a href="/member/logout">로그아웃</a>
 			</div>
 		</div>

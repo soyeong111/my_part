@@ -12,7 +12,15 @@ public class IntercepterConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		
 		registry.addInterceptor(getPublicHeaderMenuIntercepter())
-			.addPathPatterns("/" , "/admin/**", "/book/**", "/club/**", "/goods/**", "/info/**", "/member/**")
+			.addPathPatterns("/"
+							, "/info/**"
+							, "/book/**"
+							, "/room/**"
+							, "/club/**"
+							, "/goods/**"
+							, "/cart/**"
+							, "/buy/**"
+							, "/member/**")
 			.excludePathPatterns("/**/*Ajax");
 		
 //		registry.addInterceptor(getMenuIntercepter())
