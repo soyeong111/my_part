@@ -6,7 +6,7 @@
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/club/community.css">
 </th:block>
 
 <!-- 본문 내용 -->
@@ -37,13 +37,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
+						<th:block th:if="${#lists.size(boardList) == 0}">
+							<tr><td colspan=5>등록된 게시글이 없습니다.</td></tr>
+						</th:block>
+						<th:block th:unless="${#lists.size(boardList) == 0}">
+							<tr th:each="board, state : ${boardList}">
+								<td>[[${board.boardNum}]]</td>
+								<td>[[${board.boardTitle}]]</td>
+								<td>[[${board.boardWriter}]]</td>
+								<td>[[${board.regDate}]]</td>
+								<td>[[${board.readCnt}]]</td>
+							</tr>
+						</th:block>
 					</tbody>
 				</table>
 			</div>

@@ -127,6 +127,19 @@
 		ORDER BY BOARD_NUM DESC
 	</select>
 	
-	
+	<insert id="regBoard">
+		INSERT INTO COMMUNITY_BOARD (
+			BOARD_NUM
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, BOARD_WRITER
+		) VALUES (
+			(SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NUM, 7))), 0) + 1,3 , '0') 
+			FROM COMMUNITY_BOARD)
+			, #{boardTitle}
+			, #{boardContent}
+			, #{boardWriter}
+		)
+	</insert>
 	
 </mapper>

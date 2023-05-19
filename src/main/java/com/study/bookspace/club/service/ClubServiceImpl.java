@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityVO;
 
 @Service("clubService")
 public class ClubServiceImpl implements ClubService{
@@ -56,6 +57,18 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public void insertImg(BookClubImageVO bookClubImageVO) {
 		sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
+	}
+
+
+	@Override
+	public List<CommunityVO> getBoardList() {
+		return sqlSession.selectList("clubMapper.getBoardList");
+	}
+
+
+	@Override
+	public void regBoard(CommunityVO communityVO) {
+		sqlSession.insert("clubMapper.regBoard", communityVO);
 	}
 
 }

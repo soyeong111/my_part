@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
@@ -26,7 +27,7 @@ public class ClubController {
 	
 	//북클럽 정보
 	@GetMapping("/clubInfo")
-	public String clubInfo(Model model) {
+	public String clubInfo(Model model, SubMenuVO subMenuVO) {
 		//북클럽 목록 조회
 		model.addAttribute("clubList", clubService.getClubList());
 		
@@ -35,7 +36,7 @@ public class ClubController {
 	
 	//북 클럽 생성화면
 	@GetMapping("/regClubForm")
-	public String regClubForm() {
+	public String regClubForm(SubMenuVO subMenuVO) {
 		return "content/club/reg_club_form";
 	}
 	
@@ -100,7 +101,10 @@ public class ClubController {
 	
 	//북클럽 커뮤니티 페이지
 	@GetMapping("/community")
-	public String community() {
+	public String community(SubMenuVO subMenuVO, Model model) {
+		
+		model.addAttribute("boardList", clubService.getBoardList());
+		
 		return "content/club/community";
 	}
 	
