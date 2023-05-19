@@ -11,7 +11,7 @@ function isDuplicateClubName(){
 	
 	//ajax start
 	$.ajax({
-	   url: '/club/isDuplicateClubName', //요청경로
+	   url: '/club/isDuplicateClubNameAjax', //요청경로
 	   type: 'post',
 	   async : false, // 동기 방식
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',

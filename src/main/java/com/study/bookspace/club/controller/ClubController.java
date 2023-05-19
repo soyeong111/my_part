@@ -42,8 +42,8 @@ public class ClubController {
 	
 	//북클럽명 중복체크
 	@ResponseBody
-	@PostMapping("/isDuplicateClubName")
-	public boolean isDuplicateClubName(String clubName) {
+	@PostMapping("/isDuplicateClubNameAjax")
+	public boolean isDuplicateClubNameAjax(String clubName) {
 		System.out.println(clubName);
 		return clubService.isDuplicateClubName(clubName);
 	}
