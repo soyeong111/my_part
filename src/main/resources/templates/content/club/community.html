@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/public_layout}">
+
+<!-- 연결해야 할 외부 css파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/club/community.css">
+</th:block>
+
+<!-- 본문 내용 -->
+<th:block layout:fragment="content">
+	<div class="community-div w-75 m-auto">
+		<div class="row">
+			<div class="col">
+				<h3>북클럽 커뮤니티</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<colgroup>
+						<col width="10%">
+						<col width="*">
+						<col width="15%">
+						<col width="15%">
+						<col width="10%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td>No</td>
+							<td>제 목</td>
+							<td>작성자</td>
+							<td>작성일</td>
+							<td>조회수</td>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:if="${#lists.size(boardList) == 0}">
+							<tr><td colspan=5>등록된 게시글이 없습니다.</td></tr>
+						</th:block>
+						<th:block th:unless="${#lists.size(boardList) == 0}">
+							<tr th:each="board, state : ${boardList}">
+								<td>[[${board.boardNum}]]</td>
+								<td>[[${board.boardTitle}]]</td>
+								<td>[[${board.boardWriter}]]</td>
+								<td>[[${board.regDate}]]</td>
+								<td>[[${board.readCnt}]]</td>
+							</tr>
+						</th:block>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row"></div>
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<!-- <script type="text/javascript" src=""></script> -->
+</th:block>
+
+</html>

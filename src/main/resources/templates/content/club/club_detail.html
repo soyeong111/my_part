@@ -17,7 +17,6 @@
 				<div class="row">
 					<div class="col">
 						<h3>북클럽 이름</h3>
-						<input type="button" class="btn custom-btn" value="가입 신청하기" onclick="joinClub();">
 					</div>
 				</div>			
 				<div class="row">
@@ -29,7 +28,8 @@
 				</div>		
 				<div class="row">
 					<div class="col">
-						<input type="button" class="btn" value="가입신청">
+						<input type="button" class="btn custom-btn" value="가입 신청하기" th:onclick="joinClub([[${#authentication.name}]], [[${club.clubCode}]]);">
+							<input type="button" class="btn custom-btn" th:value="${club.clubName} + ' 커뮤니티'" onclick="location.href='/club/community';">
 					</div>
 				</div>	
 			</div>

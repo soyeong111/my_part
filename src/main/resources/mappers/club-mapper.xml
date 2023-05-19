@@ -20,10 +20,28 @@
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.BookClubMemberVO" id="bookClubMember">
-		<result column="CLUB_CODE" 			property="clubCode"/>
+		<id		 column="CLUB_CODE" 			property="clubCode"/>
 		<result column="MEM_ID" 			property="memId"/>
 		<result column="CLUB_REG_DATE" 		property="clubRegDate"/>
 		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.club.vo.CommunityVO" id="community">
+		<id		 column="BOARD_NUM" 		property="boardNum"/>
+		<result column="BOARD_TITLE" 		property="boardTitle"/>
+		<result column="BOARD_CONTENT"	 	property="boardContent"/>
+		<result column="BOARD_WRITER" 		property="boardWriter"/>
+		<result column="REG_DATE" 			property="regDate"/>
+		<result column="READ_CNT" 			property="readCnt"/>
+		<result column="REPLY_CNT" 			property="replyCnt"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.club.vo.CommunityReplyVO" id="communityReply">
+		<id		 column="REPLY_NUM" 		property="replyNum"/>
+		<result column="REPLY_CONTENT" 		property="replyContent"/>
+		<result column="REPLY_WRITER" 		property="replyWriter"/>
+		<result column="REG_DATE" 			property="regDate"/>
+		<result column="BOARD_NUM" 			property="boardNum"/>
 	</resultMap>
 	
 	<select id="isDuplicateClubName" resultType="int">
@@ -96,9 +114,32 @@
 		)
 	</insert>
 	
-
+	<select id="getBoardList" resultMap="community">
+		SELECT BOARD_NUM
+			, BOARD_TITLE
+			, BOARD_WRITER
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+			, READ_CNT
+			, (SELECT COUNT(REPLY_NUM)
+				FROM COMMUNITY_REPLY
+				WHERE BOARD_NUM = COMMUNITY_BOARD.BOARD_NUM) AS REPLY_CNT
+		FROM COMMUNITY_BOARD
+		ORDER BY BOARD_NUM DESC
+	</select>
 	
-	
-	
+	<insert id="regBoard">
+		INSERT INTO COMMUNITY_BOARD (
+			BOARD_NUM
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, BOARD_WRITER
+		) VALUES (
+			(SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NUM, 7))), 0) + 1,3 , '0') 
+			FROM COMMUNITY_BOARD)
+			, #{boardTitle}
+			, #{boardContent}
+			, #{boardWriter}
+		)
+	</insert>
 	
 </mapper>

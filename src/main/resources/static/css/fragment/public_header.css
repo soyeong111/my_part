@@ -1,1 +1,22 @@
 @charset "UTF-8";
+
+.header-menu-div {
+	position: relative;
+}
+
+.header-main-menu-div > div, .header-sub-menu-div > div > div {
+	width: 12%;
+	text-align: center;
+}
+
+.header-sub-menu-div {
+	display: none;
+	position: absolute;
+	width: 100%;
+	left: 0px;
+	background-color: white;
+}
+
+.header-menu-div:hover > .header-sub-menu-div {
+	display: block;
+}

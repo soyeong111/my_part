@@ -33,7 +33,6 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/idDuplicateCheckAjax")
 	public boolean idDuplicateCheckAjax(String memId) {
-		System.out.println(memId);
 		return memberService.idDuplicateCheck(memId) == null;
 	}
 	
@@ -41,7 +40,6 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/joinAjax")
 	public boolean joinAjax(MemberVO memberVO) {
-		System.out.println(memberVO);
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		return memberService.join(memberVO) == 1;
 	}

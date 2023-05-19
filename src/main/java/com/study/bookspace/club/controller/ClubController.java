@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
+import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.util.UploadUtil;
 
@@ -25,7 +27,7 @@ public class ClubController {
 	
 	//북클럽 정보
 	@GetMapping("/clubInfo")
-	public String clubInfo(Model model) {
+	public String clubInfo(Model model, SubMenuVO subMenuVO) {
 		//북클럽 목록 조회
 		model.addAttribute("clubList", clubService.getClubList());
 		
@@ -34,7 +36,7 @@ public class ClubController {
 	
 	//북 클럽 생성화면
 	@GetMapping("/regClubForm")
-	public String regClubForm() {
+	public String regClubForm(SubMenuVO subMenuVO) {
 		return "content/club/reg_club_form";
 	}
 	
@@ -83,17 +85,28 @@ public class ClubController {
 		return "content/club/club_detail";
 	}
 	
-	//회원 북클립 가입(js사용예정)
+	//회원 북클립 가입
 	@PostMapping("/joinClubAjax")
-	public String joinClubAjax(Authentication authentication) {
+	public String joinClubAjax(BookClubMemberVO bookClubMemberVO, Authentication authentication) {
 		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
+		bookClubMemberVO.setMemId(memId);
+		
+		clubService.joinClub(bookClubMemberVO);
 		
 		return "redirect:/club/clubInfo";
 	}
 	
+	//북클럽 커뮤니티 페이지
+	@GetMapping("/community")
+	public String community(SubMenuVO subMenuVO, Model model) {
+		
+		model.addAttribute("boardList", clubService.getBoardList());
+		
+		return "content/club/community";
+	}
 	
 	
 }
