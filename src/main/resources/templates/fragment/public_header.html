@@ -12,6 +12,7 @@
 			<div class="col-7 d-flex justify-content-evenly header-menu-div">
 				<div th:each="mainMenu : ${headerMenuList}">
 					<a th:href="${mainMenu.mainMenuUrl}" th:text="${mainMenu.mainMenuName}"></a>
+					<!-- <a th:if="${mainMenu.mainMenuRole == ''}"  th:href="${mainMenu.mainMenuUrl}" th:text="${mainMenu.mainMenuName}"></a> -->
 				</div>
 			</div>
 			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAnonymous()">
