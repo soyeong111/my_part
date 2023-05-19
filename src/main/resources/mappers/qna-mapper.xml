@@ -31,7 +31,7 @@
 			, #{qnaTitle}
 			, #{qnaContent}
 			, #{memId}
-			, 1
+			, #{qnaViewCnt}
 		)
 	</insert>
 	
@@ -42,33 +42,48 @@
 </update>
 	
 	<!-- qna 목록 조회 -->
+<!-- 		SELECT (SELECT COUNT(QNA_NUM)-ROW_NUM+1 
+		FROM QNA) ROW_NUMBER -->
 	<select id="selectQna" resultMap="qna">
-	SELECT (SELECT COUNT(QNA_NUM) 
+	
+	  SELECT (SELECT COUNT(QNA_NUM) 
 				FROM QNA) - ROW_NUM + 1 AS ROW_NUMBER 
+
 			, QNA_NUM
 		    , QNA_TITLE
+            , QNA_CODE
 		    , MEM_ID
-		    , QNA_CREATE_DATE
+		     , QNA_CONTENT
+		    , TO_CHAR(QNA_CREATE_DATE , 'YY-MM-DD HH24:MI') AS QNA_CREATE_DATE
 		    , QNA_VIEW_CNT
 		    , ROW_NUM
+           
+		   
 		FROM
 		(
 		    SELECT QNA_NUM
+                , QNA_CODE
 		        , QNA_TITLE
 		        , MEM_ID
+		        , QNA_CONTENT
 		        , QNA_CREATE_DATE
 		        , QNA_VIEW_CNT
-		        , ROWNUM ROW_NUM
+		        , ROWNUM ROW_NUM 
+                , INNER_ROW
+		        
 		    FROM
 		    (
-		        SELECT QNA_NUM
+		        SELECT 
+		        	QNA_NUM
+                    , QNA_CODE
 		            , QNA_TITLE
 		            , MEM_ID
-		            , TO_CHAR(QNA_CREATE_DATE, 'YY-MM-DD') AS QNA_CREATE_DATE
+		            , QNA_CONTENT
+                    , QNA_CREATE_DATE
 		            , QNA_VIEW_CNT
-		            , ROWNUM AS INNER_ROWNUM
+                    , ROWNUM INNER_ROW
 		        FROM QNA
-		        ORDER BY QNA_NUM DESC
+		        ORDER BY QNA_CREATE_DATE DESC
 		    )
 		)
 		WHERE ROW_NUM &gt;= #{startDataNum} AND ROW_NUM &lt;= #{endDataNum}
@@ -78,7 +93,16 @@
 		SELECT COUNT(QNA_NUM)
 		FROM QNA
 	</select>
-
+	
+	<select id="qnaDetail" resultMap="qna">
+		SELECT QNA_CODE
+			, QNA_TITLE
+			, QNA_CONTENT
+			, MEM_ID
+			, QNA_CREATE_DATE
+		FROM QNA
+		WHERE QNA_CODE = #{qnaCode}
+	</select>
 	
 	
 </mapper>

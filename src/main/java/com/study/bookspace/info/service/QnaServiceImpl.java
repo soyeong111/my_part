@@ -33,5 +33,12 @@ public class QnaServiceImpl implements QnaService {
 		return sqlSession.selectOne("qnaMapper.selectQnaCnt");
 	}
 
+	@Override
+	public QnaVO qnaDetail(String qnaCode) {
+		return sqlSession.selectOne("qnaMapper.qnaDetail",qnaCode);
+	}
+
+	
+
 
 }

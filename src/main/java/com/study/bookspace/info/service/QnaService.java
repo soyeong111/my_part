@@ -15,5 +15,8 @@ public interface QnaService {
 	
 	//전체 게시글 수 조회
 	int selectQnaCnt();
+	
+	//문의글 상세 보기
+	QnaVO qnaDetail(String qnaCode);
 
 }
