@@ -21,7 +21,8 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/cart/**"
 							, "/buy/**"
 							, "/member/**")
-			.excludePathPatterns("/**/*Ajax");
+			.excludePathPatterns("/**/*Ajax"
+								, "/info/sendQuestion");
 		
 //		registry.addInterceptor(getMenuIntercepter())
 //			.order(2)
