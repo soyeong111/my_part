@@ -30,13 +30,30 @@ public class InfoController {
 		return "content/info/library_intro";
 	}
 	
-	//문의사항 첫페이지(가장 최근 질문 나옴)
-	@GetMapping("/qna")
-	public String qna() {
+
+	//문의사항 리스트
+	@GetMapping ("/qna")
+	public String qnaList(Model model, PageVO pageVO) {
+		//전체 게시글 수 조회
+		//int totalDataCnt = qnaService.selectQnaCnt();
 		
-	
-		return"content/info/q_n_a";
+		//전체 데이터 수 세팅
+		pageVO.setTotalDataCnt(qnaService.selectQnaCnt());
+		
+		//현재 페이지 설정
+		pageVO.setNowPageNum(pageVO.getNowPageNum());
+		
+		//페이징 정보 세팅
+		pageVO.setPageInfo();
+		
+		//게시글 목록 조회
+		model.addAttribute("qnaList", qnaService.selectQna(pageVO));
+		
+		System.out.println(qnaService.selectQna(pageVO));
+		
+		return "content/info/qna_list";
 	}
+	
 	
 	//문의사항 목록 페이지에서 질문하기 클릭시(로그인 성공했다는 가정) 가는 질문 작성 페이지
 	@GetMapping("/questionForm")
@@ -46,7 +63,7 @@ public class InfoController {
 		return "content/info/question_form";
 	}
 	
-	//질문 등록 후 문의사항 첫페이지로 간다
+	//질문 등록 후 문의사항 리스트로 간다
 	@PostMapping("/sendQuestion")
 	public String sendQuestion(QnaVO qnaVO) {
 		
@@ -55,24 +72,26 @@ public class InfoController {
 		return "redirect:/info/qna";
 	}
 	
-	//문의사항 리스트
-	@GetMapping ("/qnaList")
-	public String qnaList(Model model, PageVO pageVO) {
-		//전체 게시글 수 조회
-		int totalDataCnt = qnaService.selectQnaCnt();
+	@GetMapping("/qnaDetail")
+	public String qnaDetail(String qnaCode, Model model) {
 		
-		//전체 데이터 수 세팅
-		pageVO.setTotalDataCnt(totalDataCnt);
+		model.addAttribute("qna",qnaService.qnaDetail(qnaCode));
+		System.out.println("///"+qnaCode+"////");
 		
-		//페이징 정보 세팅
-		pageVO.setPageInfo();
-		
-		//게시글 목록 조회
-		model.addAttribute("qnaList", qnaService.selectQna(pageVO));
-		
-		return "content/info/qna_list";
+		return "content/info/qna_detail";
 	}
 	
-
+	@GetMapping("/wayToLibrary")
+	public String wayToLibrary() {
+		
+		return "content/info/way_to_library";
+	}
+	@GetMapping("/notice")
+	public String notice() {
+		
+		return "content/info/notice";
+	}
+	
+	
 
 }
