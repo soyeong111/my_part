@@ -34,11 +34,19 @@
    		<th:block th:if="${#lists.size(qnaList) != 0}">
    		
    		<tr th:each=" qna, detailState : ${qnaList} ">
-   			<td>[[${#lists.size(qnaList) - detailState.index}]]</td>
-   			<td>[[${qna.qnaTitle}]]</td>
+   		<!-- <td th:text="${#lists.size(qna) - detailState.index + 1}"></td> -->
+		<td th:text="${qna.getRowNumber}"></td> 
+		
+   			<td>
+   				<a th:href="@{/info/qnaDetail(qnaCode=${qna.qnaCode})}">
+   	
+   					<span th:text="${qna.qnaTitle}"></span>
+   				</a>
+   			</td>
    			<td>[[${qna.memId}]]</td>
    			<td>[[${qna.qnaCreateDate}]]</td>
    			<td>[[${qna.qnaViewCnt}]]</td>
+   			
    		</tr>
    		
    		</th:block>
@@ -47,15 +55,19 @@
    	</table>
    	
    	<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+   	
 			<th:block th:if="${pageVO.prevPageFlag}">
-				<a th:href="@{/info/qna(nowPage=${pageVO.startPageNum - 1})}">이전</a>
-			</th:block>			
+				<a th:href="@{/info/qna(nowPageNum=${pageVO.startPageNum - 1})}">이전</a>
+			</th:block>		
+				
 			<th:block th:each="pageNum : ${#numbers.sequence(pageVO.startPageNum, pageVO.endPageNum)}">
-				<a th:href="@{/info/qna(nowPage=${pageNum})}"><span th:text="${pageNum}"></span></a> 
+				<a th:href="@{/info/qna(nowPageNum=${pageNum})}"><span th:text="${pageNum}"></span></a> 
 			</th:block>
+			
 			<th:block th:if="${pageVO.nextPageFlag}">
-				<a th:href="@{/info/qna(nowPage=${pageVO.endPageNum + 1})}">다음</a>
+				<a th:href="@{/info/qna(nowPageNum=${pageVO.endPageNum + 1})}">다음</a>
 			</th:block>
+			
 		</div>
 		 	<div>
    		

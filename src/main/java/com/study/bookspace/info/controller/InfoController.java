@@ -35,16 +35,21 @@ public class InfoController {
 	@GetMapping ("/qna")
 	public String qnaList(Model model, PageVO pageVO) {
 		//전체 게시글 수 조회
-		int totalDataCnt = qnaService.selectQnaCnt();
+		//int totalDataCnt = qnaService.selectQnaCnt();
 		
 		//전체 데이터 수 세팅
-		pageVO.setTotalDataCnt(totalDataCnt);
+		pageVO.setTotalDataCnt(qnaService.selectQnaCnt());
+		
+		//현재 페이지 설정
+		pageVO.setNowPageNum(pageVO.getNowPageNum());
 		
 		//페이징 정보 세팅
 		pageVO.setPageInfo();
 		
 		//게시글 목록 조회
 		model.addAttribute("qnaList", qnaService.selectQna(pageVO));
+		
+		System.out.println(qnaService.selectQna(pageVO));
 		
 		return "content/info/qna_list";
 	}
@@ -67,6 +72,14 @@ public class InfoController {
 		return "redirect:/info/qna";
 	}
 	
+	@GetMapping("/qnaDetail")
+	public String qnaDetail(String qnaCode, Model model) {
+		
+		model.addAttribute("qna",qnaService.qnaDetail(qnaCode));
+		System.out.println("///"+qnaCode+"////");
+		
+		return "content/info/qna_detail";
+	}
 	
 
 
