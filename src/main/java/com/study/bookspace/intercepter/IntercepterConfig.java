@@ -11,6 +11,10 @@ public class IntercepterConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
+		registry.addInterceptor(getPublicHeaderMenuIntercepter())
+			.addPathPatterns("/" , "/admin/**", "/book/**", "/club/**", "/goods/**", "/info/**", "/member/**")
+			.excludePathPatterns("/**/*Ajax");
+		
 //		registry.addInterceptor(getMenuIntercepter())
 //			.order(2)
 //			.addPathPatterns("/admin/**")
@@ -18,26 +22,17 @@ public class IntercepterConfig implements WebMvcConfigurer {
 //			.excludePathPatterns("/admin/updateItem")
 //			.excludePathPatterns("/admin/regItemInsert")
 //			.excludePathPatterns("/**/*Ajax");
-//		
-//		registry.addInterceptor(getCategoryInterceptor())
-//			.addPathPatterns("/item/**")
-//			.addPathPatterns("/cart/**")
-//			.addPathPatterns("/buy/**")
-//			.addPathPatterns("/member/loginForm")
-//			.excludePathPatterns("/**/*Ajax")
-//			.excludePathPatterns("/cart/deleteCart")
-//			.excludePathPatterns("/cart/updateCartCnt");
 		
+	}
+	
+	@Bean
+	public PublicHeaderMenuIntercepter getPublicHeaderMenuIntercepter() {
+		return new PublicHeaderMenuIntercepter();
 	}
 	
 //	@Bean
 //	public MenuIntercepter getMenuIntercepter() {
 //		return new MenuIntercepter();
-//	}
-//	
-//	@Bean
-//	public CategoryInterceptor getCategoryInterceptor() {
-//		return new CategoryInterceptor();
 //	}
 
 }

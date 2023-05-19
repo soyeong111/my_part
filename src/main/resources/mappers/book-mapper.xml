@@ -9,8 +9,8 @@
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.book.vo.BookVO" 	id="book">
-		<id 	column="BOOK_CODE" 							property="booKCode"/>
-		<result column="BOOK_TITLE" 						property="booKTitle"/>
+		<id 	column="BOOK_CODE" 							property="bookCode"/>
+		<result column="BOOK_TITLE" 						property="bookTitle"/>
 		<result column="BOOK_AUTHOR" 						property="bookAuthor"/>
 		<result column="BOOK_PUBLICATION_DATE"			 	property="bookPublicationDate"/>
 		<result column="BOOK_PUBLISHER" 					property="bookpublisher"/>
@@ -18,6 +18,7 @@
 		<result column="BOOK_CATE_NO" 						property="bookCateNo"/>
 		<result column="BOOK_STOCK_CNT" 					property="bookStockCnt"/>
 		<result column="ISBN" 								property="isbn"/>
+		<collection property="imgList" resultMap="img">		</collection>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.book.vo.ImgVO" 	id="img">
@@ -35,13 +36,67 @@
 		SELECT BOOK_CATE_NO
 			, BOOK_CATE_STR
 		FROM BOOK_CATEGORY
-		WHERE IS_USE = 'Y'
+		WHERE BOOK_CATE_IS_USE = 'Y' 
 		ORDER BY BOOK_CATE_NO
 	</select>
 	
+
+	<!-- 등록될 북코드 -->
+	<select id="getNextBookCode" resultType="String">
+		SELECT 'BK_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOOK_CODE, 4))), 0) + 1, 3, '0')
+		FROM BOOK
+	</select>
+
+	
+	<!-- 도서 등록  -->
+	<insert id="regBook">
+		INSERT INTO BOOK (
+			BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, ISBN
+		) VALUES (
+			#{bookCode}
+			, #{bookTitle}
+			, #{bookAuthor}
+			, #{bookPublicationDate}
+			, #{bookpublisher}
+			, #{bookIntro}
+			, #{bookCateNo}
+			, #{bookStockCnt}
+			, #{isbn}
+		)
+	</insert>
+	
+
+
+	<!-- 이미지 등록 --> 
+	<insert id="insertImges">
+		INSERT INTO BOOK_IMAGE (
+			BOOK_IMG_CODE
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_CODE 
+		)
+		<foreach collection="imgList" item="img" index="i" separator="UNION ALL">
+		SELECT (SELECT 'BK_IMG_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOOK_IMG_CODE, 8))), 0) + 1 + #{i}, 3, '0')
+  				  FROM BOOK_IMAGE)
+			, #{img.originFileName}
+			, #{img.attachedFileName}
+			, #{img.isMainImg}
+			, #{img.bookCode}
+		FROM DUAL  
+		</foreach>
+	</insert>
 	
 	
-	<!-- 목록조회 (이미지 없음!!!!!)-->
+	<!-- 목록조회 -->
 	<select id="getBookListForUser" resultMap="book">
 		SELECT BOOK.BOOK_CODE
 			, BOOK_TITLE
@@ -55,9 +110,10 @@
 			, ATTACHED_FILE_NAME
 		FROM BOOK BOOK, BOOK_IMAGE IMG
 		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
-		AND IS_MAIN_IMG = 'Y'
+		AND IS_MAIN_IMG = 'Y' 
 	</select>
 
+	
 	
 	
 	

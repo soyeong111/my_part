@@ -2,5 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="adminMapper">
+
+	<resultMap type="com.study.bookspace.admin.vo.MainMenuVO" id="mainMenu">
+		<id		column="MAIN_MENU_CODE"		property="mainMenuCode"/>
+		<result column="MAIN_MENU_NAME"		property="mainMenuName"/>
+		<result column="MAIN_MENU_URL"		property="mainMenuUrl"/>
+		<result column="MAIN_MENU_ROLE"		property="mainMenuRole"/>
+		<result column="MAIN_MENU_ORDER"	property="mainMenuOrder"/>
+		<collection property="subMenuList" resultMap="subMenu"></collection>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.admin.vo.SubMenuVO" id="subMenu">
+		<id column="SUB_MENU_CODE"		property="subMenuCode"/>
+		<result column="SUB_MENU_NAME"	property="subMenuName"/>
+		<result column="SUB_MENU_URL"	property="subMenuUrl"/>
+		<result column="MAIN_MENU_CODE" property="mainMenuCode"/>
+		<result column="SUB_MENU_ORDER" property="subMenuOrder"/>
+	</resultMap>
+	
+	<!-- ROLE별 메뉴 목록 -->
+	<select id="getMenuListByRole" resultMap="mainMenu">
+		SELECT MAI.MAIN_MENU_CODE
+			, MAIN_MENU_NAME
+			, MAIN_MENU_URL
+			, MAIN_MENU_ORDER
+			, SUB_MENU_CODE
+			, SUB_MENU_NAME
+			, SUB_MENU_URL
+			, SUB_MENU_ORDER
+		FROM MAIN_MENU MAI
+			, SUB_MENU SUB
+		WHERE MAI.MAIN_MENU_CODE = SUB.MAIN_MENU_CODE
+			AND MAIN_MENU_ROLE IN
+			<foreach collection="list" item="item" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		ORDER BY MAIN_MENU_ORDER
+			, SUB_MENU_ORDER
+	</select>
 	
 </mapper>

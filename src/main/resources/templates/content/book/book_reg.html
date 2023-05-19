@@ -6,45 +6,56 @@
 <th:block layout:fragment="content_css">
 	<!-- <link rel="stylesheet" href="/css/.css"> -->
 </th:block>
+
 <th:block layout:fragment="content">
 	<div class="book-reg-div">
-		<h2>도서 등록</h2>
 		<div class="row">
-			<div class="col-4">
-				<label for="" class="form-label">도서코드</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
-			</div>
-			<div class="col-4">
-				<label for="" class="form-label">책이름</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
-			</div>
-			<div class="col-4">
-				<label for="" class="form-label">작가</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-4">
-				<label for="" class="form-label">도서발행일</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
-			</div>
-			<div class="col-4">
-				<label for="" class="form-label">출판사</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
-			</div>
-			<div class="col-4">
-				<label for="" class="form-label">재고수량</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-4">
-				<label for="" class="form-label">ISBN</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
-			</div>
-			<div class="col-8">
-				<label for="" class="form-label">도서 소개</label> 
-				<input type="text" class="form-control" id="" name="bookCode">
+			<div class="col-12">
+				<form id="" class="row g-3" th:action="@{/book/regBookProcess}" method="post" enctype="multipart/form-data">
+					<div class="col-3">
+						<label for="" class="form-label">도서 카테고리</label> 
+						<select id="" name="bookCateNo" class="form-select">
+							<th:block th:each="category : ${categoryList}">
+								<option th:value="${category.bookCateNo}">[[${category.bookCateStr}]]</option>
+							</th:block>
+						</select>
+					</div>
+					<div class="col-9">
+						<label for="" class="form-label">책이름</label> <input type="text" class="form-control" id="" name="bookTitle">
+					</div>
+					<div class="col-6">
+						<label for="" class="form-label">작가</label> <input type="text" class="form-control" id="" name="bookAuthor">
+					</div>
+					<div class="col-6">
+						<label for="" class="form-label">도서발행일</label> <input type="text" class="form-control" id="" name="bookPublicationDate">
+					</div>
+					<div class="col-12">
+						<label for="" class="form-label">출판사</label> <input type="text" class="form-control" id="" name="bookpublisher">
+					</div>
+					<div class="col-6">
+						<label for="" class="form-label">재고수량</label> <input type="text" class="form-control" id="" name="bookStockCnt">
+					</div>
+					<div class="col-6">
+						<label for="" class="form-label">ISBN</label> <input type="text" class="form-control" id="" name="isbn">
+					</div>
+					<div class="col-6">
+						<label for="" class="form-label">MAIN IMAGE</label> 
+						<input type="file" class="form-control" id="" name="mainImg">
+					</div>
+					<div class="col-6">
+						<label for="" class="form-label">SUB IMAGE</label> 
+						<input type="file" class="form-control" id="" name="subImg" multiple>
+					</div>
+					<div class="col-12">
+						<div class="form-check form-check-inline">
+							<label for="" class="form-label">도서 소개</label> <input type="text" class="form-control" id="" name="bookIntro">
+						</div>
+					</div>
+					<div class="col-3">
+						<button id="" type="submit" class="btn btn-primary">REGISTRATION
+							ITEM</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
