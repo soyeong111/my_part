@@ -2,7 +2,7 @@
 //클럽명 중복확인 클릭 시 실행
 function isDuplicateClubName(){
 	const club_name_tag = document.querySelector('#clubName');
-	const club_name = club_name_tag.value;
+	const club_name = club_name_tag.value.trim();
 	
 	if(club_name == ''){
 		alert('클럽명을 입력하세요.');

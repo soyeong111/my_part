@@ -44,6 +44,7 @@ public class ClubController {
 	@ResponseBody
 	@PostMapping("/isDuplicateClubName")
 	public boolean isDuplicateClubName(String clubName) {
+		System.out.println(clubName);
 		return clubService.isDuplicateClubName(clubName);
 	}
 	
