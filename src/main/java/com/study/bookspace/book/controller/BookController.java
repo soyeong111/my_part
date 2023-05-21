@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.ImgVO;
@@ -25,7 +26,7 @@ public class BookController {
 	
 //	도서 목록 조회
 	@GetMapping("/bookList")
-	public String bookList(Model model) {
+	public String bookList(Model model, SubMenuVO subMenuVO) {
 		
 		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
 		
@@ -88,7 +89,7 @@ public class BookController {
 
 //	도서 상세 페이지
 	@GetMapping("/bookDetail")
-	public String bookDetail(Model model, String bookCode, HttpServletRequest request) {
+	public String bookDetail(Model model, String bookCode, HttpServletRequest request, SubMenuVO subMenuVO) {
 		
 		 String data = request.getHeader("Referer");
 		 System.out.println("@@@@@@@@" + data);
