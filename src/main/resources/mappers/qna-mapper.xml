@@ -11,8 +11,17 @@
 		<result column="QNA_VIEW_CNT"   			 property="qnaViewCnt"/>
 		<result column="MEM_ID"  						 property="memId"/>
 		<result column="ROW_NUM"  					 property="rowNum"/>
-		<result column="ROW_NUMBER"  			property="rowNumber"/>
+		<result column="ROW_NUMBER"  			 property="rowNumber"/>
 	</resultMap>	
+	
+	<resultMap type="com.study.bookspace.info.vo.AnswerVO" id="answer">
+		<id		  column="ANSWER_CODE"  							property="answerCode"/>
+		<result  column="ANSWER_CONTENT"  					property="answerContent"/>
+		<result  column="ANSWER_CREATE_DATE"  			property="answerCreateDate"/>
+		<result  column="MEM_ID"  										property="memId"/>
+		<result  column="QNA_CODE"  									property="qnaCode"/>
+	</resultMap>
+	
 	
 	<!-- qna 질문 등록 -->
 	<insert id="insertQna">
@@ -100,9 +109,41 @@
 			, QNA_CONTENT
 			, MEM_ID
 			, QNA_CREATE_DATE
+			,QNA_VIEW_CNT
 		FROM QNA
 		WHERE QNA_CODE = #{qnaCode}
 	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- ADMIN -->
+	<insert id="insertQnaAnswer">
+		INSERT INTO QNA_ANSWER (
+			ANSWER_CODE
+			, ANSWER_CONTENT
+			, ANSWER_CREATE_DATE
+			, MEM_ID
+			, QNA_CODE
+		) VALUES(
+			(SELECT 'ANSWER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ANSWER_CODE, 8))), 0) + 1, 3, '0')) AS ANSWER_CODE
+			, #{answerContent}
+			, TO_CHAR(ANSWER_CREATE_DATE , 'YY-MM-DD HH24:MI') AS ANSWER_CREATE_DATE
+			, #{memId}
+			, #{qnaCode}
+			
+		)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </mapper>
