@@ -5,6 +5,7 @@ import java.util.List;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 
 public interface ClubService {
@@ -36,13 +37,20 @@ public interface ClubService {
 	//커뮤니티 글 작성
 	void regBoard(CommunityVO communityVO);
 	
+	//커뮤니티 글 수정
+	void updateBoard(CommunityVO communityVO);
 	
+	//커뮤니티 글 상세 조회
+	CommunityVO getBoardDetail(String boardNum);
 	
+	//커뮤니티 글 삭제
+	void deleteBoard(String boardNum);
 	
+	//게시글 댓글 등록
+	void regReply(CommunityReplyVO communityReplyVO);
 	
-	
-	
-	
+	//댓글 조회
+	List<CommunityReplyVO> getReplyList(String boardNum);
 	
 	
 	

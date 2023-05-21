@@ -15,6 +15,7 @@ import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.util.UploadUtil;
 
@@ -127,5 +128,55 @@ public class ClubController {
 		return "redirect:/club/community";
 	}
 	
+	//게시글 상세페이지 이동
+	@GetMapping("/boardDetail")
+	public String boardDetail(Model model, String boardNum) {
+		
+		model.addAttribute("board", clubService.getBoardDetail(boardNum));
+		model.addAttribute("replyList", clubService.getReplyList(boardNum));
+		
+		return "content/club/board_detail";
+	}
+	
+	//게시글 수정페이지 이동
+	@GetMapping("/updateBoard")
+	public String updateBoardForm(Model model, String boardNum) {
+		
+		model.addAttribute("board", clubService.getBoardDetail(boardNum));
+		
+		return "content/club/update_form";
+	}
+	
+	//게시글 수정
+	@PostMapping("/updateBoard")
+	public String updateBoard(CommunityVO communityVO) {
+		
+		clubService.updateBoard(communityVO);
+		
+		return "redirect:/club/boardDetail";
+	}	
+	
+	//게시글 삭제
+	@GetMapping("/deleteBoard")
+	public String deleteBoard(String boardNum) {
+		
+		clubService.deleteBoard(boardNum);
+		
+		return "redirect:/club/community";
+	}
+	
+	//게시글 댓글 작성
+	@PostMapping("/regReply")
+	public String regReply(CommunityReplyVO communityReplyVO, Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
+		communityReplyVO.setReplyWriter(memId);
+		
+		clubService.regReply(communityReplyVO);
+		
+		return "redirect:/club/boardDetail";
+	}
 	
 }

@@ -15,7 +15,7 @@
 						<h3>북클럽</h3>
 					</div>
 					<div class="offset-4 col-4">
-						<a href="/club/regClubForm">북클럽 만들기</a>
+						<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]]);">
 					</div>
 				</div>
 				<div class="row row-cols-1 row-cols-md-3 g-4">
@@ -41,6 +41,6 @@
 
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<script type="text/javascript" src="/js/content/club/club_info.js"></script>
 </th:block>
 </html>

@@ -142,4 +142,53 @@
 		)
 	</insert>
 	
+	<select id="getBoardDetail" resultMap="community">
+		SELECT BOARD_NUM
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, BOARD_WRITER
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+			, READ_CNT
+		FROM COMMUNITY_BOARD
+		WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<update id="updateBoard">
+		UPDATE COMMUNITY_BOARD
+		SET
+			BOARD_TITLE = #{boardTitle}
+			, BOARD_CONTENT = #{boardContent}
+		WHERE BOARD_NUM = #{boardNum}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE COMMUNITY_BOARE
+		WHERE BOARD_NUM = #{boardNum}
+	</delete>
+	
+	<insert id="regReply">
+		INSERT INTO COMMUNITY_REPLY (
+			REPLY_NUM
+			, REPLY_CONTENT
+			, REPLY_WRITER
+			, BOARD_NUM
+		) VALUES (
+			(SELECT 'REPLY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REPLY_NUM, 7))), 0) + 1,3 , '0') 
+			FROM COMMUNITY_REPLY)
+			, #{replyContent}
+			, #{replyWriter}
+			, #{boardNum}
+		)
+	</insert>
+	
+	<select id="getReplyList" resultMap="communityReply">
+		SELECT REPLY_NUM
+			, REPLY_CONTENT
+			, REPLY_WRITER
+			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
+		FROM COMMUNITY_REPLY
+		WHERE BOARD_NUM = #{boardNum}
+		ORDER BY REPLY_NUM DESC
+	</select>
+	
 </mapper>
