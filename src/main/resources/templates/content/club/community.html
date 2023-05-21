@@ -43,7 +43,7 @@
 						<th:block th:unless="${#lists.size(boardList) == 0}">
 							<tr th:each="board, state : ${boardList}">
 								<td>[[${board.boardNum}]]</td>
-								<td>[[${board.boardTitle}]]</td>
+								<td><a th:href="@{/club/boardDetail(boardNum=${board.boardNum})}">[[${board.boardTitle}]]</a></td>
 								<td>[[${board.boardWriter}]]</td>
 								<td>[[${board.regDate}]]</td>
 								<td>[[${board.readCnt}]]</td>
