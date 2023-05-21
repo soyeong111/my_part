@@ -3,17 +3,17 @@ package com.study.bookspace.util;
 public class ConstVariable {
 	
 	// 도서 이미지 첨부 파일 경로
-    public static final String BOOK_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\book\\";
+    public static final String BOOK_UPLOAD_PATH = "C:\\workSpring\\BookSpace\\src\\main\\resources\\static\\image\\book\\";
 
     
     // 클럽 이미지 첨부 파일 경로
     public static final String CLUB_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\club\\";
 
     // info(QNA 이미지)
-    public static final String QNA_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\info";
+    public static final String QNA_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\info\\";
  
     //상품 이미지
-    public static final String GOODS_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\goods";
+    public static final String GOODS_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\goods\\";
 
     
 	// ASCII 범위 – 영숫자(0-9, a-z, A-Z)
