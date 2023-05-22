@@ -103,7 +103,6 @@
 	
 	
 	<!-- 도서 대여  -->
-	
 	<insert id="borrowBook">
 	    INSERT INTO BOOK_BORROW (
 	    	BORROW_CODE
@@ -118,7 +117,7 @@
 	    	, #{memId}
 	    	, SYSDATE + 7
 	    	, 2
-	    	)
+	    )
 	</insert>
 
 
