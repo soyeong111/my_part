@@ -19,6 +19,8 @@
 		<result column="BOOK_STOCK_CNT" 					property="bookStockCnt"/>
 		<result column="ISBN" 								property="isbn"/>
 		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
+		<result column="BORROW_CNT"							property="borrowCnt"/>
+		<result column="RESERVE_CNT"						property="reserveCnt"/>
 		<association property="categoryVO" 					resultMap="category"></association> 		
 		<collection property="imgList" 						resultMap="img"></collection>
 	</resultMap>
@@ -32,11 +34,6 @@
 	</resultMap>
 	
 
-	<resultMap type="com.study.bookspace.book.vo.BookStatusVO" id="bookStatus">
-		<id 	column="BOOK_STATUS_NO" 						property="bookStatusNo"/>
-		<result column="BOOK_STATUS_STR" 						property="bookStatusStr"/>
-	</resultMap>
-	
 	<resultMap type="com.study.bookspace.book.vo.BorrowVO"	id="borrow">
 		<id column="BORROW_CODE" 							property="borrowCode"/>
 		<result column="BOOK_CODE" 							property="bookCode"/>
@@ -45,6 +42,11 @@
 		<result column="RETURN_DUEDATE" 					property="returnDueDate"/>
 		<result column="RETURN_DATE" 						property="returnDate"/>
 		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.book.vo.BookStatusVO" id="bookStatus">
+		<id 	column="BOOK_STATUS_NO" 						property="bookStatusNo"/>
+		<result column="BOOK_STATUS_STR" 						property="bookStatusStr"/>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.book.vo.ReserveVO" id="reserve">
@@ -103,25 +105,31 @@
 	
 	
 	<!-- 도서 대여  -->
-	
 	<insert id="borrowBook">
 	    INSERT INTO BOOK_BORROW (
 	    	BORROW_CODE
 	    	, BOOK_CODE
 	    	, MEM_ID
 	    	, RETURN_DUEDATE
-	    	, BOOK_STATUS_NO
 	    ) VALUES (
 	    	(SELECT 'BK_BOR_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BORROW_CODE, 8))), 0) + 1, 3, '0')
 			FROM BOOK_BORROW)
 	    	, #{bookCode}
 	    	, #{memId}
 	    	, SYSDATE + 7
-	    	, 2
-	    	)
+	    )
 	</insert>
 
 
+	<!-- 도서 대여 개수 -->
+	<select id="getBorrowCnt" resultType="int">
+	SELECT COUNT(*) AS BORROW_CNT
+	FROM BOOK_BORROW
+	WHERE BOOK_CODE = #{bookCode}
+	</select>
+	
+	
+	
 
 	<!-- 도서 반납  -->
 	<update id="returnBook">

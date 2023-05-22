@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -124,6 +125,16 @@ public class BookController {
 		
 		bookService.borrowBook(borrowVO);
 	}
+	
+//	도서 대여 개수
+	@ResponseBody 	
+	@PostMapping("/getBorrowCntAjax")
+	public int getBorrowCntAjax(@RequestBody String bookCode, BorrowVO borrowVO, HttpSession session) {
+		
+	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+	    return bookService.getBorrowCnt(bookCode);
+	}
+
 	
 	
 	

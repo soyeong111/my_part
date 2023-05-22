@@ -190,6 +190,7 @@ public class ClubController {
 		return "content/club/club_manage";
 	}
 	
+	//북클럽 승인
 	@ResponseBody
 	@PostMapping("/acceptMemberAjax")
 	public void acceptMemberAjax(String memId) {
