@@ -50,10 +50,14 @@
   					</form>
 	  			</div>
   		</div>
-  		
+  		<div class="row mb-5">
+  			<label for="" class="col-3 col-form-label"> 책소개</label>
+  			<label for="" class="col-9 col-form-label"> [[${book.bookIntro}]] </label>
+  		</div>
   		<div class="row mb-3">
   			<div class="col d-grid">
-  				<input type="button" class="btn custom-btn" value="대여하기" >
+  				<input type="button" class="btn custom-btn" value="대여하기" th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);">
+
   			</div>
   			<div class="col d-grid">
   				<input type="button" class="btn custom-btn" value="예약하기" >
@@ -62,7 +66,6 @@
 		</div>
  	</div>		
 			
-
 		</div>
 	</div>
 </div>
@@ -72,8 +75,8 @@
 
 <!--연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/test.js"></script> -->
-</th:block>
+	<script type="text/javascript" src="/js/content/book/book_manage.js"></script> 
+</th:block> 
 
 
 </html>

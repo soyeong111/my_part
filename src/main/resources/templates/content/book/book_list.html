@@ -11,18 +11,16 @@
 <div class="book-list-div">
   <div class="row row-cols-5 g-4">
     <th:block th:each="book, iterStat : ${bookList}">
-      <div class="col-4">
-        <div class="card" style="width: 18rem; height: 100%;">
-          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}">
+      <div class="col-2">
+        <div class="card" >
+        <a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}">
+          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width:158px; height: 250px;">
+          </a>
           <div class="card-body">
-            <h5 class="card-title">
+            <div class="card-title">
               [[${book.bookTitle}]]
-            </h5>
+            </div>
           </div>
-          <div class="card-body">
-            <a href="#" class="card-link">대여하기</a> 
-            <a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}" class="card-link">자세히 보기</a>
-          </div>	
         </div>
       </div>
     </th:block>
