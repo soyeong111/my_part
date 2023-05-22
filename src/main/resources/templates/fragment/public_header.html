@@ -9,8 +9,9 @@
 					<a href="/">한울도서관</a>
 				</h1>
 			</div>
-			<div class="col-8 header-main-menu-div d-flex" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
-				<div class="flex-fill" th:each="mainMenu : ${headerMenuList}">
+			<div class="col-8 header-main-menu-div d-flex justify-content-center" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
+				<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}"
+					th:onmouseover="main_menu_mouseover([[${mainMenuStat.index}]]);" th:onmouseout="main_menu_mouseout([[${mainMenuStat.index}]]);">
 					<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
 						th:classappend="${subMenuVO != null and mainMenu.mainMenuCode == subMenuVO.mainMenuCode} ? main-menu-selected" th:text="${mainMenu.mainMenuName}"></a>
 				</div>
@@ -48,11 +49,12 @@
 				</th:block>
 			</div>
 		</div>
-		<div class="row header-unfixed-div shadow d-none" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
-			<div class="col-8 offset-2 header-sub-menu-div d-flex">
-				<div class="flex-fill" th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole == 'USER' or mainMenu.mainMenuRole == 'ADMIN'}">
+		<div class="row header-unfixed-div z-1 shadow d-none" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
+			<div class="col-8 offset-2 header-sub-menu-div d-flex justify-content-center">
+				<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
 					<div th:each="subMenu : ${mainMenu.subMenuList}">
-						<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}" th:text="${subMenu.subMenuName}"></a>
+						<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}" th:text="${subMenu.subMenuName}"
+							th:classappend="${subMenuVO != null and subMenu.subMenuCode == subMenuVO.subMenuCode} ? sub-menu-selected"></a>
 					</div>
 				</div>
 			</div>
