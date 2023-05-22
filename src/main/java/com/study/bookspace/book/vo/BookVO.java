@@ -21,6 +21,8 @@ public class BookVO {
 	private String bookCateNo;
 	private String bookStockCnt;
 	private String isbn;
+	private int brrowCnt;
+	private int reserveCnt;
 	private List<ImgVO> imgList; // 상품 1개는 이미지 정보(ImgVO) 여러개를 갖고 있다
 	private CategoryVO categoryVO; // 아이템정보 1개는 카테고리 정보를 갖고 있다
 	private String bookStatusNo;

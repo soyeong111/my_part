@@ -48,6 +48,11 @@ public class BookServiceImpl implements BookService {
 	public void borrowBook(BorrowVO borrowVO) {
 		sqlSession.insert("bookMapper.borrowBook", borrowVO);
 	}
+
+	@Override
+	public int getBorrowCnt(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getBorrowCnt");
+	}
 	
 	
 	
