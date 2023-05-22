@@ -11,7 +11,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
-		registry.addInterceptor(getPublicHeaderMenuIntercepter())
+		registry.addInterceptor(getPublicMenuIntercepter())
 			.addPathPatterns("/"
 							, "/info/**"
 							, "/book/**"
@@ -22,7 +22,15 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/buy/**"
 							, "/member/**")
 			.excludePathPatterns("/**/*Ajax"
-								, "/info/sendQuestion");
+								, "/info/sendQuestion"
+								, "/book/regBookProcess"
+								, "/club/regClub"
+								, "/club/regBoard"
+								, "/club/updateBoard"
+								, "/club/deleteBoard"
+								, "/club/regReply"
+								, "/info/sendQuestion"
+								, "/info/qnaAnswer");
 		
 //		registry.addInterceptor(getMenuIntercepter())
 //			.order(2)
@@ -35,8 +43,8 @@ public class IntercepterConfig implements WebMvcConfigurer {
 	}
 	
 	@Bean
-	public PublicHeaderMenuIntercepter getPublicHeaderMenuIntercepter() {
-		return new PublicHeaderMenuIntercepter();
+	public PublicMenuIntercepter getPublicMenuIntercepter() {
+		return new PublicMenuIntercepter();
 	}
 	
 //	@Bean

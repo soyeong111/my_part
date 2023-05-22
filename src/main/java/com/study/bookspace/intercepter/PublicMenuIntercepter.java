@@ -17,7 +17,7 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class PublicHeaderMenuIntercepter implements HandlerInterceptor {
+public class PublicMenuIntercepter implements HandlerInterceptor {
 	
 	@Resource(name = "adminService")
 	private AdminService adminService;
