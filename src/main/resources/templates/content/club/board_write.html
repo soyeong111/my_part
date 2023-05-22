@@ -12,7 +12,8 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="board-write-div">
-		<form th:action="@{club/regClub}" method="post">
+		<form th:action="@{club/regBoard}" method="post">
+			<input type="hidden"  name="${clubCode}">
 			<div class="col">
 				<div class="row">
 					<div class="col">
@@ -35,21 +36,23 @@
 							<tr>
 								<td>작성자</td>
 								<td>
-									작성자 이름
+									<span sec:authentication="name"></span>
 								</td>
 							</tr>
 							<tr>
 								<td>제목</td>
 								<td>
-									<textarea rows="20" cols="100" name="boardContent">
-									
-									</textarea>
+									<textarea rows="20" cols="100" name="boardContent"></textarea>
 								</td>
 							</tr>
 						</table>
 					</div>
 				</div>
-				<div class="row"></div>
+				<div class="row">
+					<div class="offset-4 col-4 d-grid">
+						<input type="submit" class="btn custom-btn" value="글 작성">
+					</div>
+				</div>
 			</div>
 		</form>
 	</div> 

@@ -13,4 +13,5 @@ public class CommunityReplyVO {
 	private String replyWriter;
 	private String regDate;
 	private String boardNum;
+	private String clubCode;
 }

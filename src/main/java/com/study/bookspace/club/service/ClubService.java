@@ -32,7 +32,7 @@ public interface ClubService {
 	String getNextClubCode();
 	
 	//커뮤니티 게시글 목록 조회
-	List<CommunityVO> getBoardList();
+	List<CommunityVO> getBoardList(String clubCode);
 	
 	//커뮤니티 글 작성
 	void regBoard(CommunityVO communityVO);
@@ -52,7 +52,8 @@ public interface ClubService {
 	//댓글 조회
 	List<CommunityReplyVO> getReplyList(String boardNum);
 	
-	
+	//클럽 멤버 승인
+	void acceptMember(String memId);
 	
 	
 	

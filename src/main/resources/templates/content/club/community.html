@@ -11,7 +11,7 @@
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	<div class="community-div w-75 m-auto">
+	<div class="community-div">
 		<div class="row">
 			<div class="col">
 				<h3>북클럽 커뮤니티</h3>
@@ -41,7 +41,7 @@
 							<tr><td colspan=5>등록된 게시글이 없습니다.</td></tr>
 						</th:block>
 						<th:block th:unless="${#lists.size(boardList) == 0}">
-							<tr th:each="board, state : ${boardList}">
+							<tr th:each="board, state : ${boardList}" th:with="clubCode=${board.clubCode}">
 								<td>[[${board.boardNum}]]</td>
 								<td><a th:href="@{/club/boardDetail(boardNum=${board.boardNum})}">[[${board.boardTitle}]]</a></td>
 								<td>[[${board.boardWriter}]]</td>
@@ -55,7 +55,7 @@
 		</div>
 		<div class="row">
 			<div class="offset-5 col">
-				<input type="button" class="btn custom-btn" value="글 등록" th:onclick="|location.href='@{/club/regBoard}';|">
+				<input type="button" class="btn custom-btn" value="글 등록" th:onclick="|location.href='@{/club/regBoard(clubCode=${clubCode})}';|">
 			</div>
 		</div>
 	</div>

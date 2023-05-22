@@ -14,4 +14,7 @@ public class CommunityVO {
 	private String boardWriter;
 	private String regDate;
 	private int readCnt;
+	private int replyCnt;
+	private String clubCode;
+	private BookClubVO bookClubVO;
 }

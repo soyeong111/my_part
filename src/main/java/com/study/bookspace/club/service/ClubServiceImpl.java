@@ -65,8 +65,8 @@ public class ClubServiceImpl implements ClubService{
 
 	//게시글 목록 조회
 	@Override
-	public List<CommunityVO> getBoardList() {
-		return sqlSession.selectList("clubMapper.getBoardList");
+	public List<CommunityVO> getBoardList(String clubCode) {
+		return sqlSession.selectList("clubMapper.getBoardList", clubCode);
 	}
 
 	//커뮤니티 글 쓰기
@@ -103,6 +103,12 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public List<CommunityReplyVO> getReplyList(String boardNum) {
 		return sqlSession.selectList("clubMapper.getReplyList", boardNum);
+	}
+
+
+	@Override
+	public void acceptMember(String memId) {
+		sqlSession.update("clubMapper.acceptMember", memId);
 	}
 
 	

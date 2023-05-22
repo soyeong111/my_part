@@ -104,16 +104,16 @@ public class ClubController {
 	
 	//북클럽 커뮤니티 페이지
 	@GetMapping("/community")
-	public String community(SubMenuVO subMenuVO, Model model) {
+	public String community(SubMenuVO subMenuVO, Model model, String clubCode) {
 		
-		model.addAttribute("boardList", clubService.getBoardList());
+		model.addAttribute("boardList", clubService.getBoardList(clubCode));
 		
 		return "content/club/community";
 	}
 	
 	//글 작성 페이지 이동
 	@GetMapping("/regBoard")
-	public String regBoardForm() {
+	public String regBoardForm(CommunityVO communityVO) {
 		
 		
 		return "content/club/board_write";
@@ -121,7 +121,12 @@ public class ClubController {
 	
 	//글 작성
 	@PostMapping("/regBoard")
-	public String regBoard(CommunityVO communityVO) {
+	public String regBoard(CommunityVO communityVO, Authentication authentication, String clubCode) {
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
+		communityVO.setBoardWriter(memId);
 		
 		clubService.regBoard(communityVO);
 		
@@ -177,6 +182,19 @@ public class ClubController {
 		clubService.regReply(communityReplyVO);
 		
 		return "redirect:/club/boardDetail";
+	}
+	
+	//북클럽 관리 페이지
+	@GetMapping("/clubManage")
+	public String clubManage() {
+		return "content/club/club_manage";
+	}
+	
+	@ResponseBody
+	@PostMapping("/acceptMemberAjax")
+	public void acceptMemberAjax(String memId) {
+		clubService.acceptMember(memId);
+	
 	}
 	
 }
