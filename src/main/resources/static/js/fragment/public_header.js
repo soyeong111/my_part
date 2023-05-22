@@ -6,3 +6,11 @@ function menu_mouseenter() {
 function menu_mouseleave() {
 	document.querySelector('.header-sub-menu-div').classList.add('d-none');
 }
+
+function main_menu_mouseenter(index) {
+	console.log(index);
+}
+
+function main_menu_mouseleave(index) {
+	console.log(index);
+}

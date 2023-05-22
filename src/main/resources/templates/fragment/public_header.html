@@ -9,9 +9,11 @@
 					<a href="/">한울도서관</a>
 				</h1>
 			</div>
-			<div class="col-7 d-flex justify-content-around align-self-stretch align-items-center"
+			<div class="col-7 d-flex justify-content-around align-self-stretch"
 				onmouseenter="menu_mouseenter();" onmouseleave="menu_mouseleave();">
-				<div class="header-main-menu-list" th:each="mainMenu : ${headerMenuList}" th:classappend="${mainMenu.mainMenuCode == subMenuVO.mainMenuCode}"
+				<div class="header-main-menu-list d-flex align-self-stretch align-items-center justify-content-center"
+					th:each="mainMenu : ${headerMenuList}" onmouseenter="main_menu_mouseenter();" onmouseleave="main_menu_mouseleave();"
+					th:classappend="${mainMenu.mainMenuCode == subMenuVO.mainMenuCode} ? pick-main-menu"
 					th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
 					<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
 						th:text="${mainMenu.mainMenuName}"></a>
@@ -43,7 +45,8 @@
 		<div class="row header-sub-menu-div shadow z-1 position-absolute d-none"
 			onmouseenter="menu_mouseenter();" onmouseleave="menu_mouseleave();">
 			<div class="offset-1 col-11 d-flex justify-content-center">
-				<div class="pt-3 pb-3" th:each="mainMenu : ${headerMenuList}"
+				<div class="pt-3 pb-3 sub-outer-main-div" th:each="mainMenu : ${headerMenuList}"
+					onmouseenter="main_menu_mouseenter(mainMenuStat.index);" onmouseleave="main_menu_mouseleave(mainMenuStat.index);"
 					th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
 					<div class="header-sub-menu-list p-2 text-center" th:each="subMenu : ${mainMenu.subMenuList}">
 						<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
