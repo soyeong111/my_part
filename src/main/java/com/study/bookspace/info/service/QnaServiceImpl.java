@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.util.PageVO;
 
@@ -36,6 +37,11 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public QnaVO qnaDetail(String qnaCode) {
 		return sqlSession.selectOne("qnaMapper.qnaDetail",qnaCode);
+	}
+
+	@Override
+	public void insertQnaAnswer(AnswerVO answerVO) {
+		sqlSession.insert("qnaMapper.insertQnaAnswer", answerVO);		
 	}
 
 	
