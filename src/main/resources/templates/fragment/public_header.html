@@ -2,29 +2,19 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="publicHeaderFragment">
-	<div class="public-header-div">
-		<div class="row d-flex align-items-center">
+	<div class="public-header-div position-relative">
+		<div class="row header-main-menu-div m-auto align-items-center">
 			<div class="col-3 text-center">
 				<h1>
 					<a href="/">한울도서관</a>
 				</h1>
 			</div>
-			<div class="col-7 header-menu-div">
-				<div class="header-main-menu-div d-flex justify-content-evenly">
-					<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
-						<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
-							th:text="${mainMenu.mainMenuName}"></a>
-					</div>
-				</div>
-				<div class="header-sub-menu-div">
-					<div class="d-flex justify-content-evenly">
-						<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
-							<div th:each="subMenu : ${mainMenu.subMenuList}" class="mt-2">
-								<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
-									th:text="${subMenu.subMenuName}"></a>
-							</div>
-						</div>
-					</div>
+			<div class="col-7 d-flex justify-content-around align-self-stretch align-items-center"
+				onmouseenter="menu_mouseenter();" onmouseleave="menu_mouseleave();">
+				<div class="header-main-menu-list" th:each="mainMenu : ${headerMenuList}" th:classappend="${mainMenu.mainMenuCode == subMenuVO.mainMenuCode}"
+					th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
+					<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
+						th:text="${mainMenu.mainMenuName}"></a>
 				</div>
 			</div>
 			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAnonymous()">
@@ -48,6 +38,18 @@
 					</ul>
 				</div>
 				<a href="/member/logout">로그아웃</a>
+			</div>
+		</div>
+		<div class="row header-sub-menu-div shadow z-1 position-absolute d-none"
+			onmouseenter="menu_mouseenter();" onmouseleave="menu_mouseleave();">
+			<div class="offset-1 col-11 d-flex justify-content-center">
+				<div class="pt-3 pb-3" th:each="mainMenu : ${headerMenuList}"
+					th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
+					<div class="header-sub-menu-list p-2 text-center" th:each="subMenu : ${mainMenu.subMenuList}">
+						<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
+							th:text="${subMenu.subMenuName}"></a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
