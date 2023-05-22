@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+.pick-main-menu {
+	border-bottom: 2px solid #6c96d8;
+}
+
+.header-main-menu-div {
+	width: 80%;
+	height: 80px;
+}
+
+.header-main-menu-list {
+	width: 15%;
+	text-align: center;
+}
+
+.header-sub-menu-div {
+	background-color: white;
+	border-top: 1px solid #e7f0ff;
+	left: 0;
+	right: 0;
+}
+
+.header-sub-menu-div > div {
+	padding-right: 3%;
+}
+
+.header-sub-menu-div > div >div {
+	width: 11%;
+	border-left: 1px solid #e7f0ff;
+}
