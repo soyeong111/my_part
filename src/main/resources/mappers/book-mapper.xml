@@ -18,12 +18,13 @@
 		<result column="BOOK_CATE_NO" 						property="bookCateNo"/>
 		<result column="BOOK_STOCK_CNT" 					property="bookStockCnt"/>
 		<result column="ISBN" 								property="isbn"/>
+		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
 		<association property="categoryVO" 					resultMap="category"></association> 		
 		<collection property="imgList" 						resultMap="img"></collection>
 	</resultMap>
 	
-	<resultMap type="com.study.bookspace.book.vo.ImgVO" 	id="img">
-		<result column="BOOK_IMG_CODE" 						property="bookImgCode"/>
+	<resultMap type="com.study.bookspace.book.vo.ImgVO" 	id="img">	
+		<id column="BOOK_IMG_CODE" 							property="bookImgCode"/>
 		<result column="BOOK_CODE" 							property="bookCode"/>
 		<result column="ORIGIN_FILE_NAME" 					property="originFileName"/>
 		<result column="ATTACHED_FILE_NAME" 				property="attachedFileName"/>
@@ -31,7 +32,122 @@
 	</resultMap>
 	
 
+	<resultMap type="com.study.bookspace.book.vo.BookStatusVO" id="bookStatus">
+		<id 	column="BOOK_STATUS_NO" 						property="bookStatusNo"/>
+		<result column="BOOK_STATUS_STR" 						property="bookStatusStr"/>
+	</resultMap>
 	
+	<resultMap type="com.study.bookspace.book.vo.BorrowVO"	id="borrow">
+		<id column="BORROW_CODE" 							property="borrowCode"/>
+		<result column="BOOK_CODE" 							property="bookCode"/>
+		<result column="MEM_ID" 							property="memId"/>
+		<result column="BORROW_DATE" 						property="borrowDate"/>
+		<result column="RETURN_DUEDATE" 					property="returnDueDate"/>
+		<result column="RETURN_DATE" 						property="returnDate"/>
+		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.book.vo.ReserveVO" id="reserve">
+		<id column="BOOK_RESERVE_CODE" 						property="bookReserveCode"/>
+		<result column="BOOK_CODE" 							property="bookCode"/>
+		<result column="MEM_ID" 							property="memId"/>
+		<result column="BOOK_RESERVE_DATE" 					property="bookReserveDate"/>
+	</resultMap>
+	
+	
+	
+	<!-- 전체 카테고리 목록 조회 -->
+	<select id="getCateListForAdmin" resultMap="category">
+		SELECT BOOK_CATE_NO
+			, BOOK_CATE_STR
+			, BOOK_CATE_IS_USE
+		FROM BOOK_CATEGORY
+	</select>
+	
+	<!-- 도서관리 도서 상세 조회 -->
+	<select id="getBookDetailForBookManage" resultMap="book">
+		SELECT BOOK.BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, TO_CHAR(BOOK_PUBLICATION_DATE, 'YYYY-MM-DD') BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, BOOK_IMG_CODE
+			, ISBN
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_STATUS_NO
+		FROM BOOK BOOK, BOOK_IMAGE IMG
+		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		AND BOOK.BOOK_CODE = #{bookCode}
+	</select>
+	
+	
+	<!-- 도서 정보 수정 -->
+	<update id="updateBook">
+		UPDATE BOOK
+		SET BOOK_CODE
+			, BOOK_TITLE = #{bookTitle}
+			, BOOK_AUTHOR = #{bookAuthor}
+			, BOOK_PUBLICATION_DATE = #{bookPublicationDate}
+			, BOOK_PUBLISHER = #{bookPublisher}
+			, BOOK_INTRO = #{bookIntro}
+			, BOOK_CATE_NO = #{bookCateNo}
+			, BOOK_STOCK_CNT = #{bookStockCnt}
+			, ISBN = #{isbn}
+			, BOOK_STATUS_NO = #{bookStatusNo}
+	</update>
+	
+	
+	<!-- 도서 대여  -->
+	
+	<insert id="borrowBook">
+	    INSERT INTO BOOK_BORROW (
+	    	BORROW_CODE
+	    	, BOOK_CODE
+	    	, MEM_ID
+	    	, RETURN_DUEDATE
+	    	, BOOK_STATUS_NO
+	    ) VALUES (
+	    	(SELECT 'BK_BOR_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BORROW_CODE, 8))), 0) + 1, 3, '0')
+			FROM BOOK_BORROW)
+	    	, #{bookCode}
+	    	, #{memId}
+	    	, SYSDATE + 7
+	    	, 2
+	    	)
+	</insert>
+
+
+
+	<!-- 도서 반납  -->
+	<update id="returnBook">
+		  UPDATE BOOK_STATUS
+		  SET BOOK_STATUS_NO = 1
+		  WHERE BOOK_CODE = #{bookCode}
+		  AND MEM_ID = #{memId}
+	</update>
+	
+	<!-- 도서 예약  -->
+	<insert id="reserveBook">
+		  INSERT INTO BOOK_RESERVE (
+		  	BOOK_RESERVE_CODE
+		  	, BOOK_CODE
+		  	, MEM_ID
+		  	, BOOK_RESERVE_DATE
+		  ) VALUES (
+			#{bookReserveCode}
+		  	, #{bookCode}
+		  	, #{memId}
+		  	, #{bookReserveDate}
+		  )
+	</insert>
+
+
+
 	<!-- 사용 중인 카테고리 목록 -->
 	<select id="getCateListInUse" resultMap="category">
 		SELECT BOOK_CATE_NO
@@ -121,7 +237,7 @@
 		SELECT BOOK.BOOK_CODE
 			, BOOK_TITLE
 			, BOOK_AUTHOR
-			, BOOK_PUBLICATION_DATE
+			, TO_CHAR(BOOK_PUBLICATION_DATE, 'YYYY-MM-DD') BOOK_PUBLICATION_DATE
 			, BOOK_PUBLISHER
 			, BOOK_INTRO
 			, BOOK_CATE_NO

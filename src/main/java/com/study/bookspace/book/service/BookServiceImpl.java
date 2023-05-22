@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.bookspace.book.vo.BookVO;
+import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.CategoryVO;
 
 @Service("bookService")
@@ -41,6 +42,11 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public BookVO getBookDetail(String bookCode) {
 		return sqlSession.selectOne("bookMapper.getBookDetail", bookCode);
+	}
+
+	@Override
+	public void borrowBook(BorrowVO borrowVO) {
+		sqlSession.insert("bookMapper.borrowBook", borrowVO);
 	}
 	
 	

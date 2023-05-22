@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.study.bookspace.info.service.QnaService;
+import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.util.PageVO;
@@ -90,6 +91,14 @@ public class InfoController {
 	public String notice() {
 		
 		return "content/info/notice";
+	}
+	
+	
+	@PostMapping("/qnaAnswer")
+	public String qnaAnswer(AnswerVO answerVO) {
+		qnaService.insertQnaAnswer(answerVO);
+		
+		return "redirect:/info/qnaDetail";
 	}
 	
 	
