@@ -26,7 +26,7 @@ public class MemberController {
 	
 	// 회원가입 화면으로
 	@GetMapping("/joinForm")
-	public String joinForm(SubMenuVO subMenuVO) {
+	public String joinForm() {
 		return "content/member/join";
 	}
 	
@@ -47,7 +47,7 @@ public class MemberController {
 	
 	// 로그인 화면으로
 	@GetMapping("/loginForm")
-	public String loginForm(SubMenuVO subMenuVO) {
+	public String loginForm() {
 		return "content/member/login";
 	}
 
