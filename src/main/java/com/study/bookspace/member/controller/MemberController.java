@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
 
@@ -25,7 +26,7 @@ public class MemberController {
 	
 	// 회원가입 화면으로
 	@GetMapping("/joinForm")
-	public String joinForm() {
+	public String joinForm(SubMenuVO subMenuVO) {
 		return "content/member/join";
 	}
 	
@@ -46,7 +47,7 @@ public class MemberController {
 	
 	// 로그인 화면으로
 	@GetMapping("/loginForm")
-	public String loginForm() {
+	public String loginForm(SubMenuVO subMenuVO) {
 		return "content/member/login";
 	}
 
