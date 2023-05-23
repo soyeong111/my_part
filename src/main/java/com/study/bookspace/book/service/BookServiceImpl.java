@@ -45,13 +45,15 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class) 
 	public void borrowBook(BorrowVO borrowVO) {
 		sqlSession.insert("bookMapper.borrowBook", borrowVO);
+		sqlSession.update("bookMapper.updateBorrowCnt", borrowVO);
 	}
 
 	@Override
 	public int getBorrowCnt(String bookCode) {
-		return sqlSession.selectOne("bookMapper.getBorrowCnt");
+		return sqlSession.selectOne("bookMapper.getBorrowCnt", bookCode);
 	}
 	
 	

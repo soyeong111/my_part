@@ -119,15 +119,25 @@
 	    	, SYSDATE + 7
 	    )
 	</insert>
-
+	
+	<!-- 업데이트 쿼리 -->
+	<update id="updateBorrowCnt">
+		UPDATE BOOK
+		SET BORROW_CNT = BORROW_CNT + 1
+		WHERE BOOK_CODE = #{bookCode}
+	</update>
+	
+	
+	
 
 	<!-- 도서 대여 개수 -->
 	<select id="getBorrowCnt" resultType="int">
-	SELECT COUNT(*) AS BORROW_CNT
-	FROM BOOK_BORROW
+	SELECT BORROW_CNT
+	FROM BOOK
 	WHERE BOOK_CODE = #{bookCode}
 	</select>
 	
+
 	
 	
 
