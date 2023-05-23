@@ -129,10 +129,14 @@ public class BookController {
 //	도서 대여 개수
 	@ResponseBody 	
 	@PostMapping("/getBorrowCntAjax")
-	public int getBorrowCntAjax(@RequestBody String bookCode, BorrowVO borrowVO, HttpSession session) {
+	public int getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
+		
+	
+		System.out.println(borrowVO);
+		
 		
 	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-	    return bookService.getBorrowCnt(bookCode);
+	    return bookService.getBorrowCnt(borrowVO.getBookCode());
 	}
 
 	

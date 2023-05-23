@@ -37,7 +37,7 @@ public class PublicMenuIntercepter implements HandlerInterceptor {
 				roleList.add("ADMIN");
 			}
 		}
-		modelAndView.addObject("headerMenuList", adminService.getMenuListByRole(roleList));
+		modelAndView.addObject("mainMenuList", adminService.getMenuListByRole(roleList));
 	}
 
 }

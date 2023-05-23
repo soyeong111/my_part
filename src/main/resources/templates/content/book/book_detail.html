@@ -17,7 +17,7 @@
 		
 				<th:block th:each="img : ${book.imgList}"> <!-- img: 자료형shopItemVO  --> <!-- 메인 이미지 -->
  		  			<th:block th:if="${img.isMainImg == 'Y'}">
- 		  				<img width="100%;" height="100%;" th:src="${'/image/book/' + img.attachedFileName}">
+ 		  				<img width="430px;" th:src="${'/image/book/' + img.attachedFileName}">
  		  			</th:block>
  		  		</th:block>
 			</div>
