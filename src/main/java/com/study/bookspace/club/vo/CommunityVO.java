@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CommunityVO {
+public class CommunityVO extends CommunityListSearchVO{
 	private String boardNum;
 	private String boardTitle;
 	private String boardContent;
@@ -16,5 +16,6 @@ public class CommunityVO {
 	private int readCnt;
 	private int replyCnt;
 	private String clubCode;
-	private BookClubVO bookClubVO;
+	private int rowNum;
+	private int rowNumber;
 }

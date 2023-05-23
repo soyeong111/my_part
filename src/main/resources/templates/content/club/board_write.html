@@ -12,8 +12,8 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="board-write-div">
-		<form th:action="@{club/regBoard}" method="post">
-			<input type="hidden"  name="${clubCode}">
+		<form action="/club/regBoard" method="post">
+			<input type="hidden" th:value="${clubCode}" name="clubCode">
 			<div class="col">
 				<div class="row">
 					<div class="col">

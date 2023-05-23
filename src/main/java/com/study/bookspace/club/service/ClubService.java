@@ -7,6 +7,7 @@ import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.util.PageVO;
 
 public interface ClubService {
 	
@@ -32,7 +33,7 @@ public interface ClubService {
 	String getNextClubCode();
 	
 	//커뮤니티 게시글 목록 조회
-	List<CommunityVO> getBoardList(String clubCode);
+	List<CommunityVO> getBoardList(CommunityVO communityVO);
 	
 	//커뮤니티 글 작성
 	void regBoard(CommunityVO communityVO);
@@ -55,6 +56,7 @@ public interface ClubService {
 	//클럽 멤버 승인
 	void acceptMember(String memId);
 	
-	
+	//전체 게시글 수 조회
+	int getBoardCnt();
 	
 }

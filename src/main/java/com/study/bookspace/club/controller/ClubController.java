@@ -17,6 +17,7 @@ import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.util.PageVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -104,25 +105,37 @@ public class ClubController {
 	
 	//북클럽 커뮤니티 페이지
 	@GetMapping("/community")
-	public String community(SubMenuVO subMenuVO, Model model, String clubCode) {
+	public String community(SubMenuVO subMenuVO, Model model, CommunityVO communityVO) {
+		//전체 게시글 수 조회
+		int totalDataCnt = clubService.getBoardCnt();
 		
-		model.addAttribute("boardList", clubService.getBoardList(clubCode));
+		//전체 데이터 수 세팅
+		communityVO.setTotalDataCnt(totalDataCnt);
+		
+		//현재 페이지 설정
+		communityVO.setNowPageNum(communityVO.getNowPageNum());
+		
+		//페이징 정보 세팅
+		communityVO.setPageInfo();
+		
+		model.addAttribute("clubCode", communityVO.getClubCode());
+		model.addAttribute("boardList", clubService.getBoardList(communityVO));
 		
 		return "content/club/community";
 	}
 	
 	//글 작성 페이지 이동
 	@GetMapping("/regBoard")
-	public String regBoardForm(CommunityVO communityVO) {
+	public String regBoardForm(String clubCode, Model model) {
 		
+		model.addAttribute("clubCode", clubCode);
 		
 		return "content/club/board_write";
 	}
 	
 	//글 작성
 	@PostMapping("/regBoard")
-	public String regBoard(CommunityVO communityVO, Authentication authentication, String clubCode) {
-		
+	public String regBoard(CommunityVO communityVO, Authentication authentication) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
@@ -130,7 +143,7 @@ public class ClubController {
 		
 		clubService.regBoard(communityVO);
 		
-		return "redirect:/club/community";
+		return "redirect:/club/community?clubCode=" + communityVO.getClubCode();
 	}
 	
 	//게시글 상세페이지 이동
@@ -155,7 +168,8 @@ public class ClubController {
 	//게시글 수정
 	@PostMapping("/updateBoard")
 	public String updateBoard(CommunityVO communityVO) {
-		
+
+		System.out.println(communityVO);
 		clubService.updateBoard(communityVO);
 		
 		return "redirect:/club/boardDetail";
@@ -163,11 +177,11 @@ public class ClubController {
 	
 	//게시글 삭제
 	@GetMapping("/deleteBoard")
-	public String deleteBoard(String boardNum) {
+	public String deleteBoard(String boardNum, String clubCode) {
 		
 		clubService.deleteBoard(boardNum);
 		
-		return "redirect:/club/community";
+		return "redirect:/club/community?clubCode=" + clubCode;
 	}
 	
 	//게시글 댓글 작성
@@ -197,5 +211,26 @@ public class ClubController {
 		clubService.acceptMember(memId);
 	
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

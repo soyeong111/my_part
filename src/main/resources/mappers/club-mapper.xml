@@ -35,6 +35,8 @@
 		<result column="READ_CNT" 			property="readCnt"/>
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="CLUB_CODE" 			property="clubCode"/>
+		<result column="ROW_NUM" 		 property="rowNum"/>
+		<result column="ROW_NUMBER" 	 property="rowNumber"/>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityReplyVO" id="communityReply">
@@ -117,18 +119,42 @@
 	</insert>
 	
 	<select id="getBoardList" resultMap="community">
-		SELECT BOARD_NUM
+		SELECT (SELECT COUNT(BOARD_NUM)
+				FROM COMMUNITY_BOARD
+				WHERE CLUB_CODE = #{clubCode}) - ROW_NUM + 1 AS ROW_NUMBER
+			, BOARD_NUM
 			, BOARD_TITLE
 			, BOARD_WRITER
-			, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+			, REG_DATE
 			, READ_CNT
-			, (SELECT COUNT(REPLY_NUM)
-				FROM COMMUNITY_REPLY
-				WHERE BOARD_NUM = COMMUNITY_BOARD.BOARD_NUM) AS REPLY_CNT
-			, CLUB_CODE
-		FROM COMMUNITY_BOARD
-		WHERE CLUB_CODE = #{clubCode}
-		ORDER BY BOARD_NUM DESC
+			, ROW_NUM
+			, REPLY_CNT
+		FROM
+		(
+			SELECT BOARD_NUM
+				, BOARD_TITLE
+				, BOARD_WRITER
+				, REG_DATE
+				, READ_CNT
+				, ROWNUM ROW_NUM
+				, REPLY_CNT
+		FROM
+		(	
+			SELECT BOARD_NUM
+				, BOARD_TITLE
+				, BOARD_WRITER
+				, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+				, READ_CNT
+				, (SELECT COUNT(REPLY_NUM)
+					FROM COMMUNITY_REPLY
+					WHERE BOARD_NUM = COMMUNITY_BOARD.BOARD_NUM) AS REPLY_CNT
+				, CLUB_CODE
+			FROM COMMUNITY_BOARD
+			WHERE CLUB_CODE = #{clubCode}
+			ORDER BY BOARD_NUM DESC
+			)	
+		)
+		WHERE ROW_NUM &gt;= #{startDataNum} AND ROW_NUM &lt;= #{endDataNum}
 	</select>
 	
 	<insert id="regBoard">
@@ -155,6 +181,7 @@
 			, BOARD_WRITER
 			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 			, READ_CNT
+			, CLUB_CODE
 		FROM COMMUNITY_BOARD
 		WHERE BOARD_NUM = #{boardNum}
 	</select>
@@ -203,5 +230,21 @@
 			CLUB_MEM_STATUS = 2
 		WHERE MEM_ID = #{memId}
 	</update>
+	
+	<select id="getBoardCnt" resultType="int">
+		SELECT COUNT(BOARD_NUM) 
+		FROM COMMUNITY_BOARD
+	</select>
+	
+	<!-- 커뮤니티 댓글  -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

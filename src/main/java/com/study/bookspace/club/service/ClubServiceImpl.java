@@ -12,6 +12,7 @@ import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.util.PageVO;
 
 @Service("clubService")
 public class ClubServiceImpl implements ClubService{
@@ -65,8 +66,8 @@ public class ClubServiceImpl implements ClubService{
 
 	//게시글 목록 조회
 	@Override
-	public List<CommunityVO> getBoardList(String clubCode) {
-		return sqlSession.selectList("clubMapper.getBoardList", clubCode);
+	public List<CommunityVO> getBoardList(CommunityVO communityVO) {
+		return sqlSession.selectList("clubMapper.getBoardList", communityVO);
 	}
 
 	//커뮤니티 글 쓰기
@@ -109,6 +110,12 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public void acceptMember(String memId) {
 		sqlSession.update("clubMapper.acceptMember", memId);
+	}
+
+
+	@Override
+	public int getBoardCnt() {
+		return sqlSession.selectOne("clubMapper.getBoardCnt");
 	}
 
 	
