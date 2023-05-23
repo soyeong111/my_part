@@ -3,11 +3,23 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="publicSideFragment">
 	<div class="public-side-div">
-		<th:block>
+		<th:block th:each="mainMenu : ${mainMenuList}" th:if="${subMenuVO != null and mainMenu.mainMenuCode == subMenuVO.mainMenuCode}">
+			
+			
+			
+			<div class="list-group">
+				<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
+					class="list-group-item list-group-item-action" th:text="${mainMenu.mainMenuName}"></a>
+			</div>
+			
+			
+			
+			<div class="list-group">
+				<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
+					class="list-group-item list-group-item-action" th:each="subMenu : ${mainMenu.subMenuList}" th:text="${subMenu.subMenuName}"></a>
+			</div>
 		
-			<ul class="list-group">
-				<li class="list-group-item">An item</li>
-			</ul>
+		
 		
 		</th:block>
 	</div>
