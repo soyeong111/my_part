@@ -19,6 +19,7 @@ public interface QnaService {
 	
 	//문의글 상세 보기
 	QnaVO qnaDetail(String qnaCode);
+
 	//조회수 증가
 	int updateQnaViewCnt(String qnaCode);
 	
@@ -28,7 +29,7 @@ public interface QnaService {
 	
 	int updateIsAdminAnswer(String qnaCode);
 	
+	void insertQnaAnswer(AnswerVO answerVO);
 
-	
 
 }

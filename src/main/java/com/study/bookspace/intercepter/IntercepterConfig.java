@@ -11,7 +11,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
-		registry.addInterceptor(getPublicHeaderMenuIntercepter())
+		registry.addInterceptor(getPublicMenuIntercepter())
 			.addPathPatterns("/"
 							, "/info/**"
 							, "/book/**"
@@ -22,26 +22,37 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/buy/**"
 							, "/member/**")
 			.excludePathPatterns("/**/*Ajax"
-								, "/info/sendQuestion");
+								, "/info/sendQuestion"
+								, "/book/regBookProcess"
+								, "/club/regClub"
+								, "/club/regBoard"
+								, "/club/updateBoard"
+								, "/club/deleteBoard"
+								, "/club/regReply"
+								, "/info/sendQuestion"
+								, "/info/qnaAnswer");
 		
-//		registry.addInterceptor(getMenuIntercepter())
-//			.order(2)
-//			.addPathPatterns("/admin/**")
-//			.excludePathPatterns("/admin/deleteCategory")
-//			.excludePathPatterns("/admin/updateItem")
-//			.excludePathPatterns("/admin/regItemInsert")
-//			.excludePathPatterns("/**/*Ajax");
+		registry.addInterceptor(getMyMenuIntercepter())
+			.addPathPatterns("/my/**");
+		
+		registry.addInterceptor(getAdminMenuIntercepter())
+		.addPathPatterns("/admin/**");
 		
 	}
 	
 	@Bean
-	public PublicHeaderMenuIntercepter getPublicHeaderMenuIntercepter() {
-		return new PublicHeaderMenuIntercepter();
+	public PublicMenuIntercepter getPublicMenuIntercepter() {
+		return new PublicMenuIntercepter();
 	}
 	
-//	@Bean
-//	public MenuIntercepter getMenuIntercepter() {
-//		return new MenuIntercepter();
-//	}
+	@Bean
+	public MyMenuIntercepter getMyMenuIntercepter() {
+		return new MyMenuIntercepter();
+	}
+	
+	@Bean
+	public AdminMenuIntercepter getAdminMenuIntercepter() {
+		return new AdminMenuIntercepter();
+	}
 
 }

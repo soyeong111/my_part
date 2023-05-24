@@ -1,8 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="memberSideFragment">
-	<div class="member-side-div">
-		member-side-div
+	<div class="member-side-div p-3">
+		<div class="row mb-5">
+			<div class="col">
+				<h1>
+					<a href="/">한울<br>도서관</a>
+				</h1>
+			</div>
+		</div>
+		<div class="row side-menu-list-div" th:each="mainMenu : ${sideMenuList}">
+			<div class="col pt-3 pb-3" th:classappend="${subMenuVO != null and subMenuVO.mainMenuCode == mainMenu.mainMenuCode} ? side-main-menu-selected">
+				<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
+					th:text="${mainMenu.mainMenuName}"></a>
+			</div>
+			<div class="col-6 z-1 end-0" th:classappend="${subMenuVO != null and subMenuVO.subMenuCode != null and subMenuVO.mainMenuCode == mainMenu.mainMenuCode} ? d-block">
+				<div class="pt-3 pb-3" th:each="subMenu : ${mainMenu.subMenuList}">
+					<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
+						th:text="${subMenu.subMenuName}" th:classappend="${subMenuVO != null and subMenuVO.subMenuCode == subMenu.subMenuCode} ? side-sub-menu-selected"></a>
+				</div>
+			</div>
+		</div>
 	</div>
 </th:block>
 </html>

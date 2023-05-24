@@ -1,22 +1,29 @@
 package com.study.bookspace.book.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
+import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/book")
@@ -100,6 +107,38 @@ public class BookController {
 		return "content/book/book_detail";
 		
 	}
+	
+	
+//	도서 관리 페이지
+//	@RequestMapping("/bookManage")
+//	public String bookManage(Model model, SubMenuVO subMenuVO, BookVO bookVO) {
+//		
+//		model.addAttribute("cate)
+//		
+//	}
+	
+	
+//	도서 대여
+	@ResponseBody
+	@PostMapping("/borrowAjax")
+	public void borrowAjax(BorrowVO borrowVO, HttpSession session) {
+		
+		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		bookService.borrowBook(borrowVO);
+	}
+	
+//	도서 대여 개수
+	@ResponseBody
+	@PostMapping("/getBorrowCntAjax")
+	public Map<String, Object> getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
+	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+	    Map<String, Object> response = bookService.getBorrowAndStockCnt(borrowVO.getBookCode());
+	    return response;
+	}
+
+
+
 	
 	
 	

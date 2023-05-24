@@ -17,7 +17,7 @@
 		
 				<th:block th:each="img : ${book.imgList}"> <!-- img: 자료형shopItemVO  --> <!-- 메인 이미지 -->
  		  			<th:block th:if="${img.isMainImg == 'Y'}">
- 		  				<img width="100%;" height="100%;" th:src="${'/image/book/' + img.attachedFileName}">
+ 		  				<img width="430px;" th:src="${'/image/book/' + img.attachedFileName}">
  		  			</th:block>
  		  		</th:block>
 			</div>
@@ -40,20 +40,21 @@
   			<label for="" class="col-3 col-form-label"> ISBN</label>
   			<label for="" class="col-9 col-form-label"> [[${book.isbn}]] </label>
   		</div>
-  		<div class="row mb-3">
-  			<label for="" class="col-3 col-form-label"> 대여 가능</label>
 	  			<div class="col-9">
   					<form id="buyForm">
   						<input type="hidden" name="bookCode" th:value="${book.bookCode}">
   						<input type="hidden" name="bookCnt" th:value="${book.bookStockCnt}">
-	  					<label for="" class="col-9 col-form-label"> [[${book.bookStockCnt}]] </label>
   					</form>
 	  			</div>
+  		<div class="row mb-5">
+  			<label for="" class="col-3 col-form-label"> 책소개</label>
+  			<label for="" class="col-9 col-form-label"> [[${book.bookIntro}]] </label>
   		</div>
-  		
   		<div class="row mb-3">
   			<div class="col d-grid">
-  				<input type="button" class="btn custom-btn" value="대여하기" >
+  				<input type="button" class="btn custom-btn" value="대여하기"
+      			 th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);"
+       			th:disabled="${book.borrowCnt == book.bookStockCnt}">
   			</div>
   			<div class="col d-grid">
   				<input type="button" class="btn custom-btn" value="예약하기" >
@@ -62,7 +63,6 @@
 		</div>
  	</div>		
 			
-
 		</div>
 	</div>
 </div>
@@ -72,8 +72,8 @@
 
 <!--연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/test.js"></script> -->
-</th:block>
+	<script type="text/javascript" src="/js/content/book/book_manage.js"></script> 
+</th:block> 
 
 
 </html>

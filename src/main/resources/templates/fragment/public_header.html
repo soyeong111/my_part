@@ -3,51 +3,62 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="publicHeaderFragment">
 	<div class="public-header-div">
-		<div class="row d-flex align-items-center">
-			<div class="col-3 text-center">
+		<div class="row header-fixed-div ps-5 pe-5">
+			<div class="col-2 header-title-div">
 				<h1>
 					<a href="/">한울도서관</a>
 				</h1>
 			</div>
-			<div class="col-7 header-menu-div">
-				<div class="header-main-menu-div d-flex justify-content-evenly">
-					<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
-						<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
-							th:text="${mainMenu.mainMenuName}"></a>
-					</div>
-				</div>
-				<div class="header-sub-menu-div">
-					<div class="d-flex justify-content-evenly">
-						<div th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
-							<div th:each="subMenu : ${mainMenu.subMenuList}" class="mt-2">
-								<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
-									th:text="${subMenu.subMenuName}"></a>
-							</div>
-						</div>
-					</div>
+			<div class="col-8 header-main-menu-div d-flex justify-content-center" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
+				<div th:each="mainMenu : ${publicMenuList}" th:onmouseover="public_menu_mouseover([[${mainMenuStat.index}]]);" th:onmouseout="public_menu_mouseout([[${mainMenuStat.index}]]);">
+					<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
+						th:classappend="${subMenuVO != null and mainMenu.mainMenuCode == subMenuVO.mainMenuCode} ? main-menu-selected" th:text="${mainMenu.mainMenuName}"></a>
 				</div>
 			</div>
-			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAnonymous()">
-				<a href="/member/loginForm">로그인</a>
-				<a href="/member/joinForm">회원가입</a>
-			</div>
-			<div class="col-2 d-flex justify-content-evenly" sec:authorize="isAuthenticated()">
-				<div class="dropdown">
-					<a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[[${#authentication.name}]]님</a>
-					<ul class="dropdown-menu">
-						<th:block th:each="mainMenu : ${headerMenuList}" th:if="${mainMenu.mainMenuRole == 'USER' or mainMenu.mainMenuRole == 'ADMIN'}">
-							<li><a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
-								th:text="${mainMenu.mainMenuName}"></a></li>
-							<li><hr class="dropdown-divider"></li>
-							<th:block th:each="subMenu : ${mainMenu.subMenuList}">
-								<li><a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
-									th:text="${subMenu.subMenuName}"></a></li>
+			<div class="col-2 header-member-div d-flex justify-content-evenly align-items-center">
+				<th:block sec:authorize="isAnonymous()">
+					<div>
+						<a href="/member/loginForm">로그인</a>
+					</div>
+					<div>
+						<a href="/member/joinForm">회원가입</a>
+					</div>
+				</th:block>
+				<th:block sec:authorize="isAuthenticated()">
+					<div class="dropdown">
+						<a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[[${#authentication.name}]]님 </a>
+						<ul class="dropdown-menu">
+							<li th:if="${userMainMenuList != null}" class="text-center">마이메뉴</li>
+							<th:block th:each="mainMenu : ${userMainMenuList}" th:if="${userMainMenuList != null}">
+								<li><hr class="dropdown-divider"></li>
+								<li>
+									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
+								</li>
 							</th:block>
-							<li th:if="${!mainMenuStat.last}"><hr class="dropdown-divider"></li>
-						</th:block>
-					</ul>
+							<li th:if="${adminMainMenuList != null}"><hr class="dropdown-divider"></li>
+							<li th:if="${adminMainMenuList != null}" class="text-center">관리자메뉴</li>
+							<th:block th:each="mainMenu : ${adminMainMenuList}" th:if="${adminMainMenuList != null}">
+								<li><hr class="dropdown-divider"></li>
+								<li>
+									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
+								</li>
+							</th:block>
+						</ul>
+					</div>
+					<div>
+						<a href="/member/logout">로그아웃</a>
+					</div>
+				</th:block>
+			</div>
+		</div>
+		<div class="row header-unfixed-div z-1 shadow d-none" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
+			<div class="col-8 offset-2 header-sub-menu-div d-flex justify-content-center">
+				<div th:each="mainMenu : ${publicMenuList}">
+					<div th:each="subMenu : ${mainMenu.subMenuList}">
+						<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}" th:text="${subMenu.subMenuName}"
+							th:classappend="${subMenuVO != null and subMenu.subMenuCode == subMenuVO.subMenuCode} ? sub-menu-selected"></a>
+					</div>
 				</div>
-				<a href="/member/logout">로그아웃</a>
 			</div>
 		</div>
 	</div>

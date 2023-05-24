@@ -11,5 +11,5 @@ function regClub(memId){
 		return ;
 	}
 	
-	location.href = '/club/regClub';
+	location.href = '/club/regClubForm';
 }

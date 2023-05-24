@@ -60,10 +60,8 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 
-	
-	
-
-	
-
+	public void insertQnaAnswer(AnswerVO answerVO) {
+		sqlSession.insert("qnaMapper.insertQnaAnswer", answerVO);		
+	}
 
 }

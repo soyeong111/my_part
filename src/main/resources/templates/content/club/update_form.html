@@ -13,10 +13,11 @@
 <th:block layout:fragment="content">
 	<div class="update-form-div">
 		<form th:action="@{/club/updateBoard}" method="post">
+			<input type="hidden" th:value="${board.boardNum}" name="boardNum">
 			<div class="col">
 				<div class="row">
 					<div class="col">
-						<table>
+						<table class="table">
 							<colgroup>
 								<col width="">
 								<col width="">
@@ -28,12 +29,29 @@
 								</td>
 							</tr>
 							<tr>
+								<td>작성자</td>
+								<td>
+									<span>[[${board.boardWriter}]]</span>
+								</td>
+							</tr>
+							<tr>
+								<td>작성날짜</td>
+								<td>
+									[[${board.regDate}]]
+								</td>
+							</tr>
+							<tr>
 								<td>내용</td>
 								<td>
 									<textarea rows="20" cols="100" name="boardContent" th:value=${board.boardContent}></textarea>
 								</td>
 							</tr>
 						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="offset-4 col-4">
+						<input type="submit" class="btn custom-btn" value="수정">
 					</div>
 				</div>
 			</div>

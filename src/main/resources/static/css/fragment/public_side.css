@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.public-side-main-menu-ul > li {
+	background-color: #6c96d8;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.7rem;
+	padding: 50px 16px;
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.public-side-sub-menu-div > a {
+	border: 1px solid #e7f0ff;
+	padding: 15px 30px;
+	margin-top: 10px;
+	font-weight: bold;
+}
+
+.public-side-sub-menu-div > a:hover {
+	border: 1px solid #6c96d8;
+	color: #6c96d8;
+}
+
+.public-side-menu-selected {
+	border: 1px solid #6c96d8 !important;
+	color: #6c96d8;
+}

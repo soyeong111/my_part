@@ -11,10 +11,20 @@
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	<div class="community-div w-75 m-auto">
+	<div class="community-div">
 		<div class="row">
 			<div class="col">
 				<h3>북클럽 커뮤니티</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<select>
+					<option>제목</option>
+					<option>작성자</option>
+				</select>
+				<input type="text">
+				<input type="button" class="btn custom-btn" value="검색">
 			</div>
 		</div>
 		<div class="row">
@@ -42,8 +52,8 @@
 						</th:block>
 						<th:block th:unless="${#lists.size(boardList) == 0}">
 							<tr th:each="board, state : ${boardList}">
-								<td>[[${board.boardNum}]]</td>
-								<td><a th:href="@{/club/boardDetail(boardNum=${board.boardNum})}">[[${board.boardTitle}]]</a></td>
+								<td><span th:text="${board.rowNumber}"></span></td>
+								<td><a href="javascript:void(0)" th:onclick="memberOnly([[${board.boardNum}]])">[[${board.boardTitle}]]</a></td>
 								<td>[[${board.boardWriter}]]</td>
 								<td>[[${board.regDate}]]</td>
 								<td>[[${board.readCnt}]]</td>
@@ -54,8 +64,24 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="offset-5 col">
-				<input type="button" class="btn custom-btn" value="글 등록" th:onclick="|location.href='@{/club/regBoard}';|">
+			<div class="offset-11 col">
+				<input type="button" class="btn custom-btn" value="글 등록" th:onclick="|location.href='@{/club/regBoard(clubCode=${clubCode})}';|">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+				<th:block th:if="${communityVO.prevPageFlag}">
+					<a
+						th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1})}">이전</a>
+				</th:block>
+				<th:block
+					th:each="pageNum : ${#numbers.sequence(communityVO.startPageNum, communityVO.endPageNum)}">
+					<a th:href="@{/club/community(nowPageNum=${pageNum})}"><span
+						th:text="${pageNum}"></span></a>
+				</th:block>
+				<th:block th:if="${communityVO.nextPageFlag}">
+					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1})}">다음</a>
+				</th:block>
 			</div>
 		</div>
 	</div>
@@ -63,7 +89,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/club/community.js"></script>
 </th:block>
 
 </html>

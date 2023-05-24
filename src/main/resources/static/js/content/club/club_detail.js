@@ -34,15 +34,14 @@ function joinClubAjax(clubCode){
 	});
 	//ajax end
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
+
+
+
+
+
+
+
+
+
+

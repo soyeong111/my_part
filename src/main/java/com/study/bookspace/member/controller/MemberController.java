@@ -1,5 +1,8 @@
 package com.study.bookspace.member.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
+import com.study.bookspace.util.MailService;
+import com.study.bookspace.util.MailVO;
 
 import jakarta.annotation.Resource;
 
@@ -23,6 +28,9 @@ public class MemberController {
 	@Autowired
 	private PasswordEncoder encoder;
 	
+	@Resource(name = "mailService")
+	private MailService mailService;
+	
 	// 회원가입 화면으로
 	@GetMapping("/joinForm")
 	public String joinForm() {
@@ -34,6 +42,24 @@ public class MemberController {
 	@PostMapping("/idDuplicateCheckAjax")
 	public boolean idDuplicateCheckAjax(String memId) {
 		return memberService.idDuplicateCheck(memId) == null;
+	}
+	
+	// 이메일 인증
+	@ResponseBody
+	@PostMapping("/emailAuthAjax")
+	public String emailAuthAjax(String email, MailVO mailVO) {
+		System.out.println(email);
+		
+		List<String> recipientList = new ArrayList<>();
+		recipientList.add(email);
+		mailVO.setRecipientList(recipientList);
+		mailVO.setTitle("이메일 인증");
+		String pw = mailService.createRandomPassword(6);
+		mailVO.setContent("인증 번호 : " + pw);
+		mailService.sendSimpleEmail(mailVO);
+		
+		System.out.println(pw);
+		return pw;
 	}
 	
 	// 회원가입

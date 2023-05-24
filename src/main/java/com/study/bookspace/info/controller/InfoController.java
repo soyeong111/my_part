@@ -153,5 +153,13 @@ public class InfoController {
 	}
 	
 	
+	@PostMapping("/qnaAnswer")
+	public String qnaAnswer(AnswerVO answerVO) {
+		qnaService.insertQnaAnswer(answerVO);
+		
+		return "redirect:/info/qnaDetail";
+	}
+	
+	
 
 }

@@ -1,6 +1,8 @@
 package com.study.bookspace.book.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.bookspace.book.vo.BookVO;
+import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.CategoryVO;
 
 @Service("bookService")
@@ -42,8 +45,29 @@ public class BookServiceImpl implements BookService {
 	public BookVO getBookDetail(String bookCode) {
 		return sqlSession.selectOne("bookMapper.getBookDetail", bookCode);
 	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class) 
+	public void borrowBook(BorrowVO borrowVO) {
+		sqlSession.insert("bookMapper.borrowBook", borrowVO);
+		sqlSession.update("bookMapper.updateBorrowCnt", borrowVO);
+	}
+
+	@Override
+	public Map<String, Object> getBorrowAndStockCnt(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getBorrowAndStockCnt", bookCode);
+	}
+
+	@Override
+	public int checkBorrowStatus(String memId, String bookCode) {
+	    Map<String, Object> parameters = new HashMap<>();
+	    parameters.put("memId", memId);
+	    parameters.put("bookCode", bookCode);
+	    return sqlSession.selectOne("bookMapper.checkBorrowStatus", parameters);
+	}
+
 	
-	
-	
-	
+
 }
+	
+	

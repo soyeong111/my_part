@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/public_layout}">
+
+<!-- ì—°ê²°í•´ì•¼ í•  ì™¸ë¶€ cssíŒŒì¼ -->
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href=""> -->
+</th:block>
+
+<!-- ë³¸ë¬¸ ë‚´ìš© -->
+<th:block layout:fragment="content">
 	<div class="club-manage-div">
 		<div class="row">
 			<div class="col">
-				ºÏÅ¬·´ °ü¸® ÆäÀÌÁö (only °ü¸®ÀÚ)
+				ë¶í´ëŸ½ ê´€ë¦¬ í˜ì´ì§€ (only ê´€ë¦¬ì)
+				<input type="button" value="ìŠ¹ì¸" onclick="acceptMember();">
 			</div>
 		</div>
 	</div>
-</body>
+</th:block>
+
+<!-- ì—°ê²°í•´ì•¼ í•  ì™¸ë¶€ jsíŒŒì¼ -->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/club/club_manage.js"></script>
+</th:block>
+
 </html>
