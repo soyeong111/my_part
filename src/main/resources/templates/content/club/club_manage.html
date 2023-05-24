@@ -15,7 +15,33 @@
 		<div class="row">
 			<div class="col">
 				북클럽 관리 페이지 (only 관리자)
-				<input type="button" value="승인" onclick="acceptMember();">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<tr>클럽 회원 목록</tr>
+					<tr th:each="member : ${memberList}">
+						<td>[[${member.memId}]]</td>
+						<td>
+							<input type="button" value="강퇴" th:onclick="refuse([[${member.acceptCode}]]);">
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<tr>가입신청 회원 목록</tr>
+					<tr th:each="apply : ${applyList}">
+						<td>[[${apply.memId}]]</td>
+						<td>
+							<input type="button" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]]);">
+							<input type="button" value="거절" th:onclick="refuse([[${apply.acceptCode}]]);">
+						</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>

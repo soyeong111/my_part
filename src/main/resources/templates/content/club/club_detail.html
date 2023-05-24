@@ -23,6 +23,7 @@
 					<div class="col">
 						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="400px;"></div>
 						<div>[[${club.clubName}]]</div>
+						<div>[[${club.clubShortInfo}]]</div>
 						<div>[[${club.clubIntro}]]</div>
 						<div>[[${club.clubCode}]]</div>
 					</div>
@@ -31,6 +32,14 @@
 					<div class="col">
 						<input type="button" class="btn custom-btn" value="가입 신청하기" th:onclick="joinClub([[${#authentication.name}]], [[${club.clubCode}]]);">
 							<input type="button" class="btn custom-btn" th:value="${club.clubName} + ' 커뮤니티'" th:onclick="|location.href='@{/club/community(clubCode=${club.clubCode})}';|">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						(관리자페이지로 이동 예정)
+						<input type="button" value="북클럽 관리" th:onclick="|location.href='@{/club/clubManage(clubCode=${club.clubCode})}';|">
+						<input type="button" value="북클럽 수정" th:onclick="|location.href='@{/club/updateClub(clubCode=${club.clubCode})}';|">
+						<input type="button" value="북클럽 삭제" th:onclick="deleteClub([[${club.clubCode}]]);">
 					</div>
 				</div>	
 			</div>

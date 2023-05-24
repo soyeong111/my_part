@@ -28,6 +28,12 @@ public class ClubController {
 	@Resource(name = "clubService")
 	private ClubService clubService;
 	
+	//북클럽 이용안내
+	@GetMapping("/clubGuide")
+	public String clubGuide() {
+		return "content/club/club_guide";
+	}
+	
 	//북클럽 정보
 	@GetMapping("/clubInfo")
 	public String clubInfo(Model model, SubMenuVO subMenuVO) {
@@ -103,23 +109,80 @@ public class ClubController {
 		return "redirect:/club/clubInfo";
 	}
 	
+	//북클럽 수정 페이지
+	@GetMapping("/updateClub")
+	public String updateClubForm(Model model, String clubCode) {
+		model.addAttribute("club", clubService.getClubDetail(clubCode));
+		
+		return "content/club/update_club_form";
+	}
+	
+	//북클럽 수정
+	@PostMapping("/updateClub")
+	public String updateClub(BookClubVO bookClubVO) {
+		
+		clubService.updateClub(bookClubVO);
+		
+		return "redirect:/club/clubDetail?clubCode=" + bookClubVO.getClubCode();
+	}
+	
+	//북클럽 삭제
+	@GetMapping("/deleteClub")
+	public String deleteClub(String clubCode) {
+		
+		clubService.deleteClub(clubCode);
+		
+		return "redirect:/club/clubInfo";
+	}
+	
+	//북클럽 관리 페이지
+	@GetMapping("/clubManage")
+	public String clubManage(String clubCode, Model model) {
+		
+		//북클럽 회원 목록 조회
+		model.addAttribute("memberList", clubService.getClubMemberList(clubCode));
+		//북클럽 가입 신청 회원 목록 조회 (승인 전)
+		model.addAttribute("applyList", clubService.getApplyMemberList(clubCode));
+		
+		
+		return "content/club/club_manage";
+	}
+	
+	//북클럽 회원 승인
+	@ResponseBody
+	@PostMapping("/acceptMemberAjax")
+	public void acceptMemberAjax(String acceptCode) {
+		clubService.acceptMember(acceptCode);
+	}
+	
+	//북클럽 회원 거절
+	@ResponseBody
+	@PostMapping("/refuseMemberAjax")
+	public void refuseMemberAjax(String acceptCode) {
+		clubService.refuseMember(acceptCode);
+	}
+	
+	// ------------------------- 커뮤니티 -------------------------- //
+	
+	//RequestMapping 사용
 	//북클럽 커뮤니티 페이지
-	@GetMapping("/community")
+	@RequestMapping("/community")
 	public String community(SubMenuVO subMenuVO, Model model, CommunityVO communityVO) {
+		System.out.println("@@@@@@@@@@@@@2" + communityVO);
+		
 		//전체 게시글 수 조회
 		int totalDataCnt = clubService.getBoardCnt();
 		
 		//전체 데이터 수 세팅
 		communityVO.setTotalDataCnt(totalDataCnt);
 		
-		//현재 페이지 설정
-		communityVO.setNowPageNum(communityVO.getNowPageNum());
-		
 		//페이징 정보 세팅
 		communityVO.setPageInfo();
 		
 		model.addAttribute("clubCode", communityVO.getClubCode());
 		model.addAttribute("boardList", clubService.getBoardList(communityVO));
+		
+		System.out.println("@@@@@@@@@@" + communityVO);
 		
 		return "content/club/community";
 	}
@@ -148,7 +211,8 @@ public class ClubController {
 	
 	//게시글 상세페이지 이동
 	@GetMapping("/boardDetail")
-	public String boardDetail(Model model, String boardNum) {
+	public String boardDetail(Model model, String boardNum, CommunityVO communityVO) {
+		//clubService.updateReadCnt(communityVO);
 		
 		model.addAttribute("board", clubService.getBoardDetail(boardNum));
 		model.addAttribute("replyList", clubService.getReplyList(boardNum));
@@ -172,7 +236,7 @@ public class ClubController {
 		System.out.println(communityVO);
 		clubService.updateBoard(communityVO);
 		
-		return "redirect:/club/boardDetail";
+		return "redirect:/club/boardDetail?clubCode=" + communityVO.getClubCode();
 	}	
 	
 	//게시글 삭제
@@ -198,22 +262,44 @@ public class ClubController {
 		return "redirect:/club/boardDetail";
 	}
 	
-	//북클럽 관리 페이지
-	@GetMapping("/clubManage")
-	public String clubManage() {
-		return "content/club/club_manage";
+	//게시글 댓글 수정
+	@PostMapping("/updateReply")
+	public String updateReply(CommunityReplyVO communityReplyVO) {
+		
+		
+		return "redirect:/club/boardDetail?boardNum" + communityReplyVO.getBoardNum();
 	}
 	
-	//북클럽 승인
+	
+	
+	
+	
+	//커뮤니티 이동 - 클럽 멤버만
+	//@ResponseBody
+	//@PostMapping("/isClubMemberAjax")
+	//public boolean isClubMemberAjax(String clubCode) {
+		//return clubService.isClubMember(clubCode);
+	//}
+	
 	@ResponseBody
-	@PostMapping("/acceptMemberAjax")
-	public void acceptMemberAjax(String memId) {
-		clubService.acceptMember(memId);
-	
+	@PostMapping("/isClubMemberAjax")
+	public boolean isClubMemberAjax(BookClubMemberVO bookClubMemberVO, Authentication authentication) {
+		
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
+		bookClubMemberVO.setMemId(memId);
+		
+		boolean result = clubService.isClubMember(bookClubMemberVO);
+
+		if (result) {
+		      return true; // 클럽 회원인 경우
+		    } else {
+		      return false; // 클럽 회원이 아닌 경우
+		    }
+		
 	}
-	
-	
-	
 	
 	
 	
