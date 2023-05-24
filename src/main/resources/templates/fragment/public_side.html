@@ -4,23 +4,13 @@
 <th:block th:fragment="publicSideFragment">
 	<div class="public-side-div">
 		<th:block th:each="mainMenu : ${publicMenuList}" th:if="${subMenuVO != null and mainMenu.mainMenuCode == subMenuVO.mainMenuCode}">
-			
-			
-			
-			<div class="list-group public-side-main-menu-div">
-				<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
-					class="list-group-item list-group-item-action" th:text="${mainMenu.mainMenuName}"></a>
+			<ul class="list-group public-side-main-menu-ul">
+				<li class="list-group-item" th:text="${mainMenu.mainMenuName}"></li>
+			</ul>
+			<div class="list-group public-side-sub-menu-div" th:each="subMenu : ${mainMenu.subMenuList}">
+				<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}" class="list-group-item"
+					th:text="${subMenu.subMenuName}" th:classappend="${subMenuVO != null and subMenuVO.subMenuCode == subMenu.subMenuCode} ? public-side-menu-selected"></a>
 			</div>
-			
-			
-			
-			<div class="list-group public-side-sub-menu-div">
-				<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
-					class="list-group-item list-group-item-action" th:each="subMenu : ${mainMenu.subMenuList}" th:text="${subMenu.subMenuName}"></a>
-			</div>
-		
-		
-		
 		</th:block>
 	</div>
 </th:block>

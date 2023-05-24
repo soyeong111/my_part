@@ -21,8 +21,8 @@ public class PublicMenuIntercepter implements HandlerInterceptor {
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-		modelAndView.addObject("publicMenuList", adminService.getMenuListByRoleAndUse("PUBLIC"));
 		
+		modelAndView.addObject("publicMenuList", adminService.getMenuListByRoleAndUse("PUBLIC"));
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 		for (GrantedAuthority authority : authorities) {
