@@ -40,11 +40,28 @@ public class QnaServiceImpl implements QnaService {
 	}
 
 	@Override
+	public int updateQnaViewCnt(String qnaCode) {
+		return sqlSession.update("qnaMapper.updateQnaViewCnt",qnaCode);
+	}
+
+	@Override
+	public int updateQna(QnaVO qnaVO) {
+		return sqlSession.update("qnaMapper.updateQna",qnaVO);
+	}
+
+	@Override
+	public int deleteQna(String qnaCode) {
+		return sqlSession.delete("qnaMapper.deleteQna", qnaCode);
+	}
+
+	@Override
+	public int updateIsAdminAnswer(String qnaCode) {
+		return sqlSession.update("qnaMapper.updateIsAdminAnswer", qnaCode);
+	}
+
+
 	public void insertQnaAnswer(AnswerVO answerVO) {
 		sqlSession.insert("qnaMapper.insertQnaAnswer", answerVO);		
 	}
-
-	
-
 
 }

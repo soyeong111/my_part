@@ -1,5 +1,7 @@
 package com.study.bookspace.info.vo;
 
+import org.springframework.security.core.userdetails.User;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,6 +19,6 @@ public class QnaVO {
 	private String memId;
 	private int rowNum;
 	private int rowNumber;
-	
-
+	private String isAdminAnswer;
+	 
 }

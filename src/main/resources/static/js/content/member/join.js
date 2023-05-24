@@ -89,13 +89,54 @@ function pw_check_validation(pw_check_input) {
 	}
 }
 
+/* 이메일 유효성 검사 */
+function email_validation() {
+	const email_0_input = document.querySelector('#join-mem-email-0');
+	const email_1_input = document.querySelector('#join-mem-email-1');
+	email_0_input.value = email_0_input.value.replaceAll(' ', '');
+	email_1_input.value = email_1_input.value.replaceAll(' ', '');
+	const email = email_0_input.value + '@' + email_1_input.value;
+	const regExp = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+	if (regExp.test(email)) {
+		email_0_input.closest('.row').querySelector('button').disabled = false;
+	} else {
+		email_0_input.closest('.row').querySelector('button').disabled = true;
+	}
+}
+
 /* 이메일 select 직접입력 선택시 input으로 */
 function email_input_change(select_tag) {
 	if (select_tag.value == 'self') {
-		const str = '<input type="text" name="memEmailArr" id="join-mem-email-1" class="form-control" placeholder="직접입력">';
+		const str = '<input type="text" name="memEmailArr" id="join-mem-email-1" class="form-control" onkeyup="email_validation();" placeholder="직접입력">';
 		select_tag.closest('.input-group').insertAdjacentHTML('beforeend', str);
+		select_tag.closest('.row').querySelector('button').disabled = true;
 		select_tag.remove();
 	}
+}
+
+/* 이메일 인증 */
+function email_auth(btn) {
+	const email_0_input = document.querySelector('#join-mem-email-0');
+	const email_1_input = document.querySelector('#join-mem-email-1');
+	email_0_input.disabled = true;
+	email_1_input.disabled = true;
+	const email = email_0_input.value + '@' + email_1_input.value;
+	$.ajax({
+		url: '/member/emailAuthAjax',
+		type: 'post',
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'email':email},
+		success: function(result) {
+			alert(result);
+			
+			
+			
+			
+		},
+		error: function() {
+			alert('ajax 통신 실패');
+		}
+	});
 }
 
 /* 전화번호 유효성 검사 */
@@ -109,6 +150,10 @@ function tell_validation(tell_input) {
 		tell_input.classList.remove('is-valid');
 		tell_input.classList.add('is-invalid');
 	}
+	
+	
+	
+	
 }
 
 /* 주소록 api 사용 */
@@ -149,13 +194,11 @@ function join_btn_click() {
 		return;
 	}
 	const mem_email_0_input = document.querySelector('#join-mem-email-0');
-	mem_email_0_input.value = mem_email_0_input.value.replaceAll(' ', '');
 	if (mem_email_0_input.value == '') {
 		mem_email_0_input.focus();
 		return;
 	}
 	const mem_email_1_input = document.querySelector('#join-mem-email-1');
-	mem_email_1_input.value = mem_email_1_input.value.replaceAll(' ', '');
 	if (mem_email_1_input.value == '') {
 		mem_email_1_input.focus();
 		return;

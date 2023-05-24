@@ -14,6 +14,7 @@
 	<div class="update-form-div">
 		<form th:action="@{/club/updateBoard}" method="post">
 			<input type="hidden" th:value="${board.boardNum}" name="boardNum">
+			<input type="hidden" th:value="${board.clubCode}" name="clubCode">
 			<div class="col">
 				<div class="row">
 					<div class="col">
@@ -25,7 +26,7 @@
 							<tr>
 								<td>제목</td>
 								<td>
-									<input type="text" name="boardTitle" th:value="${board.boardTitle}">
+									<input type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}">
 								</td>
 							</tr>
 							<tr>
@@ -43,7 +44,7 @@
 							<tr>
 								<td>내용</td>
 								<td>
-									<textarea rows="20" cols="100" name="boardContent" th:value=${board.boardContent}></textarea>
+									<textarea rows="20" cols="100" class="form-control" name="boardContent">[[${board.boardContent}]]</textarea>
 								</td>
 							</tr>
 						</table>

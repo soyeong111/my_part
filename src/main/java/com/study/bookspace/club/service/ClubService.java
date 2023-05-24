@@ -54,9 +54,44 @@ public interface ClubService {
 	List<CommunityReplyVO> getReplyList(String boardNum);
 	
 	//클럽 멤버 승인
-	void acceptMember(String memId);
+	void acceptMember(String acceptCode);
+	
+	//클럽 회원 거절
+	void refuseMember(String acceptCode);
 	
 	//전체 게시글 수 조회
 	int getBoardCnt();
+	
+	//조회수 증가
+	int updateReadCnt(CommunityVO communityVO);
+	
+	//클럽 멤버인지 확인
+	//boolean isClubMember(BookClubMemberVO bookClubMemberVO);
+	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
+	
+	//클럽 삭제
+	void deleteClub(String clubCode);
+	
+	//클럽 수정
+	void updateClub(BookClubVO bookClubVO);
+	
+	//클럽 회원 목록 조회
+	List<BookClubMemberVO> getClubMemberList(String clubCode);
+	
+	//클럽 가입 신청 회원 목록 조회(승인 전)
+	List<BookClubMemberVO> getApplyMemberList(String clubCode);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
