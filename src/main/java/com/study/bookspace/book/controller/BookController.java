@@ -1,6 +1,8 @@
 package com.study.bookspace.book.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -127,17 +129,15 @@ public class BookController {
 	}
 	
 //	도서 대여 개수
-	@ResponseBody 	
+	@ResponseBody
 	@PostMapping("/getBorrowCntAjax")
-	public int getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
-		
-	
-		System.out.println(borrowVO);
-		
-		
+	public Map<String, Object> getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
 	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-	    return bookService.getBorrowCnt(borrowVO.getBookCode());
+	    Map<String, Object> response = bookService.getBorrowAndStockCnt(borrowVO.getBookCode());
+	    return response;
 	}
+
+
 
 	
 	

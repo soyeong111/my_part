@@ -40,24 +40,21 @@
   			<label for="" class="col-3 col-form-label"> ISBN</label>
   			<label for="" class="col-9 col-form-label"> [[${book.isbn}]] </label>
   		</div>
-  		<div class="row mb-3">
-  			<label for="" class="col-3 col-form-label"> 대여 가능</label>
 	  			<div class="col-9">
   					<form id="buyForm">
   						<input type="hidden" name="bookCode" th:value="${book.bookCode}">
   						<input type="hidden" name="bookCnt" th:value="${book.bookStockCnt}">
-	  					<label for="" class="col-9 col-form-label"> [[${book.bookStockCnt}]] </label>
   					</form>
 	  			</div>
-  		</div>
   		<div class="row mb-5">
   			<label for="" class="col-3 col-form-label"> 책소개</label>
   			<label for="" class="col-9 col-form-label"> [[${book.bookIntro}]] </label>
   		</div>
   		<div class="row mb-3">
   			<div class="col d-grid">
-  				<input type="button" class="btn custom-btn" value="대여하기" th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);">
-
+  				<input type="button" class="btn custom-btn" value="대여하기"
+      			 th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);"
+       			th:disabled="${book.borrowCnt == book.bookStockCnt}">
   			</div>
   			<div class="col d-grid">
   				<input type="button" class="btn custom-btn" value="예약하기" >
