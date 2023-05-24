@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.util.PageVO;
 
@@ -37,6 +38,30 @@ public class QnaServiceImpl implements QnaService {
 	public QnaVO qnaDetail(String qnaCode) {
 		return sqlSession.selectOne("qnaMapper.qnaDetail",qnaCode);
 	}
+
+	@Override
+	public int updateQnaViewCnt(String qnaCode) {
+		return sqlSession.update("qnaMapper.updateQnaViewCnt",qnaCode);
+	}
+
+	@Override
+	public int updateQna(QnaVO qnaVO) {
+		return sqlSession.update("qnaMapper.updateQna",qnaVO);
+	}
+
+	@Override
+	public int deleteQna(String qnaCode) {
+		return sqlSession.delete("qnaMapper.deleteQna", qnaCode);
+	}
+
+	@Override
+	public int updateIsAdminAnswer(String qnaCode) {
+		return sqlSession.update("qnaMapper.updateIsAdminAnswer", qnaCode);
+	}
+
+
+	
+	
 
 	
 

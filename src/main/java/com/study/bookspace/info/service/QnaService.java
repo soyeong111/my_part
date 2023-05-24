@@ -2,6 +2,7 @@ package com.study.bookspace.info.service;
 
 import java.util.List;
 
+import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.util.PageVO;
 
@@ -18,5 +19,16 @@ public interface QnaService {
 	
 	//문의글 상세 보기
 	QnaVO qnaDetail(String qnaCode);
+	//조회수 증가
+	int updateQnaViewCnt(String qnaCode);
+	
+	int updateQna(QnaVO qnaVO);
+	
+	int deleteQna(String qnaCode);
+	
+	int updateIsAdminAnswer(String qnaCode);
+	
+
+	
 
 }
