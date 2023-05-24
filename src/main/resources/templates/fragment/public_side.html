@@ -7,14 +7,14 @@
 			
 			
 			
-			<div class="list-group">
+			<div class="list-group public-side-main-menu-div">
 				<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
 					class="list-group-item list-group-item-action" th:text="${mainMenu.mainMenuName}"></a>
 			</div>
 			
 			
 			
-			<div class="list-group">
+			<div class="list-group public-side-sub-menu-div">
 				<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
 					class="list-group-item list-group-item-action" th:each="subMenu : ${mainMenu.subMenuList}" th:text="${subMenu.subMenuName}"></a>
 			</div>
