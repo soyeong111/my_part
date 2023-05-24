@@ -18,7 +18,6 @@
 		<result column="BOOK_CATE_NO" 						property="bookCateNo"/>
 		<result column="BOOK_STOCK_CNT" 					property="bookStockCnt"/>
 		<result column="ISBN" 								property="isbn"/>
-		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
 		<result column="BORROW_CNT"							property="borrowCnt"/>
 		<result column="RESERVE_CNT"						property="reserveCnt"/>
 		<result column="AVAILABLE_STOCK_CNT"				property="availableStockCnt"/>
