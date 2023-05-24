@@ -1,4 +1,6 @@
 
+let join_email_pw;
+
 /* 아이디 유효성 검사 */
 function id_validation(id_input) {
 	id_input.value = id_input.value.replaceAll(' ', '');
@@ -120,6 +122,7 @@ function email_auth(btn) {
 	const email_1_input = document.querySelector('#join-mem-email-1');
 	email_0_input.disabled = true;
 	email_1_input.disabled = true;
+	btn.disabled = true;
 	const email = email_0_input.value + '@' + email_1_input.value;
 	$.ajax({
 		url: '/member/emailAuthAjax',
@@ -127,16 +130,38 @@ function email_auth(btn) {
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'email':email},
 		success: function(result) {
-			alert(result);
-			
-			
-			
-			
+			join_email_pw = result;
+			let str = '<div class="row d-flex align-items-center mt-2">';
+			str += '<div class="col-7 text-end">메일을 확인해주세요</div>';
+			str += '<div class="col-3"><input type="text" id="join-email-pw" class="form-control" placeholder="인증 번호"></div>';
+			str += '<div class="col-2 d-grid"><button type="button" class="btn custom-btn" onclick="email_pw_check(this);">확인</button></div></div>';
+			btn.closest('.row').insertAdjacentHTML('afterend', str);
 		},
 		error: function() {
 			alert('ajax 통신 실패');
 		}
 	});
+}
+
+/* 이메일 인증 확인 */
+function email_pw_check(btn) {
+	const email_pw_input = document.querySelector('#join-email-pw');
+	if (join_email_pw == email_pw_input.value) {
+		btn.btn.closest('.row').remove();
+		document.querySelector('#join-mem-email-0').classList.add('is-valid');
+		document.querySelector('#join-mem-email-1').classList.add('is-valid');
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return;
+	}
+	alert('다시 확인해주세요.');
 }
 
 /* 전화번호 유효성 검사 */
@@ -224,7 +249,7 @@ function join_btn_click() {
 		return;
 	}
 	const is_valid_list = document.querySelectorAll('#join-form .is-valid');
-	if (is_valid_list.length != 5) {
+	if (is_valid_list.length != 7) {
 		document.querySelector('#join-form .is-invalid').focus();
 		return;
 	}
