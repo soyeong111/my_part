@@ -14,10 +14,16 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	// ROLE별 메뉴 목록
+	// ROLE별 사용중인 전체 메뉴 목록
 	@Override
-	public List<MainMenuVO> getMenuListByRole(List<String> roleList) {
-		return sqlSession.selectList("adminMapper.getMenuListByRole", roleList);
+	public List<MainMenuVO> getMenuListByRoleAndUse(String mainMenuRole) {
+		return sqlSession.selectList("adminMapper.getMenuListByRoleAndUse", mainMenuRole);
+	}
+
+	// ROLE별 사용중인 메인 메뉴 목록
+	@Override
+	public List<MainMenuVO> getMainMenuListByRoleAndUse(String mainMenuRole) {
+		return sqlSession.selectList("adminMapper.getMainMenuListByRoleAndUse", mainMenuRole);
 	}
 
 }

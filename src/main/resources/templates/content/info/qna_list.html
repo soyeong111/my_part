@@ -23,6 +23,7 @@
    				<td>작성자</td>
    				<td>작성일</td>
    				<td>조회수</td>
+   				
    			</tr>
    		</thead>
    		<tbody>
@@ -37,15 +38,12 @@
    		<!-- <td th:text="${#lists.size(qna) - detailState.index + 1}"></td> -->
 		<td th:text="${qna.getRowNumber}"></td> 
 		
-   			<td>
-   				<a th:href="@{/info/qnaDetail(qnaCode=${qna.qnaCode})}">
-   	
-   					<span th:text="${qna.qnaTitle}"></span>
-   				</a>
-   			</td>
+   			<td> <a th:href="@{/info/qnaDetail(qnaCode=${qna.qnaCode})}"><span th:text="${qna.qnaTitle}"></span></a> </td>
    			<td>[[${qna.memId}]]</td>
    			<td>[[${qna.qnaCreateDate}]]</td>
    			<td>[[${qna.qnaViewCnt}]]</td>
+   			
+   			
    			
    		</tr>
    		

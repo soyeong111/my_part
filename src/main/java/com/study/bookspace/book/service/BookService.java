@@ -1,6 +1,7 @@
 package com.study.bookspace.book.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
@@ -28,6 +29,11 @@ public interface BookService {
 	void borrowBook(BorrowVO borrowVO);
 	
 //	도서 대여 개수
-	int getBorrowCnt(String bookCode);
+	Map<String, Object> getBorrowAndStockCnt(String bookCode);
+	
+//	도서 대여 개수 확인
+	int checkBorrowStatus(String memId, String bookCode);
+
+
 	
 }

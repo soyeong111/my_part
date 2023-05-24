@@ -21,6 +21,7 @@
 		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
 		<result column="BORROW_CNT"							property="borrowCnt"/>
 		<result column="RESERVE_CNT"						property="reserveCnt"/>
+		<result column="AVAILABLE_STOCK_CNT"				property="availableStockCnt"/>
 		<association property="categoryVO" 					resultMap="category"></association> 		
 		<collection property="imgList" 						resultMap="img"></collection>
 	</resultMap>
@@ -43,11 +44,7 @@
 		<result column="RETURN_DATE" 						property="returnDate"/>
 		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
 	</resultMap>
-	
-	<resultMap type="com.study.bookspace.book.vo.BookStatusVO" id="bookStatus">
-		<id 	column="BOOK_STATUS_NO" 						property="bookStatusNo"/>
-		<result column="BOOK_STATUS_STR" 						property="bookStatusStr"/>
-	</resultMap>
+
 	
 	<resultMap type="com.study.bookspace.book.vo.ReserveVO" id="reserve">
 		<id column="BOOK_RESERVE_CODE" 						property="bookReserveCode"/>
@@ -131,15 +128,23 @@
 	
 
 	<!-- 도서 대여 개수 -->
-	<select id="getBorrowCnt" resultType="int">
+	<select id="getBorrowAndStockCnt" resultType="Map">
 	SELECT BORROW_CNT
+		, BOOK_STOCK_CNT
 	FROM BOOK
 	WHERE BOOK_CODE = #{bookCode}
 	</select>
 	
+	<!-- 대여 가능한 권수를 초과하거나 중복 대여한 경우 -->
+	<select id="checkBorrowStatus" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM BOOK_BORROW 
+	    WHERE MEM_ID = #{memId}
+	</select>
+		
 
-	
-	
+
+
 
 	<!-- 도서 반납  -->
 	<update id="returnBook">
@@ -243,6 +248,7 @@
 			, BOOK_STOCK_CNT
 			, ISBN
 			, ATTACHED_FILE_NAME
+			, BORROW_CNT
 		FROM BOOK BOOK, BOOK_IMAGE IMG
 		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
 		AND IS_MAIN_IMG = 'Y' 
@@ -260,6 +266,7 @@
 			, BOOK_INTRO
 			, BOOK_CATE_NO
 			, BOOK_STOCK_CNT
+			, BORROW_CNT
 			, ISBN
 			, ATTACHED_FILE_NAME
 			, IS_MAIN_IMG
