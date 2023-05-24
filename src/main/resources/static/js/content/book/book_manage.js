@@ -22,8 +22,9 @@ function checkBorrow(bookCode) {
     type: 'post',
     data: {'bookCode': bookCode}, // bookCode를 객체 형태로 전달
     success: function(response) {
-      var borrowCnt = parseInt(response);
-      if (borrowCnt > 0) {
+      var borrowCnt = parseInt(response['BORROW_CNT']);
+      var bookStockCnt = parseInt(response['BOOK_STOCK_CNT']);
+      if (borrowCnt >= bookStockCnt) {
         alert('도서 대여가 불가능합니다.');
       } else {
         borrowAjax(bookCode);
@@ -53,3 +54,8 @@ function borrowAjax(bookCode) {
     }
   });
 }
+
+
+
+
+
