@@ -40,41 +40,39 @@
 		</div>
 		<div class="row">
 			<div class="col" th:if="${board.boardWriter == #authentication.name}">
-				<input type="button" class="btn custom-btn" value="수정" th:onclick="|location.href='@{/club/updateBoard(boardNum=${board.boardNum})}';|">
+				<input type="button" class="btn custom-btn" value="수정" th:onclick="|location.href='@{/club/updateBoard(boardNum=${board.boardNum}, clubCode=${board.clubCode})}';|">
 				<input type="button" class="btn custom-btn" value="삭제" th:onclick="deleteBoard([[${board.boardNum}]],[[${board.clubCode}]]);">
 			</div>
 		</div>
 		<div class="reply-div">
-			<form action="@{/club/regReply}" method="post">
-				<input type="hidden" name="boardNum" th:value="${board.boardNum}">
-				<input type="text" name="replyContent">
-				<input sec:authorize="isAuthenticated()" type="submit" value="등록">
+			<form class="row" action="@{/club/regReply}" method="post">
+				<div class="col-12">
+					<input type="hidden" name="boardNum" th:value="${board.boardNum}">
+					<textarea rows="3" class="form-control" cols="100" name="replyContent"></textarea>
+				</div>
+				<div class="offset-11">
+					<input sec:authorize="isAuthenticated()" class="btn custom-btn" type="submit" value="등록">
+				</div>
 			</form>
-			<div th:each="reply : ${replyList}">
+			<div th:each="reply : ${replyList}" style="margin-bottom: 10px;">
 				<div>[[${reply.replyWriter}]]</div>
 				<div>[[${reply.regDate}]]</div>
 				<div>[[${reply.replyContent}]]</div>
-				<div th:if="${session.loginInfo != null and session.loginInfo.memId == reply.replyWriter}">
+				<div th:if="${authentication != null and authentication.principal.username == reply.replyWriter}">
 					<input type="button" value="수정"
-						th:onclick="setInput(this, [[${reply.replyNum}]], [[${board.boardNum}]]);">
+						th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]]);">
 					<input type="button" value="삭제"
 						th:onclick="|location.href='@{/reply/deleteReply(replyNum=${reply.replyNum}, boardNum=${board.boardNum})}';|">
 				</div>
 			</div>
 			
 			
-			
-			<form th:action="@{/reply/regReply}" method="post">
-		<input type="hidden" name="boardNum" th:value="${board.boardNum}">
-		<input type="text" name="replyContent">
-		<input sec:authorize="isAuthenticated()" type="submit" value="등록">
-	</form>
 	
 	<div>
 		<div th:each="reply : ${replyList}" style="margin-bottom: 10px;">
 			<div>[[${reply.replyWriter}]]</div>
 			<div>[[${reply.regDate}]]</div>
-			<div >[[${reply.replyContent}]]</div>
+			<div>[[${reply.replyContent}]]</div>
 			<div th:if="${session.loginInfo != null and session.loginInfo.memId == reply.replyWriter}">
 				<input type="button" value="수정" th:onclick="setInput(this, [[${reply.replyNum}]], [[${board.boardNum}]]);">
 				<input type="button" value="삭제" th:onclick="|location.href='@{/reply/deleteReply(replyNum=${reply.replyNum}, boardNum=${board.boardNum})}';|">

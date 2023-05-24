@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/public_layout}">
+
+<!-- 연결해야 할 외부 css파일 -->
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href=""> -->
+</th:block>
+
+<!-- 본문 내용 -->
+<th:block layout:fragment="content">
+	<div class="upaate-club-form">
+		<div class="row">
+			<div class="col">
+				<h3>북클럽 수정페이지</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<form class="row g-2" id="updateClubForm" th:action="@{/club/updateClub}" method="post">
+					<div class="col-12">
+						<label for="clubName" class="form-label">클럽명</label> 
+						<div style="font-weight: bold;">[[${club.clubName}]]</div>
+					</div>
+					<!-- <div class="col-12">
+						<label for="clubImg" class="form-label">북클럽 이미지</label>
+						<input type="file" class="form-control" name="clubImg" id="clubImg"><br>
+					</div> -->
+					<div class="col-12">
+						<label for="clubShortInfo" class="form-label">클럽명</label> 
+						<input type="text" class="form-control" name="clubShortInfo" id="clubShortInfo" th:value="${club.clubShortInfo}">
+					</div>
+					<div class="col-12">
+						<label for="clubIntro" class="form-label">북클럽 소개</label> 
+						<textarea rows="15" cols="50" name="clubIntro" id=clubIntro class="form-control">[[${club.clubIntro}]]</textarea>
+					</div>
+					<div class="offset-4 col-4 d-grid">
+						<input type="submit" id="updateClubBtn" class="btn custom-btn" value="클럽 수정하기">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>	
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<!-- <script type="text/javascript" src=""></script> -->
+</th:block>
+
+</html>

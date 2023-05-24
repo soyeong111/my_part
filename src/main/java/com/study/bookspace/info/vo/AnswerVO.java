@@ -13,5 +13,5 @@ public class AnswerVO {
 	private String answerCreateDate;
 	private String memId;
 	private String qnaCode;
-
+	private String isAdminAnswer;
 }

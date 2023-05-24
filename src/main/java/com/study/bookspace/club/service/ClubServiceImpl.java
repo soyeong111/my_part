@@ -108,8 +108,8 @@ public class ClubServiceImpl implements ClubService{
 
 
 	@Override
-	public void acceptMember(String memId) {
-		sqlSession.update("clubMapper.acceptMember", memId);
+	public void acceptMember(String acceptCode) {
+		sqlSession.update("clubMapper.acceptMember", acceptCode);
 	}
 
 
@@ -118,6 +118,50 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectOne("clubMapper.getBoardCnt");
 	}
 
-	
+	//게시글 조회수 증가
+	@Override
+	public int updateReadCnt(CommunityVO communityVO) {
+		return sqlSession.update("clubMapper.updateReadCnt", communityVO);
+	}
+
+
+
+	//클럽 삭제
+	@Override
+	public void deleteClub(String clubCode) {
+		sqlSession.delete("clubMapper.deleteClub", clubCode);
+	}
+
+	//클럽 수정
+	@Override
+	public void updateClub(BookClubVO bookClubVO) {
+		sqlSession.update("clubMapper.updateClub", bookClubVO);
+	}
+
+
+	@Override
+	public boolean isClubMember(BookClubMemberVO bookClubMemberVO) {
+		int result = sqlSession.selectOne("clubMapper.isClubMember", bookClubMemberVO);
+		return result != 0 ? true : false;
+	}
+
+	//클럽 회원 목록 조회
+	@Override
+	public List<BookClubMemberVO> getClubMemberList(String clubCode) {
+		return sqlSession.selectList("clubMapper.getClubMemberList", clubCode);
+	}
+
+	//가입 신청 회원 목록 조회
+	@Override
+	public List<BookClubMemberVO> getApplyMemberList(String clubCode) {
+		return sqlSession.selectList("clubMapper.getApplyMemberList", clubCode);
+	}
+
+
+	@Override
+	public void refuseMember(String acceptCode) {
+		sqlSession.update("clubMapper.refuseMember", acceptCode);
+	}
+
 
 }
