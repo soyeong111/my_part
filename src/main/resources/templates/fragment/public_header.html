@@ -10,8 +10,7 @@
 				</h1>
 			</div>
 			<div class="col-8 header-main-menu-div d-flex justify-content-center" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
-				<div th:each="mainMenu : ${mainMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}"
-					th:onmouseover="main_menu_mouseover([[${mainMenuStat.index}]]);" th:onmouseout="main_menu_mouseout([[${mainMenuStat.index}]]);">
+				<div th:each="mainMenu : ${publicMenuList}" th:onmouseover="public_menu_mouseover([[${mainMenuStat.index}]]);" th:onmouseout="public_menu_mouseout([[${mainMenuStat.index}]]);">
 					<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
 						th:classappend="${subMenuVO != null and mainMenu.mainMenuCode == subMenuVO.mainMenuCode} ? main-menu-selected" th:text="${mainMenu.mainMenuName}"></a>
 				</div>
@@ -29,17 +28,20 @@
 					<div class="dropdown">
 						<a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[[${#authentication.name}]]님 </a>
 						<ul class="dropdown-menu">
-							<th:block th:each="mainMenu : ${mainMenuList}" th:if="${mainMenu.mainMenuRole == 'USER' or mainMenu.mainMenuRole == 'ADMIN'}">
-								<li>
-									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
-								</li>
+							<li th:if="${userMainMenuList != null}" class="text-center">마이메뉴</li>
+							<th:block th:each="mainMenu : ${userMainMenuList}" th:if="${userMainMenuList != null}">
 								<li><hr class="dropdown-divider"></li>
-								<th:block th:each="subMenu : ${mainMenu.subMenuList}">
-									<li>
-										<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}" th:text="${subMenu.subMenuName}"></a>
-									</li>
-								</th:block>
-								<li th:if="${!mainMenuStat.last}"><hr class="dropdown-divider"></li>
+								<li>
+									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
+								</li>
+							</th:block>
+							<li th:if="${adminMainMenuList != null}"><hr class="dropdown-divider"></li>
+							<li th:if="${adminMainMenuList != null}" class="text-center">관리자메뉴</li>
+							<th:block th:each="mainMenu : ${adminMainMenuList}" th:if="${adminMainMenuList != null}">
+								<li><hr class="dropdown-divider"></li>
+								<li>
+									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
+								</li>
 							</th:block>
 						</ul>
 					</div>
@@ -51,7 +53,7 @@
 		</div>
 		<div class="row header-unfixed-div z-1 shadow d-none" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
 			<div class="col-8 offset-2 header-sub-menu-div d-flex justify-content-center">
-				<div th:each="mainMenu : ${mainMenuList}" th:if="${mainMenu.mainMenuRole != 'USER' and mainMenu.mainMenuRole != 'ADMIN'}">
+				<div th:each="mainMenu : ${publicMenuList}">
 					<div th:each="subMenu : ${mainMenu.subMenuList}">
 						<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}" th:text="${subMenu.subMenuName}"
 							th:classappend="${subMenuVO != null and subMenu.subMenuCode == subMenuVO.subMenuCode} ? sub-menu-selected"></a>
