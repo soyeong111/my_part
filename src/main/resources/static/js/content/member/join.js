@@ -120,8 +120,8 @@ function email_input_change(select_tag) {
 function email_auth(btn) {
 	const email_0_input = document.querySelector('#join-mem-email-0');
 	const email_1_input = document.querySelector('#join-mem-email-1');
-	email_0_input.disabled = true;
-	email_1_input.disabled = true;
+	email_0_input.readOnly = true;
+	email_1_input.readOnly = true;
 	btn.disabled = true;
 	const email = email_0_input.value + '@' + email_1_input.value;
 	$.ajax({
@@ -147,18 +147,9 @@ function email_auth(btn) {
 function email_pw_check(btn) {
 	const email_pw_input = document.querySelector('#join-email-pw');
 	if (join_email_pw == email_pw_input.value) {
-		btn.btn.closest('.row').remove();
+		btn.closest('.row').remove();
 		document.querySelector('#join-mem-email-0').classList.add('is-valid');
 		document.querySelector('#join-mem-email-1').classList.add('is-valid');
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		return;
 	}
 	alert('다시 확인해주세요.');
@@ -250,7 +241,6 @@ function join_btn_click() {
 	}
 	const is_valid_list = document.querySelectorAll('#join-form .is-valid');
 	if (is_valid_list.length != 7) {
-		document.querySelector('#join-form .is-invalid').focus();
 		return;
 	}
 	go_join();

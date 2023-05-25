@@ -62,6 +62,7 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/joinAjax")
 	public boolean joinAjax(MemberVO memberVO) {
+		System.out.println(memberVO);
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		return memberService.join(memberVO) == 1;
 	}
