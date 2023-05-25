@@ -29,14 +29,14 @@ public class ClubController {
 	private ClubService clubService;
 	
 	//북클럽 이용안내
-	@GetMapping("/clubGuide")
-	public String clubGuide() {
+	@GetMapping("/clubInfo")
+	public String clubInfo() {
 		return "content/club/club_guide";
 	}
 	
 	//북클럽 정보
-	@GetMapping("/clubInfo")
-	public String clubInfo(Model model, SubMenuVO subMenuVO) {
+	@GetMapping("/club")
+	public String club(Model model, SubMenuVO subMenuVO) {
 		//북클럽 목록 조회
 		model.addAttribute("clubList", clubService.getClubList());
 		
@@ -83,7 +83,7 @@ public class ClubController {
 		clubService.regClub(bookClubVO);
 		clubService.insertImg(bookClubImageVO);
 		
-		return "redirect:/club/clubInfo";
+		return "redirect:/club/club";
 	}
 	
 	//북클럽 상세페이지
@@ -106,7 +106,7 @@ public class ClubController {
 		
 		clubService.joinClub(bookClubMemberVO);
 		
-		return "redirect:/club/clubInfo";
+		return "redirect:/club/club";
 	}
 	
 	//북클럽 수정 페이지
@@ -132,7 +132,7 @@ public class ClubController {
 		
 		clubService.deleteClub(clubCode);
 		
-		return "redirect:/club/clubInfo";
+		return "redirect:/club/club";
 	}
 	
 	//북클럽 관리 페이지
@@ -171,7 +171,7 @@ public class ClubController {
 		System.out.println("@@@@@@@@@@@@@2" + communityVO);
 		
 		//전체 게시글 수 조회
-		int totalDataCnt = clubService.getBoardCnt();
+		int totalDataCnt = clubService.getBoardCnt(communityVO.getClubCode());
 		
 		//전체 데이터 수 세팅
 		communityVO.setTotalDataCnt(totalDataCnt);
@@ -212,7 +212,8 @@ public class ClubController {
 	//게시글 상세페이지 이동
 	@GetMapping("/boardDetail")
 	public String boardDetail(Model model, String boardNum, CommunityVO communityVO) {
-		//clubService.updateReadCnt(communityVO);
+		System.out.println(communityVO);
+		clubService.updateReadCnt(communityVO);
 		
 		model.addAttribute("board", clubService.getBoardDetail(boardNum));
 		model.addAttribute("replyList", clubService.getReplyList(boardNum));
@@ -251,15 +252,16 @@ public class ClubController {
 	//게시글 댓글 작성
 	@PostMapping("/regReply")
 	public String regReply(CommunityReplyVO communityReplyVO, Authentication authentication) {
-		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
 		communityReplyVO.setReplyWriter(memId);
 		
+		System.out.println(communityReplyVO);
+		
 		clubService.regReply(communityReplyVO);
 		
-		return "redirect:/club/boardDetail";
+		return "redirect:/club/boardDetail?boardNum=" + communityReplyVO.getBoardNum();
 	}
 	
 	//게시글 댓글 수정

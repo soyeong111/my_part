@@ -114,8 +114,8 @@ public class ClubServiceImpl implements ClubService{
 
 
 	@Override
-	public int getBoardCnt() {
-		return sqlSession.selectOne("clubMapper.getBoardCnt");
+	public int getBoardCnt(String clubCode) {
+		return sqlSession.selectOne("clubMapper.getBoardCnt", clubCode);
 	}
 
 	//게시글 조회수 증가

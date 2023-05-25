@@ -232,14 +232,12 @@
 			, REPLY_CONTENT
 			, REPLY_WRITER
 			, BOARD_NUM
-			, CLUB_CODE
 		) VALUES (
 			(SELECT 'REPLY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REPLY_NUM, 7))), 0) + 1,3 , '0') 
 			FROM COMMUNITY_REPLY)
 			, #{replyContent}
 			, #{replyWriter}
 			, #{boardNum}
-			, #{clubCode}
 		)
 	</insert>
 	
@@ -293,6 +291,7 @@
 	<select id="getBoardCnt" resultType="int">
 		SELECT COUNT(BOARD_NUM) 
 		FROM COMMUNITY_BOARD
+		WHERE CLUB_CODE = #{clubCode}
 	</select>
 	
 	

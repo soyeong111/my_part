@@ -60,7 +60,7 @@ public interface ClubService {
 	void refuseMember(String acceptCode);
 	
 	//전체 게시글 수 조회
-	int getBoardCnt();
+	int getBoardCnt(String clubCode);
 	
 	//조회수 증가
 	int updateReadCnt(CommunityVO communityVO);
