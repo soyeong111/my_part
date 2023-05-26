@@ -1,3 +1,31 @@
+init();
+
+
+//초기 작업 실행
+function init() {
+    const borrowBtn = document.getElementById('brBtn');
+
+    const bookStockCntElement = document.getElementById('bookBr').elements['bookStockCnt'];
+    const bookStockCnt = parseInt(bookStockCntElement.value);
+
+    const borrowCntElement = document.getElementById('bookBr').elements['borrowCnt'];
+    const borrowCnt = parseInt(borrowCntElement.value);
+
+
+	console.log("bookStockCnt:", bookStockCnt);
+	console.log("borrowCnt:", borrowCnt);
+	console.log();
+
+    if (borrowCnt == bookStockCnt) {
+        borrowBtn.disabled = true;
+    }
+}
+
+
+
+
+
+
 // 대여하기 버튼 클릭 시 실행
 function borrow(memId, bookCode) {
   if (memId == 'anonymousUser') {

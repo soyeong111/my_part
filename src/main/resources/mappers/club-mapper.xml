@@ -6,10 +6,12 @@
 		<id		 column="CLUB_CODE" 		property="clubCode"/>
 		<result column="CLUB_NAME" 			property="clubName"/>
 		<result column="CLUB_INTRO"		 	property="clubIntro"/>
+		<result column="CLUB_SHORT_INFO"	property="clubShortInfo"/>
 		<result column="CLUB_CREATE_DATE" 	property="clubCreateDate"/>
 		<result column="CLUB_STATUS_NO" 	property="clubStatusNo"/>
 		<result column="MEM_ID" 			property="memId"/>
-		<association property="bookClubImageVO" resultMap="bookClubImage"></association>
+		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
+		<association property="bookClubMemberVO" resultMap="bookClubMember"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.BookClubImageVO" id="bookClubImage">
@@ -20,7 +22,8 @@
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.BookClubMemberVO" id="bookClubMember">
-		<id		 column="CLUB_CODE" 			property="clubCode"/>
+		<id		 column="ACCEPT_CODE" 		property="acceptCode"/>
+		<result	 column="CLUB_CODE" 		property="clubCode"/>
 		<result column="MEM_ID" 			property="memId"/>
 		<result column="CLUB_REG_DATE" 		property="clubRegDate"/>
 		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
@@ -48,6 +51,12 @@
 		<result column="CLUB_CODE" 			property="clubCode"/>
 	</resultMap>
 	
+	<select id="hasClub" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM BOOK_CLUB
+		WHERE MEM_ID = #{memId}
+	</select>
+	
 	<select id="isDuplicateClubName" resultType="int">
 		SELECT COUNT(CLUB_NAME)
 		FROM BOOK_CLUB
@@ -63,11 +72,13 @@
 		INSERT INTO BOOK_CLUB (
 			CLUB_CODE
 			, CLUB_NAME
+			, CLUB_SHORT_INFO
 			, CLUB_INTRO
 			, MEM_ID
 		) VALUES (
 			#{clubCode}
 			, #{clubName}
+			, #{clubShortInfo}
 			, #{clubIntro}
 			, #{memId}
 		)
@@ -91,7 +102,7 @@
 	<select id="getClubList" resultMap="bookClub">
 		SELECT CLUB.CLUB_CODE
 			, CLUB_NAME
-			, CLUB_INTRO
+			, CLUB_SHORT_INFO
 			, BC_ATTACHED_FILE_NAME
 		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
 		WHERE CLUB.CLUB_CODE = IMG.CLUB_CODE
@@ -101,6 +112,7 @@
 	<select id="getClubDetail" resultMap="bookClub">
 		SELECT CLUB.CLUB_CODE
 			, CLUB_NAME
+			, CLUB_SHORT_INFO
 			, CLUB_INTRO
 			, BC_ATTACHED_FILE_NAME
 		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
@@ -108,15 +120,47 @@
 		AND CLUB.CLUB_CODE = #{clubCode}
 	</select>
 	
+	<select id="alreadyApply" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM BOOK_CLUB_MEMBER
+		WHERE CLUB_CODE = #{clubCode}
+		AND MEM_ID = #{memId}
+	</select>
+	
+	<select id="isClubMember" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM BOOK_CLUB_MEMBER
+		WHERE CLUB_CODE = #{clubCode}
+		AND MEM_ID = #{memId}
+		AND CLUB_MEM_STATUS = 2
+	</select>
+	
 	<insert id="joinClub">
 		INSERT INTO BOOK_CLUB_MEMBER (
-			CLUB_CODE
+			ACCEPT_CODE
+			, CLUB_CODE
 			, MEM_ID
 		) VALUES (
-			#{clubCode}
+			(SELECT 'ACCEPT_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ACCEPT_CODE, 8))), 0) + 1,3 , '0') 
+			FROM BOOK_CLUB_MEMBER)
+			, #{clubCode}
 			, #{memId}
 		)
 	</insert>
+	
+	<delete id="deleteClub">
+		DELETE BOOK_CLUB
+		WHERE CLUB_CODE = #{clubCode}
+	</delete>
+	
+	<update id="updateClub">
+		UPDATE BOOK_CLUB
+		SET
+			CLUB_SHORT_INFO = #{clubShortInfo}
+			CLUB_INTRO = #{clubIntro}
+		WHERE CLUB_CODE = #{clubCode}
+	</update>
+	
 	
 	<select id="getBoardList" resultMap="community">
 		SELECT (SELECT COUNT(BOARD_NUM)
@@ -129,6 +173,7 @@
 			, READ_CNT
 			, ROW_NUM
 			, REPLY_CNT
+			, CLUB_CODE
 		FROM
 		(
 			SELECT BOARD_NUM
@@ -138,6 +183,7 @@
 				, READ_CNT
 				, ROWNUM ROW_NUM
 				, REPLY_CNT
+				, CLUB_CODE
 		FROM
 		(	
 			SELECT BOARD_NUM
@@ -151,6 +197,9 @@
 				, CLUB_CODE
 			FROM COMMUNITY_BOARD
 			WHERE CLUB_CODE = #{clubCode}
+			<if test='searchValue != null and !searchValue.equals("")'>
+				AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+			</if>
 			ORDER BY BOARD_NUM DESC
 			)	
 		)
@@ -205,12 +254,14 @@
 			, REPLY_CONTENT
 			, REPLY_WRITER
 			, BOARD_NUM
+			, CLUB_CODE
 		) VALUES (
 			(SELECT 'REPLY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REPLY_NUM, 7))), 0) + 1,3 , '0') 
 			FROM COMMUNITY_REPLY)
 			, #{replyContent}
 			, #{replyWriter}
 			, #{boardNum}
+			, #{clubCode}
 		)
 	</insert>
 	
@@ -221,23 +272,66 @@
 			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		FROM COMMUNITY_REPLY
 		WHERE BOARD_NUM = #{boardNum}
+		AND CLUB_CODE = #{clubCode}
 		ORDER BY REPLY_NUM DESC
+	</select>
+	
+	<update id="updateReply">
+		UPDATE COMMUNITY_REPLY
+		SET
+			REPLY_CONTENT = #{replyContent}
+		WHERE REPLY_NUM = #{replyNum}
+	</update>
+	
+	<delete id="deleteReply">
+		DELETE COMMUNITY_REPLY
+		WHERE REPLY_NUM = #{replyNum}
+	</delete>
+	
+	<select id="getClubMemberList" resultMap="bookClubMember">
+		SELECT ACCEPT_CODE
+			, MEM_ID
+		FROM BOOK_CLUB_MEMBER
+		WHERE CLUB_CODE = #{clubCode}
+		AND CLUB_MEM_STATUS = 2
+	</select>
+	
+	<select id="getApplyMemberList" resultMap="bookClubMember">
+		SELECT ACCEPT_CODE
+			, MEM_ID
+		FROM BOOK_CLUB_MEMBER
+		WHERE CLUB_CODE = #{clubCode}
+		AND CLUB_MEM_STATUS = 1
 	</select>
 	
 	<update id="acceptMember">
 		UPDATE BOOK_CLUB_MEMBER
 		SET
 			CLUB_MEM_STATUS = 2
-		WHERE MEM_ID = #{memId}
+		WHERE ACCEPT_CODE = #{acceptCode}
+	</update>
+	
+	<update id="refuseMember">
+		UPDATE BOOK_CLUB_MEMBER
+		SET
+			CLUB_MEM_STATUS = 3
+		WHERE ACCEPT_CODE = #{acceptCode}
 	</update>
 	
 	<select id="getBoardCnt" resultType="int">
 		SELECT COUNT(BOARD_NUM) 
 		FROM COMMUNITY_BOARD
+		WHERE CLUB_CODE = #{clubCode}
 	</select>
 	
-	<!-- 커뮤니티 댓글  -->
-	
+	<!-- 게시글 조회수  -->
+	<update id="updateReadCnt">
+		UPDATE COMMUNITY_BOARD
+		SET 
+			READ_CNT = READ_CNT + 1
+		WHERE BOARD_NUM = #{boardNum}
+		AND CLUB_CODE = #{clubCode}
+	</update>
 	
 	
 	

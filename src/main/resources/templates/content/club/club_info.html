@@ -4,19 +4,17 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/public_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/content/club/club_info.css">
 </th:block>
 <th:block layout:fragment="content">
 	<div class="club-info-div">
 		<div class="row">
 			<div class="col">
-				<div class="row">
-					<div class="col-4">
-						<h3>북클럽</h3>
-					</div>
-					<div class="offset-4 col-4">
-						<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]]);">
-					</div>
+				<div class="row club-title">
+					북클럽
+				</div>
+				<div class="offset-10 col-2">
+					<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]]);">
 				</div>
 				<div class="row row-cols-1 row-cols-md-3 g-4">
 				<th:block th:each="club : ${clubList}">
@@ -27,7 +25,7 @@
 								class="card-img-top" height="400px;"></a>
 							<div class="card-body" style="height: 200px;">
 								<h5 class="card-title">[[${club.clubName}]]</h5>
-								<p class="card-text">[[${club.clubIntro}]]</p>
+								<p class="card-text">[[${club.clubShortInfo}]]</p>
 							</div>
 						</div>
 					</div>

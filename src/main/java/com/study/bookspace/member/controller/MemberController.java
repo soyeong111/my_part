@@ -48,8 +48,6 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/emailAuthAjax")
 	public String emailAuthAjax(String email, MailVO mailVO) {
-		System.out.println(email);
-		
 		List<String> recipientList = new ArrayList<>();
 		recipientList.add(email);
 		mailVO.setRecipientList(recipientList);
@@ -57,8 +55,6 @@ public class MemberController {
 		String pw = mailService.createRandomPassword(6);
 		mailVO.setContent("인증 번호 : " + pw);
 		mailService.sendSimpleEmail(mailVO);
-		
-		System.out.println(pw);
 		return pw;
 	}
 	
@@ -66,6 +62,7 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/joinAjax")
 	public boolean joinAjax(MemberVO memberVO) {
+		System.out.println(memberVO);
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		return memberService.join(memberVO) == 1;
 	}

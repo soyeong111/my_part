@@ -17,16 +17,16 @@
 				<h3>북클럽 커뮤니티</h3>
 			</div>
 		</div>
-		<div class="row">
+		<form id="searchForm" class="row" th:action="@{/club/community}" method="post">
 			<div class="col-6">
-				<select>
-					<option>제목</option>
-					<option>작성자</option>
+				<select class="form-select" name="searchKeyword">
+					<option value="COMMUNITY.BOARD_TITLE" th:selected="${communityVO.searchKeyword == 'COMMUNITY.BOARD_TITLE'}">제목</option>
+					<option value="MEM.MEM_ID" th:selected="${communityVO.searchKeyword == 'MEM.MEM_ID'}">작성자</option>
 				</select>
-				<input type="text">
-				<input type="button" class="btn custom-btn" value="검색">
+				<input type="text" class="form-control" name="searchValue" th:value="${communityVO.searchValue}">
+				<input type="submit" class="btn custom-btn" value="검색">
 			</div>
-		</div>
+		</form>
 		<div class="row">
 			<div class="col">
 				<table class="table">
@@ -53,7 +53,10 @@
 						<th:block th:unless="${#lists.size(boardList) == 0}">
 							<tr th:each="board, state : ${boardList}">
 								<td><span th:text="${board.rowNumber}"></span></td>
-								<td><a href="javascript:void(0)" th:onclick="memberOnly([[${board.boardNum}]])">[[${board.boardTitle}]]</a></td>
+								<td>
+									<a th:href="@{/club/boardDetail(boardNum=${board.boardNum}, clubCode=${board.clubCode})}">[[${board.boardTitle}]]</a>
+									<span th:text="${board.replyCnt == 0 ? '' : '[' + board.replyCnt + ']'}"></span>
+								</td>
 								<td>[[${board.boardWriter}]]</td>
 								<td>[[${board.regDate}]]</td>
 								<td>[[${board.readCnt}]]</td>
@@ -72,15 +75,15 @@
 			<div class="col" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 				<th:block th:if="${communityVO.prevPageFlag}">
 					<a
-						th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1})}">이전</a>
+						th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1}, clubCode=${clubCode})}">이전</a>
 				</th:block>
 				<th:block
 					th:each="pageNum : ${#numbers.sequence(communityVO.startPageNum, communityVO.endPageNum)}">
-					<a th:href="@{/club/community(nowPageNum=${pageNum})}"><span
+					<a th:href="@{/club/community(nowPageNum=${pageNum}, clubCode=${clubCode})}"><span
 						th:text="${pageNum}"></span></a>
 				</th:block>
 				<th:block th:if="${communityVO.nextPageFlag}">
-					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1})}">다음</a>
+					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1}, clubCode=${clubCode})}">다음</a>
 				</th:block>
 			</div>
 		</div>

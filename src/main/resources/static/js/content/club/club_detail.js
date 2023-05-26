@@ -11,8 +11,33 @@ function joinClub(memId, clubCode){
 		return ;
 	}
 	
-	//북클럽 가입 신청
-	joinClubAjax(clubCode);
+	//ajax start
+	$.ajax({
+	   url: '/club/alreadyApplyAjax', //요청경로
+	   type: 'post',
+	   async : true,
+	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+	   data: {'memId':memId, 'clubCode':clubCode}, //필요한 데이터
+	   success: function(result) {
+	      if(result){
+			  alert('가입이력이 있습니다.');
+		  }
+		  else{
+			  const applyMsg = confirm('가입하시겠습니까?');
+			  
+			  if(applyMsg){
+				  //북클럽 가입 신청
+			 	   joinClubAjax(clubCode);				
+			  }
+		  }
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
+	
+	
 	
 }
 
@@ -37,9 +62,40 @@ function joinClubAjax(clubCode){
 }
 
 
+//클럽 삭제버튼 클릭시
+function deleteClub(clubCode){
+	const result = confirm('이 북클럽을 삭제하시겠습니까?');
+	
+	if(result){
+		location.href=`/club/deleteClub?clubCode=${clubCode}`;
+		
+	}
+}
 
-
-
+//커뮤니티 버튼 클릭 시 - 클럽 회원만 조회 가능
+function memberOnly(memId, clubCode){
+	
+	//ajax start
+	$.ajax({
+	   url: '/club/isClubMemberAjax', //요청경로
+	   type: 'post',
+	   async : true,
+	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+	   data: {'memId':memId, 'clubCode':clubCode}, //필요한 데이터
+	   success: function(result) {
+		  if(result){
+		      location.href=`/club/community?clubCode=${clubCode}`;
+		  }
+		  else{
+			  alert('클럽 회원만 입장할 수 있습니다.');
+		  }
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
+}
 
 
 

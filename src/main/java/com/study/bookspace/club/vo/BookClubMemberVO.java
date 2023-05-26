@@ -8,6 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class BookClubMemberVO {
+	private String acceptCode;
 	private String clubCode;
 	private String memId;
 	private String clubRegDate;

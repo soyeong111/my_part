@@ -40,19 +40,35 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectOne("clubMapper.getClubDetail", clubCode);
 	}
 
+	//클럽 가입 이력
+	@Override
+	public boolean alreadyApply(BookClubMemberVO bookClubMemberVO) {
+		int result = sqlSession.selectOne("clubMapper.alreadyApply", bookClubMemberVO);
+		return result != 0 ? true : false;
+	}
+	
+	
 	//북클럽 가입
 	@Override
 	public void joinClub(BookClubMemberVO bookClubMemberVO) {
 		sqlSession.insert("clubMapper.joinClub", bookClubMemberVO);
 	}
-
+	
+	//클럽 가지고 있는지 확인
+	@Override
+	public boolean hasClub(String memId) {
+		int result = sqlSession.selectOne("clubMapper.hasClub", memId);
+		return result != 0 ? true : false;
+	}
+	
 	//클럽명 중복확인
 	@Override
 	public boolean isDuplicateClubName(String clubName) {
 		int result = sqlSession.selectOne("clubMapper.isDuplicateClubName", clubName);
 		return result != 0 ? true : false;
 	}
-
+	
+	//클럽코드
 	@Override
 	public String getNextClubCode() {
 		return sqlSession.selectOne("clubMapper.getNextClubCode");
@@ -102,22 +118,87 @@ public class ClubServiceImpl implements ClubService{
 
 	//댓글 조회
 	@Override
-	public List<CommunityReplyVO> getReplyList(String boardNum) {
-		return sqlSession.selectList("clubMapper.getReplyList", boardNum);
+	public List<CommunityReplyVO> getReplyList(CommunityReplyVO communityReplyVO) {
+		return sqlSession.selectList("clubMapper.getReplyList", communityReplyVO);
 	}
 
-
+	//게시글 댓글 수정
 	@Override
-	public void acceptMember(String memId) {
-		sqlSession.update("clubMapper.acceptMember", memId);
+	public void updateReply(CommunityReplyVO communityReplyVO) {
+		sqlSession.update("clubMapper.updateReply", communityReplyVO);
+	}
+	
+	//댓글 삭제
+	@Override
+	public void deleteReply(String replyNum) {
+		sqlSession.delete("clubMapper.deleteReply", replyNum);
+	}
+	
+	//클럽 회원 승인
+	@Override
+	public void acceptMember(String acceptCode) {
+		sqlSession.update("clubMapper.acceptMember", acceptCode);
 	}
 
-
+	//게시글 수 조회
 	@Override
-	public int getBoardCnt() {
-		return sqlSession.selectOne("clubMapper.getBoardCnt");
+	public int getBoardCnt(String clubCode) {
+		return sqlSession.selectOne("clubMapper.getBoardCnt", clubCode);
+	}
+
+	//게시글 조회수 증가
+	@Override
+	public int updateReadCnt(CommunityVO communityVO) {
+		return sqlSession.update("clubMapper.updateReadCnt", communityVO);
+	}
+
+	//클럽 삭제
+	@Override
+	public void deleteClub(String clubCode) {
+		sqlSession.delete("clubMapper.deleteClub", clubCode);
+	}
+
+	//클럽 수정
+	@Override
+	public void updateClub(BookClubVO bookClubVO) {
+		sqlSession.update("clubMapper.updateClub", bookClubVO);
+	}
+
+	//클럽 회원 목록 조회
+	@Override
+	public List<BookClubMemberVO> getClubMemberList(String clubCode) {
+		return sqlSession.selectList("clubMapper.getClubMemberList", clubCode);
+	}
+
+	//가입 신청 회원 목록 조회
+	@Override
+	public List<BookClubMemberVO> getApplyMemberList(String clubCode) {
+		return sqlSession.selectList("clubMapper.getApplyMemberList", clubCode);
+	}
+
+	//회원 거절/강퇴
+	@Override
+	public void refuseMember(String acceptCode) {
+		sqlSession.update("clubMapper.refuseMember", acceptCode);
+	}
+
+	//클럽 멤버인지 확인(커뮤니티)
+	@Override
+	public boolean isClubMember(BookClubMemberVO bookClubMemberVO) {
+		int result = sqlSession.selectOne("clubMapper.isClubMember", bookClubMemberVO);
+		return result != 0 ? true : false;
 	}
 
 	
+
+
+	
+
+
+	
+
+
+	
+
 
 }

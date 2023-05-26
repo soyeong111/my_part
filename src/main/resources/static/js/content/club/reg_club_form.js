@@ -73,11 +73,13 @@ function regClubValidate(){
 	let result_clubName = true;
 	let result_clubIntro = true;
 	let result_clubImg = true;
+	let result_clubShortInfo = true;
 	
 	//오류메세지
 	let str_clubName = '';
 	let str_clubIntro = '';
 	let str_clubImg = '';
+	let str_clubShortInfo = '';
 	
 	//클럽 생성 form태그의 자식 div 전체 선택
 	const divs = document.querySelectorAll('#regClubForm > div');
@@ -105,6 +107,18 @@ function regClubValidate(){
 		result_clubIntro = false;
 	}
 	
+	//클럽 한줄소개
+	const club_short_info = document.querySelector('#clubShortInfo').value;
+	if(club_short_info == ''){
+		str_clubShortInfo = '클럽소개는 필수입력입니다.';
+		result_clubShortInfo = false;
+	}
+	else if(club_intro.length > 100){
+		str_clubShortInfo = '클럽소개는 30글자 이내로 작성해주세요.';
+		result_clubShortInfo = false;
+	}
+	
+	
 	//클럽이미지
 	const club_image = document.querySelector('#clubImg').value;
 	if(club_image == ''){
@@ -121,16 +135,21 @@ function regClubValidate(){
 	
 	if(!result_clubIntro){
 		const errorHTML = `<div class="message-is-invalid">${str_clubIntro}</div>`;
-		divs[3].insertAdjacentHTML('afterend', errorHTML);
+		divs[4].insertAdjacentHTML('afterend', errorHTML);
 	}
 	
 	if(!result_clubImg){
 		const errorHTML = `<div class="message-is-invalid">${str_clubImg}</div>`;
+		divs[3].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
+	if(!result_clubShortInfo){
+		const errorHTML = `<div class="message-is-invalid">${str_clubShortInfo}</div>`;
 		divs[2].insertAdjacentHTML('afterend', errorHTML);
 	}
 	
 	//
-	return result_clubName && result_clubIntro && result_clubImg;
+	return result_clubName && result_clubIntro && result_clubImg && result_clubShortInfo;
 	
 	
 	

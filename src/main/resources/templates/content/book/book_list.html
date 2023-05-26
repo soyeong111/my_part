@@ -8,6 +8,24 @@
 </th:block>
 <th:block layout:fragment="content">
 
+
+<div class="search">
+
+		<div class="row p-5">
+			<div class="col-2">
+				<select class="form-select">
+					<option>제목</option>
+					<option>저자</option>
+				</select>
+			</div>
+			<div class="col-6">
+				<input class="form-control">
+			</div>
+			<div class="col-2 d-grid">
+				<button type="button" class="btn btn-primary custom-btn">검색</button>
+			</div>
+		</div>
+</div>
 <div class="book-list-div">
   <div class="row row-cols-5 g-4">
     <th:block th:each="book, iterStat : ${bookList}">
