@@ -8,7 +8,7 @@ function deleteBoard(boardNum, clubCode){
 	}
 }
 
-function updateReply(selectedTag, replyNum, boardNum){
+function updateReply(selectedTag, replyNum, boardNum, clubCode){
 	//수정 버튼 클릭 시
 	if(selectedTag.value == '수정'){
 		//클릭한 수정버튼에서 댓글 내용이 있는 태그를 찾아가기
@@ -24,6 +24,7 @@ function updateReply(selectedTag, replyNum, boardNum){
 		let str = ``;
 		str += '<form id="updateReplyForm" action="/club/updateReply" method="post">';
 		str += `<input type="hidden" value="${replyNum}" name="replyNum">`;
+		str += `<input type="hidden" value="${clubCode}" name="clubCode">`;
 		str += `<input type="hidden" value="${boardNum}" name="boardNum">`;
 		str += `<input type="text" value="${content}" name="replyContent">`;
 		str += '</form>';
