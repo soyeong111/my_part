@@ -36,8 +36,6 @@ public class SmsService {
 	private String phone;
 	
     public String makeSignature(String time) throws Exception {
-    	System.out.println("~~~~makeSignature~~~~");
-    	
     	String space = " ";
     	String newLine = "\n";
     	String method = "POST";
