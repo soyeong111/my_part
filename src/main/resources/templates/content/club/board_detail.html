@@ -48,13 +48,22 @@
 			<form class="row" th:action="@{/club/regReply}" method="post">
 				<div class="col-12">
 					<input type="hidden" name="boardNum" th:value="${board.boardNum}">
+					<input type="hidden" name="clubCode" th:value="${board.clubCode}">
 					<textarea rows="3" class="form-control" cols="100" name="replyContent"></textarea>
 				</div>
 				<div class="offset-11">
 					<input sec:authorize="isAuthenticated()" class="btn custom-btn" type="submit" value="등록">
 				</div>
 			</form>
-			
+			<div th:each="reply : ${replyList}">
+				<div>[[${reply.replyWriter}]]</div>
+				<div>[[${reply.regDate}]]</div>
+				<div>[[${reply.replyContent}]]</div>
+				<div th:if="${reply.replyWriter == #authentication.name}">
+					<input type="button" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]]);">
+					<input type="button" value="삭제" th:onclick="|location.href='@{/club/deleteReply(replyNum=${reply.replyNum}, boardNum=${board.boardNum})}';|">
+				</div>
+			</div>
 		</div>
 	</div>
 </th:block>

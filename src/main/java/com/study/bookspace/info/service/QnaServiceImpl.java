@@ -64,4 +64,9 @@ public class QnaServiceImpl implements QnaService {
 		sqlSession.insert("qnaMapper.insertQnaAnswer", answerVO);		
 	}
 
+	@Override
+	public List<QnaVO> searchQna(QnaVO qnaVO) {
+		return sqlSession.selectList("qnaMapper.searchQna", qnaVO);
+	}
+
 }

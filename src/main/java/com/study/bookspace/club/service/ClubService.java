@@ -11,6 +11,9 @@ import com.study.bookspace.util.PageVO;
 
 public interface ClubService {
 	
+	//클럽 가지고 있는지 확인
+	boolean hasClub(String memId);
+	
 	//클럽명 중복확인
 	boolean isDuplicateClubName(String clubName);
 	
@@ -22,6 +25,9 @@ public interface ClubService {
 	
 	//북클럽 상세 조회
 	BookClubVO getClubDetail(String clubCode);
+	
+	//클럽 가입 이력
+	boolean alreadyApply(BookClubMemberVO bookClubMemberVO);
 	
 	//회원 북클럽 가입
 	void joinClub(BookClubMemberVO bookClubMemberVO);
@@ -51,13 +57,22 @@ public interface ClubService {
 	void regReply(CommunityReplyVO communityReplyVO);
 	
 	//댓글 조회
-	List<CommunityReplyVO> getReplyList(String boardNum);
+	List<CommunityReplyVO> getReplyList(CommunityReplyVO communityReplyVO);
+	
+	//게시글 댓글 수정
+	void updateReply(CommunityReplyVO communityReplyVO);
+	
+	//게시글 댓글 삭제
+	void deleteReply(String replyNum);
 	
 	//클럽 멤버 승인
 	void acceptMember(String acceptCode);
 	
 	//클럽 회원 거절
 	void refuseMember(String acceptCode);
+
+	//클럽 멤버인지 확인
+	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
 	
 	//전체 게시글 수 조회
 	int getBoardCnt(String clubCode);
@@ -65,9 +80,6 @@ public interface ClubService {
 	//조회수 증가
 	int updateReadCnt(CommunityVO communityVO);
 	
-	//클럽 멤버인지 확인
-	//boolean isClubMember(BookClubMemberVO bookClubMemberVO);
-	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
 	
 	//클럽 삭제
 	void deleteClub(String clubCode);

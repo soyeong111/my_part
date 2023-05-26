@@ -2,11 +2,13 @@ package com.study.bookspace.info.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import com.study.bookspace.info.service.AnswerService;
 import com.study.bookspace.info.service.QnaService;
 import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
+import com.study.bookspace.info.vo.SearchQnaVO;
 import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.util.PageVO;
 
@@ -40,10 +43,11 @@ public class InfoController {
 	
 
 	//문의사항 리스트
-	@GetMapping ("/qna")
-	public String qnaList(Model model, PageVO pageVO,SubMenuVO subMenuVO) {
+	@RequestMapping ("/qna")
+	public String qnaList(Model model, PageVO pageVO,
+			SubMenuVO subMenuVO) {
 		//전체 게시글 수 조회
-		//int totalDataCnt = qnaService.selectQnaCnt();
+		int totalDataCnt = qnaService.selectQnaCnt();
 		
 		//전체 데이터 수 세팅
 		pageVO.setTotalDataCnt(qnaService.selectQnaCnt());
@@ -57,8 +61,10 @@ public class InfoController {
 		//게시글 목록 조회
 		model.addAttribute("qnaList", qnaService.selectQna(pageVO));
 		
+		
 		return "content/info/qna_list";
 	}
+	
 	
 	
 	//문의사항 목록 페이지에서 질문하기 클릭시(로그인 성공했다는 가정) 가는 질문 작성 페이지
@@ -154,12 +160,37 @@ public class InfoController {
 	
 	
 	@PostMapping("/qnaAnswer")
-	public String qnaAnswer(AnswerVO answerVO) {
+	public String qnaAnswer(AnswerVO answerVO,SubMenuVO subMenuVO) {
 		qnaService.insertQnaAnswer(answerVO);
 		
 		return "redirect:/info/qnaDetail";
 	}
 	
+	@RequestMapping("/searchQna")
+	public String searchQna(SubMenuVO subMenuVO, QnaVO qnaVO, Model model, String searchKeyword, SearchQnaVO searchQnaVO) {
+		System.out.println("ㅇ야야ㅑ야야야ㅑ야야야야ㅑ야야야야야야ㅑ");
+		
+		searchQnaVO.setSearchKeyword(searchKeyword);
+		qnaVO.setSearchQnaVO(searchQnaVO);
+		System.out.println(qnaVO);
+		model.addAttribute("search", qnaService.searchQna(qnaVO));
+		
+		return "content/info/qna_list";
+	}
+	
+	
+	
 	
 
+	
 }
+
+
+
+
+
+
+
+
+
+

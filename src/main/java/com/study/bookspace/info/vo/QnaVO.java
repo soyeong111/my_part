@@ -20,5 +20,7 @@ public class QnaVO {
 	private int rowNum;
 	private int rowNumber;
 	private String isAdminAnswer;
+	
+	private SearchQnaVO searchQnaVO;
 	 
 }
