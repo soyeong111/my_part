@@ -9,13 +9,13 @@
 <th:block layout:fragment="content">
 
 
+
 <div class="row justify-content-center">
 	<div class="col-10">
 		<h2><label for="" class="col-9 col-form-label"> [[${book.bookTitle}]] </label></h2>
 		<div class="row mb=3">
 			<div class="col-5">
-		
-				<th:block th:each="img : ${book.imgList}"> <!-- img: 자료형shopItemVO  --> <!-- 메인 이미지 -->
+				<th:block th:each="img : ${book.imgList}"> 
  		  			<th:block th:if="${img.isMainImg == 'Y'}">
  		  				<img width="430px;" th:src="${'/image/book/' + img.attachedFileName}">
  		  			</th:block>
@@ -47,8 +47,8 @@
   		<div class="row mb-3">
   			<div class="col d-grid">
   				<input type="button" class="btn custom-btn" id="brBtn" value="대여하기"
-      			 th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);"
-      			 th:disabled="${book.borrowCnt == book.bookStockCnt}">
+      			 th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);">
+      	
   			</div>
   			<div class="col d-grid">
   				<input type="button" class="btn custom-btn" value="예약하기" >

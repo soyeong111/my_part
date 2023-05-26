@@ -43,6 +43,28 @@ public class BookController {
 	}
 
 	
+//	신작도서
+	@GetMapping("/newBook")
+	public String newBook(Model model, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("bookList", bookService.getNewBookList());
+		
+		return "content/book/new_book";
+	}
+	
+	
+	
+//	베스트 셀러
+	@GetMapping("/bestBook")
+	public String bestBook(Model model, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("bookList", bookService.getBestBookList());
+		
+		return "content/book/best_book";
+	}
+	
+	
+	
 //	도서 등록
 	@PostMapping("/regBookProcess")
 	public String regBook(BookVO bookVO ,MultipartFile mainImg, MultipartFile[] subImg) {
@@ -118,44 +140,51 @@ public class BookController {
 //	}
 	
 	
+
 //	도서 대여
 	@ResponseBody
 	@PostMapping("/borrowAjax")
-	public void borrowAjax(BorrowVO borrowVO, HttpSession session) {
+	public int borrowAjax(BorrowVO borrowVO, HttpSession session) {
 		
 		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
-		bookService.borrowBook(borrowVO);
-	}
-	
-//	도서 대여 개수
-	@ResponseBody
-	@PostMapping("/getBorrowCntAjax")
-	public Map<String, Object> getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
-	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-	    Map<String, Object> response = bookService.getBorrowAndStockCnt(borrowVO.getBookCode());
-	    return response;
-	}
-
-
-
-	
-	
-	
-//	신작도서
-	@GetMapping("/newBook")
-	public String newBook() {
+//		중복 대여
+		int checkBorrowStatus = bookService.checkBorrowStatus(borrowVO);
+//			중복 대여했으면
+		if(checkBorrowStatus != 0) {
+				return 1;
+			}
+//		
 		
-		return "content/book/new_book";
-	}
-	
-	
-	
-//	베스트 셀러
-	@GetMapping("/bestBook")
-	public String bestBook() {
+//		총 대여한 개수 
+		int getBorrowLimit = bookService.getBorrowLimit(borrowVO);
+			if(getBorrowLimit == 4) {
+				return 4;
+			}
 		
-		return "content/book/best_book";
+//		도서 대여
+		 bookService.borrowBook(borrowVO);
+		
+		 return 0;
 	}
+	
+	
+////	도서 대여 개수
+//	@ResponseBody
+//	@PostMapping("/getBorrowCntAjax")
+//	public Map<String, Object> getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
+//		
+//	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+//	    Map<String, Object> response = bookService.getBorrowAndStockCnt(borrowVO.getBookCode());
+//	    
+//	    return response;
+//	}
+//
+//
+//
+//	
+	
+	
+
 	
 }

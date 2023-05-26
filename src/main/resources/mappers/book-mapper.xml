@@ -20,7 +20,6 @@
 		<result column="ISBN" 								property="isbn"/>
 		<result column="BORROW_CNT"							property="borrowCnt"/>
 		<result column="RESERVE_CNT"						property="reserveCnt"/>
-		<result column="AVAILABLE_STOCK_CNT"				property="availableStockCnt"/>
 		<association property="categoryVO" 					resultMap="category"></association> 		
 		<collection property="imgList" 						resultMap="img"></collection>
 	</resultMap>
@@ -109,7 +108,8 @@
 	    	, RETURN_DUEDATE
 	    ) VALUES (
 	    	(SELECT 'BK_BOR_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BORROW_CODE, 8))), 0) + 1, 3, '0')
-			FROM BOOK_BORROW)
+			FROM BOOK_BORROW
+			WHERE BORROW_CODE LIKE 'BK_BOR_%')
 	    	, #{bookCode}
 	    	, #{memId}
 	    	, SYSDATE + 7
@@ -134,13 +134,28 @@
 	WHERE BOOK_CODE = #{bookCode}
 	</select>
 	
-	<!-- 대여 가능한 권수를 초과하거나 중복 대여한 경우 -->
+	
+	
+	
+	<!-- 중복 대여 -->
 	<select id="checkBorrowStatus" resultType="int">
-	    SELECT COUNT(*) 
-	    FROM BOOK_BORROW 
-	    WHERE MEM_ID = #{memId}
+	  SELECT COUNT(*) 
+	  FROM BOOK_BORROW
+	  WHERE MEM_ID = #{memId} 
+	  AND BOOK_CODE = #{bookCode} 
+	  AND RETURN_DATE IS NULL
 	</select>
-		
+	
+	<!-- 회원의 도서 대여 개수 확인 -->
+	<select id="getBorrowLimit" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM BOOK_BORROW
+	  WHERE MEM_ID = #{memId} 
+	  AND RETURN_DATE IS NULL
+	</select>
+
+
+
 
 
 
@@ -253,9 +268,49 @@
 		AND IS_MAIN_IMG = 'Y' 
 	</select>
 
+
+	<!-- 신작 조회 -->
+		<select id="getNewBookList" resultMap="book">
+	  SELECT BOOK.BOOK_CODE
+	    , BOOK_TITLE
+	    , BOOK_AUTHOR
+	    , BOOK_PUBLICATION_DATE
+	    , BOOK_PUBLISHER
+	    , BOOK_INTRO
+	    , BOOK_CATE_NO
+	    , BOOK_STOCK_CNT
+	    , ISBN
+	    , ATTACHED_FILE_NAME
+	    , BORROW_CNT
+	  FROM BOOK BOOK, BOOK_IMAGE IMG
+	  WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+	    AND IS_MAIN_IMG = 'Y'
+	    AND BOOK_PUBLICATION_DATE >= TRUNC(SYSDATE, 'IW') -- 이번 주의 시작일자
+	  ORDER BY BOOK_PUBLICATION_DATE DESC
+	</select>
+	
+	<!-- 베스트 셀러 -->
+	<select id="getBestBookList" resultMap="book">
+	    SELECT BOOK.BOOK_CODE
+	        , BOOK_TITLE
+	        , BOOK_AUTHOR
+	        , BOOK_PUBLICATION_DATE
+	        , BOOK_PUBLISHER
+	        , BOOK_INTRO
+	        , BOOK_CATE_NO
+	        , BOOK_STOCK_CNT
+	        , ISBN
+	        , ATTACHED_FILE_NAME
+	        , BORROW_CNT
+	    FROM BOOK BOOK, BOOK_IMAGE IMG
+	    WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+	    AND IS_MAIN_IMG = 'Y'
+	    ORDER BY BORROW_CNT DESC
+	</select>
 	
 	
-	<!-- 도서 상세조회  -->
+	
+	<!-- 도서 상세 조회  -->
 	<select id="getBookDetail" resultMap="book">
 		SELECT BOOK.BOOK_CODE
 			, BOOK_TITLE

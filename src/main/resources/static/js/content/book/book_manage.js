@@ -12,10 +12,6 @@ function init() {
     const borrowCnt = parseInt(borrowCntElement.value);
 
 
-	console.log("bookStockCnt:", bookStockCnt);
-	console.log("borrowCnt:", borrowCnt);
-	console.log();
-
     if (borrowCnt == bookStockCnt) {
         borrowBtn.disabled = true;
     }
@@ -38,38 +34,59 @@ function borrow(memId, bookCode) {
     // 로그인 체크
     return;
   }
-
-  checkBorrow(bookCode);
+  // 동시에 대여 가능 여부를 확인하고 대여를 처리합니다.
+  checkBorrow(memId, bookCode, function() {
+    checkBorrowLimit(memId, bookCode, function() {
+      borrowAjax(memId, bookCode);
+    });
+  });
 }
 
-
-// 대여 가능 여부 확인
-function checkBorrow(bookCode) {
+// 중복 대여 여부
+function checkBorrow(memId, bookCode, callback) {
   $.ajax({
-    url: '/book/getBorrowCntAjax',
+    url: '/book/borrowAjax',
     type: 'post',
-    data: {'bookCode': bookCode}, // bookCode를 객체 형태로 전달
+    data: { 'memId': memId, 'bookCode': bookCode },
     success: function(response) {
-      var borrowCnt = parseInt(response['BORROW_CNT']);
-      var bookStockCnt = parseInt(response['BOOK_STOCK_CNT']);
-      if (borrowCnt >= bookStockCnt) {
-        alert('도서 대여가 불가능합니다.');
+      if (response == 1) {
+        alert('이미 대여한 책입니다.');
+      
       } else {
-        borrowAjax(bookCode);
+        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
       }
     },
     error: function() {
-      alert('도서 대여 가능 여부를 확인하는데 실패했습니다.');
+      alert('대여 가능 여부를 확인하는데 실패했습니다.');
     }
   });
 }
 
-
-function borrowAjax(bookCode) {
+// 
+function checkBorrowLimit(memId, bookCode, callback) {
   $.ajax({
     url: '/book/borrowAjax',
     type: 'post',
-    data: { 'bookCode': bookCode },
+    data: { 'memId': memId, 'bookCode': bookCode },
+    success: function(response) {
+      if (response == 4) {
+        alert('대여 가능한 권수를 초과하였습니다.');
+      } else {
+        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
+      }
+    },
+    error: function() {
+      alert('대여 가능 여부를 확인하는데 실패했습니다.');
+    }
+  });
+}
+
+// 도서 대여 AJAX 처리
+function borrowAjax(memId, bookCode) {
+  $.ajax({
+    url: '/book/borrowAjax',
+    type: 'post',
+    data: { 'bookCode': bookCode, 'memId': memId },
     success: function(result) {
       const result1 = confirm('도서가 성공적으로 대여되었습니다.');
 
@@ -82,7 +99,6 @@ function borrowAjax(bookCode) {
     }
   });
 }
-
 
 
 

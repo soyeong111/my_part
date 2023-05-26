@@ -30,6 +30,16 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	public List<BookVO> getNewBookList() {
+		return sqlSession.selectList("bookMapper.getNewBookList");
+	}
+	
+	@Override
+	public List<BookVO> getBestBookList() {
+		return sqlSession.selectList("bookMapper.getBestBookList");
+	}
+	
+	@Override
 	public String getNextBookCode() {
 		return sqlSession.selectOne("bookMapper.getNextBookCode");
 	}
@@ -53,18 +63,24 @@ public class BookServiceImpl implements BookService {
 		sqlSession.update("bookMapper.updateBorrowCnt", borrowVO);
 	}
 
+//	@Override
+//	public Map<String, Object> getBorrowAndStockCnt(String bookCode) {
+//		return sqlSession.selectOne("bookMapper.getBorrowAndStockCnt", bookCode);
+//	}
+
 	@Override
-	public Map<String, Object> getBorrowAndStockCnt(String bookCode) {
-		return sqlSession.selectOne("bookMapper.getBorrowAndStockCnt", bookCode);
+	public int checkBorrowStatus(BorrowVO borrowVO) {
+	    return sqlSession.selectOne("bookMapper.checkBorrowStatus", borrowVO);
 	}
 
 	@Override
-	public int checkBorrowStatus(String memId, String bookCode) {
-	    Map<String, Object> parameters = new HashMap<>();
-	    parameters.put("memId", memId);
-	    parameters.put("bookCode", bookCode);
-	    return sqlSession.selectOne("bookMapper.checkBorrowStatus", parameters);
+	public int getBorrowLimit(BorrowVO borrowVO) {
+		return sqlSession.selectOne("bookMapper.getBorrowLimit", borrowVO);
 	}
+
+
+
+
 
 	
 

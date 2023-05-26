@@ -13,8 +13,14 @@ public interface BookService {
 //	사용중인 카테고리 목록 조회
 	List<CategoryVO> getCateListInUse();
 	
-//	도서 목록 목록 조회
+//	도서 목록 조회
 	List<BookVO> getBookListForUser();
+	
+//	신작 도서 조회
+	List<BookVO> getNewBookList();
+	
+//	베스트 셀러 조회
+	List<BookVO> getBestBookList();
 
 //	다음 등록될 상품 코드 조회
 	String getNextBookCode();
@@ -28,11 +34,14 @@ public interface BookService {
 //	도서 대여
 	void borrowBook(BorrowVO borrowVO);
 	
-//	도서 대여 개수
-	Map<String, Object> getBorrowAndStockCnt(String bookCode);
+////	도서 대여 개수
+//	Map<String, Object> getBorrowAndStockCnt(String bookCode);
 	
 //	도서 대여 개수 확인
-	int checkBorrowStatus(String memId, String bookCode);
+	int checkBorrowStatus(BorrowVO borrowVO);
+	
+// 	대여 개수 확인
+	int getBorrowLimit(BorrowVO borrowVO);
 
 
 	
