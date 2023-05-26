@@ -1,3 +1,6 @@
+init();
+
+
 //초기 작업 실행
 function init() {
     const borrowBtn = document.getElementById('brBtn');
