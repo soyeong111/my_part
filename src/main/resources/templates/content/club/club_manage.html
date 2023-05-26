@@ -24,7 +24,7 @@
 					<tr th:each="member : ${memberList}">
 						<td>[[${member.memId}]]</td>
 						<td>
-							<input type="button" value="강퇴" th:onclick="refuse([[${member.acceptCode}]]);">
+							<input type="button" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]]);">
 						</td>
 					</tr>
 				</table>
