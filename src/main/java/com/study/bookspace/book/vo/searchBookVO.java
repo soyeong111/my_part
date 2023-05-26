@@ -9,8 +9,8 @@ import lombok.ToString;
 @ToString
 public class searchBookVO {
 
-	private String searchItemName;
-	private String[] searchCateCode;
+	private String searchBookTitle;
+	private String[] searchBookCateNo;
 	private int searchItemStatus;
 	private String searchFromItemStock;
 	private String searchToItemStock;

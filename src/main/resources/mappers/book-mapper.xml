@@ -330,7 +330,50 @@
 	</select>
 	
 	
+	<!-- 상품관리 상품 목록 조회  -->
+	<select id="getBookListForAdminManage" resultMap="book">
+		SELECT BOOK.BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, TO_CHAR(BOOK_PUBLICATION_DATE, 'YYYY-MM-DD') BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, BOOK_IMG_CODE
+			, ISBN
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_STATUS_NO
+		FROM BOOK BOOK, BOOK_IMAGE IMG
+		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		AND BOOK.BOOK_CODE = #{bookCode}
+				
+			<!-- 검색 조건 -->
+		<if test='searchItemVO != null and !searchItemVO.searchItemName.equals("")'>				
+		    AND UPPER(BOOK_TITLE) LIKE '%'||UPPER(#{searchItemVO.searchItemName})||'%'
+		</if>
+		
+		<if test="searchItemVO != null">
+		    AND ITEM.CATE_CODE IN 
+		    <foreach collection="searchItemVO.searchCateCode" item="cateCode" open="(" close=")" separator=",">
+		    	#{cateCode}
+		    </foreach>
+		 </if>
+		
+		     
+		<if test="searchItemVO != null and searchItemVO.searchItemStatus != 0">
+		    AND ITEM_STATUS = #{searchItemVO.searchItemStatus}
+		</if>
+		<if test='searchItemVO != null and !searchItemVO.searchFromItemStock.equals("")'>
+		    AND ITEM_STOCK &gt;= TO_NUMBER(#{searchItemVO.searchFromItemStock})			
+		</if>
+		<if test='searchItemVO != null and !searchItemVO.searchToItemStock.equals("")'>
+		    AND ITEM_STOCK &lt;= TO_NUMBER(#{searchItemVO.searchToItemStock})		
+		</if>   
 	
+	</select>
 	
 	
 	
