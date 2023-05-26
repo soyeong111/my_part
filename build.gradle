@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+	implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: '5.2.1'
+	//implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.13'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'

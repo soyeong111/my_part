@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
+import com.study.bookspace.sms.SmsResponseVO;
+import com.study.bookspace.sms.SmsService;
+import com.study.bookspace.sms.SmsVO;
 import com.study.bookspace.util.MailService;
 import com.study.bookspace.util.MailVO;
 
@@ -30,6 +33,9 @@ public class MemberController {
 	
 	@Resource(name = "mailService")
 	private MailService mailService;
+	
+	@Resource(name = "smsService")
+	private SmsService smsService;
 	
 	// 회원가입 화면으로
 	@GetMapping("/joinForm")
@@ -56,6 +62,18 @@ public class MemberController {
 		mailVO.setContent("인증 번호 : " + pw);
 		mailService.sendSimpleEmail(mailVO);
 		return pw;
+	}
+	
+	// 휴대폰 인증
+	@ResponseBody
+	@PostMapping("/tellAuthAjax")
+	public String tellAuthAjax(SmsVO smsVO) throws Exception {
+		List<SmsVO> messages = new ArrayList<>();
+		String key = smsService.createRandomNumber(6);
+		smsVO.setContent("[한울도서관]\n인증 번호 : " + key);
+		messages.add(smsVO);
+		smsService.sendSms(messages);
+		return key;
 	}
 	
 	// 회원가입
