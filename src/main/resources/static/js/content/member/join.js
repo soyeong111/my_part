@@ -143,7 +143,7 @@ function email_auth(btn) {
 	});
 }
 
-/* 이메일 인증 확인 */
+/* 이메일 인증 확인 ------------ 이메일 인증은 빼자 */
 function email_pw_check(btn) {
 	const email_pw_input = document.querySelector('#join-email-pw');
 	if (join_email_pw == email_pw_input.value) {
@@ -166,11 +166,35 @@ function tell_validation(tell_input) {
 		tell_input.classList.remove('is-valid');
 		tell_input.classList.add('is-invalid');
 	}
-	
-	
-	
-	
 }
+
+
+
+
+
+/* 전화번호 인증 */
+function tell_auth(btn) {
+	const tell_0 = document.querySelector('#join-mem-tell-0');
+	const tell_1 = document.querySelector('#join-mem-tell-1');
+	const tell_2 = document.querySelector('#join-mem-tell-2');
+	const tell = tell_0.value + tell_1.value + tell_2.value;
+	$.ajax({
+		url: '/member/tellAuthAjax',
+		type: 'post',
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'to':tell},
+		success: function(result) {
+			alert('ajax 통신 성공');
+			console.log(result);
+		},
+		error: function() {
+			alert('ajax 통신 실패');
+		}
+	});
+}
+
+
+
 
 /* 주소록 api 사용 */
 function search_addr() {
