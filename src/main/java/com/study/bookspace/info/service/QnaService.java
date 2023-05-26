@@ -2,6 +2,8 @@ package com.study.bookspace.info.service;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.util.PageVO;
@@ -30,6 +32,8 @@ public interface QnaService {
 	int updateIsAdminAnswer(String qnaCode);
 	
 	void insertQnaAnswer(AnswerVO answerVO);
+	
+	List<QnaVO> searchQna(QnaVO qnaVO);
 
 
 }
