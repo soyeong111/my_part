@@ -7,12 +7,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class searchBookVO {
+public class SearchBookVO {
 
 	private String searchBookTitle;
-	private String[] searchBookCateNo;
-	private int searchItemStatus;
-	private String searchFromItemStock;
-	private String searchToItemStock;
-	
+	private String searchAuthor;
+	private String searchPublicationDate;
+	private String searchPublisher;
+	private int[] searchBookCateNo;
+	private String searchIsbn;
+	private int searchBookStatus;
+	private String searchFromBookStock;
+	private String searchToBookStock;
 }

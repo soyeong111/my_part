@@ -78,6 +78,16 @@ public class BookServiceImpl implements BookService {
 		return sqlSession.selectOne("bookMapper.getBorrowLimit", borrowVO);
 	}
 
+	@Override
+	public List<BookVO> getBookListForAdminManage(BookVO bookVO) {
+		return sqlSession.selectList("bookMapper.getBookListForAdminManage", bookVO);
+	}
+
+	@Override
+	public List<CategoryVO> getCateListForAdmin() {
+		return sqlSession.selectList("bookMapper.getCateListForAdmin");
+	}
+
 
 
 

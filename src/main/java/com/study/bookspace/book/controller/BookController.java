@@ -156,7 +156,7 @@ public class BookController {
 			}
 //		
 		
-//		총 대여한 개수 
+//		총 대여한 개수 (5권 이상 대여 금지)
 		int getBorrowLimit = bookService.getBorrowLimit(borrowVO);
 			if(getBorrowLimit == 4) {
 				return 4;
@@ -164,9 +164,23 @@ public class BookController {
 		
 //		도서 대여
 		 bookService.borrowBook(borrowVO);
-		
 		 return 0;
 	}
+	
+	
+	
+//	도서 관리) 도서 관리 페이지
+	@RequestMapping("/bookManage")
+	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO) {
+		
+//		카테고리 목록 (전체)
+		model.addAttribute("categoryList", bookService.getCateListForAdmin());
+		
+//		도서 목록 조회
+		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));
+		return "content/admin/book_manage";
+	}
+	
 	
 	
 ////	도서 대여 개수

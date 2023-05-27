@@ -34,7 +34,7 @@ function borrow(memId, bookCode) {
     // 로그인 체크
     return;
   }
-  // 동시에 대여 가능 여부를 확인하고 대여를 처리합니다.
+  // 동시에 대여 가능 여부를 확인하고 대여를 처리
   checkBorrow(memId, bookCode, function() {
     checkBorrowLimit(memId, bookCode, function() {
       borrowAjax(memId, bookCode);
@@ -62,7 +62,7 @@ function checkBorrow(memId, bookCode, callback) {
   });
 }
 
-// 
+// 초과 대여 여부
 function checkBorrowLimit(memId, bookCode, callback) {
   $.ajax({
     url: '/book/borrowAjax',
@@ -81,7 +81,7 @@ function checkBorrowLimit(memId, bookCode, callback) {
   });
 }
 
-// 도서 대여 AJAX 처리
+// 도서 대여
 function borrowAjax(memId, bookCode) {
   $.ajax({
     url: '/book/borrowAjax',

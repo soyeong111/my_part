@@ -34,6 +34,12 @@ public interface BookService {
 //	도서 대여
 	void borrowBook(BorrowVO borrowVO);
 	
+//	도서관리) 도서 카테고리 조회
+	List<CategoryVO> getCateListForAdmin();
+
+//	도서관리) 도서 목록 조회
+	List<BookVO> getBookListForAdminManage(BookVO bookVO);
+	
 ////	도서 대여 개수
 //	Map<String, Object> getBorrowAndStockCnt(String bookCode);
 	
