@@ -19,7 +19,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		MemberVO userInfo = memberService.getUserInfoForLogin(username);
-		System.out.println(userInfo);
 		if (userInfo == null) {
 			throw new UsernameNotFoundException("조회된 회원 없음");
 		}
