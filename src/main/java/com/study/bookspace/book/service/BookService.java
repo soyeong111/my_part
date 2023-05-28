@@ -6,6 +6,7 @@ import java.util.Map;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.CategoryVO;
+import com.study.bookspace.book.vo.ReserveVO;
 
 
 public interface BookService {
@@ -34,21 +35,38 @@ public interface BookService {
 //	도서 대여
 	void borrowBook(BorrowVO borrowVO);
 	
+//	도서 예약
+	void reserveBook(ReserveVO reserveVO);
+	
 //	도서관리) 도서 카테고리 조회
 	List<CategoryVO> getCateListForAdmin();
 
 //	도서관리) 도서 목록 조회
 	List<BookVO> getBookListForAdminManage(BookVO bookVO);
 	
+//	도서관리) 나의 대여 관리
+	List<BorrowVO> myBorrow(BorrowVO borrowVO);
+	
 ////	도서 대여 개수
 //	Map<String, Object> getBorrowAndStockCnt(String bookCode);
 	
-//	도서 대여 개수 확인
+	
+//	중복 대여
 	int checkBorrowStatus(BorrowVO borrowVO);
 	
 // 	대여 개수 확인
 	int getBorrowLimit(BorrowVO borrowVO);
+	
+//	중복 예약
+	int checkReserveStatus(ReserveVO reserveVO);
+	
+//	예약 개수 확인
+	int getReserveLimit(ReserveVO reserveVO);
+	
+//	도서 연장
+	void extendBorrow(BorrowVO borrowVO);
 
-
+//	반납 기한 연장 전, 예약 여부 확인
+	int checkReserveBeforeExtend(ReserveVO reserveVO);
 	
 }

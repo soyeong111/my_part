@@ -51,11 +51,13 @@
       	
   			</div>
   			<div class="col d-grid">
-  				<input type="button" class="btn custom-btn" value="예약하기" >
+  				<input type="button" class="btn custom-btn" id="reBtn" value="예약하기"
+      			 th:onclick="reserve([[${#authentication.name}]], [[${book.bookCode}]]);">
   			<form id="bookBr">
 				<input type="hidden" name="bookCode" th:value="${book.bookCode}">
 				<input type="hidden" name="bookStockCnt" th:value="${book.bookStockCnt}">
 				<input type="hidden" name="borrowCnt" th:value="${book.borrowCnt}">
+				<input type="hidden" name="reserveCnt" th:value="${book.reserveCnt}">
   			</form>
   			</div>
 		</div>

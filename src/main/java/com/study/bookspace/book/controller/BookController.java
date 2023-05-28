@@ -19,6 +19,7 @@ import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.ImgVO;
+import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -30,6 +31,8 @@ import jakarta.servlet.http.HttpSession;
 public class BookController {
 	@Resource(name = "bookService")
 	private BookService bookService;
+	
+	
 	
 //	도서 목록 조회
 	@GetMapping("/bookList")
@@ -144,32 +147,97 @@ public class BookController {
 //	도서 대여
 	@ResponseBody
 	@PostMapping("/borrowAjax")
-	public int borrowAjax(BorrowVO borrowVO, HttpSession session) {
+	public int borrowAjax(BorrowVO borrowVO, HttpSession session, ReserveVO reserveVO) {
 		
 		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
 //		중복 대여
 		int checkBorrowStatus = bookService.checkBorrowStatus(borrowVO);
-//			중복 대여했으면
+//			중복 대여 시
 		if(checkBorrowStatus != 0) {
 				return 1;
 			}
-//		
 		
-//		총 대여한 개수 (5권 이상 대여 금지)
+//		대여 개수 제한 (5권 이상 대여 금지)
 		int getBorrowLimit = bookService.getBorrowLimit(borrowVO);
 			if(getBorrowLimit == 4) {
 				return 4;
 			}
-		
+			 
 //		도서 대여
 		 bookService.borrowBook(borrowVO);
 		 return 0;
+		 
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/reserveAjax")
+	public int reserveAjax(HttpSession session, ReserveVO reserveVO) {
+		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		
+//		 중복 예약
+		 int checkReserveStatus = bookService.checkReserveStatus(reserveVO);
+//		 	중복 예약 시
+		 if(checkReserveStatus !=0) {
+			 return 11;
+		 }
+		 
+//		 예약 개수 제한 (2권 이상 예약 금지)
+		 int getReserveLimit = bookService.getReserveLimit(reserveVO);
+		 if(getReserveLimit == 2) {
+			 return 2;
+		 }
+		 
+//		 도서 예약 
+		 bookService.reserveBook(reserveVO);
+		 return 0;
+	}
+	
+//	내 정보) 도서 반납 연장
+	@ResponseBody
+	@PostMapping("/extendAjax")
+		public int extendAjax(HttpSession session, BorrowVO borrowVO) {
+			borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+//			반납 연장
+			bookService.extendBorrow(borrowVO);
+			
+			return 0;
+		}
+	
+//	내 정보) 도서 반납 연장 전 예약 확인
+	
+	@ResponseBody
+	@PostMapping("/checkReserveBeforeExtendAjax")
+	public int checkReserveBeforeExtend(HttpSession session, ReserveVO reserveVO) {
+		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		bookService.checkReserveBeforeExtend(reserveVO);
+		return 0;
+	}
+	
+	
+// 	내 정보)) 도서 대여 관리
+	@GetMapping("/myBorrow")
+	public String borrowManage(Model model, SubMenuVO subMenuVO, HttpSession session) {
+		
+		String memId = SecurityContextHolder.getContext().getAuthentication().getName();
+	    BorrowVO borrowVO = new BorrowVO();
+	    borrowVO.setMemId(memId);
+	    
+
+		model.addAttribute("myBorrowList", bookService.myBorrow(borrowVO));
+		
+		return "content/my/my_borrow";
 	}
 	
 	
 	
-//	도서 관리) 도서 관리 페이지
+	
+	
+//	도서 관리) 소장 도서 관리
 	@RequestMapping("/bookManage")
 	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO) {
 		
@@ -181,6 +249,8 @@ public class BookController {
 		return "content/admin/book_manage";
 	}
 	
+	
+
 	
 	
 ////	도서 대여 개수
