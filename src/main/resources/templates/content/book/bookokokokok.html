@@ -20,8 +20,7 @@
                   <col width="33%">            
                </colgroup>
                
-               
-                                    <tr>
+                     <tr>
                   <td class="table-secondary">
                      <div class="row">
                         <label for="" class="col col-form-label">카테고리</label>
@@ -30,7 +29,8 @@
                   <td colspan="4" class="text-start">
                      <div class="form-check form-check-inline">
                         <input class="form-check-input" value="10" type="checkbox" id="checkAll1" name="searchBookVO.searchBookCateNo"
-                        onclick="setCheckStatus1();">
+                        onclick="setCheckStatus1();"
+                        th:checked="${bookVO.searchBookVO == null or #arrays.contains(bookVO.searchBookVO.searchBookCateNo, 1,2,3)}">
                         
                         <label class="form-check-label" for="">
                        	 전체</label>
@@ -41,7 +41,7 @@
 					    <div class="form-check form-check-inline">
 					        <input class="form-check-input chk1" th:value="${category != null ? category.bookCateNo : ''}" 
 					               type="checkbox" id="" name="searchBookVO.searchBookCateNo" onclick="setCheckAllStatus1();"
-					               >
+					               th:checked="${bookVO.searchBookVO == null or #arrays.contains(bookVO.searchBookVO.searchBookCateNo, (category != null ? category.bookCateNo : ''))}">
 					        <label class="form-check-label" for="">
 					            <span th:text="${category != null ? category.bookCateStr : ''}"></span>
 					            <span th:if="${category != null and category.bookCateIsUse == 'N'}">(미사용)</span>
@@ -65,18 +65,17 @@
                   </td>
                 
                </tr>
-               
-               <tr>
-               	 <td class="table-secondary">
+            <tr>
+                  <td class="table-secondary">
                      <div class="row">
                         <label for="" class="col col-form-label">작가</label>
                      </div>
                   </td>
                   <td>
-                    <input type="text" class="form-control" name="searchBookVO.searchBookAuthor" 
-                    	th:value="${bookVO.searchBookVO == null ? '' : bookVO.searchBookVO.searchBookAuthor}">
+                    <input type="text" class="form-control" name="searchBookVO.searchAuthor" 
+                    	th:value="${bookVO.searchBookVO == null ? '' : bookVO.searchBookVO.searchAuthor}">
                   </td>
-                    <td class="table-secondary">
+                  <td class="table-secondary">
                      <div class="row">
                         <label for="" class="col col-form-label">출판사</label>
                      </div>
@@ -85,10 +84,9 @@
                     <input type="text" class="form-control" name="searchBookVO.searchPublisher" 
                     	th:value="${bookVO.searchBookVO == null ? '' : bookVO.searchBookVO.searchPublisher}">
                   </td>
-               </tr>
-               
-               
-                      <tr>
+               </tr> 
+
+                   <tr>
                   <td class="table-secondary">
                      <div class="row">
                         <label for="" class="col col-form-label">출판일</label>
@@ -108,18 +106,21 @@
                     	th:value="${bookVO.searchBookVO == null ? '' : bookVO.searchBookVO.searchIsbn}">
                   </td>
                </tr> 
-                    <tr>
+            
+            
+         
+               
+               <tr>
                   <td class="table-secondary">
                      <div class="row">
                         <label for="" class="col col-form-label">도서 상태</label>
                      </div>
                   </td>
                  <td>
-                     <select id="" name="searchBookVO.searchBookStatusStr" class="form-select">		
-                       <option value="" th:selected="${bookVO.searchBookVO == null or bookVO.searchBookVO.searchBookStatusStr == ''}">전체</option>
-                        <option value="비치중" th:selected="${bookVO.searchBookVO != null and bookVO.searchBookVO.searchBookStatusStr == '비치중'}">비치중</option>
-                        <option value="대여중" th:selected="${bookVO.searchBookVO != null and bookVO.searchBookVO.searchBookStatusStr == '대여중'}">대여중</option>
-                        <option value="예약중" th:selected="${bookVO.searchBookVO != null and bookVO.searchBookVO.searchBookStatusStr == '예약중'}">예약중</option>
+                     <select id="" name="searchBookVO.searchBookStatus" class="form-select">		
+                        <option value="0" th:selected="${bookVO.searchBookVO == null or bookVO.searchBookVO.searchBookStatus == 0}">비치중</option>
+                        <option value="1" th:selected="${bookVO.searchBookVO != null and bookVO.searchBookVO.searchBookStatus == 1}">대여중</option>
+                        <option value="2" th:selected="${bookVO.searchBookVO != null and bookVO.searchBookVO.searchBookStatus == 2}">예약중</option>
                      </select>
                   </td>
                   <td class="table-secondary">
@@ -131,14 +132,14 @@
                      <div class="row">
                         <div class="col-6">
                            <div class="input-group">
-                             <span class="input-group-text">최소</span>
+                             <span class="input-group-text">From</span>
                              <input type="number" min="1" class="form-control" name="searchBookVO.searchFromBookStock"
                              	th:value="${bookVO.searchBookVO == null ? '' : bookVO.searchBookVO.searchFromBookStock}">
                            </div>
                         </div>
                         <div class="col-6">
                            <div class="input-group">
-                             <span class="input-group-text">최대</span>
+                             <span class="input-group-text">To</span>
                              <input type="number" min="1" class="form-control" name="searchBookVO.searchToBookStock" 
                              	th:value="${bookVO.searchBookVO == null ? '' : bookVO.searchBookVO.searchToBookStock}">
                            </div>

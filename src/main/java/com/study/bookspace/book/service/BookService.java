@@ -7,6 +7,7 @@ import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.CategoryVO;
 import com.study.bookspace.book.vo.ReserveVO;
+import com.study.bookspace.book.vo.SearchBookVO;
 
 
 public interface BookService {
@@ -15,7 +16,7 @@ public interface BookService {
 	List<CategoryVO> getCateListInUse();
 	
 //	도서 목록 조회
-	List<BookVO> getBookListForUser();
+	List<BookVO> getBookListForUser(SearchBookVO searchBookVO);
 	
 //	신작 도서 조회
 	List<BookVO> getNewBookList();
@@ -46,6 +47,9 @@ public interface BookService {
 	
 //	도서관리) 나의 대여 관리
 	List<BorrowVO> myBorrow(BorrowVO borrowVO);
+	
+//	도서관리) 도서 삭제
+	void deleteBook(BookVO bookVO);
 	
 ////	도서 대여 개수
 //	Map<String, Object> getBorrowAndStockCnt(String bookCode);

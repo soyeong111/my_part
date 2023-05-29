@@ -60,7 +60,6 @@
 		<result column="RESERVE_DUEDATE" 					property="reserveDueDate"/>
 	</resultMap>
 	
-
 	<!-- 전체 카테고리 목록 조회 -->
 	<select id="getCateListForAdmin" resultMap="category">
 		SELECT BOOK_CATE_NO
@@ -282,6 +281,12 @@
 			, BORROW_CNT
 		FROM BOOK BOOK, BOOK_IMAGE IMG
 		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		  <if test="searchOption == 'title'">
+        AND LOWER(BOOK_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
+    <if test="searchOption == 'author'">
+        AND LOWER(BOOK_AUTHOR) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
 		AND IS_MAIN_IMG = 'Y' 
 	</select>
 
@@ -360,34 +365,44 @@
 		    , BOOK.BOOK_STATUS_NO
 		    , BOOK_STOCK_CNT
 		    , ISBN
-		    , DECODE(BOOK.BOOK_STATUS_NO, 0, '비치중', 1, '대여중', '예약중') AS BOOK_STATUS_STR
+		    , BOOK_STATUS_STR
 		FROM BOOK BOOK, BOOK_STATUS STATUS, BOOK_CATEGORY CATEGORY
 		WHERE BOOK.BOOK_STATUS_NO = STATUS.BOOK_STATUS_NO
 		AND BOOK.BOOK_CATE_NO = CATEGORY.BOOK_CATE_NO
 		
 					
 			<!-- 검색 조건 -->
+
 		<if test='searchBookVO != null and !searchBookVO.searchBookTitle.equals("")'>				
 		    AND UPPER(BOOK_TITLE) LIKE '%'||UPPER(#{searchBookVO.searchBookTitle})||'%'
 		</if>
 		
-		<if test="searchBookVO != null">
-		    AND BOOK.BOOK_CATE_NO IN 
-		    <foreach collection="searchBookVO.searchBookCateNo" item="bookCateNo" open="(" close=")" separator=",">
-		    	#{bookCateNo}
-		    </foreach>
-		 </if>
-		
-		     
-		<if test="searchBookVO != null and searchBookVO.searchBookStatus != 0">
-		    AND BOOK.BOOK_STATUS_NO = #{searchBookVO.searchBookStatus}
+		<if test='searchBookVO != null and !searchBookVO.searchBookAuthor.equals("")'>				
+		    AND UPPER(BOOK_AUTHOR) LIKE '%'||UPPER(#{searchBookVO.searchBookAuthor})||'%'
 		</if>
+		
+		<if test="searchBookVO != null and searchBookVO.searchPublicationDate != null">
+   			 AND TO_CHAR(BOOK_PUBLICATION_DATE, 'YYYY-MM-DD') LIKE '%'||#{searchBookVO.searchPublicationDate}||'%'
+		</if>
+		
+		<if test='searchBookVO != null and !searchBookVO.searchPublisher.equals("")'>				
+		    AND UPPER(BOOK_PUBLISHER) LIKE '%'||UPPER(#{searchBookVO.searchPublisher})||'%'
+		</if>
+	
+		  <if test="searchBookVO != null and searchBookVO.searchISBN != 0">
+     		   AND ISBN = #{searchBookVO.searchIsbn}
+   		 </if>
+
+		<if test="searchBookVO != null and !searchBookVO.searchBookStatusStr.equals('')">
+		   AND BOOK_STATUS_STR = #{searchBookVO.searchBookStatusStr}
+		</if>
+		
 		<if test='searchBookVO != null and !searchBookVO.searchFromBookStock.equals("")'>
 		    AND BOOK_STOCK_CNT &gt;= TO_NUMBER(#{searchBookVO.searchFromBookStock})			
 		</if>
 		<if test='searchBookVO != null and !searchBookVO.searchToBookStock.equals("")'>
 		    AND BOOK_STOCK_CNT &lt;= TO_NUMBER(#{searchBookVO.searchToBookStock})		
-		</if>   
+		</if>  
 	
 	</select>
 	
@@ -437,9 +452,15 @@
 	</select>
 	
 		
-		
-		
-		
+	<!-- 도서관리) 도서 삭제  -->
+	<delete id="deleteBook">
+	DELETE BOOK
+	WHERE BOOK_CODE IN	
+		<foreach collection="bookCodeList" item="bookCode" open="(" close=")" separator=",">
+			#{bookCode}
+		</foreach>
+	</delete>
+	
 		
 		
 		

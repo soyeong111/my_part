@@ -9,7 +9,7 @@ import lombok.ToString;
 @ToString
 public class CategoryVO {
 
-	private String bookCateNo;
+	private int bookCateNo;
 	private String bookCateStr;
 	private String bookCateIsUse;
 }

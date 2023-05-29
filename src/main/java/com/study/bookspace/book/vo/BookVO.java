@@ -19,7 +19,7 @@ public class BookVO {
 	private String bookPublisher;
 	private String bookIntro;
 	private int bookCateNo;
-	private String bookStockCnt;
+	private int bookStockCnt;
 	private String isbn;
 	private BorrowVO borrowVO;
 	private int borrowCnt;
@@ -29,7 +29,8 @@ public class BookVO {
 	private CategoryVO categoryVO; // 책정보 1개는 카테고리 정보를 갖고 있다
 	private SearchBookVO searchBookVO;  // bookVO 1개는 검색조건 1개를 갖고 있다
 	private BookStatusVO bookStatusVO; 
-	
+	private List<String> bookCodeList;
+
 }
 
 

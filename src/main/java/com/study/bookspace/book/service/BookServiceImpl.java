@@ -14,6 +14,7 @@ import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.CategoryVO;
 import com.study.bookspace.book.vo.ReserveVO;
+import com.study.bookspace.book.vo.SearchBookVO;
 
 @Service("bookService")
 public class BookServiceImpl implements BookService {
@@ -27,8 +28,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookVO> getBookListForUser() {
-		return sqlSession.selectList("bookMapper.getBookListForUser");
+	public List<BookVO> getBookListForUser(SearchBookVO searchBookVO) {
+		return sqlSession.selectList("bookMapper.getBookListForUser", searchBookVO);
 	}
 
 	@Override
@@ -125,6 +126,11 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public List<BorrowVO> myBorrow(BorrowVO borrowVO) {
 		return sqlSession.selectList("bookMapper.myBorrow", borrowVO);
+	}
+
+	@Override
+	public void deleteBook(BookVO bookVO) {
+		sqlSession.delete("bookMapper.deleteBook", bookVO);
 	}
 
 

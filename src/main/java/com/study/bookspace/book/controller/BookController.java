@@ -1,5 +1,6 @@
 package com.study.bookspace.book.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +22,7 @@ import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.book.vo.ReserveVO;
+import com.study.bookspace.book.vo.SearchBookVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -35,13 +38,13 @@ public class BookController {
 	
 	
 //	도서 목록 조회
-	@GetMapping("/bookList")
-	public String bookList(Model model, SubMenuVO subMenuVO) {
+	@RequestMapping("/bookList")
+	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO) {
 		
 		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
 		
-		model.addAttribute("bookList", bookService.getBookListForUser());
-		
+		List<BookVO> bookList = bookService.getBookListForUser(searchBookVO);
+		model.addAttribute("bookList", bookList);
 		return "content/book/book_list";
 	}
 
@@ -251,6 +254,25 @@ public class BookController {
 	
 	
 
+//	도서 관리) 도서 삭제
+	@GetMapping("/deleteBook")
+	public String deleteBook(String[] bookCodes ,BookVO bookVO) {
+		
+//		배열을 리스트로
+		List<String> bookCodeList = Arrays.asList(bookCodes);
+		
+		bookVO.setBookCodeList(bookCodeList);
+		// 도서 삭제
+		bookService.deleteBook(bookVO);
+		
+		return "redirect:/book/bookManage";
+		
+	}
+	
+	
+	
+	
+	
 	
 	
 ////	도서 대여 개수

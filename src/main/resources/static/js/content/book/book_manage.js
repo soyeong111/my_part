@@ -1,195 +1,124 @@
-init();
-
-
-//초기 작업 실행
-function init() {
-    const reserveBtn = document.getElementById('reBtn');
-    const borrowBtn = document.getElementById('brBtn');
-
-    const bookStockCntElement = document.getElementById('bookBr').elements['bookStockCnt'];
-    const bookStockCnt = parseInt(bookStockCntElement.value);
-
-    const borrowCntElement = document.getElementById('bookBr').elements['borrowCnt'];
-    const borrowCnt = parseInt(borrowCntElement.value);
-    
-    const reserveCntElement = document.getElementById('bookBr').elements['reserveCnt'];
-    const reserveCnt = parseInt(reserveCntElement.value);
-
-
-    if (borrowCnt >= bookStockCnt) {
-        borrowBtn.disabled = true;
-    } 
-    
-    if (reserveCnt >= 2){
-		reserveBtn.disabled = true;
+//장바구니 상품 삭제
+function deleteCart(cartCode){
+	const result = confirm('장바구니에서 삭제할까요?');
+	
+	if(result){
+		location.href = `/cart/deleteCart?cartCode=${cartCode}`;
+		
 	}
+	
 }
 
 
 
-
-
-
-// 대여하기 버튼 클릭 시 실행
-function borrow(memId, bookCode) {
-  if (memId == 'anonymousUser') {
-    const result = confirm('먼저 로그인 하세요. \n로그인 하시겠습니까?');
-
-    if (result) {
-      // 로그인 페이지로 이동
-      location.href = '/member/loginForm';
-    }
-    // 로그인 체크
-    return;
-  }
-  // 동시에 대여 가능 여부를 확인하고 대여를 처리
-  checkBorrow(memId, bookCode, function() {
-    checkBorrowLimit(memId, bookCode, function() {
-      borrowAjax(memId, bookCode);
-    });
-  });
+//선택삭제 버튼 클릭 시 실행
+function deleteBook(){
+	//체크한 체크박스
+	const chks = document.querySelectorAll('.chk:checked');
+	const result = confirm('장바구니에서 삭제할까요?');
+	
+	if(chks.length == 0){
+		alert('선택한 상품이 없습니다.');
+		return;
+	}
+	
+	//bookCode를 여러개 담을 수 있는 배열 생성
+	const bookCodeArr = [];
+	
+	chks.forEach(function(chk, index){
+		
+		bookCodeArr[index] = chk.value;
+	});
+		
+	location.href = `/book/deleteBook?bookCodes=${bookCodeArr}`;
 }
 
-// 중복 대여 여부
-function checkBorrow(memId, bookCode, callback) {
-  $.ajax({
-    url: '/book/borrowAjax',
-    type: 'post',
-    data: { 'memId': memId, 'bookCode': bookCode },
-    success: function(response) {
-      if (response == 1) {
-        alert('이미 대여한 책입니다.');
-      
-      } else {
-        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
-      }
-    },
-    error: function() {
-      alert('대여 가능 여부를 확인하는데 실패했습니다.');
-    }
-  });
-}
+	
+	
+//------------체크박스-------------
 
-// 초과 대여 여부
-function checkBorrowLimit(memId, bookCode, callback) {
-  $.ajax({
-    url: '/book/borrowAjax',
-    type: 'post',
-    data: { 'memId': memId, 'bookCode': bookCode },
-    success: function(response) {
-      if (response == 4) {
-        alert('대여 가능한 권수를 초과하였습니다.');
-      } else {
-        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
-      }
-    },
-    error: function() {
-      alert('대여 가능 여부를 확인하는데 실패했습니다.');
-    }
-  });
-}
-
-// 도서 대여
-function borrowAjax(memId, bookCode) {
-  $.ajax({
-    url: '/book/borrowAjax',
-    type: 'post',
-    data: { 'bookCode': bookCode, 'memId': memId },
-    success: function(result) {
-      const result1 = confirm('도서가 성공적으로 대여되었습니다.');
-
-      if (result1) {
-        location.href = `/book/bookDetail?bookCode=${bookCode}`;
-      }
-    },
-    error: function() {
-      alert('대여에 실패했습니다.');
-    }
-  });
-}
-
-//------------------------------예약하기
-
-
-// 예약하기 버튼 클릭 시 실행
-function reserve(memId, bookCode) {
-  if (memId == 'anonymousUser') {
-    const result = confirm('먼저 로그인 하세요. \n로그인 하시겠습니까?');
-
-    if (result) {
-      // 로그인 페이지로 이동
-      location.href = '/member/loginForm';
-    }
-    // 로그인 체크
-    return;
-  }
-  // 동시에 대여 가능 여부를 확인하고 대여를 처리
-  checkReserve(memId, bookCode, function() {
-    checkReserveLimit(memId, bookCode, function() {
-      reserveAjax(memId, bookCode);
-    });
-  });
-}
-
-// 중복 예약 여부
-function checkReserve(memId, bookCode, callback) {
-  $.ajax({
-    url: '/book/reserveAjax',
-    type: 'post',
-    data: { 'memId': memId, 'bookCode': bookCode },
-    success: function(response) {
-      if (response == 11) {
-        alert('이미 예약한 책입니다.');
-      
-      } else {
-        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
-      }
-    },
-    error: function() {
-      alert('중복 제약 여부를 확인하는데 실패했습니다.');
-    }
-  });
+	
+// 카테고리 제목줄 체크박스 클릭 시 실행
+function setCheckStatus1(){
+	const checkAll = document.querySelector('#checkAll1');
+	const chks = document.querySelectorAll('.chk1');
+	
+	
+	//하나씩 빼서 하나를 true
+	if(checkAll.checked){
+		for(const chk of chks){
+			chk.checked = true;
+		}
+		
+	}else{
+		for(const chk of chks){
+			chk.checked = false;
+	}
+	
+	}
+	
 }
 
 
+//제목줄 체크박스 상태 변경
+function setCheckAllStatus1(){
+	
+	//체크박스 개수
+	const cnt = document.querySelectorAll('.chk1').length;
+	
+	// 체크된 상품의 개수
+	const checkedCnt = document.querySelectorAll('.chk1:checked').length;
+	const checkAll = document.querySelector('#checkAll1');
+	
+	if(cnt == checkedCnt){
+		checkAll.checked = true;
+		
+	} else{
+		checkAll.checked = false;
+		
+	}
+	
+}
+	
 
-
-// 초과 예약 여부
-function checkReserveLimit(memId, bookCode, callback) {
-  $.ajax({
-    url: '/book/reserveAjax',
-    type: 'post',
-    data: { 'memId': memId, 'bookCode': bookCode },
-    success: function(response) {
-      if (response == 2) {
-        alert('예약 가능한 권수를 초과하였습니다.');
-      } else {
-        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
-      }
-    },
-    error: function() {
-      alert('초과 예약을 확인하는데 실패했습니다.');
-    }
-  });
+// 테이블 제목줄 체크박스 클릭 시 실행
+function setCheckStatus(){
+	const checkAll = document.querySelector('#checkAll');
+	const chks = document.querySelectorAll('.chk');
+	
+	
+	//하나씩 빼서 하나를 true
+	if(checkAll.checked){
+		for(const chk of chks){
+			chk.checked = true;
+		}
+		
+	}else{
+		for(const chk of chks){
+			chk.checked = false;
+	}
+	
+	}
+	
 }
 
-// 도서 예약
-function reserveAjax(memId, bookCode) {
-  $.ajax({
-    url: '/book/borrowAjax',
-    type: 'post',
-    data: { 'bookCode': bookCode, 'memId': memId },
-    success: function(result) {
-      const result1 = confirm('도서가 성공적으로 예약되었습니다.');
 
-      if (result1) {
-        location.href = `/book/bookDetail?bookCode=${bookCode}`;
-      }
-    },
-    error: function() {
-      alert('대여에 실패했습니다.');
-    }
-  });
+//제목줄 체크박스 상태 변경
+function setCheckAllStatus(){
+	
+	//체크박스 개수
+	const cnt = document.querySelectorAll('.chk').length;
+	
+	// 체크된 상품의 개수
+	const checkedCnt = document.querySelectorAll('.chk:checked').length;
+	const checkAll = document.querySelector('#checkAll');
+	
+	if(cnt == checkedCnt){
+		checkAll.checked = true;
+		
+	} else{
+		checkAll.checked = false;
+		
+	}
+	
 }
-
-

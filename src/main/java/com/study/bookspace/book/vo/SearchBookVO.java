@@ -10,12 +10,17 @@ import lombok.ToString;
 public class SearchBookVO {
 
 	private String searchBookTitle;
-	private String searchAuthor;
+	private String searchBookAuthor;
 	private String searchPublicationDate;
 	private String searchPublisher;
 	private int[] searchBookCateNo;
+	private String[] searchBookCateStr;
 	private String searchIsbn;
+	private String searchBookStatusStr;
 	private int searchBookStatus;
 	private String searchFromBookStock;
 	private String searchToBookStock;
+	private String searchOption;
+	private String searchText;
+	
 }
