@@ -48,15 +48,16 @@
 		<result column="BORROW_DATE" 						property="borrowDate"/>
 		<result column="RETURN_DUEDATE" 					property="returnDueDate"/>
 		<result column="RETURN_DATE" 						property="returnDate"/>
-		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
+		<result column="BOOK_TITLE"							property="bookTitle"/>
 	</resultMap>
 
 	
 	<resultMap type="com.study.bookspace.book.vo.ReserveVO" id="reserve">
-		<id column="BOOK_RESERVE_CODE" 						property="bookReserveCode"/>
+		<id column="RESERVE_CODE" 							property="reserveCode"/>
 		<result column="BOOK_CODE" 							property="bookCode"/>
 		<result column="MEM_ID" 							property="memId"/>
-		<result column="BOOK_RESERVE_DATE" 					property="bookReserveDate"/>
+		<result column="RESERVE_DATE" 						property="reserveDate"/>
+		<result column="RESERVE_DUEDATE" 					property="reserveDueDate"/>
 	</resultMap>
 	
 
@@ -121,10 +122,35 @@
 	    )
 	</insert>
 	
-	<!-- 업데이트 쿼리 -->
+	<!-- 대여 업데이트 쿼리 -->
 	<update id="updateBorrowCnt">
 		UPDATE BOOK
 		SET BORROW_CNT = BORROW_CNT + 1
+		WHERE BOOK_CODE = #{bookCode}
+	</update>
+	
+	
+	<!-- 도서 예약  -->
+	<insert id="reserveBook">
+		INSERT INTO BOOK_RESERVE (
+	    	RESERVE_CODE
+	    	, BOOK_CODE
+	    	, MEM_ID
+	    	, RESERVE_DUEDATE
+	    ) VALUES (
+	    	(SELECT 'BK_RES_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(RESERVE_CODE, 8))), 0) + 1, 3, '0')
+			FROM BOOK_RESERVE
+			WHERE RESERVE_CODE LIKE 'BK_RES_%')
+	    	, #{bookCode}
+	    	, #{memId}
+	    	, SYSDATE + 3
+	    )
+	</insert>
+	
+	<!-- 예약 업데이트 쿼리 -->
+	<update id="updateReserveCnt">
+		UPDATE BOOK
+		SET RESERVE_CNT = RESERVE_CNT + 1
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
@@ -159,35 +185,21 @@
 	  AND RETURN_DATE IS NULL
 	</select>
 
-
-
-
-
-
-
-	<!-- 도서 반납  -->
-	<update id="returnBook">
-		  UPDATE BOOK_STATUS
-		  SET BOOK_STATUS_NO = 1
-		  WHERE BOOK_CODE = #{bookCode}
-		  AND MEM_ID = #{memId}
-	</update>
+		<!-- 중복 예약 -->
+	<select id="checkReserveStatus" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM BOOK_RESERVE
+	  WHERE MEM_ID = #{memId} 
+	  AND BOOK_CODE = #{bookCode} 
+	</select>
 	
-	<!-- 도서 예약  -->
-	<insert id="reserveBook">
-		  INSERT INTO BOOK_RESERVE (
-		  	BOOK_RESERVE_CODE
-		  	, BOOK_CODE
-		  	, MEM_ID
-		  	, BOOK_RESERVE_DATE
-		  ) VALUES (
-			#{bookReserveCode}
-		  	, #{bookCode}
-		  	, #{memId}
-		  	, #{bookReserveDate}
-		  )
-	</insert>
-
+	<!-- 회원의 도서 예약 개수 확인 -->
+	<select id="getReserveLimit" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM BOOK_RESERVE
+	  WHERE MEM_ID = #{memId} 
+	</select>
+	
 
 
 	<!-- 사용 중인 카테고리 목록 -->
@@ -326,6 +338,7 @@
 			, BOOK_CATE_NO
 			, BOOK_STOCK_CNT
 			, BORROW_CNT
+			, RESERVE_CNT
 			, ISBN
 			, ATTACHED_FILE_NAME
 			, IS_MAIN_IMG
@@ -379,13 +392,59 @@
 	</select>
 	
 	
+	<!-- 도서관리) 대여 관리 -->
+	<select id="borrowManage" resultMap="borrow">
+		SELECT B.BOOK_TITLE
+			, BR.BORROW_DATE
+			, BR.RETURN_DATE
+			, BR.RETURN_DUEDATE
+			, M.MEM_NAME
+		FROM BOOK_BORROW BR, BOOK B, MEMBER M
+		WHERE BR.BOOK_CODE = B.BOOK_CODE
+		AND BR.MEM_ID = M.MEM_ID
+	</select>
 	
 	
 	
+	<!-- 내가 대여한 책 -->
+	<select id="myBorrow" resultMap="borrow">
+		SELECT B.BOOK_TITLE
+			, BR.BORROW_DATE
+			, BR.RETURN_DATE
+			, BR.RETURN_DUEDATE
+			, BR.MEM_ID
+			, BR.BORROW_CODE
+			, B.BOOK_CODE
+		FROM BOOK_BORROW BR, BOOK B
+		WHERE BR.BOOK_CODE = B.BOOK_CODE
+		AND BR.MEM_ID = #{memId}
+	</select>
 	
+		
+		<!-- 반납 연장 -->
+	<update id="extendBorrow">
+	    UPDATE BOOK_BORROW
+	    SET RETURN_DUEDATE = RETURN_DUEDATE + 3
+	    WHERE BORROW_CODE = #{borrowCode}
+	</update>
+			
+			
+		<!-- 반납 연장 전, 예약 여부 확인 -->
+	<select id="checkReserveBeforeExtend" resultType="int">
+		  SELECT COUNT(*) 
+		  FROM BOOK_RESERVE
+		  WHERE BOOK_CODE = #{bookCode}
+	</select>
 	
-	
-	
+		
+		
+		
+		
+		
+		
+		
+		
+		
 </mapper>
 
 

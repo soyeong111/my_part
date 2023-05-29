@@ -8,7 +8,49 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="borrow-manage-div">
-		borrow_manage
+		
+		
+		
+		<!-- 도서 목록 영역 -->	
+	<div class="row">
+		<div class="col">
+			<table class="table table-striped table-hover text-center">
+					<colgroup>
+						<col width="">
+						<col width="">
+						<col width="">
+						<col width="">
+						<col width="">
+					</colgroup>
+					<thead class="table-head">
+						<tr>
+							<td>No</td>
+							<td>제목</td>
+							<td>대여일</td>
+							<td>반납기한</td>
+							<td>반납일</td>
+							<td>반납하기</td>
+						</tr>
+					</thead>
+					<tbody>	
+					<tr th:each="borrow, state : ${myBorrowList}">
+					<td th:text="${#lists.size(myBorrowList) - state.index}"></td>
+					<td><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
+					<td>[[${borrow.borrowDate}]]</td>
+					<td>[[${borrow.returnDueDate}]]</td>
+					<td>[[${borrow.returnDate}]]</td>
+					<td>
+		  				<input type="button" class="btn custom-btn" id="brBtn" value="반납하기">
+					</td>
+				</tbody>
+				
+			</table>
+		</div>
+	</div>
+		
+		
+		
+		
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">

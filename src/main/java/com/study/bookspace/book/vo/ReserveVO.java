@@ -8,8 +8,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReserveVO {
-	private String bookReserveCode;
+	private String reserveCode;
 	private String bookCode;
 	private String memId;
-	private String bookReserveDate;
+	private String reserveDate;
+	private String reserveDueDate;
 }
