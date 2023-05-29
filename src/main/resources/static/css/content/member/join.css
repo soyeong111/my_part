@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.message-is-invalid {
+.invalid-text-div {
 	font-size: 0.7rem;
 	color: red;
 	margin-top: 2px;
