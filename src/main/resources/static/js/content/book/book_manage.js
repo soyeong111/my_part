@@ -1,24 +1,69 @@
-//장바구니 상품 삭제
-function deleteCart(cartCode){
-	const result = confirm('장바구니에서 삭제할까요?');
-	
-	if(result){
-		location.href = `/cart/deleteCart?cartCode=${cartCode}`;
-		
-	}
-	
+function editBook() {
+  const checkedCheckboxes = document.querySelectorAll('#contentTable input.chk:checked');
+
+  checkedCheckboxes.forEach((checkbox) => {
+    const row = checkbox.parentNode.parentNode;
+    const bookCode = checkbox.value;
+    const categoryCell = row.querySelector('td:nth-child(3)');
+    const titleCell = row.querySelector('td:nth-child(4)');
+    const authorCell = row.querySelector('td:nth-child(5)');
+    const publisherCell = row.querySelector('td:nth-child(6)');
+    const publicationDateCell = row.querySelector('td:nth-child(7)');
+    const isbnCell = row.querySelector('td:nth-child(8)');
+    const stockCountCell = row.querySelector('td:nth-child(10)');
+
+    const categoryValue = categoryCell.innerText;
+    const titleValue = titleCell.innerText;
+    const authorValue = authorCell.innerText;
+    const publisherValue = publisherCell.innerText;
+    const publicationDateValue = publicationDateCell.innerText;
+    const isbnValue = isbnCell.innerText;
+    const stockCountValue = stockCountCell.innerText;
+
+    categoryCell.innerHTML = `<input type="text" class="form-control" value="${categoryValue}">`;
+    titleCell.innerHTML = `<input type="text" class="form-control" value="${titleValue}">`;
+    authorCell.innerHTML = `<input type="text" class="form-control"  value="${authorValue}">`;
+    publisherCell.innerHTML = `<input type="text" class="form-control" value="${publisherValue}">`;
+    publicationDateCell.innerHTML = `<input type="date" class="form-control" value="${publicationDateValue}">`;
+    isbnCell.innerHTML = `<input type="text"class="form-control"  value="${isbnValue}">`;
+    stockCountCell.innerHTML = `<input type="number" class="form-control" value="${stockCountValue}">`;
+
+    const editButton = document.getElementById('editBtn');
+    editButton.value = '완료';
+    editButton.setAttribute('onclick', 'updateBook()');
+  });
+}
+
+function updateBook() {
+  const updatedData = [];
+
+  const updatedCells = document.querySelectorAll('#contentTable td input.form-control');
+  updatedCells.forEach((cell) => {
+    updatedData.push(cell.value);
+    cell.outerHTML = cell.value;
+  });
+
+  const editButton = document.getElementById('editBtn');
+  editButton.value = '수정';
+  editButton.setAttribute('onclick', 'editBook()');
+
+
 }
 
 
 
-//선택삭제 버튼 클릭 시 실행
+//------------삭제-------------
+
+
+
+//삭제 버튼 클릭 시 실행
 function deleteBook(){
 	//체크한 체크박스
 	const chks = document.querySelectorAll('.chk:checked');
-	const result = confirm('장바구니에서 삭제할까요?');
+	const result = confirm('해당 도서를 삭제하시겠습니까?');
 	
 	if(chks.length == 0){
-		alert('선택한 상품이 없습니다.');
+		alert('선택한 도서가 없습니다.');
 		return;
 	}
 	

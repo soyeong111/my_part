@@ -33,7 +33,8 @@
 							<td>대여일</td>
 							<td>반납 기한</td>
 							<td>반납일</td>
-							<td>반납 연장</td>
+							<td>연장</td>
+							<td>반납</td>
 						</tr>
 					</thead>
 					<tbody>	
@@ -45,8 +46,14 @@
 					<td>[[${borrow.returnDate}]]</td>
 					<td>
 		  				<input type="button" class="btn custom-btn"  
-		  				data-toggle="alert" data-target="#exampleModal" id="exBtn" value="연장하기"
+		  				id="exBtn" value="연장"
 		  				th:onclick="extend([[${#authentication.name}]], [[${borrow.borrowCode}]],
+		  				[[${borrow.bookCode}]]);">
+					</td>
+					<td>
+		  				<input type="button" class="btn custom-btn-del"  
+		  				id="reBtn" value="반납"
+		  				th:onclick="returnBook([[${#authentication.name}]], [[${borrow.borrowCode}]],
 		  				[[${borrow.bookCode}]]);">
 					</td>
 				</tbody>
@@ -65,7 +72,7 @@
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/book/book_extend.js"></script> 
+	<script type="text/javascript" src="/js/content/book/my_borrow.js"></script> 
 </th:block>
 </html>
 

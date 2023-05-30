@@ -89,21 +89,6 @@
 	</select>
 	
 	
-	<!-- 도서 정보 수정 -->
-	<update id="updateBook">
-		UPDATE BOOK
-		SET BOOK_CODE
-			, BOOK_TITLE = #{bookTitle}
-			, BOOK_AUTHOR = #{bookAuthor}
-			, BOOK_PUBLICATION_DATE = #{bookPublicationDate}
-			, BOOK_PUBLISHER = #{bookPublisher}
-			, BOOK_INTRO = #{bookIntro}
-			, BOOK_CATE_NO = #{bookCateNo}
-			, BOOK_STOCK_CNT = #{bookStockCnt}
-			, ISBN = #{isbn}
-	</update>
-	
-	
 	<!-- 도서 대여  -->
 	<insert id="borrowBook">
 	    INSERT INTO BOOK_BORROW (
@@ -127,6 +112,24 @@
 		SET BORROW_CNT = BORROW_CNT + 1
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
+	
+	
+		<!-- 도서 반납 -->
+	<update id="returnBook">
+	    UPDATE BOOK_BORROW
+	    SET RETURN_DATE = SYSDATE
+	    WHERE BORROW_CODE = #{borrowCode}
+	</update>
+
+		<!-- 반납 업데이트 쿼리 -->
+	<update id="updateReturnCnt">
+	    UPDATE BOOK
+	    SET BORROW_CNT = BORROW_CNT - 1
+	    WHERE BOOK_CODE = #{bookCode}
+	</update>
+
+	
+	
 	
 	
 	<!-- 도서 예약  -->
@@ -460,12 +463,50 @@
 			#{bookCode}
 		</foreach>
 	</delete>
+
 	
 		
+		<!-- 도서관리) 도서 삭제 (자식 레코드)  -->
+	<delete id="deleteBooks">
+	  <foreach collection="bookCodeList" item="bookCode" separator=";">
+	    <![CDATA[
+	      BEGIN
+	        
+	        DELETE FROM BOOK_IMAGE WHERE BOOK_CODE = #{bookCode}
+	
+	       
+	        DELETE FROM BOOK_RESERVE WHERE BOOK_CODE = #{bookCode}
+	
+	       
+	        DELETE FROM BOOK_BORROW WHERE BOOK_CODE = #{bookCode}
+	
+	       
+	        DELETE FROM BOOK WHERE BOOK_CODE = #{bookCode}
+	
+	        
+	        COMMIT
+	      END
+	    ]]>
+	  </foreach>
+	</delete>
+
+		<!-- 도서 정보 수정 -->
+		<update id="updateBook">
+			UPDATE BOOK
+			SET
+				BOOK_TITLE = #{bookTitle}
+				, BOOK_AUTHOR = #{bookAuthor}
+				, BOOK_PUBLICATION_DATE = #{bookPublicationDate}
+				, BOOK_PUBLISHER = #{bookPublisher}
+				, BOOK_CATE_NO = #{bookCateNo}
+				, BOOK_STOCK_CNT = #{bookStockCnt}
+				, ISBN = #{isbn}
+			WHERE BOOK_CODE = #{bookCode}
+		</update>
 		
 		
 		
-		
+
 </mapper>
 
 
