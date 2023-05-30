@@ -30,11 +30,11 @@ public class ClubController {
 	
 	//북클럽 이용안내
 	@GetMapping("/clubInfo")
-	public String clubInfo() {
+	public String clubInfo(SubMenuVO subMenuVO) {
 		return "content/club/club_guide";
 	}
 	
-	//북클럽 정보
+	//북클럽 정보***
 	@GetMapping("/club")
 	public String club(Model model, SubMenuVO subMenuVO) {
 		//북클럽 목록 조회
@@ -98,7 +98,7 @@ public class ClubController {
 	
 	//북클럽 상세페이지
 	@GetMapping("/clubDetail")
-	public String clubDetail(Model model, String clubCode) {
+	public String clubDetail(Model model, String clubCode, SubMenuVO subMenuVO) {
 		//클럽 상세 조회
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
 		

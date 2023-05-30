@@ -20,7 +20,7 @@
 				<th:block th:each="club : ${clubList}">
 					<div class="col">
 						<div class="card">
-							<a th:href="@{/club/clubDetail(clubCode=${club.clubCode})}">
+							<a th:href="@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
 								<img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}"
 								class="card-img-top" height="400px;"></a>
 							<div class="card-body" style="height: 200px;">

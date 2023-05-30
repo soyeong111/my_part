@@ -17,13 +17,13 @@
 				<h3>북클럽 커뮤니티</h3>
 			</div>
 		</div>
-		<form id="searchForm" class="row" th:action="@{/club/community}" method="post">
+		<form class="row" th:action="@{/club/community}" method="post" th:object="${communityVO}">
 			<div class="col-6">
-				<select class="form-select" name="searchKeyword">
-					<option value="COMMUNITY.BOARD_TITLE" th:selected="${communityVO.searchKeyword == 'COMMUNITY.BOARD_TITLE'}">제목</option>
-					<option value="MEM.MEM_ID" th:selected="${communityVO.searchKeyword == 'MEM.MEM_ID'}">작성자</option>
+				<select class="form-select" th:field="*{searchOption}">
+					<option value="title">제목</option>
+					<option value="writer">작성자</option>
 				</select>
-				<input type="text" class="form-control" name="searchValue" th:value="${communityVO.searchValue}">
+				<input type="text" class="form-control" th:field="*{searchText}">
 				<input type="submit" class="btn custom-btn" value="검색">
 			</div>
 		</form>

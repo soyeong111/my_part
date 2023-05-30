@@ -197,8 +197,11 @@
 				, CLUB_CODE
 			FROM COMMUNITY_BOARD
 			WHERE CLUB_CODE = #{clubCode}
-			<if test='searchValue != null and !searchValue.equals("")'>
-				AND UPPER(${searchKeyword}) LIKE '%'||UPPER(#{searchValue})||'%'
+			<if test="searchOption == 'title'">
+				 AND LOWER(BOARD_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
+			</if>
+			 <if test="searchOption == 'writer'">
+				 AND LOWER(BOARD_WRITER) LIKE '%' || LOWER(#{searchText}) || '%'
 			</if>
 			ORDER BY BOARD_NUM DESC
 			)	
@@ -220,6 +223,25 @@
 			, #{boardContent}
 			, #{boardWriter}
 			, #{clubCode}
+		)
+	</insert>
+	
+	<insert id="regNotice">
+		INSERT INTO COMMUNITY_BOARD (
+			BOARD_NUM
+			, BOARD_TITLE
+			, BOARD_CONTENT
+			, BOARD_WRITER
+			, CLUB_CODE
+			, CLUB_NOTICE
+		) VALUES (
+			(SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NUM, 7))), 0) + 1,3 , '0') 
+			FROM COMMUNITY_BOARD)
+			, #{boardTitle}
+			, #{boardContent}
+			, #{boardWriter}
+			, #{clubCode}
+			, 1
 		)
 	</insert>
 	
