@@ -28,10 +28,10 @@ public class PublicMenuIntercepter implements HandlerInterceptor {
 		for (GrantedAuthority authority : authorities) {
 			String role = authority.getAuthority();
 			if (!role.equals("ROLE_ANONYMOUS")) {
-				modelAndView.addObject("userMainMenuList", adminService.getMenuListByRoleAndUse("USER"));
+				modelAndView.addObject("userMainMenuList", adminService.getMainMenuListByRoleAndUse("USER"));
 			}
 			if (role.equals("ROLE_ADMIN")) {
-				modelAndView.addObject("adminMainMenuList", adminService.getMenuListByRoleAndUse("ADMIN"));
+				modelAndView.addObject("adminMainMenuList", adminService.getMainMenuListByRoleAndUse("ADMIN"));
 			}
 		}
 		
