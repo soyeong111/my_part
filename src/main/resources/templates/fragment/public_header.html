@@ -32,7 +32,7 @@
 							<th:block th:each="mainMenu : ${userMainMenuList}" th:if="${userMainMenuList != null}">
 								<li><hr class="dropdown-divider"></li>
 								<li>
-									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
+									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.mainSubMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
 								</li>
 							</th:block>
 							<li th:if="${adminMainMenuList != null}"><hr class="dropdown-divider"></li>
@@ -40,7 +40,7 @@
 							<th:block th:each="mainMenu : ${adminMainMenuList}" th:if="${adminMainMenuList != null}">
 								<li><hr class="dropdown-divider"></li>
 								<li>
-									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
+									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.mainSubMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
 								</li>
 							</th:block>
 						</ul>

@@ -10,6 +10,7 @@
 		<result column="MAIN_MENU_ROLE"		property="mainMenuRole"/>
 		<result column="MAIN_MENU_ORDER"	property="mainMenuOrder"/>
 		<result column="MAIN_MENU_IS_USE"	property="mainMenuIsUse"/>
+		<result column="MAIN_SUB_MENU_CODE" property="mainSubMenuCode"/>
 		<collection property="subMenuList" resultMap="subMenu"></collection>
 	</resultMap>
 	
@@ -42,11 +43,15 @@
 	
 	<!-- ROLE별 사용중인 메인 메뉴 목록 -->
 	<select id="getMainMenuListByRoleAndUse" resultMap="mainMenu">
-		SELECT MAIN_MENU_CODE
+		SELECT MAI.MAIN_MENU_CODE
 			, MAIN_MENU_NAME
 			, MAIN_MENU_URL
-		FROM MAIN_MENU
-		WHERE MAIN_MENU_ROLE = #{mainMenuRole}
+			, SUB_MENU_CODE MAIN_SUB_MENU_CODE
+		FROM MAIN_MENU MAI
+			, SUB_MENU SUB
+		WHERE MAI.MAIN_MENU_CODE = SUB.MAIN_MENU_CODE
+			AND MAIN_MENU_URL = SUB_MENU_URL
+			AND MAIN_MENU_ROLE = #{mainMenuRole}
 			AND MAIN_MENU_IS_USE = 'Y'
 		ORDER BY MAIN_MENU_ORDER
 	</select>
