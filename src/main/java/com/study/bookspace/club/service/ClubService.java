@@ -44,6 +44,9 @@ public interface ClubService {
 	//커뮤니티 글 작성
 	void regBoard(CommunityVO communityVO);
 	
+	//커뮤니티 공지사항 작성
+	void regNotice(CommunityVO communityVO);
+	
 	//커뮤니티 글 수정
 	void updateBoard(CommunityVO communityVO);
 	

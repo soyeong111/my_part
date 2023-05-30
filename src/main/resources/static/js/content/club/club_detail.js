@@ -73,7 +73,7 @@ function deleteClub(clubCode){
 }
 
 //커뮤니티 버튼 클릭 시 - 클럽 회원만 조회 가능
-function memberOnly(memId, clubCode){
+function memberOnly(memId, clubCode, mainMenuCode, subMenuCode){
 	
 	//ajax start
 	$.ajax({
@@ -84,7 +84,7 @@ function memberOnly(memId, clubCode){
 	   data: {'memId':memId, 'clubCode':clubCode}, //필요한 데이터
 	   success: function(result) {
 		  if(result){
-		      location.href=`/club/community?clubCode=${clubCode}`;
+		      location.href=`/club/community?clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 		  }
 		  else{
 			  alert('클럽 회원만 입장할 수 있습니다.');

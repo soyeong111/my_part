@@ -189,6 +189,12 @@ public class ClubServiceImpl implements ClubService{
 		return result != 0 ? true : false;
 	}
 
+	//커뮤니티 공지사항 작성
+	@Override
+	public void regNotice(CommunityVO communityVO) {
+		sqlSession.insert("clubMapper.regNotice", communityVO);
+	}
+
 	
 
 

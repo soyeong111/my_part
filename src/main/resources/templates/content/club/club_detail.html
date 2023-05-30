@@ -27,7 +27,7 @@
 				<div class="row">
 					<div class="col">
 						<input type="button" class="btn custom-btn" value="가입 신청하기" th:onclick="joinClub([[${#authentication.name}]], [[${club.clubCode}]]);">
-						<input type="button" class="btn custom-btn" th:value="${club.clubName} + ' 커뮤니티'" th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]]);">
+						<input type="button" class="btn custom-btn" th:value="${club.clubName} + ' 커뮤니티'" th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 					</div>
 				</div>
 				<div class="row">
