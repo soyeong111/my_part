@@ -34,7 +34,7 @@ public class ClubController {
 		return "content/club/club_guide";
 	}
 	
-	//북클럽 정보
+	//북클럽 정보!!!
 	@GetMapping("/club")
 	public String club(Model model, SubMenuVO subMenuVO) {
 		//북클럽 목록 조회
