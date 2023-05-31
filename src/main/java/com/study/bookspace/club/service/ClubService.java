@@ -60,7 +60,7 @@ public interface ClubService {
 	void regReply(CommunityReplyVO communityReplyVO);
 	
 	//댓글 조회
-	List<CommunityReplyVO> getReplyList(CommunityReplyVO communityReplyVO);
+	List<CommunityReplyVO> getReplyList(String boardNum);
 	
 	//게시글 댓글 수정
 	void updateReply(CommunityReplyVO communityReplyVO);
@@ -81,7 +81,7 @@ public interface ClubService {
 	int getBoardCnt(String clubCode);
 	
 	//조회수 증가
-	int updateReadCnt(CommunityVO communityVO);
+	int updateReadCnt(String boardNum);
 	
 	
 	//클럽 삭제

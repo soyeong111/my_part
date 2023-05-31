@@ -63,11 +63,11 @@ function joinClubAjax(clubCode){
 
 
 //클럽 삭제버튼 클릭시
-function deleteClub(clubCode){
+function deleteClub(clubCode, mainMenuCode, subMenuCode){
 	const result = confirm('이 북클럽을 삭제하시겠습니까?');
 	
 	if(result){
-		location.href=`/club/deleteClub?clubCode=${clubCode}`;
+		location.href=`/club/deleteClub?clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 		
 	}
 }

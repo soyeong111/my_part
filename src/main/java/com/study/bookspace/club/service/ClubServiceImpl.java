@@ -26,7 +26,6 @@ public class ClubServiceImpl implements ClubService{
 		sqlSession.insert("clubMapper.regClub", bookClubVO);
 		//sqlSession.insert("clubMapper.insertImg", bookClubVO);
 	}
-	
 
 	//북클럽 목록 조회
 	@Override
@@ -118,8 +117,8 @@ public class ClubServiceImpl implements ClubService{
 
 	//댓글 조회
 	@Override
-	public List<CommunityReplyVO> getReplyList(CommunityReplyVO communityReplyVO) {
-		return sqlSession.selectList("clubMapper.getReplyList", communityReplyVO);
+	public List<CommunityReplyVO> getReplyList(String boardNum) {
+		return sqlSession.selectList("clubMapper.getReplyList", boardNum);
 	}
 
 	//게시글 댓글 수정
@@ -148,8 +147,8 @@ public class ClubServiceImpl implements ClubService{
 
 	//게시글 조회수 증가
 	@Override
-	public int updateReadCnt(CommunityVO communityVO) {
-		return sqlSession.update("clubMapper.updateReadCnt", communityVO);
+	public int updateReadCnt(String boardNum) {
+		return sqlSession.update("clubMapper.updateReadCnt", boardNum);
 	}
 
 	//클럽 삭제

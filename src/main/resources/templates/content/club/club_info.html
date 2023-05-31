@@ -13,17 +13,17 @@
 				<div class="row club-title">
 					북클럽
 				</div>
-				<div class="offset-10 col-2">
-					<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]]);">
+				<div class="offset-9 col-2">
+					<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 				</div>
-				<div class="row row-cols-1 row-cols-md-3 g-4">
+				<div class="row row-cols-1 row-cols-md-3 g-4 w-75 m-auto">
 				<th:block th:each="club : ${clubList}">
 					<div class="col">
 						<div class="card">
 							<a th:href="@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
 								<img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}"
-								class="card-img-top" height="400px;"></a>
-							<div class="card-body" style="height: 200px;">
+								class="card-img-top" height="300px;"></a>
+							<div class="card-body" style="height: 130px;">
 								<h5 class="card-title">[[${club.clubName}]]</h5>
 								<p class="card-text">[[${club.clubShortInfo}]]</p>
 							</div>

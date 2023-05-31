@@ -1,10 +1,5 @@
 @charset "UTF-8";
 
-table {
-	text-align: center;
-	width: 100%;
-	margin-top: 2rem;
-}
 
 .community-head-div{
 	margin-bottom: 4rem; 
@@ -14,6 +9,10 @@ table {
 	font-weight: bold;
 }
 
-thead{
-	font-weight: bold;
+table {
+	margin-top: 2rem;
+}
+
+.reply-div{
+	margin-top: 2rem; 
 }

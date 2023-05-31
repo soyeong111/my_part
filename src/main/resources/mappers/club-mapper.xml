@@ -157,7 +157,7 @@
 		UPDATE BOOK_CLUB
 		SET
 			CLUB_SHORT_INFO = #{clubShortInfo}
-			CLUB_INTRO = #{clubIntro}
+			, CLUB_INTRO = #{clubIntro}
 		WHERE CLUB_CODE = #{clubCode}
 	</update>
 	
@@ -276,14 +276,12 @@
 			, REPLY_CONTENT
 			, REPLY_WRITER
 			, BOARD_NUM
-			, CLUB_CODE
 		) VALUES (
 			(SELECT 'REPLY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(REPLY_NUM, 7))), 0) + 1,3 , '0') 
 			FROM COMMUNITY_REPLY)
 			, #{replyContent}
 			, #{replyWriter}
 			, #{boardNum}
-			, #{clubCode}
 		)
 	</insert>
 	
@@ -294,7 +292,6 @@
 			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		FROM COMMUNITY_REPLY
 		WHERE BOARD_NUM = #{boardNum}
-		AND CLUB_CODE = #{clubCode}
 		ORDER BY REPLY_NUM DESC
 	</select>
 	
@@ -352,7 +349,6 @@
 		SET 
 			READ_CNT = READ_CNT + 1
 		WHERE BOARD_NUM = #{boardNum}
-		AND CLUB_CODE = #{clubCode}
 	</update>
 	
 	

@@ -2,23 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org"
     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{fragment/layout}">
+    layout:decorate="~{fragment/public_layout}">
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/room/reading_room.css">
 </th:block>
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="reading-room-div">
-		열람실 페이지
+		<div class="reading-div">
+			열람실 현황
+		</div>
+		<div class="row p-4">
+			<div class="col-8 border">
+				<div class="row pb-5">
+					<div class="col text-center fw-bold">
+						D O O R
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 ps-3 pe-3 pb-5" th:each="section : ${sectionList}">
+						<div class="row">
+							<div class="col-6 p-3" th:each="seat : ${section.seatList}" th:classappend="${seatStat.count%2 == 1 } ? text-end">
+								<a href="javascript:void(0)" th:onclick="seatPick([[${seat.seatCode}]]);">
+									<img th:if="${seat.seatIsUsed == 'N'}" src="/image/room/desk-white.png" height="70;">
+									<img th:if="${seat.seatIsUsed == 'Y'}" src="/image/room/desk-black.png" height="70;">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-4">
+				zz
+			</div>
+		</div>
 	</div>  
+	<div>
+		<a href="https://www.flaticon.com/kr/free-icons/-" title="- 아이콘">- 아이콘  제작자: Freepik - Flaticon</a>
+	</div>
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/room/reading_room.js"></script>
 </th:block>
 
 </html>

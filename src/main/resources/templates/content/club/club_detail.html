@@ -34,8 +34,8 @@
 					<div class="col">
 						(관리자페이지로 이동 예정)
 						<input type="button" value="북클럽 관리" th:onclick="|location.href='@{/club/clubManage(clubCode=${club.clubCode})}';|">
-						<input type="button" value="북클럽 수정" th:onclick="|location.href='@{/club/updateClub(clubCode=${club.clubCode})}';|">
-						<input type="button" value="북클럽 삭제" th:onclick="deleteClub([[${club.clubCode}]]);">
+						<input type="button" value="북클럽 수정" th:onclick="|location.href='@{/club/updateClubForm(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+						<input type="button" value="북클럽 삭제" th:onclick="deleteClub([[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 					</div>
 				</div>	
 			</div>
