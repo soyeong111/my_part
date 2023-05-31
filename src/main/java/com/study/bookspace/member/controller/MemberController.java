@@ -89,5 +89,17 @@ public class MemberController {
 	public String loginForm() {
 		return "content/member/login";
 	}
+	
+	// 아이디 찾기 화면으로
+	@GetMapping("/findIdForm")
+	public String findIdForm() {
+		return "content/member/find_id";
+	}
+	
+	// 비밀번호 찾기 화면으로
+	@GetMapping("/findPwForm")
+	public String findPwForm() {
+		return "content/member/find_pw";
+	}
 
 }
