@@ -118,18 +118,15 @@
 	<update id="returnBook">
 	    UPDATE BOOK_BORROW
 	    SET RETURN_DATE = SYSDATE
-	    WHERE BORROW_CODE = #{borrowCode}
+	    WHERE BORROW_CODE = #{borrowCode, jdbcType=VARCHAR}
 	</update>
 
 		<!-- 반납 업데이트 쿼리 -->
 	<update id="updateReturnCnt">
 	    UPDATE BOOK
 	    SET BORROW_CNT = BORROW_CNT - 1
-	    WHERE BOOK_CODE = #{bookCode}
+	    WHERE BOOK_CODE = #{bookCode, jdbcType=VARCHAR}
 	</update>
-
-	
-	
 	
 	
 	<!-- 도서 예약  -->
@@ -166,7 +163,6 @@
 	FROM BOOK
 	WHERE BOOK_CODE = #{bookCode}
 	</select>
-	
 	
 	
 	
@@ -376,6 +372,12 @@
 					
 			<!-- 검색 조건 -->
 
+		<if test="searchBookVO != null">
+		    AND CATEGORY.BOOK_CATE_NO IN 
+		    <foreach collection="searchBookVO.searchBookCateNo" item="bookCateNo" open="(" close=")" separator=",">
+		    	#{bookCateNo}
+		    </foreach>
+		 </if>
 		<if test='searchBookVO != null and !searchBookVO.searchBookTitle.equals("")'>				
 		    AND UPPER(BOOK_TITLE) LIKE '%'||UPPER(#{searchBookVO.searchBookTitle})||'%'
 		</if>
@@ -436,6 +438,7 @@
 		FROM BOOK_BORROW BR, BOOK B
 		WHERE BR.BOOK_CODE = B.BOOK_CODE
 		AND BR.MEM_ID = #{memId}
+		ORDER BY BR.BORROW_DATE
 	</select>
 	
 		
@@ -500,8 +503,7 @@
 				, BOOK_PUBLISHER = #{bookPublisher}
 				, BOOK_CATE_NO = #{bookCateNo}
 				, BOOK_STOCK_CNT = #{bookStockCnt}
-				, ISBN = #{isbn}
-			WHERE BOOK_CODE = #{bookCode}
+			  WHERE BOOK_CODE = #{bookCode}
 		</update>
 		
 		
