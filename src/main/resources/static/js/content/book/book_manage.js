@@ -1,5 +1,12 @@
 function editBook() {
   const checkedCheckboxes = document.querySelectorAll('#contentTable input.chk:checked');
+  const editButton = document.getElementById('editBtn');
+  const editMode = editButton.value === '완료';
+  
+    if (checkedCheckboxes.length === 0) {
+    alert('도서를 선택하세요.');
+    return;
+  }
 
   checkedCheckboxes.forEach((checkbox) => {
     const row = checkbox.parentNode.parentNode;
@@ -12,42 +19,70 @@ function editBook() {
     const isbnCell = row.querySelector('td:nth-child(8)');
     const stockCountCell = row.querySelector('td:nth-child(10)');
 
-    const categoryValue = categoryCell.innerText;
-    const titleValue = titleCell.innerText;
-    const authorValue = authorCell.innerText;
-    const publisherValue = publisherCell.innerText;
-    const publicationDateValue = publicationDateCell.innerText;
-    const isbnValue = isbnCell.innerText;
-    const stockCountValue = stockCountCell.innerText;
+    if (editMode) {
+      // 완료 버튼을 클릭한 경우
+      const bookCateNo = categoryCell.querySelector('input').value;
+      const bookTitle = titleCell.querySelector('input').value;
+      const bookAuthor = authorCell.querySelector('input').value;
+      const bookPublisher = publisherCell.querySelector('input').value;
+      const bookPublicationDate = publicationDateCell.querySelector('input').value;
+      const isbn = isbnCell.querySelector('input').value;
+      const bookStockCnt = stockCountCell.querySelector('input').value;
 
-    categoryCell.innerHTML = `<input type="text" class="form-control" value="${categoryValue}">`;
-    titleCell.innerHTML = `<input type="text" class="form-control" value="${titleValue}">`;
-    authorCell.innerHTML = `<input type="text" class="form-control"  value="${authorValue}">`;
-    publisherCell.innerHTML = `<input type="text" class="form-control" value="${publisherValue}">`;
-    publicationDateCell.innerHTML = `<input type="date" class="form-control" value="${publicationDateValue}">`;
-    isbnCell.innerHTML = `<input type="text"class="form-control"  value="${isbnValue}">`;
-    stockCountCell.innerHTML = `<input type="number" class="form-control" value="${stockCountValue}">`;
+      // AJAX를 통해 수정된 데이터를 서버에 전송하여 DB에 저장
+      $.ajax({
+        url: '/book/updateBookAjax',
+        type: 'post',
+        data: {
+          'bookCode': bookCode,
+          'bookCateNo': bookCateNo,
+          'bookTitle': bookTitle,
+          'bookAuthor': bookAuthor,
+          'bookPublisher': bookPublisher,
+          'bookPublicationDate': bookPublicationDate,
+          'isbn': isbn,
+          'bookStockCnt': bookStockCnt
+        },
+        success: function(result) {
+          // 성공적으로 업데이트되었을 때의 처리
+        },
+        error: function(error) {
+          // 업데이트 실패 또는 오류 발생시의 처리
+        }
+      });  
 
-    const editButton = document.getElementById('editBtn');
-    editButton.value = '완료';
-    editButton.setAttribute('onclick', 'updateBook()');
+      // 입력 필드의 값을 셀 내부에 반영
+      categoryCell.innerHTML = bookCateNo;
+      titleCell.innerHTML = bookTitle;
+      authorCell.innerHTML = bookAuthor;
+      publisherCell.innerHTML = bookPublisher;
+      publicationDateCell.innerHTML = bookPublicationDate;
+      isbnCell.innerHTML = isbn;
+      stockCountCell.innerHTML = bookStockCnt;
+    } else {
+      // 수정 버튼을 클릭한 경우
+      const bookCateNo = categoryCell.innerText;
+      const bookTitle = titleCell.innerText;
+      const bookAuthor = authorCell.innerText;
+      const bookPublisher = publisherCell.innerText;
+      const bookPublicationDate = publicationDateCell.innerText;
+      const isbn = isbnCell.innerText;
+      const bookStockCnt = stockCountCell.innerText;
+
+      // 입력 필드로 변경
+      categoryCell.innerHTML = `<input type="text" class="form-control" value="${bookCateNo}">`;
+      titleCell.innerHTML = `<input type="text" class="form-control" value="${bookTitle}">`;
+      authorCell.innerHTML = `<input type="text" class="form-control"  value="${bookAuthor}">`;
+      publisherCell.innerHTML = `<input type="text" class="form-control" value="${bookPublisher}">`;
+      publicationDateCell.innerHTML = `<input type="date" class="form-control" value="${bookPublicationDate}">`;
+      isbnCell.innerHTML = `<input type="text"class="form-control"  value="${isbn}">`;
+      stockCountCell.innerHTML = `<input type="number" class="form-control" value="${bookStockCnt}">`;
+    }
   });
-}
 
-function updateBook() {
-  const updatedData = [];
-
-  const updatedCells = document.querySelectorAll('#contentTable td input.form-control');
-  updatedCells.forEach((cell) => {
-    updatedData.push(cell.value);
-    cell.outerHTML = cell.value;
-  });
-
-  const editButton = document.getElementById('editBtn');
-  editButton.value = '수정';
+  // 버튼 상태 변경
+  editButton.value = editMode ? '수정' : '완료';
   editButton.setAttribute('onclick', 'editBook()');
-
-
 }
 
 

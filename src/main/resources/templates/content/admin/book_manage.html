@@ -37,11 +37,11 @@
                     
 					<th:block th:each="category : ${categoryList}">
 					    <div class="form-check form-check-inline">
-					        <input class="form-check-input chk1" th:value="${category != null ? category.bookCateNo : ''}" 
+					        <input class="form-check-input chk1" th:value="${category.bookCateNo}" 
 					               type="checkbox" id="" name="searchBookVO.searchBookCateNo" onclick="setCheckAllStatus1();"
 					               checked>
 					        <label class="form-check-label" for="">
-					            <span th:text="${category != null ? category.bookCateStr : ''}"></span>
+					             [[${category.bookCateStr}]]
 					            <span th:if="${category != null and category.bookCateIsUse == 'N'}">(미사용)</span>
 					        </label>
 					    </div>
@@ -155,6 +155,8 @@
 	</div>
 	
 <!-- 도서 목록 영역 -->	
+<div>
+	<form th:action="@{/book/updateBook}" method="post">
 	<div class="row">
 		<div class="col" id="contentTable">
 			<table class="table table-striped table-hover text-center">
@@ -165,6 +167,7 @@
 						<col width="">
 						<col width="">
 					</colgroup>
+				
 					<thead class="table-head">
 						<tr>
 							<td>
@@ -199,6 +202,7 @@
 				    <td>[[${book.bookStockCnt}]]</td>
 					</tr>
 				</tbody>
+				
 			</table>
 		</div>
 	</div>
@@ -210,7 +214,8 @@
 					<input type="button" class="btn custom-btn-del" value="삭제" onclick="deleteBook();">
 				</div>
 			</div>
-	
+		</form>
+	</div>
 </div>
 </th:block>
 <th:block layout:fragment="content_js">

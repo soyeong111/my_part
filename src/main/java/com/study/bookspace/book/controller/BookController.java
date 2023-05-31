@@ -192,6 +192,14 @@ public class BookController {
 	public int reserveAjax(HttpSession session, ReserveVO reserveVO) {
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
+		BorrowVO borrowVO = new BorrowVO();
+		
+//		중복 대여
+		int checkBorrowStatus = bookService.checkBorrowStatus(borrowVO);
+//			중복 대여 시
+		if(checkBorrowStatus != 0) {
+				return 1;
+			}
 		
 //		 중복 예약
 		 int checkReserveStatus = bookService.checkReserveStatus(reserveVO);
@@ -293,12 +301,13 @@ public class BookController {
 	
 //	도서 관리) 도서 수정
 	@ResponseBody
-	@PostMapping("/updateBook")
-	public String updateBook(BookVO bookVO) {
+	@PostMapping("/updateBookAjax")
+	public String updateBookAjax(BookVO bookVO) {
+		
 		
 		bookService.updateBook(bookVO);
 		
-		return "success";
+		return "redirect:/book/bookManage";
 	}
 	
 	
