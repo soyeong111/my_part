@@ -65,7 +65,6 @@
 		SELECT MEM_ID
 			, MEM_PW
 			, MEM_ROLE
-			, MEM_STATUS
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 	</select>

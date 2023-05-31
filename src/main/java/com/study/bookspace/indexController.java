@@ -13,5 +13,11 @@ public class indexController {
 	public String index(SubMenuVO subMenuVO, SearchBookVO searchBookVO) {
 		return "content/main";
 	}
+	
+	// 접근 제한 화면으로
+	@GetMapping("/accessDeny")
+	public String accessDeny() {
+		return "content/access_deny";
+	}
 
 }
