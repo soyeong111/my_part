@@ -56,7 +56,7 @@
 				<div class="col-7">
 					<div class="input-group">
 						<input type="text" name="memEmailArr" id="join-mem-email-0" class="form-control" placeholder="이메일"
-							 onkeyup="email_input_change();">
+							 onkeyup="email_input_change(this);">
 						<span class="input-group-text">@</span>
 						<select name="memEmailArr" id="join-mem-email-1" class="form-select" onchange="email_select_change(this);">
 							<option value="naver.com">naver.com</option>
@@ -69,40 +69,26 @@
 					<button type="button" class="btn custom-btn" onclick="email_pw_send(this);" disabled>메일 인증</button>
 				</div>
 			</div>
-			
-			
-			
-			
-			
-			
-			
 			<div class="row d-flex align-items-center mt-4">
 				<div class="col-2 text-end">
 					<label for="join-mem-tell-1" class="form-label m-0">전화번호</label>
 				</div>
 				<div class="col-7">
 					<div class="input-group">
-						<select name="memTellArr" id="join-mem-tell-0" class="form-select">
+						<select name="memTellArr" id="join-mem-tell-0" class="form-select" onchange="tell_validation();">
 							<option value="010">010</option>
 							<option value="011">011</option>
 						</select>
 						<span class="input-group-text">-</span>
-						<input type="text" name="memTellArr" id="join-mem-tell-1" class="form-control">
+						<input type="text" name="memTellArr" id="join-mem-tell-1" class="form-control" onkeyup="tell_change(this);" maxlength="4">
 						<span class="input-group-text">-</span>
-						<input type="text" name="memTellArr" id="join-mem-tell-2" class="form-control">
+						<input type="text" name="memTellArr" id="join-mem-tell-2" class="form-control" onkeyup="tell_change(this);" maxlength="4">
 					</div>
 				</div>
 				<div class="col-3 d-grid">
-					<button type="button" class="btn custom-btn" disabled>번호 인증</button>
+					<button type="button" class="btn custom-btn" onclick="tell_pw_send(this);" disabled>번호 인증</button>
 				</div>
 			</div>
-			
-			
-			
-			
-			
-			
-			
 			<div class="row d-flex align-items-center mt-4">
 				<div class="col-2 text-end">
 					<label for="join-mem-birthday" class="form-label m-0">생년월일</label>
@@ -114,7 +100,7 @@
 					<label class="form-label m-0">성별</label>
 				</div>
 				<div class="col-3">
-					<input type="radio" name="memGender" id="join-mem-gender-m" class="form-check-input ms-2" value="M" checked>
+					<input type="radio" name="memGender" id="join-mem-gender-m" class="form-check-input ms-2" value="M">
 					<label for="join-mem-gender-m" class="form-check-label mb-0 ms-1">남</label>
 					<input type="radio" name="memGender" id="join-mem-gender-f" class="form-check-input ms-4" value="F">
 					<label for="join-mem-gender-f" class="form-check-label mb-0 ms-1">여</label>
@@ -138,13 +124,13 @@
 					<label for="join-mem-addr-detail" class="form-label m-0">상세주소</label>
 				</div>
 				<div class="col-10">
-					<input type="text" name="memAddrDetail" id="join-mem-addr-detail" class="form-control" placeholder="상세 주소 입력">
+					<input type="text" name="memAddrDetail" id="join-mem-addr-detail" class="form-control" placeholder="상세 주소 입력" onkeyup="addr_validation(this);">
 				</div>
 			</div>
 			
 			<div class="row mt-4">
 				<div class="col-4 offset-4 d-grid">
-					<button type="button" class="btn custom-btn" onclick="join();">회원 가입</button>
+					<button type="button" class="btn custom-btn" onclick="require_check();">회원 가입</button>
 				</div>
 			</div>
 			
