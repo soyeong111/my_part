@@ -69,18 +69,17 @@ public class MemberController {
 	@PostMapping("/tellAuthAjax")
 	public String tellAuthAjax(SmsVO smsVO) throws Exception {
 		List<SmsVO> messages = new ArrayList<>();
-		String key = smsService.createRandomNumber(6);
-		smsVO.setContent("[한울도서관]\n인증 번호 : " + key);
+		String pw = smsService.createRandomNumber(6);
+		smsVO.setContent("[한울도서관]\n인증 번호 : " + pw);
 		messages.add(smsVO);
 		smsService.sendSms(messages);
-		return key;
+		return pw;
 	}
 	
 	// 회원가입
 	@ResponseBody
 	@PostMapping("/joinAjax")
 	public boolean joinAjax(MemberVO memberVO) {
-		System.out.println(memberVO);
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		return memberService.join(memberVO) == 1;
 	}
@@ -89,6 +88,18 @@ public class MemberController {
 	@GetMapping("/loginForm")
 	public String loginForm() {
 		return "content/member/login";
+	}
+	
+	// 아이디 찾기 화면으로
+	@GetMapping("/findIdForm")
+	public String findIdForm() {
+		return "content/member/find_id";
+	}
+	
+	// 비밀번호 찾기 화면으로
+	@GetMapping("/findPwForm")
+	public String findPwForm() {
+		return "content/member/find_pw";
 	}
 
 }

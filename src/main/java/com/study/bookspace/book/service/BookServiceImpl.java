@@ -68,6 +68,14 @@ public class BookServiceImpl implements BookService {
 
 	
 	@Override
+	@Transactional(rollbackFor = Exception.class) 
+	public void returnBook(BorrowVO borrowVO) {
+		sqlSession.update("bookMapper.returnBook", borrowVO);
+		sqlSession.update("bookMapper.updateReturnCnt", borrowVO);
+	}
+
+	
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void extendBorrow(BorrowVO borrowVO) {
 		sqlSession.update("bookMapper.extendBorrow", borrowVO);
@@ -131,6 +139,11 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void deleteBook(BookVO bookVO) {
 		sqlSession.delete("bookMapper.deleteBook", bookVO);
+	}
+
+	@Override
+	public void updateBook(BookVO bookVO) {
+		sqlSession.update("bookMapper.updateBook", bookVO);
 	}
 
 

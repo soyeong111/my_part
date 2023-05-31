@@ -78,7 +78,7 @@ public class SmsService {
 				.countryCode("82")
 				.from(phone)
 				.messages(messages)
-				.content("")
+				.content(" ")
 				.build();
 		
 		ObjectMapper objectMapper = new ObjectMapper();

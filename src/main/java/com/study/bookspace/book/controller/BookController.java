@@ -174,11 +174,32 @@ public class BookController {
 	}
 	
 	
+//	도서 반납
+	@ResponseBody
+	@PostMapping("/returnBookAjax")
+	public int returnBookAjax(BorrowVO borrowVO, HttpSession session) {
+		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+//		도서 반납
+		bookService.returnBook(borrowVO);
+		 return 0;
+	}
+	
+	
+	
 	@ResponseBody
 	@PostMapping("/reserveAjax")
 	public int reserveAjax(HttpSession session, ReserveVO reserveVO) {
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
+		BorrowVO borrowVO = new BorrowVO();
+		
+//		중복 대여
+		int checkBorrowStatus = bookService.checkBorrowStatus(borrowVO);
+//			중복 대여 시
+		if(checkBorrowStatus != 0) {
+				return 1;
+			}
 		
 //		 중복 예약
 		 int checkReserveStatus = bookService.checkReserveStatus(reserveVO);
@@ -198,29 +219,6 @@ public class BookController {
 		 return 0;
 	}
 	
-//	내 정보) 도서 반납 연장
-	@ResponseBody
-	@PostMapping("/extendAjax")
-		public int extendAjax(HttpSession session, BorrowVO borrowVO) {
-			borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-		
-//			반납 연장
-			bookService.extendBorrow(borrowVO);
-			
-			return 0;
-		}
-	
-//	내 정보) 도서 반납 연장 전 예약 확인
-	
-	@ResponseBody
-	@PostMapping("/checkReserveBeforeExtendAjax")
-	public int checkReserveBeforeExtend(HttpSession session, ReserveVO reserveVO) {
-		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-		
-		bookService.checkReserveBeforeExtend(reserveVO);
-		return 0;
-	}
-	
 	
 // 	내 정보)) 도서 대여 관리
 	@GetMapping("/myBorrow")
@@ -236,9 +234,40 @@ public class BookController {
 		return "content/my/my_borrow";
 	}
 	
+
 	
 	
+//	내 정보) 도서 반납 연장
+	@ResponseBody
+	@PostMapping("/extendAjax")
+		public int extendAjax(HttpSession session, BorrowVO borrowVO) {
+			borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+//			반납 연장
+			bookService.extendBorrow(borrowVO);
+			
+			return 0;
+		}
 	
+	
+//	내 정보) 다른 회원이 예약한 도서인지 확인
+	
+	@ResponseBody
+	@PostMapping("/checkReserveBeforeExtendAjax")
+	public int checkReserveBeforeExtendAjax(HttpSession session, ReserveVO reserveVO) {
+		
+		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+//		예약여부 확인
+		int checkReserveBeforeExtend = bookService.checkReserveBeforeExtend(reserveVO);
+//			예약 시
+		if(checkReserveBeforeExtend != 0) {
+			return 1;
+		}
+		return 0;
+	}
+	
+
 	
 //	도서 관리) 소장 도서 관리
 	@RequestMapping("/bookManage")
@@ -270,6 +299,16 @@ public class BookController {
 	}
 	
 	
+//	도서 관리) 도서 수정
+	@ResponseBody
+	@PostMapping("/updateBookAjax")
+	public String updateBookAjax(BookVO bookVO) {
+		
+		
+		bookService.updateBook(bookVO);
+		
+		return "redirect:/book/bookManage";
+	}
 	
 	
 	

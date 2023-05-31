@@ -36,6 +36,9 @@ public interface BookService {
 //	도서 대여
 	void borrowBook(BorrowVO borrowVO);
 	
+//	도서 반납
+	void returnBook(BorrowVO borrowVO);
+	
 //	도서 예약
 	void reserveBook(ReserveVO reserveVO);
 	
@@ -50,6 +53,9 @@ public interface BookService {
 	
 //	도서관리) 도서 삭제
 	void deleteBook(BookVO bookVO);
+	
+//	도서관리) 도서 수정
+	void updateBook(BookVO bookVO);
 	
 ////	도서 대여 개수
 //	Map<String, Object> getBorrowAndStockCnt(String bookCode);

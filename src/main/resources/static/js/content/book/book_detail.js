@@ -124,12 +124,38 @@ function reserve(memId, bookCode) {
     return;
   }
   // 동시에 대여 가능 여부를 확인하고 대여를 처리
-  checkReserve(memId, bookCode, function() {
-    checkReserveLimit(memId, bookCode, function() {
-      reserveAjax(memId, bookCode);
-    });
+  checkBorrow(memId, bookCode, function() {
+	  checkReserve(memId, bookCode, function() {
+	    checkReserveLimit(memId, bookCode, function() {
+	      reserveAjax(memId, bookCode);
+  		  });
+	  });
   });
 }
+
+
+
+// 중복 대여 여부
+function checkBorrow(memId, bookCode, callback) {
+  $.ajax({
+    url: '/book/borrowAjax',
+    type: 'post',
+    data: { 'memId': memId, 'bookCode': bookCode },
+    success: function(response) {
+      if (response == 1) {
+        alert('이미 대여한 책입니다.');
+      
+      } else {
+        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
+      }
+    },
+    error: function() {
+      alert('대여 가능 여부를 확인하는데 실패했습니다.');
+    }
+  });
+}
+
+
 
 // 중복 예약 여부
 function checkReserve(memId, bookCode, callback) {
