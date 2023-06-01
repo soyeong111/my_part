@@ -20,12 +20,30 @@ public class ClubServiceImpl implements ClubService{
 	private SqlSessionTemplate sqlSession;
 
 	//북클럽 생성 + 이미지 삽입
-	@Override
+	//@Override
 	//@Transactional(rollbackFor = Exception.class)
-	public void regClub(BookClubVO bookClubVO) {
-		sqlSession.insert("clubMapper.regClub", bookClubVO);
+	//public void regClub(BookClubVO bookClubVO) {
+	//	sqlSession.insert("clubMapper.regClub", bookClubVO);
 		//sqlSession.insert("clubMapper.insertImg", bookClubVO);
+	//}
+	
+	
+	
+	//북클럽 생성 + 이미지 삽입
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, BookClubMemberVO bookClubMemberVO) {
+		sqlSession.insert("clubMapper.regClub", bookClubVO);
+		sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
+		sqlSession.insert("clubMapper.joinClub", bookClubMemberVO);
+		sqlSession.update("clubMapper.updateClubMemberStatus", bookClubMemberVO);
+		sqlSession.update("clubMapper.updateClubMemberRole", bookClubMemberVO);
 	}
+	
+	
+	
+	
+	
 
 	//북클럽 목록 조회
 	@Override
@@ -74,10 +92,10 @@ public class ClubServiceImpl implements ClubService{
 	}
 
 	//북클럽 이미지 삽입
-	@Override
-	public void insertImg(BookClubImageVO bookClubImageVO) {
-		sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
-	}
+	//@Override
+	//public void insertImg(BookClubImageVO bookClubImageVO) {
+	//	sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
+	//}
 
 	//게시글 목록 조회
 	@Override
@@ -192,6 +210,16 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public void regNotice(CommunityVO communityVO) {
 		sqlSession.insert("clubMapper.regNotice", communityVO);
+	}
+
+
+
+
+
+	//클럽 이미지 이름 조회
+	@Override
+	public String getClubImageName(String clubCode) {
+		return sqlSession.selectOne("clubMapper.getClubImageName", clubCode);
 	}
 
 	

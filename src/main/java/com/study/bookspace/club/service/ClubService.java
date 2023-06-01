@@ -18,7 +18,7 @@ public interface ClubService {
 	boolean isDuplicateClubName(String clubName);
 	
 	//북클럽 생성 @@ 
-	void regClub(BookClubVO bookClubVO);
+	void regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, BookClubMemberVO bookClubMemberVO);
 	
 	//북클럽 목록 조회
 	List<BookClubVO> getClubList();
@@ -33,7 +33,7 @@ public interface ClubService {
 	void joinClub(BookClubMemberVO bookClubMemberVO);
 	
 	//이미지 삽입
-	void insertImg(BookClubImageVO bookClubImageVO);
+	//void insertImg(BookClubImageVO bookClubImageVO);
 	
 	//다음 등록 클럽 코드 조회
 	String getNextClubCode();
@@ -83,6 +83,8 @@ public interface ClubService {
 	//조회수 증가
 	int updateReadCnt(String boardNum);
 	
+	//클럽 이미지 이름 조회
+	String getClubImageName(String clubCode);
 	
 	//클럽 삭제
 	void deleteClub(String clubCode);

@@ -33,5 +33,26 @@
 		WHERE SEC.SECTION_CODE = SEAT.SECTION_CODE
 	</select>
 	
+	<select id="getSeatDetail" resultMap="seat">
+		SELECT SEAT_CODE
+			, SEAT_IS_USED
+		FROM SECTION_SEAT
+		WHERE SEAT_CODE = #{seatCode}
+	</select>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
