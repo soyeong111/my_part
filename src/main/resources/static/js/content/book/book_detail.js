@@ -14,9 +14,12 @@ function init() {
     
     const reserveCntElement = document.getElementById('bookBr').elements['reserveCnt'];
     const reserveCnt = parseInt(reserveCntElement.value);
+   
+    const returnDateElement = document.getElementById('bookBr').elements['returnDate'];
+    const returnDate = returnDateElement.value.toString();
 
 
-    if (borrowCnt >= bookStockCnt) {
+    if (borrowCnt >= bookStockCnt && returnDate == null) {
         borrowBtn.disabled = true;
     } 
     
@@ -33,15 +36,20 @@ function init() {
 // 대여하기 버튼 클릭 시 실행
 function borrow(memId, bookCode) {
   if (memId == 'anonymousUser') {
-    const result = confirm('먼저 로그인 하세요. \n로그인 하시겠습니까?');
-
+   swal({
+    title: "먼저 로그인 하세요.",
+    text: "로그인 하시겠습니까?",
+    icon: "warning" //"info,success,warning,error" 중 택1
+  }).then(function(result) {
     if (result) {
-      // 로그인 페이지로 이동
+      // 확인 버튼을 클릭한 경우 로그인 페이지로 이동
       location.href = '/member/loginForm';
     }
-    // 로그인 체크
-    return;
-  }
+  });
+
+  // 로그인 체크
+  return;
+}
   // 동시에 대여 가능 여부를 확인하고 대여를 처리
   checkBorrow(memId, bookCode, function() {
     checkBorrowLimit(memId, bookCode, function() {
@@ -58,7 +66,7 @@ function checkBorrow(memId, bookCode, callback) {
     data: { 'memId': memId, 'bookCode': bookCode },
     success: function(response) {
       if (response == 1) {
-        alert('이미 대여한 책입니다.');
+        alert('이미 대여한 책입니다');
       
       } else {
         callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
@@ -78,7 +86,13 @@ function checkBorrowLimit(memId, bookCode, callback) {
     data: { 'memId': memId, 'bookCode': bookCode },
     success: function(response) {
       if (response == 4) {
-        alert('대여 가능한 권수를 초과하였습니다.');
+        
+         swal({
+	    title: "대여 불가.",
+	    text: "대여 가능간 권수(4권)을 초과하였습니다.",
+	    icon: "error" //"info,success,warning,error" 중 택1
+	  });
+        
       } else {
         callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
       }

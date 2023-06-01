@@ -22,6 +22,7 @@ public class BookVO {
 	private int bookCateNo;
 	private int bookStockCnt;
 	private String isbn;
+	private String returnDate;
 	private BorrowVO borrowVO;
 	private int borrowCnt;
 	private int reserveCnt;
@@ -31,6 +32,7 @@ public class BookVO {
 	private SearchBookVO searchBookVO;  // bookVO 1개는 검색조건 1개를 갖고 있다
 	private BookStatusVO bookStatusVO; 
 	private List<String> bookCodeList;
+	
 
 }
 

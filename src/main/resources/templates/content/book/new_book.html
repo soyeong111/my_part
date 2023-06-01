@@ -19,7 +19,7 @@
 <div class="book-list-div">
   <div class="row row-cols-5 g-4">
     <th:block th:each="book, iterStat : ${bookList}">
-      <div class="col-2">
+      <div class="col">
         <div class="bookList" style="text-align: center;">
         <a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}">
           <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width:158px; height: 250px;">

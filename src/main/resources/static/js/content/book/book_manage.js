@@ -2,11 +2,15 @@ function editBook() {
   const checkedCheckboxes = document.querySelectorAll('#contentTable input.chk:checked');
   const editButton = document.getElementById('editBtn');
   const editMode = editButton.value === '완료';
-  
-    if (checkedCheckboxes.length === 0) {
-    alert('도서를 선택하세요.');
-    return;
-  }
+	
+	if (checkedCheckboxes.length === 0) {
+	  swal({
+	    title: "선택된 도서가 없습니다.",
+	    text: "도서를 선택해주세요.",
+	    icon: "warning" //"info,success,warning,error" 중 택1
+	  });
+	  return;
+	}
 
   checkedCheckboxes.forEach((checkbox) => {
     const row = checkbox.parentNode.parentNode;
@@ -70,7 +74,7 @@ function editBook() {
       const bookStockCnt = stockCountCell.innerText;
 
       // 입력 필드로 변경
-      categoryCell.innerHTML = `<input type="text" class="form-control" value="${bookCateNo}">`;
+	   categoryCell.innerHTML = `<input type="text" class="form-control" value="${bookCateNo}">`
       titleCell.innerHTML = `<input type="text" class="form-control" value="${bookTitle}">`;
       authorCell.innerHTML = `<input type="text" class="form-control"  value="${bookAuthor}">`;
       publisherCell.innerHTML = `<input type="text" class="form-control" value="${bookPublisher}">`;
@@ -95,26 +99,38 @@ function editBook() {
 function deleteBook(){
 	//체크한 체크박스
 	const chks = document.querySelectorAll('.chk:checked');
-	const result = confirm('해당 도서를 삭제하시겠습니까?');
 	
-	if(chks.length == 0){
-		alert('선택한 도서가 없습니다.');
-		return;
+	
+	if (chks.length == 0) {
+	  swal({
+	    title: "선택된 도서가 없습니다.",
+	    text: "도서를 선택해주세요.",
+	    icon: "warning" //"info,success,warning,error" 중 택1
+	  });
+	  return;
 	}
 	
-	//bookCode를 여러개 담을 수 있는 배열 생성
-	const bookCodeArr = [];
-	
-	chks.forEach(function(chk, index){
-		
-		bookCodeArr[index] = chk.value;
+		swal({
+		title: "도서 삭제",
+		text: "해당 도서를 삭제하시겠습니까?",
+		icon: "error",
+		buttons: ["취소", "삭제"],
+		dangerMode: true,
+	})
+	.then((confirmed) => {
+		if (confirmed) {
+			//bookCode를 여러개 담을 수 있는 배열 생성
+			const bookCodeArr = [];
+			
+			chks.forEach(function(chk, index){
+				bookCodeArr[index] = chk.value;
+			});
+				
+			location.href = `/book/deleteBook?bookCodes=${bookCodeArr}`;
+		}
 	});
-		
-	location.href = `/book/deleteBook?bookCodes=${bookCodeArr}`;
 }
 
-	
-	
 //------------체크박스-------------
 
 	

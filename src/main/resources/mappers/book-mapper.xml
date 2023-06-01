@@ -21,6 +21,7 @@
 		<result column="BORROW_CNT"							property="borrowCnt"/>
 		<result column="RESERVE_CNT"						property="reserveCnt"/>
 		<association property="categoryVO" 					resultMap="category"></association> 		
+		<association property="borrowVO" 					resultMap="borrow"></association> 		
 		<association property="bookStatusVO" 				resultMap="bookStatus"></association> 		
 		<collection property="imgList" 						resultMap="img"></collection>
 	</resultMap>
@@ -346,9 +347,11 @@
 			, ISBN
 			, ATTACHED_FILE_NAME
 			, IS_MAIN_IMG
-		FROM BOOK BOOK, BOOK_IMAGE IMG
-		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
-		AND BOOK.BOOK_CODE = #{bookCode}
+		 	, RETURN_DATE 
+    FROM BOOK BOOK
+    JOIN BOOK_IMAGE IMG ON BOOK.BOOK_CODE = IMG.BOOK_CODE
+    LEFT JOIN BOOK_BORROW BB ON BOOK.BOOK_CODE = BB.BOOK_CODE
+    WHERE BOOK.BOOK_CODE = #{bookCode}
 	</select>
 	
 	
@@ -438,7 +441,7 @@
 		FROM BOOK_BORROW BR, BOOK B
 		WHERE BR.BOOK_CODE = B.BOOK_CODE
 		AND BR.MEM_ID = #{memId}
-		ORDER BY BR.BORROW_DATE
+		ORDER BY BR.BORROW_DATE DESC
 	</select>
 	
 		
@@ -458,40 +461,21 @@
 	</select>
 	
 		
-	<!-- 도서관리) 도서 삭제  -->
+	<!-- 도서관리) 도서 삭제  (자식 레코드)-->
 	<delete id="deleteBook">
-	DELETE BOOK
-	WHERE BOOK_CODE IN	
-		<foreach collection="bookCodeList" item="bookCode" open="(" close=")" separator=",">
-			#{bookCode}
-		</foreach>
-	</delete>
-
-	
-		
-		<!-- 도서관리) 도서 삭제 (자식 레코드)  -->
-	<delete id="deleteBooks">
 	  <foreach collection="bookCodeList" item="bookCode" separator=";">
 	    <![CDATA[
 	      BEGIN
-	        
-	        DELETE FROM BOOK_IMAGE WHERE BOOK_CODE = #{bookCode}
-	
-	       
-	        DELETE FROM BOOK_RESERVE WHERE BOOK_CODE = #{bookCode}
-	
-	       
-	        DELETE FROM BOOK_BORROW WHERE BOOK_CODE = #{bookCode}
-	
-	       
-	        DELETE FROM BOOK WHERE BOOK_CODE = #{bookCode}
-	
-	        
-	        COMMIT
-	      END
+	        DELETE FROM BOOK_IMAGE WHERE BOOK_CODE = #{bookCode};
+	        DELETE FROM BOOK_RESERVE WHERE BOOK_CODE = #{bookCode};
+	        DELETE FROM BOOK_BORROW WHERE BOOK_CODE = #{bookCode};
+	        DELETE FROM BOOK WHERE BOOK_CODE = #{bookCode};
+	        COMMIT;
+	      END;
 	    ]]>
 	  </foreach>
 	</delete>
+
 
 		<!-- 도서 정보 수정 -->
 		<update id="updateBook">
