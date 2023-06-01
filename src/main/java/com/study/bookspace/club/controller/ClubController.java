@@ -1,5 +1,7 @@
 package com.study.bookspace.club.controller;
 
+import java.io.File;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.PageVO;
 import com.study.bookspace.util.UploadUtil;
 
@@ -68,7 +71,7 @@ public class ClubController {
 	
 	//북 클럽 생성
 	@PostMapping("/regClub")
-	public String regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, MultipartFile clubImg, Authentication authentication, SubMenuVO subMenuVO) {
+	public String regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, BookClubMemberVO bookClubMemberVO, MultipartFile clubImg, Authentication authentication, SubMenuVO subMenuVO) {
 		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
@@ -87,11 +90,19 @@ public class ClubController {
 		bookClubImageVO.setClubCode(clubCode);
 		bookClubImageVO.setBcOriginFileName(attachedClubImageVO.getBcOriginFileName());
 		bookClubImageVO.setBcAttachedFileName(attachedClubImageVO.getBcAttachedFileName());
-		//bookClubVO.setBookClubImageVO(attachedClubImageVO);
 		
-		clubService.regClub(bookClubVO);
-		clubService.insertImg(bookClubImageVO);
-		//clubService.joinClub(bookClubVO.getBookClubMemberVO());
+		bookClubMemberVO.setClubCode(clubCode);
+		bookClubMemberVO.setMemId(memId);
+		bookClubMemberVO.setClubRole("MANAGER");
+		bookClubMemberVO.setClubMemStatus(2);
+		
+		System.out.println(bookClubVO);
+		System.out.println(bookClubImageVO);
+		System.out.println(bookClubMemberVO);
+		
+		clubService.regClub(bookClubVO, bookClubImageVO, bookClubMemberVO);
+		//clubService.regClub(bookClubVO);
+		//clubService.insertImg(bookClubImageVO);
 		
 		return "redirect:/club/club?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
@@ -148,6 +159,10 @@ public class ClubController {
 	//북클럽 삭제
 	@GetMapping("/deleteClub")
 	public String deleteClub(String clubCode, SubMenuVO subMenuVO) {
+		String clubImgName = clubService.getClubImageName(clubCode);
+		
+		File file = new File(ConstVariable.CLUB_UPLOAD_PATH + clubImgName);
+		file.delete();		
 		
 		clubService.deleteClub(clubCode);
 		
@@ -164,6 +179,7 @@ public class ClubController {
 		//북클럽 가입 신청 회원 목록 조회 (승인 전)
 		model.addAttribute("applyList", clubService.getApplyMemberList(clubCode));
 		
+		model.addAttribute("clubCode", clubCode);
 		
 		return "content/club/club_manage";
 	}

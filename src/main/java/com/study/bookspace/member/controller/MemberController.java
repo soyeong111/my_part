@@ -1,7 +1,9 @@
 package com.study.bookspace.member.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
-import com.study.bookspace.sms.SmsResponseVO;
 import com.study.bookspace.sms.SmsService;
 import com.study.bookspace.sms.SmsVO;
 import com.study.bookspace.util.MailService;
@@ -94,6 +95,17 @@ public class MemberController {
 	@GetMapping("/findIdForm")
 	public String findIdForm() {
 		return "content/member/find_id";
+	}
+	
+	// 아이디 찾기
+	@ResponseBody
+	@PostMapping("/findIdAjax")
+	public String findIdAjax(Map<String, Object> mapData) {
+		System.out.println(mapData);
+		
+		
+		
+		return "";
 	}
 	
 	// 비밀번호 찾기 화면으로

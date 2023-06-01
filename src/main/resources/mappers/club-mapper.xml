@@ -27,6 +27,7 @@
 		<result column="MEM_ID" 			property="memId"/>
 		<result column="CLUB_REG_DATE" 		property="clubRegDate"/>
 		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
+		<result column="CLUB_ROLE" 			property="clubRole"/>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityVO" id="community">
@@ -83,6 +84,22 @@
 			, #{memId}
 		)
 	</insert>
+	
+	<update id="updateClubMemberStatus">
+		UPDATE BOOK_CLUB_MEMBER
+		SET
+			CLUB_MEM_STATUS = #{clubMemStatus}
+		WHERE CLUB_CODE = #{clubCode}
+		AND MEM_ID = #{memId}
+	</update>
+	
+	<update id="updateClubMemberRole">
+		UPDATE BOOK_CLUB_MEMBER
+		SET
+			CLUB_ROLE = #{clubRole}
+		WHERE CLUB_CODE = #{clubCode}
+		AND MEM_ID = #{memId}
+	</update>
 	
 	<insert id="insertImg">
 		INSERT INTO BOOK_CLUB_IMAGE (
@@ -147,6 +164,12 @@
 			, #{memId}
 		)
 	</insert>
+	
+	<select id="getClubImageName" resultType="String">
+		SELECT BC_ATTACHED_FILE_NAME
+		FROM BOOK_CLUB_IMAGE
+		WHERE CLUB_CODE = #{clubCode}
+	</select>
 	
 	<delete id="deleteClub">
 		DELETE BOOK_CLUB
