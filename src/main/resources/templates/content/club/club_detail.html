@@ -12,18 +12,30 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="club-detail-div">
-		<div class="row">
+		<div class="club-name-div">
+			<div>[[${club.clubName}]]</div>
+		</div>			
+		<div class="row  w-85 m-auto pt-5">
 			<div class="col">
-				<div class="club-name-div">
-					<div>[[${club.clubName}]]</div>
-				</div>			
+				<div class="row mb-4">
+					<div class="col">
+						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="350px;"></div>
+					</div>
+				</div>	
 				<div class="row">
 					<div class="col">
-						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="400px;"></div>
-						<div>[[${club.clubShortInfo}]]</div>
-						<div>[[${club.clubIntro}]]</div>
+						<table>
+							<colgroup>
+								<col width="27%">
+								<col width="*">
+							</colgroup>
+							<tr>
+								<td><span>북클럽 소개</span></td>
+								<td>[[${club.clubIntro}]]</td>
+							</tr>
+						</table>
 					</div>
-				</div>		
+				</div>	
 				<div class="row">
 					<div class="col">
 						<input type="button" class="btn custom-btn" value="가입 신청하기" th:onclick="joinClub([[${#authentication.name}]], [[${club.clubCode}]]);">
@@ -32,7 +44,7 @@
 				</div>
 				<div class="row">
 					<div class="col">
-						(관리자페이지로 이동 예정)
+						(클럽장 마이페이지로 이동 예정)
 						<input type="button" value="북클럽 관리" th:onclick="|location.href='@{/club/clubManage(clubCode=${club.clubCode})}';|">
 						<input type="button" value="북클럽 수정" th:onclick="|location.href='@{/club/updateClubForm(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 						<input type="button" value="북클럽 삭제" th:onclick="deleteClub([[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">

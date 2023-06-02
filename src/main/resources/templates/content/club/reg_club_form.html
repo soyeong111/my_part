@@ -11,16 +11,13 @@
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	<div class="reg-club-form-div w-75 m-auto">
+	<div class="reg-club-form-div">
 		<div class="row">
 			<div class="col">
-			
-				<div class="row">
-					<div class="col">
-						<h3>북클럽 생성페이지</h3>
-					</div>
+				<div class="reg-form-div">
+					<div>북클럽 생성페이지</div>
 				</div>
-				<div class="row">
+				<div class="row w-75 m-auto pt-4">
 					<div class="col">
 						<form class="row g-2" id="regClubForm" th:action="@{/club/regClub}" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
@@ -37,11 +34,11 @@
 							</div>
 							<div class="col-12">
 								<label for="clubShortInfo" class="form-label">북클럽 한 줄 소개</label>
-								<input type="text" class="form-control" id="clubShortInfo" name="clubShortInfo" placeholder="한 줄 소개를 작성해주세요."><br>
+								<input type="text" class="form-control" id="clubShortInfo" name="clubShortInfo" placeholder="한 줄 소개를 작성해주세요.">
 							</div>
 							<div class="col-12">
 								<label for="clubImg" class="form-label">북클럽 이미지</label>
-								<input type="file" class="form-control" name="clubImg" id="clubImg"><br>
+								<input type="file" class="form-control" name="clubImg" id="clubImg">
 							</div>
 							<div class="col-12">
 								<label for="clubIntro" class="form-label">북클럽 소개</label> 

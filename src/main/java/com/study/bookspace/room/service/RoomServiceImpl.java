@@ -15,14 +15,18 @@ public class RoomServiceImpl implements RoomService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	//좌석 목록 조회
 	@Override
 	public List<SectionVO> getSectionList() {
 		return sqlSession.selectList("roomMapper.getSectionList");
 	}
 
+	//좌석 상세 조회
 	@Override
-	public SeatVO getSeatDetail(String seatCode) {
-		return null;
+	public String getSeatDetail(String seatCode) {
+		return sqlSession.selectOne("roomMapper.getSeatDetail", seatCode);
 	}
+
+	
 
 }
