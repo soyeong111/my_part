@@ -10,10 +10,10 @@ public class ConstVariable {
     public static final String CLUB_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\club\\";
 
     // info(QNA 이미지)
-    public static final String QNA_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\info\\";
+    public static final String QNA_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\info\\";
  
     //상품 이미지
-    public static final String GOODS_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\images\\goods\\";
+    public static final String GOODS_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\goods\\";
 
     
 	// ASCII 범위 – 영숫자(0-9, a-z, A-Z)

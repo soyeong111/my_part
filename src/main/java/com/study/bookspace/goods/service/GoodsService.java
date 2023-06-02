@@ -21,5 +21,26 @@ public interface GoodsService {
 	
 	//카테고리 사용여부 변경
 	int changeIsUse(String goodsCateCode);
+	
+	//굿즈 리스트 조회(관리자)
+	List<GoodsVO> selectGoodsListAdmin(GoodsVO goodsVO);
+	
+	//굿즈 등록
+	void insertGoods(GoodsVO goodsVO);
+	
+	//다음 굿즈 코드 조회
+	String nextGoodsCode();
+	
+	//사용중인 카테고리 목록 조회
+	List<GoodsCategoryVO> cateListInUse();
+	
+	//굿즈 상세 조회(관리자)
+	GoodsVO selectGoodsDetailAdmin(String goodsCode);
+	
+	//굿즈 정보 수정
+	void updateGoods(GoodsVO goodsVO);
+	
+	//굿즈 삭제
+	void deleteGoods(String goodsCode);
 
 }

@@ -25,4 +25,6 @@ public class GoodsVO {
 	private GoodsCategoryVO goodsCategoryVO;
 	
 	//서치
+	private GoodsSearchVO goodsSearchVO;
+	
 }
