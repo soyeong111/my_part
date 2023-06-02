@@ -25,6 +25,22 @@ public class GoodsServiceImpl implements GoodsService {
 		
 	}
 
+	@Override
+	public int checkCateName(String goodsCateName) {
+		return sqlSession.selectOne("goodsMapper.checkGoodsCateName",goodsCateName);
+	}
+
+	@Override
+	public void deleteGoodsCategory(String goodsCateCode) {
+		sqlSession.delete("goodsMapper.deleteGoodsCategory", goodsCateCode);
+		
+	}
+
+	@Override
+	public int changeIsUse(String goodsCateCode) {
+		return sqlSession.update("goodsMapper.updateIsUse",goodsCateCode);
+	}
+
 
 	
 	
