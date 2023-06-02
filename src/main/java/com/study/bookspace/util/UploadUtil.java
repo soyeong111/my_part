@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.club.vo.BookClubImageVO;
+import com.study.bookspace.goods.vo.GoodsImgVO;
+import com.study.bookspace.goods.vo.GoodsVO;
 
 
 public class UploadUtil {
@@ -76,7 +78,7 @@ public class UploadUtil {
 			String attachedFileName = uuid + extension;
 			
 			try {
-				File file = new File(ConstVariable.CLUB_UPLOAD_PATH + attachedFileName);
+				File file = new File(ConstVariable.HCLUB_UPLOAD_PATH + attachedFileName);
 				clubImg.transferTo(file);
 				
 				//첨부가 제대로 되야 필요하므로 try문 안에 작성했다.
@@ -88,6 +90,60 @@ public class UploadUtil {
 		}
 		return bookClubImageVO;
 	}
+	
+	
+	
+	
+	
+	
+//	단일 파일 업로드- 굿즈
+	public static GoodsImgVO goodsUploadFile(MultipartFile goodsImg) {
+		
+		GoodsImgVO goodsImgVO = null;
+		
+		if(!goodsImg.isEmpty()) {
+			
+			goodsImgVO = new GoodsImgVO();
+			
+			String originFileName = goodsImg.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+			String extension = originFileName.substring(originFileName.lastIndexOf("."));
+			String attachedFileName = uuid + extension;
+
+			try {
+				File file = new File(ConstVariable.GOODS_UPLOAD_PATH + attachedFileName);
+				goodsImg.transferTo(file);
+				
+				goodsImgVO.setOriginFileName(originFileName);
+				goodsImgVO.setAttachedFileName(attachedFileName);
+				goodsImgVO.setIsMain("Y");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
+		}
+		return goodsImgVO;
+	}
+	
+//	다중 파일 업로드 메소드
+	public static List<GoodsImgVO> goodsMultiFileUpload(MultipartFile[] imges) {
+	
+//		첨부된 파일정보를 다 담을 수 있는 통
+		List<GoodsImgVO> result = new ArrayList<>();
+		
+		
+		for(MultipartFile img : imges) {
+			GoodsImgVO vo = goodsUploadFile(img);
+			vo.setIsMain("N");
+			result.add(vo);
+			
+		
+		}
+		return result;
+	}
+	
 	
 	
 	

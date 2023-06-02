@@ -8,8 +8,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class GoodsCategoryVO {
-	private int goodsCateNo;
-	private String goodsCateStr;
+	private String goodsCateCode;
+	private String goodsCateName;
+	private int goodsCateOrderNo;
 	private String goodsCateIsUse;
-	private int goodsCateOrderNum;
+
 }

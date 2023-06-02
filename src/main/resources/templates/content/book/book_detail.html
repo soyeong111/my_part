@@ -44,6 +44,8 @@
   			<label for="" class="col-3 col-form-label"> 책소개</label>
   			<label for="" class="col-9 col-form-label"> [[${book.bookIntro}]] </label>
   		</div>
+  			[[${book.returnDate}]]
+
   		<div class="row mb-3">
   			<div class="col d-grid">
   				<input type="button" class="btn custom-btn" id="brBtn" value="대여하기"
@@ -58,6 +60,7 @@
 				<input type="hidden" name="bookStockCnt" th:value="${book.bookStockCnt}">
 				<input type="hidden" name="borrowCnt" th:value="${book.borrowCnt}">
 				<input type="hidden" name="reserveCnt" th:value="${book.reserveCnt}">
+				<input type="hidden" name="returnDate" th:value="${book.returnDate}">
   			</form>
   			</div>
 		</div>
@@ -73,6 +76,7 @@
 <!--연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/book/book_detail.js"></script> 
+	 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </th:block> 
 
 
