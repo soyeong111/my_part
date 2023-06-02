@@ -26,7 +26,7 @@ public class ConstVariable {
 	public static final String COMMUNITY_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\community\\";
 
 	// 클럽이미지(집)
-	public static final String HCLUB_UPLOAD_PATH = "C:\\dev\\team_project\\BookSpace\\src\\main\\resources\\static\\image\\club\\";
+	//public static final String HCLUB_UPLOAD_PATH = "C:\\dev\\team_project\\BookSpace\\src\\main\\resources\\static\\image\\club\\";
 	// 커뮤니티 이미지(집)
-	public static final String HCOMMUNITY_UPLOAD_PATH = "C:\\dev\\team_project\\BookSpace\\src\\main\\resources\\static\\image\\community\\";
+	//public static final String HCOMMUNITY_UPLOAD_PATH = "C:\\dev\\team_project\\BookSpace\\src\\main\\resources\\static\\image\\community\\";
 }
