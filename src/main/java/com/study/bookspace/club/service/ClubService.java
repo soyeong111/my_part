@@ -32,6 +32,12 @@ public interface ClubService {
 	//회원 북클럽 가입
 	void joinClub(BookClubMemberVO bookClubMemberVO);
 	
+	//북클럽장 아이디 조회
+	String getClubBossId(String clubCode);
+	
+	//나의 클럽 신청 대기 상태 조회
+	List<BookClubMemberVO> getMyClubDetail(String memId);
+	
 	//이미지 삽입
 	//void insertImg(BookClubImageVO bookClubImageVO);
 	

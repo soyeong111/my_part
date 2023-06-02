@@ -5,3 +5,11 @@
    color: red;
    margin-top: 2px;
 }
+
+.reg-form-div{
+	margin-bottom: 4rem; 
+	margin-top: 3rem; 
+	margin-left: 2rem;  
+	font-size: 20px; 
+	font-weight: bold;
+}

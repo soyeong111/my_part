@@ -8,7 +8,91 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="my-book-club-div">
-		my_book_club
+		<div class="row">
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						<div>북클럽 회원 목록</div>
+						<table class="table text-center">
+							<thead>
+								<tr>
+									<td>No</td>
+									<td>아이디</td>
+									<td>가입날짜</td>
+									<td>강퇴</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="member, state : ${memberList}">
+									<td>[[${#lists.size(memberList) - state.index}]]</td>
+									<td>[[${member.memId}]]</td>
+									<td>[[${member.clubRegDate}]]</td>
+									<td>
+										<input type="button" class="btn custom-btn-del" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]], [[${clubCode}]]);">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div>북클럽 신청 회원</div>
+						<table class="table text-center">
+							<colgroup>
+								<col width="10%">
+								<col width="*">
+								<col width="30%">
+							</colgroup>
+							<thead>
+								<tr>
+									<td>No</td>
+									<td>아이디</td>
+									<td>승인/거절</td>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${#lists.size(applyList) == 0}">
+									<tr><td colspan=5>가입신청 내역이 없습니다.</td></tr>
+								</th:block>
+								<tr th:each="apply, state : ${applyList}">
+									<td>[[${#lists.size(applyList) - state.index}]]</td>
+									<td>[[${apply.memId}]]</td>
+									<td>
+										<input type="button" class="btn custom-btn" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]]);">
+										<input type="button" class="btn custom-btn-del" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]]);">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col">
+				<div>나의 북클럽(클럽회원)</div>
+				<table class="table text-center">
+					<thead>
+						<tr>
+							<td>클럽명</td>
+							<td>상태</td>
+							<td>신청날짜</td>
+							<td>취소</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
