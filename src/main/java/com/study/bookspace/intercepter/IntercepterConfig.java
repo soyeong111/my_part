@@ -22,14 +22,22 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/buy/**"
 							, "/member/**")
 			.excludePathPatterns("/**/*Ajax"
-								, "/info/sendQuestion"
 								, "/book/regBookProcess"
 								, "/club/regClub"
 								, "/club/regBoard"
 								, "/club/updateBoard"
 								, "/club/deleteBoard"
 								, "/club/regReply"
+								, "/club/updateClub"
+								, "/club/deleteClub"
+								, "/club/updateReply"
+								, "/club/deleteReply"
 								, "/info/sendQuestion"
+								, "/info/updateQna"
+								, "/info/deleteQna"
+								, "/info/sendAnswer"
+								, "/info/updateAnswer"
+								, "/info/deleteAnswer"
 								, "/info/qnaAnswer");
 		
 		registry.addInterceptor(getMyMenuIntercepter())
