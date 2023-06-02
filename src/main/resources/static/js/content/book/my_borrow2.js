@@ -1,7 +1,85 @@
-function extend() {
-  // 여기에서 연장 작업을 수행하는 코드를 작성합니다.
-  
-  // 연장 작업이 완료되면 버튼의 텍스트를 "완료"로 변경합니다.
+
+function extend(btn, name, borrowCode, bookCode) {
   var button = document.getElementById('exBtn-' + borrowCode);
-  button.value = "완료";
+  if (button && button.value === '연장') {
+    Swal.fire({
+      title: '반납 기한을 연장하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: '네',
+      cancelButtonText: '아니오',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: '/book/extendAjax',
+          type: 'post',
+          async: true,
+          contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+          data: { 'borrowCode': borrowCode, 'memId': name },
+          success: function(result) {
+	          },
+          error: function() {
+            Swal.fire('연장에 실패했습니다.', '', 'error');
+          }
+        });
+      }
+    });
+  }
 }
+
+
+
+
+//반납 버튼 클릭 시 실행
+function returnBook(btn, name, borrowCode, bookCode) {
+  var button = document.getElementById('reBtn-' + borrowCode);
+  if (button && button.value === '반납') {
+    button.style.display = 'none'; // 버튼 숨기기
+    var span = document.createElement('span'); // 텍스트 엘리먼트 생성
+    span.textContent = '완료'; // 텍스트 설정
+    button.parentNode.appendChild(span); // 텍스트 추가
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 페이지 로드 시 상태를 복원
+//window.addEventListener('load', function() {
+//  var buttons = document.querySelectorAll('input.btn.custom-btn');
+//  buttons.forEach(function(button) {
+//    var borrowCode = button.id.substring(6); // borrowCode 추출
+ //   var extendStatus = localStorage.getItem('extendStatus-' + borrowCode);
+ //   if (extendStatus === 'completed') {
+  //    button.style.display = 'none'; // 버튼 숨기기
+    //  var span = document.createElement('span'); // 텍스트 엘리먼트 생성
+   //   span.textContent = '완료'; // 텍스트 설정
+   //   button.parentNode.appendChild(span); // 텍스트 추가
+   // }
+ // });
+//});
+
+

@@ -50,6 +50,7 @@
 		<result column="RETURN_DUEDATE" 					property="returnDueDate"/>
 		<result column="RETURN_DATE" 						property="returnDate"/>
 		<result column="BOOK_TITLE"							property="bookTitle"/>
+		<result column="EXTENDED"							property="extended"/>
 	</resultMap>
 
 	
@@ -109,7 +110,7 @@
 	
 	<!-- 대여 업데이트 쿼리 -->
 	<update id="updateBorrowCnt">
-		UPDATE BOOK
+		UPDATE BOOKf
 		SET BORROW_CNT = BORROW_CNT + 1
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
@@ -438,6 +439,7 @@
 			, BR.MEM_ID
 			, BR.BORROW_CODE
 			, B.BOOK_CODE
+			, EXTENDED
 		FROM BOOK_BORROW BR, BOOK B
 		WHERE BR.BOOK_CODE = B.BOOK_CODE
 		AND BR.MEM_ID = #{memId}
@@ -449,6 +451,7 @@
 	<update id="extendBorrow">
 	    UPDATE BOOK_BORROW
 	    SET RETURN_DUEDATE = RETURN_DUEDATE + 3
+	    , EXTENDED = 'Y'
 	    WHERE BORROW_CODE = #{borrowCode}
 	</update>
 			
@@ -490,9 +493,20 @@
 			  WHERE BOOK_CODE = #{bookCode}
 		</update>
 		
-		
-		
-
+		<!-- 연장 버튼 클릭 후, 바뀐 반납 기한 -->
+	<select id="getReturnDuedate" resultType="String">
+		SELECT RETURN_DUEDATE
+		FROM BOOK_BORROW
+		WHERE BORROW_CODE = #{borrowCode}
+	</select>
+	
+	<!-- 반납 버튼 클릭 후, 바뀐 RETURN_DUEDATE -->
+	<select id="get">
+		SELECT COUNT(*)
+		FROM BOOK_BORROW
+		WHERE BORROW_CODE = #{borrowCode}
+	</select>
+	
 </mapper>
 
 

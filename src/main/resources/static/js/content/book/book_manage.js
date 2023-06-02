@@ -11,6 +11,31 @@ function editBook() {
 	  });
 	  return;
 	}
+	
+	
+	
+  let categoryList;
+  if(!editMode){
+	
+	//ajax start
+   $.ajax({
+      url: '/book/categoryListAjax', //요청경로
+      type: 'post',
+      async : false,
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {}, //필요한 데이터
+      success: function(result) {
+         console.log(result[0]['bookCateStr']);
+         categoryList = result;
+      },
+      error: function() {
+         alert('실패');
+      }
+   });
+   //ajax end
+}
+  
+	
 
   checkedCheckboxes.forEach((checkbox) => {
     const row = checkbox.parentNode.parentNode;
@@ -25,7 +50,7 @@ function editBook() {
 
     if (editMode) {
       // 완료 버튼을 클릭한 경우
-      const bookCateNo = categoryCell.querySelector('input').value;
+      const bookCateNo = categoryCell.querySelector('select').value;
       const bookTitle = titleCell.querySelector('input').value;
       const bookAuthor = authorCell.querySelector('input').value;
       const bookPublisher = publisherCell.querySelector('input').value;
@@ -33,7 +58,7 @@ function editBook() {
       const isbn = isbnCell.querySelector('input').value;
       const bookStockCnt = stockCountCell.querySelector('input').value;
 
-      // AJAX를 통해 수정된 데이터를 서버에 전송하여 DB에 저장
+      // AJAX
       $.ajax({
         url: '/book/updateBookAjax',
         type: 'post',
@@ -48,24 +73,20 @@ function editBook() {
           'bookStockCnt': bookStockCnt
         },
         success: function(result) {
-          // 성공적으로 업데이트되었을 때의 처리
+		location.href = "/book/bookManage";
+		
         },
         error: function(error) {
           // 업데이트 실패 또는 오류 발생시의 처리
         }
       });  
 
-      // 입력 필드의 값을 셀 내부에 반영
-      categoryCell.innerHTML = bookCateNo;
-      titleCell.innerHTML = bookTitle;
-      authorCell.innerHTML = bookAuthor;
-      publisherCell.innerHTML = bookPublisher;
-      publicationDateCell.innerHTML = bookPublicationDate;
-      isbnCell.innerHTML = isbn;
-      stockCountCell.innerHTML = bookStockCnt;
+     
+      
     } else {
+	
       // 수정 버튼을 클릭한 경우
-      const bookCateNo = categoryCell.innerText;
+      const bookCateNo = categoryCell.dataset.bookno;
       const bookTitle = titleCell.innerText;
       const bookAuthor = authorCell.innerText;
       const bookPublisher = publisherCell.innerText;
@@ -73,8 +94,22 @@ function editBook() {
       const isbn = isbnCell.innerText;
       const bookStockCnt = stockCountCell.innerText;
 
+
       // 입력 필드로 변경
-	   categoryCell.innerHTML = `<input type="text" class="form-control" value="${bookCateNo}">`
+      
+     let str = `<select name="bookCateNo" class="form-select">`;
+
+			for (let i = 0; i < categoryList.length; i++) {
+			  str += `<option ${bookCateNo == categoryList[i].bookCateNo ? 'selected' : ''} 
+			  value="${categoryList[i].bookCateNo}">${categoryList[i].bookCateStr}</option>`;
+			}
+			
+			str += `</select>`;
+
+      
+      categoryCell.replaceChildren();
+	  categoryCell.insertAdjacentHTML('afterbegin', str);
+	   
       titleCell.innerHTML = `<input type="text" class="form-control" value="${bookTitle}">`;
       authorCell.innerHTML = `<input type="text" class="form-control"  value="${bookAuthor}">`;
       publisherCell.innerHTML = `<input type="text" class="form-control" value="${bookPublisher}">`;
@@ -87,6 +122,10 @@ function editBook() {
   // 버튼 상태 변경
   editButton.value = editMode ? '수정' : '완료';
   editButton.setAttribute('onclick', 'editBook()');
+  
+  
+  
+   
 }
 
 
