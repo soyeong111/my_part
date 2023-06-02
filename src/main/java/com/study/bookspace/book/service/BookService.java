@@ -79,4 +79,7 @@ public interface BookService {
 //	반납 기한 연장 전, 예약 여부 확인
 	int checkReserveBeforeExtend(ReserveVO reserveVO);
 	
+//	반납 기한 연장 후, 연장된 반납기한
+	String getReturnDuedate(String borrowCode);
+	
 }

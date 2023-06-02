@@ -146,6 +146,11 @@ public class BookServiceImpl implements BookService {
 		sqlSession.update("bookMapper.updateBook", bookVO);
 	}
 
+	@Override
+	public String getReturnDuedate(String borrowCode) {
+		return sqlSession.selectOne("bookMapper.getReturnDuedate", borrowCode);
+	}
+
 
 
 
