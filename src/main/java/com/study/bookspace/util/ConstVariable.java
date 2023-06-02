@@ -7,8 +7,11 @@ public class ConstVariable {
 
     
     // 클럽 이미지 첨부 파일 경로
-    public static final String CLUB_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\club\\";
+    public static final String HCLUB_UPLOAD_PATH = "C:\\Users\\suesu\\Desktop\\dev\\team_project\\BookSpace\\src\\main\\resources\\static\\upload\\";
 
+    //클럽 -학원
+    public static final String CLUB_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\club\\";
+    
     // info(QNA 이미지)
     public static final String QNA_UPLOAD_PATH = "D:\\dev\\workspaceSTS\\BookSpace\\src\\main\\resources\\static\\image\\info\\";
  

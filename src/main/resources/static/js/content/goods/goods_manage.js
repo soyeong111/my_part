@@ -1,9 +1,6 @@
-//이미지 팝업 모달
 const imgModal = new bootstrap.Modal('#imgModal');
 
-//이미지명 클릭 시 이미지 모달 띄움
 function openImgModal(atachedFileName, originFileName){
-	//모달 안에서 보여질 이미지 정보 세팅
 	const modalTag = document.querySelector('#imgModal');
 	modalTag.querySelector('img').src = `/upload/${atachedFileName}`;
 	
@@ -11,7 +8,7 @@ function openImgModal(atachedFileName, originFileName){
 	modalTag.querySelector('h1').textContent = originFileName;
 	
 	//모달 오픈
-	imgModal.show(); //imgModal.hide() -> 모달 숨김
+	imgModal.show(); 
 }
 
 
