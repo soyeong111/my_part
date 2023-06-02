@@ -20,6 +20,7 @@ import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
+import com.study.bookspace.book.vo.CategoryVO;
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.book.vo.SearchBookVO;
@@ -174,18 +175,7 @@ public class BookController {
 	}
 	
 	
-//	도서 반납
-	@ResponseBody
-	@PostMapping("/returnBookAjax")
-	public int returnBookAjax(BorrowVO borrowVO, HttpSession session) {
-		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-		
-//		도서 반납
-		bookService.returnBook(borrowVO);
-		 return 0;
-	}
-	
-	
+
 	
 	@ResponseBody
 	@PostMapping("/reserveAjax")
@@ -235,18 +225,29 @@ public class BookController {
 	}
 	
 
+//	도서 반납
+	@ResponseBody
+	@PostMapping("/returnBookAjax")
+	public int returnBookAjax(BorrowVO borrowVO, HttpSession session) {
+		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+//		도서 반납
+		bookService.returnBook(borrowVO);
+		 return 0;
+	}
 	
 	
 //	내 정보) 도서 반납 연장
 	@ResponseBody
 	@PostMapping("/extendAjax")
-		public int extendAjax(HttpSession session, BorrowVO borrowVO) {
+		public String extendAjax(HttpSession session, BorrowVO borrowVO) {
 			borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
 //			반납 연장
 			bookService.extendBorrow(borrowVO);
 			
-			return 0;
+//			변경 된 반납기한
+			return bookService.getReturnDuedate(borrowVO.getBorrowCode());
 		}
 	
 	
@@ -281,6 +282,15 @@ public class BookController {
 		return "content/admin/book_manage";
 	}
 	
+	@ResponseBody
+	@PostMapping("/categoryListAjax")
+	public List<CategoryVO> categoryListAjax() {
+		
+		System.out.println(11111111);
+		
+//		카테고리 목록 (전체)
+		return bookService.getCateListForAdmin();
+	}
 	
 
 //	도서 관리) 도서 삭제
@@ -302,12 +312,9 @@ public class BookController {
 //	도서 관리) 도서 수정
 	@ResponseBody
 	@PostMapping("/updateBookAjax")
-	public String updateBookAjax(BookVO bookVO) {
-		
-		
+	public void updateBookAjax(BookVO bookVO) {
 		bookService.updateBook(bookVO);
 		
-		return "redirect:/book/bookManage";
 	}
 	
 	

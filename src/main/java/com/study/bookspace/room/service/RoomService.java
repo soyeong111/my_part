@@ -11,6 +11,6 @@ public interface RoomService {
 	//좌석 목록 조회
 	List<SectionVO> getSectionList();
 	
-	SeatVO getSeatDetail(String seatCode);
-	
+	//좌석 상세 조회
+	String getSeatDetail(String seatCode);
 }

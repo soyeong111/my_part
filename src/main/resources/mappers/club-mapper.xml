@@ -28,6 +28,9 @@
 		<result column="CLUB_REG_DATE" 		property="clubRegDate"/>
 		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
 		<result column="CLUB_ROLE" 			property="clubRole"/>
+		<result column="MEM_STATUS" 			property="memStatus"/>
+		<association property="bookClubVO" resultMap="bookClub"></association>
+		<association property="memberVO" resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityVO" id="community">
@@ -332,18 +335,41 @@
 	
 	<select id="getClubMemberList" resultMap="bookClubMember">
 		SELECT ACCEPT_CODE
-			, MEM_ID
-		FROM BOOK_CLUB_MEMBER
-		WHERE CLUB_CODE = #{clubCode}
+			, M.MEM_ID
+			, MEM_NAME
+			, TO_CHAR(CLUB_REG_DATE, 'YYYY-MM-DD') AS CLUB_REG_DATE
+		FROM BOOK_CLUB_MEMBER CM, MEMBER M
+		WHERE CM.MEM_ID = M.MEM_ID
+		AND CLUB_CODE = #{clubCode}
 		AND CLUB_MEM_STATUS = 2
+		ORDER BY ACCEPT_CODE
 	</select>
 	
 	<select id="getApplyMemberList" resultMap="bookClubMember">
 		SELECT ACCEPT_CODE
-			, MEM_ID
-		FROM BOOK_CLUB_MEMBER
-		WHERE CLUB_CODE = #{clubCode}
+			, CM.MEM_ID
+			, MEM_NAME
+		FROM BOOK_CLUB_MEMBER CM, MEMBER M
+		WHERE CM.MEM_ID = M.MEM_ID
+		AND CLUB_CODE = #{clubCode}
 		AND CLUB_MEM_STATUS = 1
+	</select>
+	
+	<select id="getClubBossId" resultType="String">
+		SELECT MEM_ID
+		FROM BOOK_CLUB
+		WHERE CLUB_CODE = #{clubCode}
+	</select>
+	
+	<!-- 나의 클럽 상태 조회 -->
+	<select id="getMyClubDetail" resultMap="bookClubMember">
+		SELECT ACCEPT_CODE
+			, CLUB_NAME
+			, TO_CHAR(CLUB_REG_DATE, 'YYYY-MM-DD') AS CLUB_REG_DATE
+			, DECODE(CLUB_MEM_STATUS, 1, '승인대기', 2, '승인', 3, '거절') AS MEM_STATUS
+		FROM BOOK_CLUB_MEMBER CM, BOOK_CLUB CLUB
+		WHERE CM.CLUB_CODE = CLUB.CLUB_CODE
+        AND CM.MEM_ID = #{memId}
 	</select>
 	
 	<update id="acceptMember">

@@ -8,7 +8,6 @@ function seatPick(seatCode){
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 	   data: {'seatCode':seatCode}, //필요한 데이터
 	   success: function(result) {
-	      
 	      const room_seat_div = document.querySelector('#room-seat-div');
 	      room_seat_div.replaceChildren();
 	      
@@ -17,10 +16,15 @@ function seatPick(seatCode){
 	      str += `<div class="row">`;
 	      str += `<div class="col">`;
 	      str += ``;
+	      str += `<div>${result}</div>`;
+	      str += ``;
 	      str += `</div>`;
 	      str += `</div>`;
 	      str += ``;
 	      str += ``;
+	      
+	      
+	      
 	      
 	      room_seat_div.insertAdjacentHTML('afterbegin', str);
 	      

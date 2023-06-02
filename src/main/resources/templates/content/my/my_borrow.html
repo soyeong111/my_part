@@ -38,26 +38,27 @@
         </tr>
       </thead>
       <tbody>	
+      
         <tr th:each="borrow, state : ${myBorrowList}">
           <td th:text="${#lists.size(myBorrowList) - state.index}"></td>
           <td><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
           <td>[[${borrow.borrowDate}]]</td>
-          <td>[[${borrow.returnDueDate}]]</td>
+          <td class="dueDate">[[${borrow.returnDueDate}]]</td>
           <td>[[${borrow.returnDate}]]</td>
+          <td> 
+          	<span th:if="${borrow.extended == 'Y'}">완료</span>
+		       <input type="button" class="btn custom-btn"  
+			  th:id="'exBtn-' + ${borrow.borrowCode}" value="연장"
+			  th:onclick="extend(this,[[${#authentication.name}]], [[${borrow.borrowCode}]], [[${borrow.bookCode}]]);"
+			  th:if="${borrow.extended  == 'N'}">
           <td>
-            <input type="button" class="btn custom-btn"  
-              id="exBtn-${borrow.borrowCode}" value="연장"
-              th:onclick="extend([[${#authentication.name}]], [[${borrow.borrowCode}]],
-              [[${borrow.bookCode}]]);">
-          </td>
-          <td>
-            <input type="button" class="btn custom-btn-del"  
-              id="reBtn-${borrow.borrowCode}" value="반납"
-              th:onclick="returnBook([[${#authentication.name}]], [[${borrow.borrowCode}]],
-              [[${borrow.bookCode}]]);">
+              <input type="button" class="btn custom-btn-del"  
+			  th:id="'reBtn-' + ${borrow.borrowCode}" value="반납"
+			  th:onclick="returnBook([[${#authentication.name}]], [[${borrow.borrowCode}]], [[${borrow.bookCode}]]);">
+
           </td>
         </tr>
-      </tbody>
+        </tbody>
     </table>
   </div>
   <div class="noticeExtend" style="text-align: right;">
@@ -73,6 +74,8 @@
 </th:block>
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/book/my_borrow2.js"></script> 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
 </th:block>
 </html>
 

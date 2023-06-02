@@ -1,5 +1,7 @@
 package com.study.bookspace.club.vo;
 
+import com.study.bookspace.member.vo.MemberVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,4 +16,7 @@ public class BookClubMemberVO {
 	private String clubRegDate;
 	private int clubMemStatus;
 	private String clubRole;
+	private String memStatus;
+	private BookClubVO bookClubVO;
+	private MemberVO memberVO;
 }

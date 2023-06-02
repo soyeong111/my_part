@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.room.service.RoomService;
+import com.study.bookspace.room.vo.SeatVO;
 
 import jakarta.annotation.Resource;
 
@@ -26,7 +27,7 @@ public class RoomController {
 	
 	//열람실 현황 페이지
 	@GetMapping("/readingRoom")
-	public String readingRoom(SubMenuVO subMenuVO, Model model) {
+	public String readingRoom(SubMenuVO subMenuVO, Model model, String seatCode) {
 		
 		model.addAttribute("sectionList", roomService.getSectionList());
 		
@@ -36,7 +37,9 @@ public class RoomController {
 	// 열람실 좌석 클릭 시 ajax 실행
 	@ResponseBody
 	@PostMapping("/readingRoomAjax")
-	public void readingRoomAjax(String seatCode) {
+	public String readingRoomAjax(String seatCode) {
+		
+		return roomService.getSeatDetail(seatCode);
 		
 	}
 	

@@ -181,8 +181,8 @@
 							<td>출판사</td>
 							<td>출판일</td>
 							<td>ISBN</td>
-							<td>도서상태</td>
-							<td>재고수</td>
+							<td>도서상태　</td>
+							<td>재고</td>
 						</tr>
 					</thead>
 					<tbody>	
@@ -192,7 +192,7 @@
 						class="form-check-input chk" checked>
 					</td>
 					<td th:text="${#lists.size(bookList) - state.index}"></td>
-					 <td>[[${book.categoryVO.bookCateNo}]]</td>	
+					<td th:data-bookno=${book.categoryVO.bookCateNo}>[[${book.categoryVO.bookCateStr}]]</td> 
 				    <td><a href="javascript:void(0);">[[${book.bookTitle}]]</a></td>
 				    <td>[[${book.bookAuthor}]]</td>	
 				    <td>[[${book.bookPublisher}]]</td>	
@@ -204,8 +204,6 @@
 				</tbody>
 				
 			</table>
-			
-
 
 			
 		</div>
