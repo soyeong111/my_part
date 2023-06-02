@@ -10,29 +10,33 @@
 
 
 <div class="search">
-
-		<div class="row p-5">
-			<div class="col-2">
-				<select class="form-select">
-					<option>제목</option>
-					<option>저자</option>
-				</select>
-			</div>
-			<div class="col-6">
-				<input class="form-control">
-			</div>
-			<div class="col-2 d-grid">
-				<button type="button" class="btn btn-primary custom-btn">검색</button>
-			</div>
-		</div>
+    <form th:action="@{/book/bookList}" method="post" th:object="${searchBookVO}">
+        <div class="row p-5">
+            <div class="col-2">
+                <select class="form-select" th:field="*{searchOption}">
+                    <option value="title">제목</option>
+                    <option value="author">저자</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <input class="form-control" th:field="*{searchText}">
+            </div>
+            <div class="col-2 d-grid">
+                <input type="submit" value="검색" class="btn btn-primary custom-btn">
+            </div>
+        </div>
+    </form>
 </div>
-<div class="book-list-div">
+
+
+
+	<div class="book-list-div">
   <div class="row row-cols-5 g-4">
     <th:block th:each="book, iterStat : ${bookList}">
-      <div class="col-2">
+      <div class="col">
         <div class="bookList" style="text-align: center;">
         <a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}">
-          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width:158px; height: 250px;">
+          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width:168px; height: 255px;">
           </a>
             <div class="bookList-title">
               <[[${book.bookTitle}]]>

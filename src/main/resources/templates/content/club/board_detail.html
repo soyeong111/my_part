@@ -6,12 +6,15 @@
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/club/board_detail.css">
 </th:block>
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="board-detail-div">
+		<div class="community-head-div">
+			<div>커뮤니티</div>
+		</div>
 		<div class="row">
 			<div class="col">
 				<table class="table">
@@ -33,22 +36,24 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td>[[${board.boardContent}]]</td>
+						<td colspan="3">[[${board.boardContent}]]</td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col" th:if="${board.boardWriter == #authentication.name}">
-				<input type="button" class="btn custom-btn" value="수정" th:onclick="|location.href='@{/club/updateBoard(boardNum=${board.boardNum}, clubCode=${board.clubCode})}';|">
-				<input type="button" class="btn custom-btn" value="삭제" th:onclick="deleteBoard([[${board.boardNum}]],[[${board.clubCode}]]);">
+			<div class="offset-10 col" th:if="${board.boardWriter == #authentication.name}">
+				<input type="button" class="btn custom-btn" value="수정" th:onclick="|location.href='@{/club/updateBoardForm(boardNum=${board.boardNum}, clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="deleteBoard([[${board.boardNum}]],[[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 			</div>
 		</div>
 		<div class="reply-div">
 			<form class="row" th:action="@{/club/regReply}" method="post">
-				<div class="col-12">
+				<div class="col-12 mb-3">
 					<input type="hidden" name="boardNum" th:value="${board.boardNum}">
 					<input type="hidden" name="clubCode" th:value="${board.clubCode}">
+					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<textarea rows="3" class="form-control" cols="100" name="replyContent"></textarea>
 				</div>
 				<div class="offset-11">
@@ -60,8 +65,8 @@
 				<div>[[${reply.regDate}]]</div>
 				<div>[[${reply.replyContent}]]</div>
 				<div th:if="${reply.replyWriter == #authentication.name}">
-					<input type="button" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]]);">
-					<input type="button" value="삭제" th:onclick="|location.href='@{/club/deleteReply(replyNum=${reply.replyNum}, boardNum=${board.boardNum})}';|">
+					<input type="button" class="btn custom-btn" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+					<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="deleteReply([[${reply.replyNum}]], [[${board.boardNum}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 				</div>
 			</div>
 		</div>

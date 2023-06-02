@@ -12,21 +12,9 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="community-div">
-		<div class="row">
-			<div class="col">
-				<h3>북클럽 커뮤니티</h3>
-			</div>
+		<div class="community-head-div">
+			<div>커뮤니티</div>
 		</div>
-		<form id="searchForm" class="row" th:action="@{/club/community}" method="post">
-			<div class="col-6">
-				<select class="form-select" name="searchKeyword">
-					<option value="COMMUNITY.BOARD_TITLE" th:selected="${communityVO.searchKeyword == 'COMMUNITY.BOARD_TITLE'}">제목</option>
-					<option value="MEM.MEM_ID" th:selected="${communityVO.searchKeyword == 'MEM.MEM_ID'}">작성자</option>
-				</select>
-				<input type="text" class="form-control" name="searchValue" th:value="${communityVO.searchValue}">
-				<input type="submit" class="btn custom-btn" value="검색">
-			</div>
-		</form>
 		<div class="row">
 			<div class="col">
 				<table class="table">
@@ -54,7 +42,7 @@
 							<tr th:each="board, state : ${boardList}">
 								<td><span th:text="${board.rowNumber}"></span></td>
 								<td>
-									<a th:href="@{/club/boardDetail(boardNum=${board.boardNum}, clubCode=${board.clubCode})}">[[${board.boardTitle}]]</a>
+									<a th:href="@{/club/boardDetail(boardNum=${board.boardNum}, clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">[[${board.boardTitle}]]</a>
 									<span th:text="${board.replyCnt == 0 ? '' : '[' + board.replyCnt + ']'}"></span>
 								</td>
 								<td>[[${board.boardWriter}]]</td>
@@ -68,7 +56,7 @@
 		</div>
 		<div class="row">
 			<div class="offset-11 col">
-				<input type="button" class="btn custom-btn" value="글 등록" th:onclick="|location.href='@{/club/regBoard(clubCode=${clubCode})}';|">
+				<input type="button" class="btn custom-btn" value="글쓰기" th:onclick="|location.href='@{/club/regBoardForm(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 			</div>
 		</div>
 		<div class="row">
@@ -87,6 +75,23 @@
 				</th:block>
 			</div>
 		</div>
+		<form class="row" th:action="@{/club/community}" method="post" th:object="${communityVO}">
+			<input type="hidden" name="clubCode" th:value="${clubCode}">
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
+			<div class="offset-4 col-1">
+				<select class="form-select" th:field="*{searchOption}">
+					<option value="title">제목</option>
+					<option value="writer">작성자</option>
+				</select>
+			</div>
+			<div class="col-2">	
+				<input type="text" class="form-control" th:field="*{searchText}">
+			</div>
+			<div class="col-2">
+				<input type="submit" class="btn custom-btn" value="검색">
+			</div>
+		</form>
 	</div>
 </th:block>
 

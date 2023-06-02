@@ -1,7 +1,9 @@
 package com.study.bookspace.member.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
+import com.study.bookspace.sms.SmsService;
+import com.study.bookspace.sms.SmsVO;
 import com.study.bookspace.util.MailService;
 import com.study.bookspace.util.MailVO;
 
@@ -30,6 +34,9 @@ public class MemberController {
 	
 	@Resource(name = "mailService")
 	private MailService mailService;
+	
+	@Resource(name = "smsService")
+	private SmsService smsService;
 	
 	// 회원가입 화면으로
 	@GetMapping("/joinForm")
@@ -58,11 +65,22 @@ public class MemberController {
 		return pw;
 	}
 	
+	// 휴대폰 인증
+	@ResponseBody
+	@PostMapping("/tellAuthAjax")
+	public String tellAuthAjax(SmsVO smsVO) throws Exception {
+		List<SmsVO> messages = new ArrayList<>();
+		String pw = smsService.createRandomNumber(6);
+		smsVO.setContent("[한울도서관]\n인증 번호 : " + pw);
+		messages.add(smsVO);
+		smsService.sendSms(messages);
+		return pw;
+	}
+	
 	// 회원가입
 	@ResponseBody
 	@PostMapping("/joinAjax")
 	public boolean joinAjax(MemberVO memberVO) {
-		System.out.println(memberVO);
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		return memberService.join(memberVO) == 1;
 	}
@@ -71,6 +89,29 @@ public class MemberController {
 	@GetMapping("/loginForm")
 	public String loginForm() {
 		return "content/member/login";
+	}
+	
+	// 아이디 찾기 화면으로
+	@GetMapping("/findIdForm")
+	public String findIdForm() {
+		return "content/member/find_id";
+	}
+	
+	// 아이디 찾기
+	@ResponseBody
+	@PostMapping("/findIdAjax")
+	public String findIdAjax(Map<String, Object> mapData) {
+		System.out.println(mapData);
+		
+		
+		
+		return "";
+	}
+	
+	// 비밀번호 찾기 화면으로
+	@GetMapping("/findPwForm")
+	public String findPwForm() {
+		return "content/member/find_pw";
 	}
 
 }

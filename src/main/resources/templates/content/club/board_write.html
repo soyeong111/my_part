@@ -12,8 +12,10 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="board-write-div">
-		<form action="/club/regBoard" method="post">
+		<form action="/club/regBoard" method="post" enctype="multipart/form-data">
 			<input type="hidden" th:value="${clubCode}" name="clubCode">
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 			<div class="col">
 				<div class="row">
 					<div class="col">
@@ -28,6 +30,12 @@
 								<col width="*">
 							</colgroup>
 							<tr>
+								<td>공지사항</td>
+								<td>
+									<input class="form-check" type="checkbox" name="clubNotice">
+								</td>
+							</tr>
+							<tr>
 								<td>제목</td>
 								<td>
 									<input type="text" name="boardTitle">
@@ -40,9 +48,15 @@
 								</td>
 							</tr>
 							<tr>
-								<td>제목</td>
+								<td>내용</td>
 								<td>
 									<textarea rows="20" cols="100" name="boardContent"></textarea>
+								</td>
+							</tr>
+							<tr>
+								<td>첨부파일</td>
+								<td>
+									<input type="file" name="boardImg" id="boardImg"><br>
 								</td>
 							</tr>
 						</table>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/main_layout}">
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href="/css/.css"> -->
+</th:block>
+<th:block layout:fragment="content">
+	<div class="find-id-div w-25 m-auto">
+		<div class="row find-id-title-div mt-5">
+			<div class="col">
+				<h2>아이디 찾기</h2>
+			</div>
+		</div>
+		<div class="row find-id-radio-div mt-5">
+			<div class="col d-flex align-items-center">
+				<input type="radio" id="find-id-opt-tell" class="form-check-input m-0" value="MEM_TELL" checked>
+				<label for="find-id-opt-tell" class="form-label m-0">연락처로 찾기</label>
+			</div>
+			<div class="col d-flex align-items-center">
+				<input type="radio" id="find-id-opt-email" class="form-check-input m-0" value="MEM_EMAIL">
+				<label for="find-id-opt-email" class="form-label m-0">이메일로 찾기</label>
+			</div>
+		</div>
+		<div class="row find-id-change-div mt-4">
+		
+		
+			<div class="col-12">
+				<div class="input-group">
+					<select class="form-select">
+						<option value="010">010</option>
+						<option value="011">011</option>
+					</select>
+					<span class="input-group-text">-</span>
+					<input type="text" class="form-control" onkeyup="tell_keyup(this);" maxlength="4">
+					<span class="input-group-text">-</span>
+					<input type="text" class="form-control" onkeyup="tell_keyup(this);" maxlength="4">
+				</div>
+			</div>
+			
+			<div class="col-12 d-grid mt-4">
+				<button type="button" class="btn btn-primary custom-btn" onclick="find_id();">아이디 찾기</button>
+			</div>
+			
+			
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/member/find_id.js"></script>
+</th:block>
+</html>

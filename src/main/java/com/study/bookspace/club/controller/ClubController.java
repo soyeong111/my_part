@@ -1,5 +1,7 @@
 package com.study.bookspace.club.controller;
 
+import java.io.File;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.PageVO;
 import com.study.bookspace.util.UploadUtil;
 
@@ -30,11 +33,11 @@ public class ClubController {
 	
 	//북클럽 이용안내
 	@GetMapping("/clubInfo")
-	public String clubInfo() {
+	public String clubInfo(SubMenuVO subMenuVO) {
 		return "content/club/club_guide";
 	}
 	
-	//북클럽 정보
+	//북클럽 정보***
 	@GetMapping("/club")
 	public String club(Model model, SubMenuVO subMenuVO) {
 		//북클럽 목록 조회
@@ -68,7 +71,7 @@ public class ClubController {
 	
 	//북 클럽 생성
 	@PostMapping("/regClub")
-	public String regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, MultipartFile clubImg, Authentication authentication) {
+	public String regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, BookClubMemberVO bookClubMemberVO, MultipartFile clubImg, Authentication authentication, SubMenuVO subMenuVO) {
 		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
@@ -87,18 +90,26 @@ public class ClubController {
 		bookClubImageVO.setClubCode(clubCode);
 		bookClubImageVO.setBcOriginFileName(attachedClubImageVO.getBcOriginFileName());
 		bookClubImageVO.setBcAttachedFileName(attachedClubImageVO.getBcAttachedFileName());
-		//bookClubVO.setBookClubImageVO(attachedClubImageVO);
 		
-		clubService.regClub(bookClubVO);
-		clubService.insertImg(bookClubImageVO);
-		//clubService.joinClub(bookClubVO.getBookClubMemberVO());
+		bookClubMemberVO.setClubCode(clubCode);
+		bookClubMemberVO.setMemId(memId);
+		bookClubMemberVO.setClubRole("MANAGER");
+		bookClubMemberVO.setClubMemStatus(2);
 		
-		return "redirect:/club/club";
+		System.out.println(bookClubVO);
+		System.out.println(bookClubImageVO);
+		System.out.println(bookClubMemberVO);
+		
+		clubService.regClub(bookClubVO, bookClubImageVO, bookClubMemberVO);
+		//clubService.regClub(bookClubVO);
+		//clubService.insertImg(bookClubImageVO);
+		
+		return "redirect:/club/club?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//북클럽 상세페이지
 	@GetMapping("/clubDetail")
-	public String clubDetail(Model model, String clubCode) {
+	public String clubDetail(Model model, String clubCode, SubMenuVO subMenuVO) {
 		//클럽 상세 조회
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
 		
@@ -127,8 +138,8 @@ public class ClubController {
 	}
 	
 	//북클럽 수정 페이지
-	@GetMapping("/updateClub")
-	public String updateClubForm(Model model, String clubCode) {
+	@GetMapping("/updateClubForm")
+	public String updateClubForm(Model model, String clubCode, SubMenuVO subMenuVO) {
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
 		
 		return "content/club/update_club_form";
@@ -136,20 +147,27 @@ public class ClubController {
 	
 	//북클럽 수정
 	@PostMapping("/updateClub")
-	public String updateClub(BookClubVO bookClubVO) {
+	public String updateClub(BookClubVO bookClubVO, SubMenuVO subMenuVO) {
 		
 		clubService.updateClub(bookClubVO);
 		
-		return "redirect:/club/clubDetail?clubCode=" + bookClubVO.getClubCode();
+		return "redirect:/club/clubDetail?clubCode=" 
+			+ bookClubVO.getClubCode() + "&mainMenuCode=" + subMenuVO.getMainMenuCode() 
+			+ "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//북클럽 삭제
 	@GetMapping("/deleteClub")
-	public String deleteClub(String clubCode) {
+	public String deleteClub(String clubCode, SubMenuVO subMenuVO) {
+		String clubImgName = clubService.getClubImageName(clubCode);
+		
+		File file = new File(ConstVariable.CLUB_UPLOAD_PATH + clubImgName);
+		file.delete();		
 		
 		clubService.deleteClub(clubCode);
 		
-		return "redirect:/club/club";
+		return "redirect:/club/club?mainMenuCode=" 
+			+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//북클럽 관리 페이지
@@ -161,6 +179,7 @@ public class ClubController {
 		//북클럽 가입 신청 회원 목록 조회 (승인 전)
 		model.addAttribute("applyList", clubService.getApplyMemberList(clubCode));
 		
+		model.addAttribute("clubCode", clubCode);
 		
 		return "content/club/club_manage";
 	}
@@ -212,8 +231,8 @@ public class ClubController {
 	}
 	
 	//글 작성 페이지 이동
-	@GetMapping("/regBoard")
-	public String regBoardForm(String clubCode, Model model) {
+	@GetMapping("/regBoardForm")
+	public String regBoardForm(String clubCode, Model model, SubMenuVO subMenuVO) {
 		
 		model.addAttribute("clubCode", clubCode);
 		
@@ -222,7 +241,7 @@ public class ClubController {
 	
 	//글 작성
 	@PostMapping("/regBoard")
-	public String regBoard(CommunityVO communityVO, Authentication authentication) {
+	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
@@ -230,23 +249,25 @@ public class ClubController {
 		
 		clubService.regBoard(communityVO);
 		
-		return "redirect:/club/community?clubCode=" + communityVO.getClubCode();
+		return "redirect:/club/community?clubCode=" + communityVO.getClubCode() 
+		+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//게시글 상세페이지 이동
 	@GetMapping("/boardDetail")
-	public String boardDetail(Model model, String boardNum, CommunityVO communityVO, CommunityReplyVO communityReplyVO) {
-		clubService.updateReadCnt(communityVO);
+	public String boardDetail(Model model, CommunityVO communityVO, CommunityReplyVO communityReplyVO, SubMenuVO subMenuVO) {
+		clubService.updateReadCnt(communityVO.getBoardNum());
 		
-		model.addAttribute("board", clubService.getBoardDetail(boardNum));
-		model.addAttribute("replyList", clubService.getReplyList(communityReplyVO));
+		//model.addAttribute("board", clubService.getBoardDetail(boardNum));
+		model.addAttribute("board", clubService.getBoardDetail(communityVO.getBoardNum()));
+		model.addAttribute("replyList", clubService.getReplyList(communityReplyVO.getBoardNum()));
 		
 		return "content/club/board_detail";
 	}
 	
 	//게시글 수정페이지 이동
-	@GetMapping("/updateBoard")
-	public String updateBoardForm(Model model, String boardNum) {
+	@GetMapping("/updateBoardForm")
+	public String updateBoardForm(Model model, String boardNum, SubMenuVO subMenuVO) {
 		
 		model.addAttribute("board", clubService.getBoardDetail(boardNum));
 		
@@ -266,16 +287,17 @@ public class ClubController {
 	
 	//게시글 삭제
 	@GetMapping("/deleteBoard")
-	public String deleteBoard(String boardNum, String clubCode) {
+	public String deleteBoard(String boardNum, String clubCode, SubMenuVO subMenuVO) {
 		
 		clubService.deleteBoard(boardNum);
 		
-		return "redirect:/club/community?clubCode=" + clubCode;
+		return "redirect:/club/community?clubCode=" + clubCode 
+				+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//게시글 댓글 작성
 	@PostMapping("/regReply")
-	public String regReply(CommunityReplyVO communityReplyVO, Authentication authentication) {
+	public String regReply(CommunityReplyVO communityReplyVO, Authentication authentication, SubMenuVO subMenuVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
@@ -284,27 +306,29 @@ public class ClubController {
 		clubService.regReply(communityReplyVO);
 		
 		return "redirect:/club/boardDetail?boardNum=" 
-				+ communityReplyVO.getBoardNum() + "&clubCode=" + communityReplyVO.getClubCode();
+				+ communityReplyVO.getBoardNum() + "&clubCode=" + communityReplyVO.getClubCode()
+				+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//게시글 댓글 수정
 	@PostMapping("/updateReply")
-	public String updateReply(CommunityReplyVO communityReplyVO) {
+	public String updateReply(CommunityReplyVO communityReplyVO, SubMenuVO subMenuVO) {
 		
 		clubService.updateReply(communityReplyVO);
 		
 		return "redirect:/club/boardDetail?boardNum=" 
-				+ communityReplyVO.getBoardNum() + "&clubCode=" + communityReplyVO.getClubCode();
+				+ communityReplyVO.getBoardNum() + "&clubCode=" + communityReplyVO.getClubCode()
+				+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//게시글 댓글 삭제
 	@GetMapping("/deleteReply")
-	public String deleteReply(CommunityReplyVO communityReplyVO) {
+	public String deleteReply(CommunityReplyVO communityReplyVO, SubMenuVO subMenuVO) {
 		
 		clubService.deleteReply(communityReplyVO.getReplyNum());
-		System.out.println("@@@@@@@@@@@@" + communityReplyVO);
 		return "redirect:/club/boardDetail?boardNum=" 
-				+ communityReplyVO.getBoardNum() + "&clubCode=" + communityReplyVO.getClubCode();
+				+ communityReplyVO.getBoardNum() + "&clubCode=" + communityReplyVO.getClubCode()
+				+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	

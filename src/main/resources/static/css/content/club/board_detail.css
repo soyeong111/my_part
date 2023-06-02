@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+
+.community-head-div{
+	margin-bottom: 4rem; 
+	margin-top: 3rem; 
+	margin-left: 2rem;  
+	font-size: 20px; 
+	font-weight: bold;
+}
+
+table {
+	margin-top: 2rem;
+}
+
+.reply-div{
+	margin-top: 2rem; 
+}

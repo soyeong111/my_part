@@ -23,7 +23,8 @@
 				<div class="row">
 					<div class="col">
 						<form class="row g-2" id="regClubForm" th:action="@{/club/regClub}" method="post" enctype="multipart/form-data">
-							
+							<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+							<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 							<div class="col-9">
 								<label for="clubName" class="form-label">클럽명</label> 
 								<input type="text" class="form-control" id="clubName" name="clubName" placeholder="클럽 이름을 작성해주세요."

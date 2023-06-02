@@ -14,7 +14,7 @@ function login() {
 		return;
 	}
 	$.ajax({
-		url: '/member/loginAjax',
+		url: '/member/login',
 		type: 'post',
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'memId':mem_id_input.value, 'memPw':mem_pw_input.value},

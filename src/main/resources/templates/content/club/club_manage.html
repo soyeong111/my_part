@@ -24,7 +24,7 @@
 					<tr th:each="member : ${memberList}">
 						<td>[[${member.memId}]]</td>
 						<td>
-							<input type="button" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]]);">
+							<input type="button" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]], [[${clubCode}]]);">
 						</td>
 					</tr>
 				</table>
@@ -37,8 +37,8 @@
 					<tr th:each="apply : ${applyList}">
 						<td>[[${apply.memId}]]</td>
 						<td>
-							<input type="button" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]]);">
-							<input type="button" value="거절" th:onclick="refuse([[${apply.acceptCode}]]);">
+							<input type="button" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]]);">
+							<input type="button" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]]);">
 						</td>
 					</tr>
 				</table>

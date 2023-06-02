@@ -1,6 +1,6 @@
 
 //승인 버튼 클릭 시
-function acceptMember(acceptCode){
+function acceptMember(acceptCode, clubCode){
 	
 	//ajax start
 	$.ajax({
@@ -12,7 +12,9 @@ function acceptMember(acceptCode){
 	   success: function(result) {
 		  const accpet = confirm('승인하시겠습니까?');
 		  if(accpet){
-	      alert('승인이 완료되었습니다.');
+	      	alert('승인이 완료되었습니다.');
+	      	location.href=`/club/clubManage?clubCode=${clubCode}`;
+	      
      	  }
 	   },
 	   error: function() {
@@ -23,7 +25,7 @@ function acceptMember(acceptCode){
 }
 
 //거절 버튼 클릭 시
-function refuse(acceptCode){
+function refuse(acceptCode, clubCode){
 	
 	//ajax start
 	$.ajax({
@@ -36,6 +38,7 @@ function refuse(acceptCode){
 	      const refusal = confirm('거절하시겠습니까?');
 	      if(refusal){
 			  alert('거절이 완료되었습니다.');
+			  location.href=`/club/clubManage?clubCode=${clubCode}`;
 		  }
 	   },
 	   error: function() {
@@ -46,7 +49,7 @@ function refuse(acceptCode){
 }
 
 //강퇴 버튼 클릭 시
-function kickOut(acceptCode){
+function kickOut(acceptCode, clubCode){
 	
 	//ajax start
 	$.ajax({
@@ -59,6 +62,7 @@ function kickOut(acceptCode){
 	      const kickOutMsg = confirm('강퇴하시겠습니까?');
 	      if(kickOutMsg){
 			  alert('강퇴가 완료되었습니다.');
+			  location.href=`/club/clubManage?clubCode=${clubCode}`;
 		  }
 	   },
 	   error: function() {

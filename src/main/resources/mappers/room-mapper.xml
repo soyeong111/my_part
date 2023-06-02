@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="roomMapper">
+	<resultMap type="com.study.bookspace.room.vo.SectionVO" id="section">
+		<id		 column="SECTION_CODE" 		property="sectionCode"/>
+		<result column="SECTION_NAME" 		property="sectionName"/>
+		<collection property="seatList" 	resultMap="seat"></collection>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.room.vo.SeatVO" id="seat">
+		<id		 column="SEAT_CODE" 		property="seatCode"/>
+		<result column="SECTION_CODE" 		property="sectionCode"/>
+		<result column="SEAT_NAME" 			property="seatName"/>
+		<result column="SEAT_IS_USED"		 property="seatIsUsed"/>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.room.vo.UseVO" id="use">
+		<id		 column="SEAT_USE_CODE" 	property="seatUseCode"/>
+		<result column="SEAT_CODE" 			property="seatCode"/>
+		<result column="MEM_ID" 			property="memId"/>
+		<result column="SEAT_IN_DATE" 		property="seatInDate"/>
+		<result column="SEAT_OUT_DATE" 		property="seatOutDate"/>
+	</resultMap>
+	
+	<select id="getSectionList" resultMap="section">
+		SELECT SEC.SECTION_CODE
+		    , SECTION_NAME
+		    , SEAT_CODE
+		    , SEAT_NAME
+		    , SEAT_IS_USED
+		FROM ROOM_SECTION SEC, SECTION_SEAT SEAT
+		WHERE SEC.SECTION_CODE = SEAT.SECTION_CODE
+	</select>
+	
+	<select id="getSeatDetail" resultMap="seat">
+		SELECT SEAT_CODE
+			, SEAT_IS_USED
+		FROM SECTION_SEAT
+		WHERE SEAT_CODE = #{seatCode}
+	</select>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

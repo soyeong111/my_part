@@ -43,12 +43,12 @@ public class MailService {
 	// n자리의 랜덤 비밀번호 생성
 	public String createRandomPassword(int len) {
 		SecureRandom random = new SecureRandom();
-		StringBuilder sb = new StringBuilder();
+		StringBuilder pw = new StringBuilder();
 		for (int i = 0; i < len; i++) {
 			int randomIndex = random.nextInt(ConstVariable.CHARS.length());
-			sb.append(ConstVariable.CHARS.charAt(randomIndex));
+			pw.append(ConstVariable.CHARS.charAt(randomIndex));
 		}
-		return sb.toString();
+		return pw.toString();
 	}
 
 }
