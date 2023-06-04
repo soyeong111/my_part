@@ -115,21 +115,7 @@
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
-	
-		<!-- 도서 반납 -->
-	<update id="returnBook">
-	    UPDATE BOOK_BORROW
-	    SET RETURN_DATE = SYSDATE
-	    WHERE BORROW_CODE = #{borrowCode, jdbcType=VARCHAR}
-	</update>
 
-		<!-- 반납 업데이트 쿼리 -->
-	<update id="updateReturnCnt">
-	    UPDATE BOOK
-	    SET BORROW_CNT = BORROW_CNT - 1
-	    WHERE BOOK_CODE = #{bookCode, jdbcType=VARCHAR}
-	</update>
-	
 	
 	<!-- 도서 예약  -->
 	<insert id="reserveBook">
@@ -348,11 +334,9 @@
 			, ISBN
 			, ATTACHED_FILE_NAME
 			, IS_MAIN_IMG
-		 	, RETURN_DATE 
-    FROM BOOK BOOK
-    JOIN BOOK_IMAGE IMG ON BOOK.BOOK_CODE = IMG.BOOK_CODE
-    LEFT JOIN BOOK_BORROW BB ON BOOK.BOOK_CODE = BB.BOOK_CODE
-    WHERE BOOK.BOOK_CODE = #{bookCode}
+    FROM BOOK BOOK, BOOK_IMAGE IMG
+    WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+    AND BOOK.BOOK_CODE = #{bookCode}
 	</select>
 	
 	
@@ -493,6 +477,22 @@
 			  WHERE BOOK_CODE = #{bookCode}
 		</update>
 		
+		<!-- 도서 반납 -->
+	<update id="returnBook">
+	    UPDATE BOOK_BORROW
+	    SET RETURN_DATE = SYSDATE
+	    WHERE BORROW_CODE = #{borrowCode, jdbcType=VARCHAR}
+	</update>
+
+		<!-- 반납 업데이트 쿼리 -->
+	<update id="updateReturnCnt">
+	    UPDATE BOOK
+	    SET BORROW_CNT = BORROW_CNT - 1
+	    WHERE BOOK_CODE = #{bookCode, jdbcType=VARCHAR}
+	</update>
+	
+		
+		
 		<!-- 연장 버튼 클릭 후, 바뀐 반납 기한 -->
 	<select id="getReturnDuedate" resultType="String">
 		SELECT RETURN_DUEDATE
@@ -500,12 +500,7 @@
 		WHERE BORROW_CODE = #{borrowCode}
 	</select>
 	
-	<!-- 반납 버튼 클릭 후, 바뀐 RETURN_DUEDATE -->
-	<select id="get">
-		SELECT COUNT(*)
-		FROM BOOK_BORROW
-		WHERE BORROW_CODE = #{borrowCode}
-	</select>
+
 	
 </mapper>
 

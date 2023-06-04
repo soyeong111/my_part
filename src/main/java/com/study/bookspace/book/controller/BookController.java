@@ -228,12 +228,11 @@ public class BookController {
 //	도서 반납
 	@ResponseBody
 	@PostMapping("/returnBookAjax")
-	public int returnBookAjax(BorrowVO borrowVO, HttpSession session) {
+	public void returnBookAjax(BorrowVO borrowVO, HttpSession session) {
 		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
 //		도서 반납
 		bookService.returnBook(borrowVO);
-		 return 0;
 	}
 	
 	
@@ -242,7 +241,7 @@ public class BookController {
 	@PostMapping("/extendAjax")
 		public String extendAjax(HttpSession session, BorrowVO borrowVO) {
 			borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-		
+			
 //			반납 연장
 			bookService.extendBorrow(borrowVO);
 			

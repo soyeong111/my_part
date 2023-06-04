@@ -1,5 +1,8 @@
 package com.study.bookspace.member.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +31,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public MemberVO getUserInfoForLogin(String memId) {
 		return sqlSession.selectOne("memberMapper.getUserInfoForLogin", memId);
+	}
+
+	// 아이디 찾기
+	@Override
+	public List<MemberVO> findIdList(Map<String, Object> mapData) {
+		return sqlSession.selectList("memberMapper.findIdList", mapData);
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.member.service.MemberService;
@@ -100,12 +101,8 @@ public class MemberController {
 	// 아이디 찾기
 	@ResponseBody
 	@PostMapping("/findIdAjax")
-	public String findIdAjax(Map<String, Object> mapData) {
-		System.out.println(mapData);
-		
-		
-		
-		return "";
+	public List<MemberVO> findIdAjax(@RequestParam Map<String, Object> mapData) {
+		return memberService.findIdList(mapData);
 	}
 	
 	// 비밀번호 찾기 화면으로

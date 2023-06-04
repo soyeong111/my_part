@@ -52,9 +52,11 @@
 			  th:onclick="extend(this,[[${#authentication.name}]], [[${borrow.borrowCode}]], [[${borrow.bookCode}]]);"
 			  th:if="${borrow.extended  == 'N'}">
           <td>
+          	<span th:if="${borrow.returnDate != NULL}">완료</span>
               <input type="button" class="btn custom-btn-del"  
 			  th:id="'reBtn-' + ${borrow.borrowCode}" value="반납"
-			  th:onclick="returnBook([[${#authentication.name}]], [[${borrow.borrowCode}]], [[${borrow.bookCode}]]);">
+			  th:onclick="returnBook(this,[[${#authentication.name}]], [[${borrow.borrowCode}]], [[${borrow.bookCode}]]);"
+			  th:if="${borrow.returnDate == NULL}">
 
           </td>
         </tr>
@@ -62,7 +64,7 @@
     </table>
   </div>
   <div class="noticeExtend" style="text-align: right;">
-    1회 반납 기한일로부터 3일 연장 가능<br>
+    반납 기한일로부터 3일 연장 가능 (1회)<br>
     단, 다른 회원이 예약한 도서는 연장 불가
   </div>
 </div>
