@@ -37,7 +37,7 @@ public class RoomController {
 	// 열람실 좌석 클릭 시 ajax 실행
 	@ResponseBody
 	@PostMapping("/readingRoomAjax")
-	public String readingRoomAjax(String seatCode) {
+	public SeatVO readingRoomAjax(String seatCode) {
 		
 		return roomService.getSeatDetail(seatCode);
 		

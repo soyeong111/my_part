@@ -15,9 +15,20 @@ function seatPick(seatCode){
 	      
 	      str += `<div class="row">`;
 	      str += `<div class="col">`;
-	      str += ``;
-	      str += `<div>${result}</div>`;
-	      str += ``;
+	      str += `<table class="table text-center">`;
+	      str += `<thead>`;
+	      str += `<tr>`;
+	      str += `<td>좌석번호</td>`;
+	      str += `<td>상태</td>`;
+	      str += `<td>입실/퇴실</td>`;
+	      str += `</tr>`;
+	      str += `</thead>`;
+	      str += `<tbody>`;
+	      str += `<tr>`;
+	      str += `<td>${result.seatCode}</td>`;
+	      str += `<td>${result.seatIsUsed}</td>`;
+	      str += `<td><input type="button" class="btn custom-btn" value="입실" onclick="getIn();"></td>`;
+	      str += `</tr>`;
 	      str += `</div>`;
 	      str += `</div>`;
 	      str += ``;
@@ -34,4 +45,11 @@ function seatPick(seatCode){
 	   }
 	});
 	//ajax end
+}
+
+function getIn(seatCode){
+	const getInMsg = confirm('입실하시겠습니까?');
+	if(getInMsg){
+		alert(1);
+	}
 }

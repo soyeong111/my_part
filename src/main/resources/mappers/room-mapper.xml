@@ -33,8 +33,9 @@
 		WHERE SEC.SECTION_CODE = SEAT.SECTION_CODE
 	</select>
 	
-	<select id="getSeatDetail" resultType="String">
+	<select id="getSeatDetail" resultMap="seat">
 		SELECT SEAT_CODE
+			, DECODE(SEAT_IS_USED, 'N', '대기중', 'Y', '사용중') AS SEAT_IS_USED
 		FROM SECTION_SEAT
 		WHERE SEAT_CODE = #{seatCode}
 	</select>	

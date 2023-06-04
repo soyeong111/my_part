@@ -23,7 +23,7 @@ public class RoomServiceImpl implements RoomService{
 
 	//좌석 상세 조회
 	@Override
-	public String getSeatDetail(String seatCode) {
+	public SeatVO getSeatDetail(String seatCode) {
 		return sqlSession.selectOne("roomMapper.getSeatDetail", seatCode);
 	}
 
