@@ -1,4 +1,33 @@
 
+
+// 연장 전 예약 확인
+function checkReserve(btn, name, borrowCode, bookCode) {
+  $.ajax({
+    url: '/book/checkReserveBeforeExtendAjax',
+    type: 'post',
+    data: { 'memId': name, 'bookCode': bookCode },
+    success: function(response) {
+      if (response == 1) {
+        Swal.fire({
+          title: '연장 불가',
+          text: '다른 회원이 예약한 도서는 연장이 불가합니다.',
+          icon: 'error',
+        });
+      } else {
+        extend(btn, name, borrowCode, bookCode);
+      }
+    },
+    error: function() {
+      Swal.fire({
+        title: '오류',
+        text: '대여 가능 여부를 확인하는데 실패했습니다.',
+        icon: 'error',
+      });
+    }
+  });
+}
+
+// 반납 기한 연장
 function extend(btn, name, borrowCode, bookCode) {
   var button = document.getElementById('exBtn-' + borrowCode);
   if (button && button.value === '연장') {
@@ -30,8 +59,6 @@ function extend(btn, name, borrowCode, bookCode) {
     });
   }
 }
-
-
 
 
 //반납 버튼 클릭 시 실행

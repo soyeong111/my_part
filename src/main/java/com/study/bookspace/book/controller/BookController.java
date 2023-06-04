@@ -258,10 +258,11 @@ public class BookController {
 		
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
+		
 //		예약여부 확인
 		int checkReserveBeforeExtend = bookService.checkReserveBeforeExtend(reserveVO);
 //			예약 시
-		if(checkReserveBeforeExtend != 0) {
+		if(checkReserveBeforeExtend >= 1) {
 			return 1;
 		}
 		return 0;

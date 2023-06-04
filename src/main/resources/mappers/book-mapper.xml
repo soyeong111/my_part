@@ -357,6 +357,7 @@
 		WHERE BOOK.BOOK_STATUS_NO = STATUS.BOOK_STATUS_NO
 		AND BOOK.BOOK_CATE_NO = CATEGORY.BOOK_CATE_NO
 		
+		
 					
 			<!-- 검색 조건 -->
 
@@ -396,7 +397,7 @@
 		<if test='searchBookVO != null and !searchBookVO.searchToBookStock.equals("")'>
 		    AND BOOK_STOCK_CNT &lt;= TO_NUMBER(#{searchBookVO.searchToBookStock})		
 		</if>  
-	
+		ORDER BY BOOK_PUBLICATION_DATE DESC
 	</select>
 	
 	
