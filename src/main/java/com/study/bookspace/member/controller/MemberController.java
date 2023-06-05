@@ -110,5 +110,13 @@ public class MemberController {
 	public String findPwForm() {
 		return "content/member/find_pw";
 	}
+	
+	// 비밀번호 변경 전 아이디 확인
+	@ResponseBody
+	@PostMapping("/checkIdAjax")
+	public int checkIdAjax(@RequestParam Map<String, Object> mapData) {
+		return memberService.checkId(mapData);
+	}
+	
 
 }

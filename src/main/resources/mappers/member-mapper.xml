@@ -78,5 +78,15 @@
 		WHERE ${column} = #{value}
 			AND MEM_STATUS != '탈퇴'
 	</select>
+	
+	<!-- 비밀번호 변경 전 아이디 확인 -->
+	<select id="checkId" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM MEMBER
+		WHERE ${column} = #{value}
+			AND MEM_ID = #{memId}
+			AND MEM_STATUS != '탈퇴'
+	</select>
+	
 
 </mapper>

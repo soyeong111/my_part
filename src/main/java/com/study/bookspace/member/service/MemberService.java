@@ -18,5 +18,8 @@ public interface MemberService {
 	
 	// 아이디 찾기
 	List<MemberVO> findIdList(Map<String, Object> mapData);
+	
+	// 비밀번호 변경 전 아이디 확인
+	int checkId(Map<String, Object> mapData);
 
 }

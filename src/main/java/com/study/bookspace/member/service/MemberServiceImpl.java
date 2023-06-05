@@ -39,4 +39,10 @@ public class MemberServiceImpl implements MemberService {
 		return sqlSession.selectList("memberMapper.findIdList", mapData);
 	}
 
+	// 비밀번호 변경 전 아이디 확인
+	@Override
+	public int checkId(Map<String, Object> mapData) {
+		return sqlSession.selectOne("memberMapper.checkId", mapData);
+	}
+
 }
