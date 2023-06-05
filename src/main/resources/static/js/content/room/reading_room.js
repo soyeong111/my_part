@@ -1,4 +1,55 @@
 
+function getSeat(memId, seatCode, mainMenuCode, subMenuCode){
+	
+	
+	
+	//ajax start
+	$.ajax({
+	   url: '/room/isUsingSeatAjax', //요청경로
+	   type: 'post',
+	   async : true,
+	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+	   data: {'memId':memId, 'seatCode':seatCode}, //필요한 데이터
+	   success: function(result) {
+	      const seatMsg = confirm('입실하시겠습니까?');
+		  if(seatMsg){
+	      
+	          if(result){
+			      alert('이미 사용중인 좌석이 있습니다.');
+			      return ;
+		  	  }
+		  	  else{
+				  
+				//ajax start
+				$.ajax({
+				   url: '/room/getSeatAjax', //요청경로
+				   type: 'post',
+				   async : true,
+				   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				   data: {'seatCode':seatCode}, //필요한 데이터
+				   success: function(result) {
+					
+					//document.querySelector(`#getSeatBtn_${result.seatCode}`).disabled = true;
+				      location.href=`/room/readingRoom?mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+				   },
+				   error: function() {
+				      alert('실패');
+				   }
+				});
+				//ajax end
+				  
+			  }
+		  }
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
+}
+
+
+
 function seatPick(seatCode){
 	//ajax start
 	$.ajax({
@@ -27,7 +78,7 @@ function seatPick(seatCode){
 	      str += `<tr>`;
 	      str += `<td>${result.seatCode}</td>`;
 	      str += `<td>${result.seatIsUsed}</td>`;
-	      str += `<td><input type="button" class="btn custom-btn" value="입실" onclick="getIn();"></td>`;
+	      str += `<td><input type="button" class="btn custom-btn" value="입실" onclick="getIn('${result.seatCode}');"></td>`;
 	      str += `</tr>`;
 	      str += `</div>`;
 	      str += `</div>`;
@@ -47,9 +98,55 @@ function seatPick(seatCode){
 	//ajax end
 }
 
-function getIn(seatCode){
-	const getInMsg = confirm('입실하시겠습니까?');
-	if(getInMsg){
-		alert(1);
+
+// 퇴실 버튼 클릭 시
+function checkOutSeat(seatCode, mainMenuCode, subMenuCode){
+	const checkOutMsg = confirm('퇴실하시겠습니까?');
+	if(checkOutMsg){
+		location.href=`/room/checkOutSeat?seatCode=${seatCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------ 아코디언 ---------------------//
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 모든 아코디언 버튼 요소를 선택합니다.
+    const accordionButtons = document.querySelectorAll(".accordion-button");
+
+    // 각 아코디언 버튼에 클릭 이벤트를 추가합니다.
+    accordionButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        // 현재 클릭된 아코디언 버튼을 제외한 모든 아코디언 요소를 닫습니다.
+        accordionButtons.forEach(function(otherButton) {
+          if (otherButton !== button) {
+            otherButton.setAttribute("aria-expanded", "false");
+            otherButton.classList.add("collapsed");
+            const target = document.querySelector(otherButton.getAttribute("data-bs-target"));
+            target.classList.remove("show");
+          }
+        });
+      });
+    });
+  });

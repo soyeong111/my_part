@@ -1,5 +1,9 @@
 package com.study.bookspace.room.controller;
 
+import java.util.List;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.room.service.RoomService;
 import com.study.bookspace.room.vo.SeatVO;
+import com.study.bookspace.room.vo.UseVO;
 
 import jakarta.annotation.Resource;
 
@@ -30,7 +35,7 @@ public class RoomController {
 	public String readingRoom(SubMenuVO subMenuVO, Model model, String seatCode) {
 		
 		model.addAttribute("sectionList", roomService.getSectionList());
-		
+		//model.addAttribute("seatList", roomService.getSeatDetailList());
 		return "content/room/reading_room";
 	}
 	
@@ -44,14 +49,35 @@ public class RoomController {
 	}
 	
 	
+	//입실 버튼 클릭시 좌석 등록
+	@ResponseBody
+	@PostMapping("/getSeatAjax")
+	public SeatVO getSeatAjax(String seatCode, UseVO useVO, Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		useVO.setMemId(memId);
+		
+		roomService.getSeat(useVO);
+		return roomService.getSeatDetail(seatCode);
+	}
 	
+	//입실 버튼 클릭 시 이미 자리 사용중인 회원인지 확인
+	@ResponseBody
+	@PostMapping("/isUsingSeatAjax")
+	public boolean isUsingSeatAjax(String memId) {
+		return roomService.isUsingSeat(memId);
+	}
 	
-	
-	
-	
-	
-	
-	
+	//퇴실 버튼 클릭 시
+	@GetMapping("/checkOutSeat")
+	public String checkOutSeat(String seatCode, SubMenuVO subMenuVO) {
+		
+		roomService.checkOutSeat(seatCode);
+		
+		return "redirect:/room/readingRoom?mainMenuCode=" 
+			+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
+	}
 	
 	
 	

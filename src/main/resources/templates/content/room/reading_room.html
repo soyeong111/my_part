@@ -25,6 +25,7 @@
 				<div class="row">
 					<div class="col-4 ps-3 pe-3 pb-5" th:each="section : ${sectionList}">
 						<div class="row">
+						<div class="text-center"><strong>[[${section.sectionName}]]</strong></div>
 							<div class="col-6 p-3" th:each="seat : ${section.seatList}" th:classappend="${seatStat.count%2 == 1 } ? text-end">
 								<a href="javascript:void(0)" th:onclick="seatPick([[${seat.seatCode}]]);">
 									<img th:if="${seat.seatIsUsed == 'N'}" src="/image/room/desk-white.png" height="70;">
@@ -36,6 +37,41 @@
 				</div>
 			</div>
 			<div class="col-4" id="room-seat-div">
+			<div class="accordion" id="accordionRoomSection">
+			  <th:block th:each="section, state : ${sectionList}">
+			  <div class="accordion-item">
+			    <h2 class="accordion-header">
+			      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+			      		th:data-bs-target="${'#section_' + state.count}" aria-expanded="true" aria-controls="collapseOne">
+			      		<strong>[[${section.sectionName}]]</strong>
+			      </button>
+			    </h2>
+			    <div th:id="${'section_' + state.count}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+			      <div class="accordion-body">
+			      		<table class="table text-center">
+							<thead>
+								<tr>
+									<td>좌석번호</td>
+									<td>상태</td>
+									<td>입실/퇴실</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="seat : ${section.seatList}">
+									<td>[[${section.sectionName}]]-[[${seat.seatName}]]</td>
+									<td>[[${seat.seatIsUsed}]]</td>
+									<td>
+										<input th:id="${'getSeatBtn_' + seat.seatCode}" type="button" class="btn custom-btn" value="입실" th:onclick="getSeat([[${#authentication.name}]], [[${seat.seatCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+										<input type="button" class="btn custom-btn-del" value="퇴실" th:onclick="checkOutSeat([[${seat.seatCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+			      </div>
+			    </div>
+			  </div>
+			  </th:block>
+			</div>
 			</div>
 		</div>
 	</div>  
