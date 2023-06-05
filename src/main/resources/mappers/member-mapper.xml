@@ -76,7 +76,7 @@
 			, TO_CHAR(MEM_JOIN_DATE, 'YY-MM-DD HH24:MI:SS') MEM_JOIN_DATE
 		FROM MEMBER
 		WHERE ${column} = #{value}
-			AND MEM_STATUS = '활동'
+			AND MEM_STATUS != '탈퇴'
 	</select>
 
 </mapper>

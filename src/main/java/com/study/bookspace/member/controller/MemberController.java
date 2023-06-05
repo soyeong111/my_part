@@ -59,7 +59,7 @@ public class MemberController {
 		List<String> recipientList = new ArrayList<>();
 		recipientList.add(email);
 		mailVO.setRecipientList(recipientList);
-		mailVO.setTitle("이메일 인증");
+		mailVO.setTitle("한울도서관");
 		String pw = mailService.createRandomPassword(6);
 		mailVO.setContent("인증 번호 : " + pw);
 		mailService.sendSimpleEmail(mailVO);
