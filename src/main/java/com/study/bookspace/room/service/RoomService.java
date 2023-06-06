@@ -25,4 +25,7 @@ public interface RoomService {
 	
 	//퇴실 버튼 클릭 시
 	void checkOutSeat(String seatCode);
+	
+	//좌석 이용 내역 조회
+	List<UseVO> getSeatUseList();
 }

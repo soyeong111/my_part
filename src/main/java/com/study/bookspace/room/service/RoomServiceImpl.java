@@ -58,5 +58,11 @@ public class RoomServiceImpl implements RoomService{
 		sqlSession.update("roomMapper.updateSeatN", seatCode);
 	}
 
+	// 좌석 이용 내역 조회
+	@Override
+	public List<UseVO> getSeatUseList() {
+		return sqlSession.selectList("roomMapper.getSeatUseList");
+	}
+
 
 }

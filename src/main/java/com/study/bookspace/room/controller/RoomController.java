@@ -31,11 +31,15 @@ public class RoomController {
 	}
 	
 	//열람실 현황 페이지
-	@GetMapping("/readingRoom")
+	@RequestMapping("/readingRoom")
 	public String readingRoom(SubMenuVO subMenuVO, Model model, String seatCode) {
 		
 		model.addAttribute("sectionList", roomService.getSectionList());
 		//model.addAttribute("seatList", roomService.getSeatDetailList());
+		
+		//좌석 이용 내역 조회
+		model.addAttribute("useList", roomService.getSeatUseList());		
+		
 		return "content/room/reading_room";
 	}
 	

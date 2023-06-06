@@ -86,7 +86,14 @@
 		WHERE SEAT_CODE = #{seatCode}
 	</update>
 	
-	
+	<select id="getSeatUseList" resultMap="use">
+		SELECT SEAT_USE_CODE
+			, SEAT_CODE
+			, MEM_ID
+			, TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
+			, TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
+		FROM SEAT_USE
+	</select>
 	
 	
 </mapper>
