@@ -159,7 +159,7 @@ public class GoodsController {
 	//굿즈 삭제(굿즈 관리 페이지)
 	@GetMapping("/deleteGoods")
 	public String deleteGoods(String goodsCode) {
-		System.out.println(111);
+		
 		goodsService.deleteGoods(goodsCode);
 		
 		return "redirect:/goods/goodsManage";

@@ -14,4 +14,5 @@ public class GoodsImgVO {
 	private String isMain;
 	private String goodsCode;
 
+
 }
