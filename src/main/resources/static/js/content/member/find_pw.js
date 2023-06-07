@@ -5,7 +5,7 @@ let timer;
 
 let auth_pw;
 
-//init();
+init();
 
 /* 초기 설정 함수 */
 function init() {
@@ -14,8 +14,8 @@ function init() {
 
 /* 타이머 시작 */
 function startTimer() {
-	minute = 0;
-	second = 30;
+	minute = 5;
+	second = 0;
 	timer = setInterval(countTimer, 1000);
 }
 
@@ -275,10 +275,6 @@ function check_id() {
 	});
 }
 
-
-
-
-
 /* 비밀번호 유효성 검사 */
 function pw_validation(pw_input) {
 	pw_input.value = pw_input.value.replaceAll(' ', '');
@@ -298,12 +294,12 @@ function pw_validation(pw_input) {
 			pw_check_input.classList.add('is-valid');
 			return;
 		}
-		str = '<div class="col-10 offset-2 invalid-text-div">*비밀번호 확인을 입력해주세요.</div>';
+		str = '<div class="col-12 invalid-text-div mt-4">*비밀번호 확인을 입력해주세요.</div>';
 	} else {
 		pw_input.classList.remove('is-valid');
 		pw_input.classList.add('is-invalid');
 		pw_check_input.disabled = true;
-		str = '<div class="col-12 text-center invalid-text-div">*비밀번호는 8~16자리의, 영문소문자 + 영문대문자 + 특수문자(! @ # $ % &) + 숫자여야합니다.</div>';
+		str = '<div class="col-12 invalid-text-div mt-4">*비밀번호는 8~16자리의, 영문소문자 + 영문대문자 + 특수문자(! @ # $ % &) + 숫자여야합니다.</div>';
 	}
 	pw_check_input.classList.remove('is-valid');
 	pw_check_input.classList.add('is-invalid');
@@ -325,44 +321,47 @@ function pw_check(pw_check_input) {
 	}
 	pw_check_input.classList.remove('is-valid');
 	pw_check_input.classList.add('is-invalid');
-	const str = '<div class="col-12 text-center invalid-text-div">*비밀번호를 확인해주세요.</div>';
+	const str = '<div class="col-12 invalid-text-div mt-4">*비밀번호를 확인해주세요.</div>';
 	pw_input.closest('.row').lastElementChild.insertAdjacentHTML('beforebegin', str);
 }
 
-
-
-
-
 /* 비밀번호 변경 화면 그리기 */
 function draw_change_pw() {
-	
-	
 	let str = '<div class="col-12">';
-	
-	str += '';
-	str += '';
-	str += '';
-	str += '';
-	
-	str += '<div class="col-12 d-grid mt-5">';
-	str += '<button type="button" class="btn btn-primary custom-btn" onclick="change_pw();">비밀번호 변경</button>';
+	str += '<div class="input-group">';
+	str += '<span class="input-group-text">변경 비밀번호</span>';
+	str += '<input type="text" name="memPw" id="find-pw-change-input" class="form-control" onkeyup="pw_validation(this);">';
 	str += '</div>';
-	
+	str += '</div>';
+	str += '<div class="col-12 mt-4">';
+	str += '<div class="input-group">';
+	str += '<span class="input-group-text">비밀번호 확인</span>';
+	str += '<input type="text" id="find-pw-change-check" class="form-control" onkeyup="pw_check(this);" disabled>';
+	str += '</div>';
+	str += '</div>';
+	str += '<div class="col-12 d-grid mt-4">';
+	str += '<button type="button" class="btn btn-primary custom-btn" onclick="change_pw();">비밀번호 변경</button>';
 	str += '</div>';
 	const find_pw_change_div = document.querySelector('.find-pw-change-div');
 	find_pw_change_div.replaceChildren();
 	find_pw_change_div.insertAdjacentHTML('afterbegin', str);
 	startTimer();
-	
-	
 }
 
 /* 비밀번호 변경 */
 function change_pw() {
-	
-	
-	
-	
-	
-	
+	const pw_input = document.querySelector('#find-pw-change-input');
+	const pw_check_input = document.querySelector('#find-pw-change-check');
+	if (pw_input.valeu == pw_check_input.value) {
+		alert(11111);
+		
+		
+		
+	} else {
+		alert(22222);
+		
+		
+		
+		
+	}
 }
