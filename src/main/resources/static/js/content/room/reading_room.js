@@ -1,6 +1,14 @@
 
 function getSeat(memId, seatCode, mainMenuCode, subMenuCode){
 	
+	if(memId == 'anonymousUser'){
+		const result = confirm('회원만 입실가능합니다.\n로그인 하시겠습니까?');
+		
+		if(result){
+			location.href = `/member/loginForm`;
+		}
+		return ;
+	}
 	
 	
 	//ajax start
@@ -28,8 +36,11 @@ function getSeat(memId, seatCode, mainMenuCode, subMenuCode){
 				   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 				   data: {'seatCode':seatCode}, //필요한 데이터
 				   success: function(result) {
-					
-					//document.querySelector(`#getSeatBtn_${result.seatCode}`).disabled = true;
+					  
+					  
+					  //document.querySelector(`#getSeatBtn_${result.seatCode}`).disabled = true;
+					  
+					  
 				      location.href=`/room/readingRoom?mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 				   },
 				   error: function() {
@@ -47,7 +58,6 @@ function getSeat(memId, seatCode, mainMenuCode, subMenuCode){
 	});
 	//ajax end
 }
-
 
 
 function seatPick(seatCode){

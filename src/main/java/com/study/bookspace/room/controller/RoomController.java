@@ -27,18 +27,28 @@ public class RoomController {
 	//열람실 안내 페이지
 	@GetMapping("/readingRoomInfo")
 	public String readinRoomInfo(SubMenuVO subMenuVO) {
+		System.out.println();
 		return "content/room/reading_room_info";
 	}
 	
 	//열람실 현황 페이지
 	@RequestMapping("/readingRoom")
-	public String readingRoom(SubMenuVO subMenuVO, Model model, String seatCode) {
-		
+	public String readingRoom(SubMenuVO subMenuVO, Model model, UseVO useVO) {
 		model.addAttribute("sectionList", roomService.getSectionList());
 		//model.addAttribute("seatList", roomService.getSeatDetailList());
 		
-		//좌석 이용 내역 조회
-		model.addAttribute("useList", roomService.getSeatUseList());		
+		//좌석 이용 내역 목록 조회
+		model.addAttribute("useList", roomService.getSeatUseList());	
+		
+		
+		if(useVO.getSeatCode() != null) {
+			//해당 좌석 사용중인 사용자 아이디 조회
+			model.addAttribute("seatUseId", roomService.getSeatUseId(useVO.getSeatCode()));
+		}
+		
+		if(useVO.getSeatUseCode() != null) {
+			model.addAttribute("useDetail", roomService.getSeatUseDetail(useVO.getSeatUseCode()));
+		}
 		
 		return "content/room/reading_room";
 	}
@@ -75,9 +85,9 @@ public class RoomController {
 	
 	//퇴실 버튼 클릭 시
 	@GetMapping("/checkOutSeat")
-	public String checkOutSeat(String seatCode, SubMenuVO subMenuVO) {
-		
-		roomService.checkOutSeat(seatCode);
+	public String checkOutSeat(String seatUseCode, String seatCode, SubMenuVO subMenuVO) {
+		//roomService.getSeatUseDetail(seatUseCode);
+		roomService.checkOutSeat(seatUseCode, seatCode);
 		
 		return "redirect:/room/readingRoom?mainMenuCode=" 
 			+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();

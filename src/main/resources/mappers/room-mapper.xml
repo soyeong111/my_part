@@ -77,7 +77,7 @@
 	<update id="checkOutSeat">
 		UPDATE SEAT_USE
 		SET SEAT_OUT_DATE = SYSDATE
-		WHERE SEAT_CODE = #{seatCode}
+		WHERE SEAT_USE_CODE = #{seatUseCode}
 	</update>
 	
 	<update id="updateSeatN">
@@ -93,7 +93,33 @@
 			, TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
 			, TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
 		FROM SEAT_USE
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') &lt;= #{searchToDate}
+		</if>
+		<if test='seatListSearchVO != null and !seatListSearchVO.searchId.equals("")'>
+		AND UPPER(MEM_ID) LIKE '%'||UPPER(#{seatListSearchVO.searchId})||'%'
+		</if>	
+		ORDER BY SEAT_USE_CODE DESC
 	</select>
 	
+	<select id="getSeatUseDetail">
+		SELECT SEAT_USE_CODE
+			, SEAT_CODE
+			, MEM_ID
+			, TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
+			, TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
+		FROM SEAT_USE
+		WHERE SEAT_USE_CODE = #{seatUseCode}
+	</select>
+	
+	<select id="getSeatUseId" resultType="String">
+	    SELECT MEM_ID
+	    FROM SEAT_USE
+	    WHERE SEAT_CODE = #{seatCode}
+	    AND SEAT_OUT_DATE IS NULL
+	</select>
 	
 </mapper>

@@ -53,15 +53,27 @@ public class RoomServiceImpl implements RoomService{
 	//퇴실 버튼 클릭
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void checkOutSeat(String seatCode) {
-		sqlSession.update("roomMapper.checkOutSeat", seatCode);
+	public void checkOutSeat(String seatUseCode, String seatCode) {
+		sqlSession.update("roomMapper.checkOutSeat", seatUseCode);
 		sqlSession.update("roomMapper.updateSeatN", seatCode);
 	}
 
-	// 좌석 이용 내역 조회
+	// 좌석 이용 내역 목록 조회
 	@Override
 	public List<UseVO> getSeatUseList() {
 		return sqlSession.selectList("roomMapper.getSeatUseList");
+	}
+
+	//좌석 이용 내역 조회
+	@Override
+	public UseVO getSeatUseDetail(String seatUseCode) {
+		return sqlSession.selectOne("roomMapper.getSeatUseDetail", seatUseCode);
+	}
+
+	//해당 좌석 사용중인 사용자 아이디 조회
+	@Override
+	public String getSeatUseId(String seatCode) {
+		return sqlSession.selectOne("roomMapper.getSeatUseId", seatCode);
 	}
 
 

@@ -60,8 +60,10 @@
 								<tr th:each="seat : ${section.seatList}">
 									<td>[[${section.sectionName}]]-[[${seat.seatName}]]</td>
 									<td>[[${seat.seatIsUsed}]]</td>
-									<td>
-										<input th:id="${'getSeatBtn_' + seat.seatCode}" type="button" class="btn custom-btn" value="입실" th:onclick="getSeat([[${#authentication.name}]], [[${seat.seatCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+									<td th:if="${seatUseId != #authentication.name}">
+										<input th:id="${'getSeatBtn_' + seat.seatCode}" th:disabled="${seat.seatIsUsed == 'Y'}" type="button" class="btn custom-btn" value="입실" th:onclick="getSeat([[${#authentication.name}]], [[${seat.seatCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+									</td>
+									<td th:if="${seatUseId == #authentication.name}">
 										<input type="button" class="btn custom-btn-del" value="퇴실" th:onclick="checkOutSeat([[${seat.seatCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 									</td>
 								</tr>
@@ -78,10 +80,22 @@
 		
 		<div class="row">
 			<div class="col">
-				<form class="row" th:action="@{/room/readingRoom}" method="post" th:object="${useVO}">
-					<div class="col-3">
+				<form th:action="@{/room/readingRoom}" method="post" >
+					<div class="row">
+						<div class="col-2">
+							<input type="date" name="searchFromDate" class="form-control" th:value="${useVO.searchFromDate}">
+						</div>		
+						<div class="col-2">
+							<input type="date" name="searchToDate" class="form-control" th:value="${useVO.searchToDate}">
+						</div>
+						<div class="col-2">
+							<input type="text" name="searchId" class="form-control" th:value="${useVO.searchId}">
+						</div>
+						<div class="col-2">
+							<input type="submit" class="btn custom-btn" value="검색">
+						</div>	
 					</div>
-				</form>				
+				</form>			
 				<table class="table text-center">
 					<thead>
 						<tr>

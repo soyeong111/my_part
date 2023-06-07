@@ -24,8 +24,15 @@ public interface RoomService {
 	boolean isUsingSeat(String memId);
 	
 	//퇴실 버튼 클릭 시
-	void checkOutSeat(String seatCode);
+	void checkOutSeat(String seatUseCode, String seatCode);
+	
+	//좌석 이용 내역 목록 조회
+	List<UseVO> getSeatUseList();
 	
 	//좌석 이용 내역 조회
-	List<UseVO> getSeatUseList();
+	UseVO getSeatUseDetail(String seatUseCode);
+	
+	//해당 좌석 사용중인 사용자 아이디 조회
+	String getSeatUseId(String seatCode);
+	
 }
