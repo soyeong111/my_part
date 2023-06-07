@@ -118,5 +118,27 @@ public class MemberController {
 		return memberService.checkId(mapData);
 	}
 	
+	// 비밀번호 변경
+	@ResponseBody
+	@PostMapping("/changePwAjax")
+	public int changePwAjax(MemberVO memberVO) {
+		memberVO.setMemId(encoder.encode(memberVO.getMemId()));
+		System.out.println(memberVO);
+		int result = memberService.pwDuplicateCheck(memberVO);
+		if (result == 1) {
+			return 2;
+		}
+		return memberService.changePw(memberVO);
+		
+		
+		
+		// 얘 왜 0 나옴?
+		
+		
+		
+		
+		
+		
+	}
 
 }

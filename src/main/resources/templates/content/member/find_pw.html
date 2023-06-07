@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/main_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/content/member/find_pw.css">
 </th:block>
 <th:block layout:fragment="content">
 	<div class="find-pw-div w-25 m-auto">
@@ -27,32 +27,6 @@
 				</div>
 			</div>
 			<div class="row find-pw-change-div mt-5">
-			
-				
-				
-				<div class="col-12">
-					<div class="input-group">
-						<span class="input-group-text">변경 비밀번호</span>
-						<input type="text" id="find-pw-change-input" class="form-control" onkeyup="pw_validation(this);">
-					</div>
-				</div>
-				
-				
-				<div class="col-12">
-					<div class="input-group">
-						<span class="input-group-text">비밀번호 확인</span>
-						<input type="text" id="find-pw-change-check" class="form-control" onkeyup="pw_check(this);" disabled>
-					</div>
-				</div>
-				
-					
-				<div class="col-12">
-					<div class="col-12 d-grid mt-5">
-						<button type="button" class="btn btn-primary custom-btn" onclick="change_pw();">비밀번호 변경</button>
-					</div>
-				</div>
-			
-			
 			</div>
 		</form>
 	</div>
