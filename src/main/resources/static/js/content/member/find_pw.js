@@ -62,7 +62,7 @@ function draw_tell_find_pw() {
 	str += '</div>';
 	str += '</div>';
 	str += '<div class="col-12 d-grid mt-5">';
-	str += '<button type="button" class="btn btn-primary custom-btn" onclick="tell_find_pw();">아이디 찾기</button>';
+	str += '<button type="button" class="btn btn-primary custom-btn" onclick="tell_find_pw();">비밀번호 찾기</button>';
 	str += '</div>';
 	const find_pw_change_div = document.querySelector('.find-pw-change-div');
 	find_pw_change_div.replaceChildren();
@@ -93,7 +93,7 @@ function draw_email_find_pw() {
 	str += '</div>';
 	str += '</div>';
 	str += '<div class="col-12 d-grid mt-5">';
-	str += '<button type="button" class="btn btn-primary custom-btn" onclick="email_find_pw();">아이디 찾기</button>';
+	str += '<button type="button" class="btn btn-primary custom-btn" onclick="email_find_pw();">비밀번호 찾기</button>';
 	str += '</div>';
 	const find_pw_change_div = document.querySelector('.find-pw-change-div');
 	find_pw_change_div.replaceChildren();
@@ -255,7 +255,7 @@ function check_id() {
 				document.querySelector('#find-pw-value-input').value = '';
 				document.querySelector('#find-pw-id-input').value = '';
 				let str = '<div class="col-12 text-center">';
-				str += '가입된 회원이 없습니다.';
+				str += '일치하는 회원이 없습니다.';
 				str += '</div>';
 				str += '<div class="col-12 mt-5 text-center">';
 				str += '<a href="/member/findIdForm">아이디 찾기</a>';
@@ -278,6 +278,7 @@ function check_id() {
 /* 비밀번호 유효성 검사 */
 function pw_validation(pw_input) {
 	pw_input.value = pw_input.value.replaceAll(' ', '');
+	pw_input.closest('.row').querySelector('button').disabled = true;
 	const pw_check_input = document.querySelector('#find-pw-change-check');
 	const invalid_text_div = pw_input.closest('.row').querySelector('.invalid-text-div');
 	if (invalid_text_div != null) {
@@ -290,6 +291,7 @@ function pw_validation(pw_input) {
 		pw_input.classList.add('is-valid');
 		pw_check_input.disabled = false;
 		if (pw_input.value == pw_check_input.value) {
+			pw_input.closest('.row').querySelector('button').disabled = false;
 			pw_check_input.classList.remove('is-invalid');
 			pw_check_input.classList.add('is-valid');
 			return;
@@ -315,13 +317,15 @@ function pw_check(pw_check_input) {
 		invalid_text_div.remove();
 	}
 	if (pw_check_input.value == pw_input.value) {
+		pw_input.closest('.row').querySelector('button').disabled = false;
 		pw_check_input.classList.remove('is-invalid');
 		pw_check_input.classList.add('is-valid');
 		return;
 	}
+	pw_input.closest('.row').querySelector('button').disabled = true;
 	pw_check_input.classList.remove('is-valid');
 	pw_check_input.classList.add('is-invalid');
-	const str = '<div class="col-12 invalid-text-div mt-4">*비밀번호를 확인해주세요.</div>';
+	const str = '<div class="col-12 invalid-text-div mt-4">*비밀번호가 일치하지 않습니다.</div>';
 	pw_input.closest('.row').lastElementChild.insertAdjacentHTML('beforebegin', str);
 }
 
@@ -330,17 +334,17 @@ function draw_change_pw() {
 	let str = '<div class="col-12">';
 	str += '<div class="input-group">';
 	str += '<span class="input-group-text">변경 비밀번호</span>';
-	str += '<input type="text" name="memPw" id="find-pw-change-input" class="form-control" onkeyup="pw_validation(this);">';
+	str += '<input type="password" name="memPw" id="find-pw-change-input" class="form-control" onkeyup="pw_validation(this);" maxlength="16">';
 	str += '</div>';
 	str += '</div>';
 	str += '<div class="col-12 mt-4">';
 	str += '<div class="input-group">';
 	str += '<span class="input-group-text">비밀번호 확인</span>';
-	str += '<input type="text" id="find-pw-change-check" class="form-control" onkeyup="pw_check(this);" disabled>';
+	str += '<input type="password" id="find-pw-change-check" class="form-control" onkeyup="pw_check(this);" maxlength="16" disabled>';
 	str += '</div>';
 	str += '</div>';
 	str += '<div class="col-12 d-grid mt-4">';
-	str += '<button type="button" class="btn btn-primary custom-btn" onclick="change_pw();">비밀번호 변경</button>';
+	str += '<button type="button" class="btn btn-primary custom-btn" onclick="change_pw();" disabled>비밀번호 변경</button>';
 	str += '</div>';
 	const find_pw_change_div = document.querySelector('.find-pw-change-div');
 	find_pw_change_div.replaceChildren();
@@ -350,18 +354,24 @@ function draw_change_pw() {
 
 /* 비밀번호 변경 */
 function change_pw() {
-	const pw_input = document.querySelector('#find-pw-change-input');
-	const pw_check_input = document.querySelector('#find-pw-change-check');
-	if (pw_input.valeu == pw_check_input.value) {
-		alert(11111);
-		
-		
-		
-	} else {
-		alert(22222);
-		
-		
-		
-		
-	}
+	$.ajax({
+		url: '/member/changePwAjax',
+		type: 'post',
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: $('#find-pw-form').serialize(),
+		success: function(result) {
+			alert(result);
+			if (result == 1) {
+				clearInterval(timer);
+				alert('비밀번호가 변경되었습니다.\n로그인 페이지로 이동합니다.');
+			} else if (result == 2) {
+				alert('기존 비밀번호와 같은 비밀번호로는\n변경이 불가합니다.');
+			} else {
+				alert('비밀번호 변경 실패');
+			}
+		},
+		error: function() {
+			alert('ajax 통신 실패');
+		}
+	});
 }
