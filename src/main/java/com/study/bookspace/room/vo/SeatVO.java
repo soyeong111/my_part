@@ -12,4 +12,6 @@ public class SeatVO {
 	private String sectionCode;
 	private String seatName;
 	private String seatIsUsed;
+	private String memId;
+	private String seatUseCode;
 }

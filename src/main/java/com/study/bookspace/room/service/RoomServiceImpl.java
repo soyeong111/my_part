@@ -64,17 +64,6 @@ public class RoomServiceImpl implements RoomService{
 		return sqlSession.selectList("roomMapper.getSeatUseList");
 	}
 
-	//좌석 이용 내역 조회
-	@Override
-	public UseVO getSeatUseDetail(String seatUseCode) {
-		return sqlSession.selectOne("roomMapper.getSeatUseDetail", seatUseCode);
-	}
-
-	//해당 좌석 사용중인 사용자 아이디 조회
-	@Override
-	public String getSeatUseId(String seatCode) {
-		return sqlSession.selectOne("roomMapper.getSeatUseId", seatCode);
-	}
 
 
 }

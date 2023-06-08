@@ -110,10 +110,10 @@ function seatPick(seatCode){
 
 
 // 퇴실 버튼 클릭 시
-function checkOutSeat(seatCode, mainMenuCode, subMenuCode){
+function checkOutSeat(seatCode,seatUseCode, mainMenuCode, subMenuCode){
 	const checkOutMsg = confirm('퇴실하시겠습니까?');
 	if(checkOutMsg){
-		location.href=`/room/checkOutSeat?seatCode=${seatCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+		location.href=`/room/checkOutSeat?seatCode=${seatCode}&seatUseCode=${seatUseCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 	}
 }
 

@@ -11,3 +11,11 @@
 thead{
 	font-weight: bold;
 }
+
+.seat-in{
+	background-image: url("../../image/room/desk-white.png");
+}
+
+.seat-out{
+	background-image: url("../../image/room/desk-black.png");
+}
