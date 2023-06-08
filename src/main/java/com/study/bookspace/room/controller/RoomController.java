@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.room.service.RoomService;
+import com.study.bookspace.room.vo.SeatListSearchVO;
 import com.study.bookspace.room.vo.SeatVO;
 import com.study.bookspace.room.vo.UseVO;
 
@@ -34,14 +35,14 @@ public class RoomController {
 	
 	//열람실 현황 페이지
 	@RequestMapping("/readingRoom")
-	public String readingRoom(SubMenuVO subMenuVO, Model model, UseVO useVO, Authentication authentication) {
+	public String readingRoom(SubMenuVO subMenuVO, Model model, UseVO useVO, Authentication authentication, SeatListSearchVO seatListSearchVO) {
 		
 		useVO.setSeatCode(useVO.getSeatCode());
 		
 		model.addAttribute("sectionList", roomService.getSectionList());
 		
 		//좌석 이용 내역 목록 조회
-		model.addAttribute("useList", roomService.getSeatUseList());	
+		model.addAttribute("useList", roomService.getSeatUseList(seatListSearchVO));	
 		
 		return "content/room/reading_room";
 	}
@@ -86,8 +87,15 @@ public class RoomController {
 			+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
-	
-	
+	//전체퇴실 버튼 클릭 시
+	@GetMapping("/allCheckOut")
+	public String allCheckOut(SubMenuVO subMenuVO) {
+		
+		roomService.allCheckOut();
+		
+		return "redirect:/room/readingRoom?mainMenuCode=" 
+				+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
+	}
 	
 	
 	

@@ -23,6 +23,8 @@
 		<result column="MEM_ID" 			property="memId"/>
 		<result column="SEAT_IN_DATE" 		property="seatInDate"/>
 		<result column="SEAT_OUT_DATE" 		property="seatOutDate"/>
+		<result column="SECTION_NAME" 		property="sectionName"/>
+		<result column="SEAT_NAME" 			property="seatName"/>
 	</resultMap>
 	
 	<select id="getSectionList" resultMap="section">
@@ -98,23 +100,38 @@
 	
 	<select id="getSeatUseList" resultMap="use">
 		SELECT SEAT_USE_CODE
-			, SEAT_CODE
-			, MEM_ID
-			, TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
-			, TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
-		FROM SEAT_USE
+	        , USE.SEAT_CODE
+	        , MEM_ID
+	        , TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
+	        , TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
+	        , SECTION_NAME
+	        , SEAT_NAME
+		FROM SEAT_USE USE, ROOM_SECTION RS, SECTION_SEAT SS
+		WHERE USE.SEAT_CODE = SS.SEAT_CODE
+		AND RS.SECTION_CODE = SS.SECTION_CODE
 		<if test='searchFromDate != null and !searchFromDate.equals("")'>
-		AND TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') &gt;= #{searchFromDate}
+		AND TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
 		</if>
 		<if test='searchToDate != null and !searchToDate.equals("")'>
-		AND TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') &lt;= #{searchToDate}
+		AND TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
 		</if>
-		<if test='seatListSearchVO != null and !seatListSearchVO.searchId.equals("")'>
-		AND UPPER(MEM_ID) LIKE '%'||UPPER(#{seatListSearchVO.searchId})||'%'
+		<if test='searchId != null and !searchId.equals("")'>
+		AND UPPER(MEM_ID) LIKE '%' || UPPER(#{searchId})||'%'
 		</if>	
 		ORDER BY SEAT_USE_CODE DESC
 	</select>
 	
+	<update id="allCheckOut">
+		UPDATE SEAT_USE
+		SET SEAT_OUT_DATE = SYSDATE
+		WHERE SEAT_OUT_DATE IS NULL
+	</update>
+	
+	<update id="allSeatUpdateN">
+		UPDATE SECTION_SEAT
+		SET SEAT_IS_USED = 'N'
+		WHERE SEAT_IS_USED = 'Y'
+	</update>
 	
 	
 </mapper>
