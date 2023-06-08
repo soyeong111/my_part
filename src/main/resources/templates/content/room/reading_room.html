@@ -26,11 +26,8 @@
 					<div class="col-4 ps-3 pe-3 pb-5" th:each="section : ${sectionList}">
 						<div class="row">
 						<div class="text-center"><strong>[[${section.sectionName}]]</strong></div>
-							<div class="col-6 p-3" th:each="seat : ${section.seatList}" th:classappend="${seatStat.count%2 == 1 } ? text-end">
-								<a href="javascript:void(0)" th:onclick="seatPick([[${seat.seatCode}]]);">
-									<img th:if="${seat.seatIsUsed == 'N'}" src="/image/room/desk-white.png" height="70;">
-									<img th:if="${seat.seatIsUsed == 'Y'}" src="/image/room/desk-black.png" height="70;">
-								</a>
+							<div class="col-6 p-3 position-relative" th:each="seat : ${section.seatList}" th:classappend="${seatStat.count%2 == 1 } ? text-end" >
+								<a class="d-block" href="javascript:void(0)" th:classappend="${seat.seatIsUsed == 'N'} ? seat-in : seat-out"></a>
 							</div>
 						</div>
 					</div>
@@ -59,12 +56,15 @@
 							<tbody>
 								<tr th:each="seat : ${section.seatList}">
 									<td>[[${section.sectionName}]]-[[${seat.seatName}]]</td>
-									<td>[[${seat.seatIsUsed}]]</td>
-									<td th:if="${seatUseId != #authentication.name}">
+									<td> 
+										<span th:if="${seat.seatIsUsed == 'Y'}">사용중</span>
+                						<span th:if="${seat.seatIsUsed == 'N'}">대기중</span>
+                					</td>
+									<td th:if="${seat.memId != #authentication.name}">
 										<input th:id="${'getSeatBtn_' + seat.seatCode}" th:disabled="${seat.seatIsUsed == 'Y'}" type="button" class="btn custom-btn" value="입실" th:onclick="getSeat([[${#authentication.name}]], [[${seat.seatCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 									</td>
-									<td th:if="${seatUseId == #authentication.name}">
-										<input type="button" class="btn custom-btn-del" value="퇴실" th:onclick="checkOutSeat([[${seat.seatCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+									<td th:if="${seat.memId == #authentication.name}">
+										<input type="button" class="btn custom-btn-del" value="퇴실" th:onclick="checkOutSeat([[${seat.seatCode}]],[[${seat.seatUseCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 									</td>
 								</tr>
 							</tbody>
@@ -81,8 +81,10 @@
 		<div class="row">
 			<div class="col">
 				<form th:action="@{/room/readingRoom}" method="post" >
+					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<div class="row">
-						<div class="col-2">
+						<div class="offset-2 col-2">
 							<input type="date" name="searchFromDate" class="form-control" th:value="${useVO.searchFromDate}">
 						</div>		
 						<div class="col-2">
@@ -106,6 +108,9 @@
 						</tr>
 					</thead>
 					<tbody>
+						<th:block th:if="${#lists.size(useList) == 0}">
+							<tr><td colspan=4>해당 이용내역이 없습니다.</td></tr>
+						</th:block>
 						<tr th:each="use : ${useList}">
 							<td>[[${use.memId}]]</td>
 							<td>[[${use.seatCode}]]</td>

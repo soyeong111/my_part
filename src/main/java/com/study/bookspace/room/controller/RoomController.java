@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.admin.vo.SubMenuVO;
@@ -33,22 +34,14 @@ public class RoomController {
 	
 	//열람실 현황 페이지
 	@RequestMapping("/readingRoom")
-	public String readingRoom(SubMenuVO subMenuVO, Model model, UseVO useVO) {
+	public String readingRoom(SubMenuVO subMenuVO, Model model, UseVO useVO, Authentication authentication) {
+		
+		useVO.setSeatCode(useVO.getSeatCode());
+		
 		model.addAttribute("sectionList", roomService.getSectionList());
-		//model.addAttribute("seatList", roomService.getSeatDetailList());
 		
 		//좌석 이용 내역 목록 조회
 		model.addAttribute("useList", roomService.getSeatUseList());	
-		
-		
-		if(useVO.getSeatCode() != null) {
-			//해당 좌석 사용중인 사용자 아이디 조회
-			model.addAttribute("seatUseId", roomService.getSeatUseId(useVO.getSeatCode()));
-		}
-		
-		if(useVO.getSeatUseCode() != null) {
-			model.addAttribute("useDetail", roomService.getSeatUseDetail(useVO.getSeatUseCode()));
-		}
 		
 		return "content/room/reading_room";
 	}

@@ -12,7 +12,9 @@
 		<id		 column="SEAT_CODE" 		property="seatCode"/>
 		<result column="SECTION_CODE" 		property="sectionCode"/>
 		<result column="SEAT_NAME" 			property="seatName"/>
-		<result column="SEAT_IS_USED"		 property="seatIsUsed"/>
+		<result column="SEAT_IS_USED"		property="seatIsUsed"/>
+		<result column="MEM_ID"		 		property="memId"/>
+		<result column="SEAT_USE_CODE"		property="seatUseCode"/>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.room.vo.UseVO" id="use">
@@ -29,6 +31,14 @@
 		    , SEAT_CODE
 		    , SEAT_NAME
 		    , SEAT_IS_USED
+            , (SELECT MEM_ID FROM SEAT_USE 
+                WHERE SEAT.SEAT_CODE = SEAT_CODE
+                AND SEAT_IN_DATE IS NOT NULL
+                AND SEAT_OUT_DATE IS NULL) AS MEM_ID
+            , (SELECT SEAT_USE_CODE FROM SEAT_USE
+                WHERE SEAT.SEAT_CODE = SEAT_CODE
+                AND SEAT_IN_DATE IS NOT NULL
+                AND SEAT_OUT_DATE IS NULL) AS SEAT_USE_CODE
 		FROM ROOM_SECTION SEC, SECTION_SEAT SEAT
 		WHERE SEC.SECTION_CODE = SEAT.SECTION_CODE
 		ORDER BY SECTION_NAME, SEAT_NAME
@@ -105,21 +115,6 @@
 		ORDER BY SEAT_USE_CODE DESC
 	</select>
 	
-	<select id="getSeatUseDetail">
-		SELECT SEAT_USE_CODE
-			, SEAT_CODE
-			, MEM_ID
-			, TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
-			, TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
-		FROM SEAT_USE
-		WHERE SEAT_USE_CODE = #{seatUseCode}
-	</select>
 	
-	<select id="getSeatUseId" resultType="String">
-	    SELECT MEM_ID
-	    FROM SEAT_USE
-	    WHERE SEAT_CODE = #{seatCode}
-	    AND SEAT_OUT_DATE IS NULL
-	</select>
 	
 </mapper>

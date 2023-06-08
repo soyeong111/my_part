@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.CategoryVO;
+import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.book.vo.SearchBookVO;
 
@@ -130,6 +131,12 @@ public class BookServiceImpl implements BookService {
 	public List<CategoryVO> getCateListForAdmin() {
 		return sqlSession.selectList("bookMapper.getCateListForAdmin");
 	}
+	
+	@Override
+	public List<ImgVO> getImgListForAdmin() {
+		return sqlSession.selectList("bookMapper.getImgListForAdmin");
+	}
+
 
 	@Override
 	public List<BorrowVO> myBorrow(BorrowVO borrowVO) {
@@ -150,6 +157,7 @@ public class BookServiceImpl implements BookService {
 	public String getReturnDuedate(String borrowCode) {
 		return sqlSession.selectOne("bookMapper.getReturnDuedate", borrowCode);
 	}
+
 
 
 

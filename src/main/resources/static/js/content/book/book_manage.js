@@ -170,6 +170,69 @@ function deleteBook(){
 	});
 }
 
+//-----이미지 모달창-----
+
+function getBookDetail(bookCode) {
+  // ajax start
+  $.ajax({
+    url: '/book/imgListAjax', // 요청경로
+    type: 'post',
+    async: true,
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: { 'bookCode': bookCode }, // 도서 코드 전달
+    success: function(result) {
+      console.log(result); // 이미지 데이터 확인
+
+      //const imgList = result.imgList; // 이미지 데이터
+
+      const itemDetailDiv = document.querySelector('#itemDetailDiv');
+
+      let str = '';
+
+      // 메인 이미지 처리
+      str += `<div class="row update-content">`;
+      str += `<label class="col-3 col-form-label text-end">메인 이미지</label>`;
+      str += `<div class="col-9">`;
+      str += `<input type="file" class="form-control">`;
+      str += `</div>`;
+      str += `<label class="col-3 col-form-label text-end"></label>`;
+      str += `<div class="col-9">`;
+      // 메인 이미지 데이터 처리
+      for (const img of result) {
+        if (img.isMainImg === 'Y') {
+          str += `<label class="form-label">${img.originFileName}</label>`;
+          // 여기에서 메인 이미지에 대한 추가 작업 수행
+        }
+      }
+      str += `</div>`;
+      str += `</div>`;
+
+      // 서브 이미지 처리
+      str += `<label class="col-3 col-form-label text-end">상세 이미지</label>`;
+      str += `<div class="col-9">`;
+      str += `<input type="file" class="form-control">`;
+      // 서브 이미지 데이터 처리
+      for (const img of result) {
+        if (img.isMainImg === 'N') {
+          str += `<label class="form-label">${img.originFileName}</label>`;
+          // 여기에서 서브 이미지에 대한 추가 작업 수행
+        }
+      }
+      str += `</div>`;
+
+      itemDetailDiv.insertAdjacentHTML('afterbegin', str);
+    },
+    error: function() {
+      alert('실패');
+    }
+  });
+  // ajax end
+}
+
+
+
+
+
 //------------체크박스-------------
 
 	
