@@ -22,9 +22,6 @@ public interface MemberService {
 	// 비밀번호 변경 전 아이디 확인
 	int checkId(Map<String, Object> mapData);
 	
-	// 비밀번호 중복 확인
-	int pwDuplicateCheck(MemberVO memberVO);
-	
 	// 비밀번호 변경
 	int changePw(MemberVO memberVO);
 

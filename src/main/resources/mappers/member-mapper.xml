@@ -89,14 +89,6 @@
 			AND MEM_STATUS != '탈퇴'
 	</select>
 	
-	<!-- 비밀번호 중복 확인 -->
-	<select id="pwDuplicateCheck" resultType="int">
-		SELECT COUNT(MEM_ID)
-		FROM MEMBER
-		WHERE MEM_ID = #{memId}
-			AND MEM_PW = #{memPw}
-	</select>
-	
 	<!-- 비밀번호 변경 -->
 	<update id="changePw">
 		UPDATE MEMBER

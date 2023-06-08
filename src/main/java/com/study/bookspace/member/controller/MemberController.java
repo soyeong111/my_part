@@ -122,23 +122,8 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/changePwAjax")
 	public int changePwAjax(MemberVO memberVO) {
-		memberVO.setMemId(encoder.encode(memberVO.getMemId()));
-		System.out.println(memberVO);
-		int result = memberService.pwDuplicateCheck(memberVO);
-		if (result == 1) {
-			return 2;
-		}
+		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		return memberService.changePw(memberVO);
-		
-		
-		
-		// 얘 왜 0 나옴?
-		
-		
-		
-		
-		
-		
 	}
 
 }
