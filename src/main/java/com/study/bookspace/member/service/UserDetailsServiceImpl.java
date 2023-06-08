@@ -22,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		if (userInfo == null) {
 			throw new UsernameNotFoundException("조회된 회원 없음");
 		}
+		System.out.println(userInfo);
 		UserDetails user = User.withUsername(userInfo.getMemId())
 								.password(userInfo.getMemPw())
 								.roles(userInfo.getMemRole())

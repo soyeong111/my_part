@@ -13,6 +13,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(getPublicMenuIntercepter())
 			.addPathPatterns("/"
+							, "/accessDeny"
 							, "/info/**"
 							, "/book/**"
 							, "/room/**"
