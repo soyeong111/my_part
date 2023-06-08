@@ -277,6 +277,9 @@ public class BookController {
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
 		
+//		이미지 목록 (전체)
+//		model.addAttribute("imageList", bookService.getU)
+		
 //		도서 목록 조회
 		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));
 		return "content/admin/book_manage";

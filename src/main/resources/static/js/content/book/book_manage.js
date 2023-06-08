@@ -170,6 +170,36 @@ function deleteBook(){
 	});
 }
 
+//-----이미지 모달창-----
+function bookTitle(){
+	
+	
+				for (let i = 0; i < categoryList.length; i++) {
+			  str += `<option ${bookCateNo == categoryList[i].bookCateNo ? 'selected' : ''} 
+			  value="${categoryList[i].bookCateNo}">${categoryList[i].bookCateStr}</option>`;
+			}
+			
+			str += `</select>`;
+			
+			
+			
+	
+	        str += `             <label class="col-3 col-form-label text-end">상세 이미지</label>   `;
+	        str += `             <div class="col-9">                                                `;
+	        str += `                <input type="file" class="form-control">                        `;
+	        for(const img of result['item'].imgList){
+					if(img.isMain == 'N'){
+	   		     str += `             <label class="form-label"><a href="javascript:void(0)" onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a></label>  			 `;
+						
+					}
+		
+				}
+	        str += `             </div>                                                             `;
+}
+
+
+
+
 //------------체크박스-------------
 
 	
