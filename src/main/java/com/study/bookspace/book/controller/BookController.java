@@ -289,10 +289,17 @@ public class BookController {
 	@PostMapping("/categoryListAjax")
 	public List<CategoryVO> categoryListAjax() {
 		
-		System.out.println(11111111);
-		
 //		카테고리 목록 (전체)
 		return bookService.getCateListForAdmin();
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/imgListAjax")
+	public List<ImgVO> imgListAjax() {
+		
+//		이미지목록 (전체)
+		return bookService.getImgListForAdmin();
 	}
 	
 
