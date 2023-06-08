@@ -258,10 +258,11 @@ public class BookController {
 		
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
+		
 //		예약여부 확인
 		int checkReserveBeforeExtend = bookService.checkReserveBeforeExtend(reserveVO);
 //			예약 시
-		if(checkReserveBeforeExtend != 0) {
+		if(checkReserveBeforeExtend >= 1) {
 			return 1;
 		}
 		return 0;
@@ -275,6 +276,9 @@ public class BookController {
 		
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
+		
+//		이미지 목록 (전체)
+		model.addAttribute("imgList", bookService.getImgListForAdmin());
 		
 //		도서 목록 조회
 		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));

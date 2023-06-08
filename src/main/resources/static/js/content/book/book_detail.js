@@ -32,24 +32,27 @@ function init() {
 
 
 
-
 // 대여하기 버튼 클릭 시 실행
 function borrow(memId, bookCode) {
   if (memId == 'anonymousUser') {
-   swal({
-    title: "먼저 로그인 하세요.",
-    text: "로그인 하시겠습니까?",
-    icon: "warning" //"info,success,warning,error" 중 택1
-  }).then(function(result) {
-    if (result) {
-      // 확인 버튼을 클릭한 경우 로그인 페이지로 이동
-      location.href = '/member/loginForm';
-    }
-  });
+    Swal.fire({
+      icon: 'warning',
+      title: '알림',
+      text: '먼저 로그인하세요',
+      showCancelButton: true,
+      confirmButtonText: '로그인',
+      cancelButtonText: '취소'
+    }).then(function(result) {
+      if (result.isConfirmed) {
+        // 확인 버튼을 클릭한 경우 로그인 페이지로 이동
+        location.href = '/member/loginForm';
+      }
+    });
 
-  // 로그인 체크
-  return;
-}
+    // 로그인 체크
+    return;
+  }
+
   // 동시에 대여 가능 여부를 확인하고 대여를 처리
   checkBorrow(memId, bookCode, function() {
     checkBorrowLimit(memId, bookCode, function() {
@@ -65,18 +68,31 @@ function checkBorrow(memId, bookCode, callback) {
     type: 'post',
     data: { 'memId': memId, 'bookCode': bookCode },
     success: function(response) {
-      if (response == 1) {
-        alert('이미 대여한 책입니다');
-      
+      if (response === '1') {
+        Swal.fire({
+          icon: 'warning',
+          title: '알림',
+          text: '이미 대여한 책입니다',
+          confirmButtonText: '확인'
+        }).then(function() {
+          // 확인 버튼을 클릭한 경우 콜백 실행
+          callback();
+        });
       } else {
         callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
       }
     },
     error: function() {
-      alert('대여 가능 여부를 확인하는데 실패했습니다.');
+      Swal.fire({
+        icon: 'error',
+        title: '에러',
+        text: '대여 가능 여부를 확인하는데 실패했습니다.',
+        confirmButtonText: '확인'
+      });
     }
   });
 }
+
 
 // 초과 대여 여부
 function checkBorrowLimit(memId, bookCode, callback) {

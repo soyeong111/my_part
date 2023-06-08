@@ -11,6 +11,7 @@
 		<!--   검색 영역  -->
 	<div class="row" id="titleTable">
 		<div class="col">
+		<h1 style="text-align: center; margin-top: 10px;">도서 관리</h1>
 			<form th:action="@{/book/bookManage}" method="post">
             <table class="table table-bordered align-middle text-center" style="margin-top: 10px;">
                <colgroup>
@@ -202,7 +203,6 @@
 				    <td>[[${book.bookStockCnt}]]</td>
 					</tr>
 				</tbody>
-				
 			</table>
 
 			
@@ -219,6 +219,26 @@
 		</form>
 	</div>
 </div>
+
+	<!-- img Modal -->
+	<div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h1 class="modal-title fs-5"> Modal Title </h1>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <img src="" width="100%;">
+         </div>
+       </div>
+     </div>
+   </div>
+	
+	
+
+
+
 </th:block>
 <th:block layout:fragment="content_js">
 	 <script type="text/javascript" src="/js/content/book/book_manage.js"></script> 
