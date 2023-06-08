@@ -360,12 +360,10 @@ function change_pw() {
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: $('#find-pw-form').serialize(),
 		success: function(result) {
-			alert(result);
 			if (result == 1) {
 				clearInterval(timer);
 				alert('비밀번호가 변경되었습니다.\n로그인 페이지로 이동합니다.');
-			} else if (result == 2) {
-				alert('기존 비밀번호와 같은 비밀번호로는\n변경이 불가합니다.');
+				location.href = '/member/loginForm';
 			} else {
 				alert('비밀번호 변경 실패');
 			}

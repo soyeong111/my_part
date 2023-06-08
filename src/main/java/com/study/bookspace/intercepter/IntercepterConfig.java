@@ -38,13 +38,18 @@ public class IntercepterConfig implements WebMvcConfigurer {
 								, "/info/sendAnswer"
 								, "/info/updateAnswer"
 								, "/info/deleteAnswer"
-								, "/info/qnaAnswer");
+								, "/info/qnaAnswer"
+								, "/room/checkOutSeat");
 		
 		registry.addInterceptor(getMyMenuIntercepter())
 			.addPathPatterns("/my/**");
 		
 		registry.addInterceptor(getAdminMenuIntercepter())
-		.addPathPatterns("/admin/**");
+			.addPathPatterns("/admin/**")
+			.excludePathPatterns("/admin/deleteGoodsCategory"
+								, "/admin/regGoodsProcess"
+								, "/admin/updateGoods"
+								, "/admin/deleteGoods");
 		
 	}
 	

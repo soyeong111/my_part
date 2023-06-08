@@ -10,6 +10,12 @@ import com.study.bookspace.admin.vo.SubMenuVO;
 @RequestMapping("/my")
 public class MyController {
 	
+	// 프로필 페이지로 이동
+	@GetMapping("/myProfile")
+	public String profile(SubMenuVO subMenuVO) {
+		return "content/my/my_profile";
+	}
+	
 	// 내정보 페이지로 이동
 	@GetMapping("/myInfo")
 	public String myInfo(SubMenuVO subMenuVO) {
