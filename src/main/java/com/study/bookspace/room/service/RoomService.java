@@ -29,10 +29,5 @@ public interface RoomService {
 	//좌석 이용 내역 목록 조회
 	List<UseVO> getSeatUseList();
 	
-	//좌석 이용 내역 조회
-	UseVO getSeatUseDetail(String seatUseCode);
-	
-	//해당 좌석 사용중인 사용자 아이디 조회
-	String getSeatUseId(String seatCode);
 	
 }
