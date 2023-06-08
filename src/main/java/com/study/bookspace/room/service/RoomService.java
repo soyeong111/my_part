@@ -12,5 +12,27 @@ public interface RoomService {
 	List<SectionVO> getSectionList();
 	
 	//좌석 상세 조회
-	String getSeatDetail(String seatCode);
+	SeatVO getSeatDetail(String seatCode);
+	
+	//좌석 상세 리스트 조회
+	List<SeatVO> getSeatDetailList();
+	
+	//입실 버튼 클릭 시
+	void getSeat(UseVO useVO);
+	
+	//이미 자리 사용중인 회원
+	boolean isUsingSeat(String memId);
+	
+	//퇴실 버튼 클릭 시
+	void checkOutSeat(String seatUseCode, String seatCode);
+	
+	//좌석 이용 내역 목록 조회
+	List<UseVO> getSeatUseList();
+	
+	//좌석 이용 내역 조회
+	UseVO getSeatUseDetail(String seatUseCode);
+	
+	//해당 좌석 사용중인 사용자 아이디 조회
+	String getSeatUseId(String seatCode);
+	
 }

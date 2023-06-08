@@ -217,33 +217,33 @@ function find_id() {
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: $('#find-id-form').serialize(),
 		success: function(result) {
-			
-			console.log(result);
-			
 			auth_pw = '';
 			document.querySelector('#find-id-value-input').value = '';
-			let str = '<div class="col-12">';
+			let str = '';
 			if (result.length == 0) {
-				
-				str += '빈값';
-				
-				
-				
-				
-				
-				
-				
+				str += '<div class="col-12 text-center">';
+				str += '가입된 회원이 없습니다.';
+				str += '</div>';
 			} else {
-				
-				str += `${result[0]['memId']}`;
-				
-				
-				
-				
-				
-				
-				
+				str += '<div class="col-3 p-1 text-end">';
+				str += '아이디';
+				str += '</div>';
+				str += '<div class="col-9 p-1 text-center">';
+				str += '가입날짜';
+				str += '</div>';
+				result.forEach((member) => {
+					str += '<div class="col-3 p-1 text-end">';
+					str += `${member['memId']}`;
+					str += '</div>';
+					str += '<div class="col-9 p-1 text-center">';
+					str += `${member['memJoinDate']}`;
+					str += '</div>';
+				});
 			}
+			str += '<div class="col-12 mt-5 text-center">';
+			str += '<a href="/member/findIdForm">아이디 찾기</a>';
+			str += '<span class="m-2">/</span>';
+			str += '<a href="/member/findPwForm">비밀번호 찾기</a>';
 			str += '</div>';
 			const find_id_change_div = document.querySelector('.find-id-change-div');
 			find_id_change_div.replaceChildren();

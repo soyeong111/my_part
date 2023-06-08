@@ -39,4 +39,22 @@ public class MemberServiceImpl implements MemberService {
 		return sqlSession.selectList("memberMapper.findIdList", mapData);
 	}
 
+	// 비밀번호 변경 전 아이디 확인
+	@Override
+	public int checkId(Map<String, Object> mapData) {
+		return sqlSession.selectOne("memberMapper.checkId", mapData);
+	}
+
+	// 비밀번호 중복 확인
+	@Override
+	public int pwDuplicateCheck(MemberVO memberVO) {
+		return sqlSession.selectOne("memberMapper.pwDuplicateCheck", memberVO);
+	}
+
+	// 비밀번호 변경
+	@Override
+	public int changePw(MemberVO memberVO) {
+		return sqlSession.update("memberMapper.changePw", memberVO);
+	}
+
 }

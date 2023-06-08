@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class UseVO {
+public class UseVO extends SeatListSearchVO{
 	private String seatUseCode;
 	private String seatCode;
 	private String memId;

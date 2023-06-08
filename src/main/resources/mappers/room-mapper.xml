@@ -31,27 +31,95 @@
 		    , SEAT_IS_USED
 		FROM ROOM_SECTION SEC, SECTION_SEAT SEAT
 		WHERE SEC.SECTION_CODE = SEAT.SECTION_CODE
+		ORDER BY SECTION_NAME, SEAT_NAME
 	</select>
 	
-	<select id="getSeatDetail" resultType="String">
+	<select id="getSeatDetail" resultMap="seat">
 		SELECT SEAT_CODE
+			, DECODE(SEAT_IS_USED, 'N', '대기중', 'Y', '사용중') AS SEAT_IS_USED
 		FROM SECTION_SEAT
 		WHERE SEAT_CODE = #{seatCode}
 	</select>	
 	
+	<select id="getSeatDetailList" resultMap="seat">
+		SELECT SEAT_CODE
+			, SEAT_NAME
+			, DECODE(SEAT_IS_USED, 'N', '대기중', 'Y', '사용중') AS SEAT_IS_USED
+		FROM SECTION_SEAT
+	</select>	
 	
+	<insert id="getSeat">
+		INSERT INTO SEAT_USE (
+			SEAT_USE_CODE
+            , SEAT_CODE
+            , MEM_ID
+		) VALUES (
+			(SELECT 'SEAT_USE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SEAT_USE_CODE, 10))), 0) + 1,3 , '0') 
+			FROM SEAT_USE)
+            , #{seatCode}
+            , #{memId}
+		)
+	</insert>
 	
+	<update id="updateSeatY">
+		UPDATE SECTION_SEAT
+		SET SEAT_IS_USED = 'Y'
+		WHERE SEAT_CODE = #{seatCode}
+	</update>
 	
+	<select id="isUsingSeat" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM SEAT_USE
+		WHERE MEM_ID = #{memId}
+		AND SEAT_OUT_DATE IS NULL
+	</select>
 	
+	<update id="checkOutSeat">
+		UPDATE SEAT_USE
+		SET SEAT_OUT_DATE = SYSDATE
+		WHERE SEAT_USE_CODE = #{seatUseCode}
+	</update>
 	
+	<update id="updateSeatN">
+		UPDATE SECTION_SEAT
+		SET SEAT_IS_USED = 'N'
+		WHERE SEAT_CODE = #{seatCode}
+	</update>
 	
+	<select id="getSeatUseList" resultMap="use">
+		SELECT SEAT_USE_CODE
+			, SEAT_CODE
+			, MEM_ID
+			, TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
+			, TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
+		FROM SEAT_USE
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') &lt;= #{searchToDate}
+		</if>
+		<if test='seatListSearchVO != null and !seatListSearchVO.searchId.equals("")'>
+		AND UPPER(MEM_ID) LIKE '%'||UPPER(#{seatListSearchVO.searchId})||'%'
+		</if>	
+		ORDER BY SEAT_USE_CODE DESC
+	</select>
 	
+	<select id="getSeatUseDetail">
+		SELECT SEAT_USE_CODE
+			, SEAT_CODE
+			, MEM_ID
+			, TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
+			, TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
+		FROM SEAT_USE
+		WHERE SEAT_USE_CODE = #{seatUseCode}
+	</select>
 	
-	
-	
-	
-	
-	
-	
+	<select id="getSeatUseId" resultType="String">
+	    SELECT MEM_ID
+	    FROM SEAT_USE
+	    WHERE SEAT_CODE = #{seatCode}
+	    AND SEAT_OUT_DATE IS NULL
+	</select>
 	
 </mapper>
