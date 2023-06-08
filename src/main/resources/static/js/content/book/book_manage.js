@@ -171,19 +171,44 @@ function deleteBook(){
 }
 
 //-----이미지 모달창-----
-function bookTitle(){
+function getBookDetail(bookCode, bookIntro){
 	
+	let imgList;
 	
-				for (let i = 0; i < categoryList.length; i++) {
-			  str += `<option ${bookCateNo == categoryList[i].bookCateNo ? 'selected' : ''} 
-			  value="${categoryList[i].bookCateNo}">${categoryList[i].bookCateStr}</option>`;
-			}
-			
-			str += `</select>`;
-			
-			
-			
-	
+	//ajax start
+   $.ajax({
+      url: '', //요청경로
+      type: 'post',
+      async : true,
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      data: {}, //필요한 데이터
+      success: function(result) {
+         alert('ajax 통신 성공');
+         
+         
+             str += `    <div class="row">                                                           `;
+	        str += `       <div class="col sub-title">                                              `;
+	        str += `          상품 이미지 정보                                                      `;
+	        str += `       </div>                                                                   `;
+	        str += `    </div>                                                                      `;
+	        str += `    <div class="row">                                                           `;
+	        str += `       <div class="col-1"></div>                                                `;
+	        str += `       <div class="col-11">                                                     `;
+	        str += `          <div class="row update-content">                                      `;
+	        str += `             <label class="col-3 col-form-label text-end">메인 이미지</label>   `;
+	        str += `             <div class="col-9">                                                `;
+	        str += `                <input type="file" class="form-control">                        `;
+	        str += `             </div>                                                             `;
+	        str += `             <label class="col-3 col-form-label text-end"></label> 				  `;
+	        str += `             <div class="col-9">                                                `;
+	   		   for(const img of result['item'].imgList){
+					if(img.isMain == 'Y'){
+	   		     str += `             <label class="form-label"><a href="javascript:void(0)" onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a></label>  			 `;
+																													//'문자'
+					}
+		
+				}
+	        str += `             </div>                                                             `;
 	        str += `             <label class="col-3 col-form-label text-end">상세 이미지</label>   `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <input type="file" class="form-control">                        `;
@@ -195,7 +220,26 @@ function bookTitle(){
 		
 				}
 	        str += `             </div>                                                             `;
+	        str += `          </div>                                                                `;
+	        str += `       </div>                                                                   `;
+         
+         
+      },
+      error: function() {
+         alert('실패');
+      }
+   });
+   //ajax end
+	                                                 
 }
+
+
+
+
+
+
+
+
 
 
 

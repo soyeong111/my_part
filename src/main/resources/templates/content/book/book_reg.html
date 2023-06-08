@@ -12,7 +12,7 @@
 		<div class="row">
 			<div class="col-12">
 				<form id="" class="row g-3" th:action="@{/book/regBookProcess}" method="post" enctype="multipart/form-data">
-					<div class="col-3">
+					<div class="col-6">
 						<label for="" class="form-label">도서 카테고리</label> 
 						<select id="" name="bookCateNo" class="form-select">
 							<th:block th:each="category : ${categoryList}">
@@ -20,7 +20,7 @@
 							</th:block>
 						</select>
 					</div>
-					<div class="col-9">
+					<div class="col-6">
 						<label for="" class="form-label">책이름</label> <input type="text" class="form-control" id="" name="bookTitle">
 					</div>
 					<div class="col-6">
@@ -30,15 +30,15 @@
 						<label for="" class="form-label">도서발행일</label> 
 						<input type="date" class="form-control" id="" name="bookPublicationDate">
 					</div>
-					<div class="col-12">
+					<div class="col-4">
 						<label for="" class="form-label">출판사</label> 
 						<input type="text" class="form-control" id="" name="bookPublisher">
 					</div>
-					<div class="col-6">
+					<div class="col-4">
 						<label for="" class="form-label">재고수량</label> 
 						<input id = "cntInput" name="bookStockCnt" type="number" class="form-control" value="1" min="1">
 					</div>
-					<div class="col-6">
+					<div class="col-4">
 						<label for="" class="form-label">ISBN</label> <input type="text" class="form-control" id="" name="isbn">
 					</div>
 					<div class="col-6">
@@ -54,7 +54,7 @@
 						<textarea rows="5" class="form-control" name="bookIntro"></textarea>
 					</div>
 					<div class="col-12 d-flex justify-content-center">
-  						<button id="" type="submit" class="btn custom-btn">도서등록</button>
+  						<button id="" type="submit" class="btn custom-btn">등록</button>
 					</div>
 				</form>
 			</div>
