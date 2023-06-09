@@ -6,6 +6,7 @@ function main_menu_mouseenter(main_menu_div) {
 	if (collapse_div != null) {
 		const collapse = bootstrap.Collapse.getOrCreateInstance(collapse_div);
 		collapse.show();
+		console.log('in-X');
 	}
 	console.log('in-2');
 }
@@ -17,6 +18,7 @@ function main_menu_mouseleave(main_menu_div) {
 	if (collapse_div != null) {
 		const collapse = bootstrap.Collapse.getOrCreateInstance(collapse_div);
 		collapse.hide();
+		console.log('out-X');
 	}
 	console.log('out-2');
 }
