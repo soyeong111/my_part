@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.bookspace.club.vo.BookClubMemberVO;
+import com.study.bookspace.room.vo.SeatListSearchVO;
 import com.study.bookspace.room.vo.SeatVO;
 import com.study.bookspace.room.vo.SectionVO;
 import com.study.bookspace.room.vo.UseVO;
@@ -60,9 +61,18 @@ public class RoomServiceImpl implements RoomService{
 
 	// 좌석 이용 내역 목록 조회
 	@Override
-	public List<UseVO> getSeatUseList() {
-		return sqlSession.selectList("roomMapper.getSeatUseList");
+	public List<UseVO> getSeatUseList(SeatListSearchVO seatListSearchVO) {
+		return sqlSession.selectList("roomMapper.getSeatUseList", seatListSearchVO);
 	}
+
+	//전부 퇴실 시키기
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void allCheckOut() {
+		sqlSession.update("roomMapper.allCheckOut");
+		sqlSession.update("roomMapper.allSeatUpdateN");
+	}
+	
 
 
 
