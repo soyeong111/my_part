@@ -134,7 +134,7 @@ function allCheckOut(mainMenuCode, subMenuCode){
 
 
 // ------------------ 아코디언 ---------------------//
-
+/*
 document.addEventListener("DOMContentLoaded", function() {
     // 모든 아코디언 버튼 요소를 선택합니다.
     const accordionButtons = document.querySelectorAll(".accordion-button");
@@ -154,3 +154,4 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
   });
+*/

@@ -35,14 +35,14 @@ public class RoomController {
 	
 	//열람실 현황 페이지
 	@RequestMapping("/readingRoom")
-	public String readingRoom(SubMenuVO subMenuVO, Model model, UseVO useVO, Authentication authentication, SeatListSearchVO seatListSearchVO) {
+	public String readingRoom(SubMenuVO subMenuVO, Model model, UseVO useVO, Authentication authentication) {
 		
 		useVO.setSeatCode(useVO.getSeatCode());
 		
 		model.addAttribute("sectionList", roomService.getSectionList());
 		
 		//좌석 이용 내역 목록 조회
-		model.addAttribute("useList", roomService.getSeatUseList(seatListSearchVO));	
+			
 		
 		return "content/room/reading_room";
 	}
