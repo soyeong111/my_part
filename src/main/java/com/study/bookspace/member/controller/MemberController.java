@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.member.service.MemberService;
@@ -58,7 +59,7 @@ public class MemberController {
 		List<String> recipientList = new ArrayList<>();
 		recipientList.add(email);
 		mailVO.setRecipientList(recipientList);
-		mailVO.setTitle("이메일 인증");
+		mailVO.setTitle("한울도서관");
 		String pw = mailService.createRandomPassword(6);
 		mailVO.setContent("인증 번호 : " + pw);
 		mailService.sendSimpleEmail(mailVO);
@@ -100,18 +101,29 @@ public class MemberController {
 	// 아이디 찾기
 	@ResponseBody
 	@PostMapping("/findIdAjax")
-	public String findIdAjax(Map<String, Object> mapData) {
-		System.out.println(mapData);
-		
-		
-		
-		return "";
+	public List<MemberVO> findIdAjax(@RequestParam Map<String, Object> mapData) {
+		return memberService.findIdList(mapData);
 	}
 	
 	// 비밀번호 찾기 화면으로
 	@GetMapping("/findPwForm")
 	public String findPwForm() {
 		return "content/member/find_pw";
+	}
+	
+	// 비밀번호 변경 전 아이디 확인
+	@ResponseBody
+	@PostMapping("/checkIdAjax")
+	public int checkIdAjax(@RequestParam Map<String, Object> mapData) {
+		return memberService.checkId(mapData);
+	}
+	
+	// 비밀번호 변경
+	@ResponseBody
+	@PostMapping("/changePwAjax")
+	public int changePwAjax(MemberVO memberVO) {
+		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		return memberService.changePw(memberVO);
 	}
 
 }

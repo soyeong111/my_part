@@ -12,7 +12,9 @@
 		<id		 column="SEAT_CODE" 		property="seatCode"/>
 		<result column="SECTION_CODE" 		property="sectionCode"/>
 		<result column="SEAT_NAME" 			property="seatName"/>
-		<result column="SEAT_IS_USED"		 property="seatIsUsed"/>
+		<result column="SEAT_IS_USED"		property="seatIsUsed"/>
+		<result column="MEM_ID"		 		property="memId"/>
+		<result column="SEAT_USE_CODE"		property="seatUseCode"/>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.room.vo.UseVO" id="use">
@@ -21,6 +23,8 @@
 		<result column="MEM_ID" 			property="memId"/>
 		<result column="SEAT_IN_DATE" 		property="seatInDate"/>
 		<result column="SEAT_OUT_DATE" 		property="seatOutDate"/>
+		<result column="SECTION_NAME" 		property="sectionName"/>
+		<result column="SEAT_NAME" 			property="seatName"/>
 	</resultMap>
 	
 	<select id="getSectionList" resultMap="section">
@@ -29,30 +33,105 @@
 		    , SEAT_CODE
 		    , SEAT_NAME
 		    , SEAT_IS_USED
+            , (SELECT MEM_ID FROM SEAT_USE 
+                WHERE SEAT.SEAT_CODE = SEAT_CODE
+                AND SEAT_IN_DATE IS NOT NULL
+                AND SEAT_OUT_DATE IS NULL) AS MEM_ID
+            , (SELECT SEAT_USE_CODE FROM SEAT_USE
+                WHERE SEAT.SEAT_CODE = SEAT_CODE
+                AND SEAT_IN_DATE IS NOT NULL
+                AND SEAT_OUT_DATE IS NULL) AS SEAT_USE_CODE
 		FROM ROOM_SECTION SEC, SECTION_SEAT SEAT
 		WHERE SEC.SECTION_CODE = SEAT.SECTION_CODE
+		ORDER BY SECTION_NAME, SEAT_NAME
 	</select>
 	
 	<select id="getSeatDetail" resultMap="seat">
 		SELECT SEAT_CODE
-			, SEAT_IS_USED
+			, DECODE(SEAT_IS_USED, 'N', '대기중', 'Y', '사용중') AS SEAT_IS_USED
 		FROM SECTION_SEAT
 		WHERE SEAT_CODE = #{seatCode}
 	</select>	
 	
+	<select id="getSeatDetailList" resultMap="seat">
+		SELECT SEAT_CODE
+			, SEAT_NAME
+			, DECODE(SEAT_IS_USED, 'N', '대기중', 'Y', '사용중') AS SEAT_IS_USED
+		FROM SECTION_SEAT
+	</select>	
 	
+	<insert id="getSeat">
+		INSERT INTO SEAT_USE (
+			SEAT_USE_CODE
+            , SEAT_CODE
+            , MEM_ID
+		) VALUES (
+			(SELECT 'SEAT_USE_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(SEAT_USE_CODE, 10))), 0) + 1,3 , '0') 
+			FROM SEAT_USE)
+            , #{seatCode}
+            , #{memId}
+		)
+	</insert>
 	
+	<update id="updateSeatY">
+		UPDATE SECTION_SEAT
+		SET SEAT_IS_USED = 'Y'
+		WHERE SEAT_CODE = #{seatCode}
+	</update>
 	
+	<select id="isUsingSeat" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM SEAT_USE
+		WHERE MEM_ID = #{memId}
+		AND SEAT_OUT_DATE IS NULL
+	</select>
 	
+	<update id="checkOutSeat">
+		UPDATE SEAT_USE
+		SET SEAT_OUT_DATE = SYSDATE
+		WHERE SEAT_USE_CODE = #{seatUseCode}
+	</update>
 	
+	<update id="updateSeatN">
+		UPDATE SECTION_SEAT
+		SET SEAT_IS_USED = 'N'
+		WHERE SEAT_CODE = #{seatCode}
+	</update>
 	
+	<select id="getSeatUseList" resultMap="use">
+		SELECT SEAT_USE_CODE
+	        , USE.SEAT_CODE
+	        , MEM_ID
+	        , TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_IN_DATE 
+	        , TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD HH24:MI') AS SEAT_OUT_DATE
+	        , SECTION_NAME
+	        , SEAT_NAME
+		FROM SEAT_USE USE, ROOM_SECTION RS, SECTION_SEAT SS
+		WHERE USE.SEAT_CODE = SS.SEAT_CODE
+		AND RS.SECTION_CODE = SS.SECTION_CODE
+		<if test='searchFromDate != null and !searchFromDate.equals("")'>
+		AND TO_CHAR(SEAT_IN_DATE, 'YYYY-MM-DD') &gt;= #{searchFromDate}
+		</if>
+		<if test='searchToDate != null and !searchToDate.equals("")'>
+		AND TO_CHAR(SEAT_OUT_DATE, 'YYYY-MM-DD') &lt;= #{searchToDate}
+		</if>
+		<if test='searchId != null and !searchId.equals("")'>
+		AND UPPER(MEM_ID) LIKE '%' || UPPER(#{searchId})||'%'
+		</if>	
+		ORDER BY SEAT_USE_CODE DESC
+	</select>
 	
+	<update id="allCheckOut">
+		UPDATE SEAT_USE
+		SET SEAT_OUT_DATE = SYSDATE
+		WHERE SEAT_OUT_DATE IS NULL
+	</update>
 	
-	
-	
-	
-	
-	
+	<update id="allSeatUpdateN">
+		UPDATE SECTION_SEAT
+		SET SEAT_IS_USED = 'N'
+		WHERE SEAT_IS_USED = 'Y'
+	</update>
 	
 	
 </mapper>

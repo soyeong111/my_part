@@ -4,14 +4,34 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/main_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/content/member/find_pw.css">
 </th:block>
 <th:block layout:fragment="content">
-	<div class="find-pw-div">
-		find-pw
+	<div class="find-pw-div w-25 m-auto">
+		<form id="find-pw-form">
+			<input type="hidden" name="value" id="find-pw-value-input">
+			<input type="hidden" name="memId" id="find-pw-id-input">
+			<div class="row find-pw-title-div mt-5">
+				<div class="col">
+					<h2>비밀번호 찾기</h2>
+				</div>
+			</div>
+			<div class="row find-pw-radio-div mt-5">
+				<div class="col d-flex align-items-center">
+					<input type="radio" name="column" id="find-pw-opt-tell" class="form-check-input m-1" value="MEM_TELL" onchange="draw_tell_find_pw();" checked>
+					<label for="find-pw-opt-tell" class="form-label m-0">연락처로 찾기</label>
+				</div>
+				<div class="col d-flex align-items-center">
+					<input type="radio" name="column" id="find-pw-opt-email" class="form-check-input m-1" onchange="draw_email_find_pw();" value="MEM_EMAIL">
+					<label for="find-pw-opt-email" class="form-label m-0">이메일로 찾기</label>
+				</div>
+			</div>
+			<div class="row find-pw-change-div mt-5">
+			</div>
+		</form>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<script type="text/javascript" src="/js/content/member/find_pw.js"></script>
 </th:block>
 </html>

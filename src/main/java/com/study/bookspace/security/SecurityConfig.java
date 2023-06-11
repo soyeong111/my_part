@@ -31,7 +31,9 @@ public class SecurityConfig {
 									, "/info/qna"
 									, "/info/qnaDetail"
 									, "/info/wayToLibrary"
+									, "/info/notice"
 									, "/info/searchQna"
+									, "/room/readingRoomInfo"
 									, "/room/readingRoom").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
 					.requestMatchers("/member/**").hasRole("ANONYMOUS")

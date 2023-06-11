@@ -52,6 +52,7 @@
 	border-left: 1px solid #e7f0ff;
 	border-right: 1px solid #e7f0ff;
 	padding: 10px 0;
+	border-top: 3px solid white;
 }
 
 .header-sub-menu-div > div:hover {
@@ -77,5 +78,12 @@
 }
 
 .main-sub-menu-hover {
-	border-top: 3px solid #6c96d8;
+	border-top: 3px solid #6c96d8 !important;
+}
+
+.admin-a {
+	background-image: url("../../image/admin.svg");
+	display: block;
+	width: 30px;
+	height: 30px;
 }

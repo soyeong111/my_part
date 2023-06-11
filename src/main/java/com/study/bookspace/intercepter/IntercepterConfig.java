@@ -13,6 +13,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(getPublicMenuIntercepter())
 			.addPathPatterns("/"
+							, "/accessDeny"
 							, "/info/**"
 							, "/book/**"
 							, "/room/**"
@@ -22,21 +23,34 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/buy/**"
 							, "/member/**")
 			.excludePathPatterns("/**/*Ajax"
-								, "/info/sendQuestion"
 								, "/book/regBookProcess"
 								, "/club/regClub"
 								, "/club/regBoard"
 								, "/club/updateBoard"
 								, "/club/deleteBoard"
 								, "/club/regReply"
+								, "/club/updateClub"
+								, "/club/deleteClub"
+								, "/club/updateReply"
+								, "/club/deleteReply"
 								, "/info/sendQuestion"
-								, "/info/qnaAnswer");
+								, "/info/updateQna"
+								, "/info/deleteQna"
+								, "/info/sendAnswer"
+								, "/info/updateAnswer"
+								, "/info/deleteAnswer"
+								, "/info/qnaAnswer"
+								, "/room/checkOutSeat");
 		
 		registry.addInterceptor(getMyMenuIntercepter())
 			.addPathPatterns("/my/**");
 		
 		registry.addInterceptor(getAdminMenuIntercepter())
-		.addPathPatterns("/admin/**");
+			.addPathPatterns("/admin/**")
+			.excludePathPatterns("/admin/deleteGoodsCategory"
+								, "/admin/regGoodsProcess"
+								, "/admin/updateGoods"
+								, "/admin/deleteGoods");
 		
 	}
 	

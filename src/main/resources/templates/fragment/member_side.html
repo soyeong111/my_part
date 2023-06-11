@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="memberSideFragment">
-	<div class="member-side-div p-3">
-		<div class="row mb-5">
-			<div class="col">
-				<h1>
-					<a href="/">한울<br>도서관</a>
-				</h1>
-			</div>
+	<div class="member-side-div">
+		<div class="mb-5 ps-4 pt-4">
+			<h1>
+				<a href="/">한울<br>도서관</a>
+			</h1>
 		</div>
-		<div class="row side-menu-list-div" th:each="mainMenu : ${sideMenuList}">
-			<div class="col pt-3 pb-3" th:classappend="${subMenuVO != null and subMenuVO.mainMenuCode == mainMenu.mainMenuCode} ? side-main-menu-selected">
+		<div class="side-menu-list-div">
+			
+			<div class="side-main-menu-div" th:each="mainMenu : ${sideMenuList}" onmouseenter="main_menu_mouseenter(this);" onmouseleave="main_menu_mouseleave(this);">
+			
 				<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.subMenuList[0].subMenuCode})}"
 					th:text="${mainMenu.mainMenuName}"></a>
-			</div>
-			<div class="col-6 z-1 end-0" th:classappend="${subMenuVO != null and subMenuVO.subMenuCode != null and subMenuVO.mainMenuCode == mainMenu.mainMenuCode} ? d-block">
-				<div class="pt-3 pb-3" th:each="subMenu : ${mainMenu.subMenuList}">
-					<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
-						th:text="${subMenu.subMenuName}" th:classappend="${subMenuVO != null and subMenuVO.subMenuCode == subMenu.subMenuCode} ? side-sub-menu-selected"></a>
+					
+				<div class="mt-2" th:classappend="${mainMenu.mainMenuCode != subMenuVO.mainMenuCode} ? collapse">
+					<div class="side-sub-menu-div pt-2 pb-2" th:each="subMenu : ${mainMenu.subMenuList}">
+						<a th:href="@{${subMenu.subMenuUrl}(mainMenuCode=${subMenu.mainMenuCode}, subMenuCode=${subMenu.subMenuCode})}"
+							th:text="${subMenu.subMenuName}" th:classappend="${subMenu.subMenuCode == subMenuVO.subMenuCode} ? side-sub-menu-pick"></a>
+					</div>
 				</div>
+				
 			</div>
+			
 		</div>
 	</div>
 </th:block>

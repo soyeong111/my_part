@@ -11,6 +11,7 @@
 		<!--   검색 영역  -->
 	<div class="row" id="titleTable">
 		<div class="col">
+		<h1 style="text-align: center; margin-top: 10px;">도서 관리</h1>
 			<form th:action="@{/book/bookManage}" method="post">
             <table class="table table-bordered align-middle text-center" style="margin-top: 10px;">
                <colgroup>
@@ -181,8 +182,8 @@
 							<td>출판사</td>
 							<td>출판일</td>
 							<td>ISBN</td>
-							<td>도서상태</td>
-							<td>재고수</td>
+							<td>도서상태　</td>
+							<td>재고</td>
 						</tr>
 					</thead>
 					<tbody>	
@@ -192,8 +193,8 @@
 						class="form-check-input chk" checked>
 					</td>
 					<td th:text="${#lists.size(bookList) - state.index}"></td>
-					 <td>[[${book.categoryVO.bookCateNo}]]</td>	
-				    <td><a href="javascript:void(0);">[[${book.bookTitle}]]</a></td>
+					<td th:data-bookno=${book.categoryVO.bookCateNo}>[[${book.categoryVO.bookCateStr}]]</td> 
+				    <td><a href="javascript:void(0);" th:onclick="getBookDetail([[${book.bookCode}]]);">[[${book.bookTitle}]]</a></td>
 				    <td>[[${book.bookAuthor}]]</td>	
 				    <td>[[${book.bookPublisher}]]</td>	
 				    <td>[[${book.bookPublicationDate}]]</td>	
@@ -202,14 +203,14 @@
 				    <td>[[${book.bookStockCnt}]]</td>
 					</tr>
 				</tbody>
-				
 			</table>
-			
-
-
-			
 		</div>
 	</div>
+	
+		<div class="col" id="itemDetailDiv">
+		
+	
+		</div>	
 	<div class="row mb-3">
 				<div class="offset-5 col-1 d-grid">
 					<input type="button" id="editBtn" class="btn custom-btn" value="수정" onclick="editBook();">
@@ -221,6 +222,26 @@
 		</form>
 	</div>
 </div>
+
+	<!-- img Modal -->
+	<div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h1 class="modal-title fs-5"> Modal Title </h1>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+            <img src="" width="100%;">
+         </div>
+       </div>
+     </div>
+   </div>
+	
+	
+
+
+
 </th:block>
 <th:block layout:fragment="content_js">
 	 <script type="text/javascript" src="/js/content/book/book_manage.js"></script> 

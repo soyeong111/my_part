@@ -20,16 +20,6 @@ public class ClubServiceImpl implements ClubService{
 	private SqlSessionTemplate sqlSession;
 
 	//북클럽 생성 + 이미지 삽입
-	//@Override
-	//@Transactional(rollbackFor = Exception.class)
-	//public void regClub(BookClubVO bookClubVO) {
-	//	sqlSession.insert("clubMapper.regClub", bookClubVO);
-		//sqlSession.insert("clubMapper.insertImg", bookClubVO);
-	//}
-	
-	
-	
-	//북클럽 생성 + 이미지 삽입
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, BookClubMemberVO bookClubMemberVO) {
@@ -40,11 +30,6 @@ public class ClubServiceImpl implements ClubService{
 		sqlSession.update("clubMapper.updateClubMemberRole", bookClubMemberVO);
 	}
 	
-	
-	
-	
-	
-
 	//북클럽 목록 조회
 	@Override
 	public List<BookClubVO> getClubList() {
@@ -63,7 +48,6 @@ public class ClubServiceImpl implements ClubService{
 		int result = sqlSession.selectOne("clubMapper.alreadyApply", bookClubMemberVO);
 		return result != 0 ? true : false;
 	}
-	
 	
 	//북클럽 가입
 	@Override
@@ -212,16 +196,29 @@ public class ClubServiceImpl implements ClubService{
 		sqlSession.insert("clubMapper.regNotice", communityVO);
 	}
 
-
-
-
-
 	//클럽 이미지 이름 조회
 	@Override
 	public String getClubImageName(String clubCode) {
 		return sqlSession.selectOne("clubMapper.getClubImageName", clubCode);
 	}
 
+	//북클럽장 아이디 조회
+	@Override
+	public String getClubBossId(String clubCode) {
+		return sqlSession.selectOne("clubMapper.getClubBossId", clubCode);
+	}
+
+	//나의 클럽 신청 대기 상태 조회
+	@Override
+	public List<BookClubMemberVO> getMyClubDetail(String memId) {
+		return sqlSession.selectList("clubMapper.getMyClubDetail", memId);
+	}
+
+
+
+
+
+	
 	
 
 

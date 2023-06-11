@@ -20,6 +20,7 @@ import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
+import com.study.bookspace.book.vo.CategoryVO;
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.book.vo.SearchBookVO;
@@ -174,18 +175,7 @@ public class BookController {
 	}
 	
 	
-//	도서 반납
-	@ResponseBody
-	@PostMapping("/returnBookAjax")
-	public int returnBookAjax(BorrowVO borrowVO, HttpSession session) {
-		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-		
-//		도서 반납
-		bookService.returnBook(borrowVO);
-		 return 0;
-	}
-	
-	
+
 	
 	@ResponseBody
 	@PostMapping("/reserveAjax")
@@ -235,18 +225,28 @@ public class BookController {
 	}
 	
 
+//	도서 반납
+	@ResponseBody
+	@PostMapping("/returnBookAjax")
+	public void returnBookAjax(BorrowVO borrowVO, HttpSession session) {
+		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+//		도서 반납
+		bookService.returnBook(borrowVO);
+	}
 	
 	
 //	내 정보) 도서 반납 연장
 	@ResponseBody
 	@PostMapping("/extendAjax")
-		public int extendAjax(HttpSession session, BorrowVO borrowVO) {
+		public String extendAjax(HttpSession session, BorrowVO borrowVO) {
 			borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-		
+			
 //			반납 연장
 			bookService.extendBorrow(borrowVO);
 			
-			return 0;
+//			변경 된 반납기한
+			return bookService.getReturnDuedate(borrowVO.getBorrowCode());
 		}
 	
 	
@@ -258,10 +258,11 @@ public class BookController {
 		
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
+		
 //		예약여부 확인
 		int checkReserveBeforeExtend = bookService.checkReserveBeforeExtend(reserveVO);
 //			예약 시
-		if(checkReserveBeforeExtend != 0) {
+		if(checkReserveBeforeExtend >= 1) {
 			return 1;
 		}
 		return 0;
@@ -276,11 +277,30 @@ public class BookController {
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
 		
+//		이미지 목록 (전체)
+		model.addAttribute("imgList", bookService.getImgListForAdmin());
+		
 //		도서 목록 조회
 		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));
 		return "content/admin/book_manage";
 	}
 	
+	@ResponseBody
+	@PostMapping("/categoryListAjax")
+	public List<CategoryVO> categoryListAjax() {
+		
+//		카테고리 목록 (전체)
+		return bookService.getCateListForAdmin();
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/imgListAjax")
+	public List<ImgVO> imgListAjax() {
+		
+//		이미지목록 (전체)
+		return bookService.getImgListForAdmin();
+	}
 	
 
 //	도서 관리) 도서 삭제
@@ -302,12 +322,9 @@ public class BookController {
 //	도서 관리) 도서 수정
 	@ResponseBody
 	@PostMapping("/updateBookAjax")
-	public String updateBookAjax(BookVO bookVO) {
-		
-		
+	public void updateBookAjax(BookVO bookVO) {
 		bookService.updateBook(bookVO);
 		
-		return "redirect:/book/bookManage";
 	}
 	
 	

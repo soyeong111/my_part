@@ -6,6 +6,7 @@ import java.util.Map;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.CategoryVO;
+import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.book.vo.SearchBookVO;
 
@@ -44,7 +45,10 @@ public interface BookService {
 	
 //	도서관리) 도서 카테고리 조회
 	List<CategoryVO> getCateListForAdmin();
-
+	
+//	도서관리) 도서 이미지 목록 조회
+	List<ImgVO> getImgListForAdmin();
+	
 //	도서관리) 도서 목록 조회
 	List<BookVO> getBookListForAdminManage(BookVO bookVO);
 	
@@ -78,5 +82,8 @@ public interface BookService {
 
 //	반납 기한 연장 전, 예약 여부 확인
 	int checkReserveBeforeExtend(ReserveVO reserveVO);
+	
+//	반납 기한 연장 후, 연장된 반납기한
+	String getReturnDuedate(String borrowCode);
 	
 }

@@ -13,4 +13,6 @@ public class UseVO {
 	private String memId;
 	private String seatInDate;
 	private String seatOutDate;
+	private String sectionName;
+	private String seatName;
 }

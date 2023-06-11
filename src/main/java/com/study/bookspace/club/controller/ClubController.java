@@ -91,18 +91,13 @@ public class ClubController {
 		bookClubImageVO.setBcOriginFileName(attachedClubImageVO.getBcOriginFileName());
 		bookClubImageVO.setBcAttachedFileName(attachedClubImageVO.getBcAttachedFileName());
 		
+		// -- 클럽 멤버로 + 매니저로 -- //
 		bookClubMemberVO.setClubCode(clubCode);
 		bookClubMemberVO.setMemId(memId);
 		bookClubMemberVO.setClubRole("MANAGER");
 		bookClubMemberVO.setClubMemStatus(2);
 		
-		System.out.println(bookClubVO);
-		System.out.println(bookClubImageVO);
-		System.out.println(bookClubMemberVO);
-		
 		clubService.regClub(bookClubVO, bookClubImageVO, bookClubMemberVO);
-		//clubService.regClub(bookClubVO);
-		//clubService.insertImg(bookClubImageVO);
 		
 		return "redirect:/club/club?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
@@ -172,12 +167,23 @@ public class ClubController {
 	
 	//북클럽 관리 페이지
 	@GetMapping("/clubManage")
-	public String clubManage(String clubCode, Model model) {
+	public String clubManage(String clubCode, Model model, BookClubMemberVO bookClubMemberVO, Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
+		bookClubMemberVO.setMemId(memId);
+		//System.out.println(bookClubMemberVO);
 		
 		//북클럽 회원 목록 조회
 		model.addAttribute("memberList", clubService.getClubMemberList(clubCode));
 		//북클럽 가입 신청 회원 목록 조회 (승인 전)
 		model.addAttribute("applyList", clubService.getApplyMemberList(clubCode));
+		//내 북클럽 상태 조회
+		model.addAttribute("myClubDetail", clubService.getMyClubDetail(memId));
+		
+		//클럽장 아이디 조회
+		model.addAttribute("bossId", clubService.getClubBossId(clubCode));
 		
 		model.addAttribute("clubCode", clubCode);
 		
@@ -224,8 +230,6 @@ public class ClubController {
 		
 		model.addAttribute("clubCode", communityVO.getClubCode());
 		model.addAttribute("boardList", clubService.getBoardList(communityVO));
-		
-		System.out.println("@@@@@@@@@@" + communityVO);
 		
 		return "content/club/community";
 	}

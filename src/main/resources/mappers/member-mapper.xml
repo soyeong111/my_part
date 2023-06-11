@@ -68,6 +68,32 @@
 			, MEM_STATUS
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
+			AND MEM_STATUS != '탈퇴'
 	</select>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findIdList" resultMap="member">
+		SELECT MEM_ID
+			, TO_CHAR(MEM_JOIN_DATE, 'YY-MM-DD HH24:MI:SS') MEM_JOIN_DATE
+		FROM MEMBER
+		WHERE ${column} = #{value}
+			AND MEM_STATUS != '탈퇴'
+	</select>
+	
+	<!-- 비밀번호 변경 전 아이디 확인 -->
+	<select id="checkId" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM MEMBER
+		WHERE ${column} = #{value}
+			AND MEM_ID = #{memId}
+			AND MEM_STATUS != '탈퇴'
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="changePw">
+		UPDATE MEMBER
+		SET MEM_PW = #{memPw}
+		WHERE MEM_ID = #{memId}
+	</update>
 
 </mapper>

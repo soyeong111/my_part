@@ -14,36 +14,114 @@
 	<div class="club-manage-div">
 		<div class="row">
 			<div class="col">
-				북클럽 관리 페이지 (only 관리자)
+				<div class="row">
+					<div class="col">
+						<div>북클럽 회원 목록(클럽장)</div>
+						<table class="table text-center">
+							<thead>
+								<tr>
+									<td>No</td>
+									<td>아이디</td>
+									<td>이름</td>
+									<td>가입날짜</td>
+									<td>강퇴</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="member, state : ${memberList}">
+									<td>[[${state.count}]]</td>
+									<td>[[${member.memId}]]</td>
+									<td>[[${member.memberVO.memName}]]</td>
+									<td>[[${member.clubRegDate}]]</td>
+									<td th:if="${member.memId != bossId}">
+										<input type="button" class="btn custom-btn-del" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]], [[${clubCode}]]);">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div>북클럽 신청 회원(클럽장)</div>
+						<table class="table text-center">
+							<colgroup>
+								<col width="10%">
+								<col width="*">
+								<col width="30%">
+							</colgroup>
+							<thead>
+								<tr>
+									<td>No</td>
+									<td>아이디</td>
+									<td>이름</td>
+									<td>승인/거절</td>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:if="${#lists.size(applyList) == 0}">
+									<tr><td colspan=5>가입신청 내역이 없습니다.</td></tr>
+								</th:block>
+								<tr th:each="apply, state : ${applyList}">
+									<td>[[${#lists.size(applyList) - state.index}]]</td>
+									<td>[[${apply.memId}]]</td>
+									<td>[[${apply.memberVO.memName}]]</td>
+									<td>
+										<input type="button" class="btn custom-btn" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]]);">
+										<input type="button" class="btn custom-btn-del" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]]);">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
+		
 		<div class="row">
 			<div class="col">
-				<table class="table">
-					<tr>클럽 회원 목록</tr>
-					<tr th:each="member : ${memberList}">
-						<td>[[${member.memId}]]</td>
-						<td>
-							<input type="button" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]], [[${clubCode}]]);">
-						</td>
-					</tr>
+				<div>나의 북클럽(클럽회원)</div>
+				<table class="table text-center">
+					<th:block th:each="club : ${myClubDetail}">
+					<th:block th:if="${club.memStatus == '승인대기'}">
+						<thead>
+							<tr>
+								<td>클럽명</td>
+								<td>상태</td>
+								<td>신청날짜</td>
+								<td>취소</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>[[${club.bookClubVO.clubName}]]</td>
+								<td>[[${club.memStatus}]]</td>
+								<td>[[${club.clubRegDate}]]</td>
+								<td>
+									<input type="button" class="btn custom-btn-del" value="취소" th:onclick="cancelApply();">
+								</td>
+							</tr>
+						</tbody>
+					</th:block>
+					<th:block th:if="${club.memStatus == '승인'}">
+						<thead>
+							<tr>
+								<td>클럽명</td>
+								<td>가입날짜</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>[[${club.bookClubVO.clubName}]]</td>
+								<td>[[${club.clubRegDate}]]</td>
+							</tr>
+						</tbody>
+					</th:block>
+					</th:block>
 				</table>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col">
-				<table class="table">
-					<tr>가입신청 회원 목록</tr>
-					<tr th:each="apply : ${applyList}">
-						<td>[[${apply.memId}]]</td>
-						<td>
-							<input type="button" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]]);">
-							<input type="button" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]]);">
-						</td>
-					</tr>
-				</table>
-			</div>
-		</div>
+		
 	</div>
 </th:block>
 
