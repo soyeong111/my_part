@@ -41,7 +41,7 @@
 		</div>
 		<div class="row">
 			<div class="col" style="font-size: 16px; color: red; font-style: italic;">
-				* 순번은 카테고리 목록이 화면에 보이는 순서입니다.
+				*카테고리번호는 카테고리 정렬시 사용하는 번호입니다 
 			</div>
 		</div>
 		<div class="row">
@@ -55,11 +55,10 @@
 					</colgroup>
 					<thead class="table-head"> 
 						<tr>
-							<td>N o</td>
+							<td></td>
 							<td>카테고리명</td>	
 							<td>사용여부</td>
-							<td>순 번</td>
-							<td></td>
+							<td>카테고리 번호</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -70,7 +69,8 @@
 						</th:block>
 						<th:block th:unless="${#lists.size(cateList) == 0}">
 							<tr th:each="category, state : ${cateList}">
-								<td>[[${state.count}]]</td>
+					<!-- 		<td th:text="${#lists.size(qna) - detailState.index + 1}"></td> -->
+								<td th:text="${state.count}"></td>
 								<td>[[${category.goodsCateName}]]</td>
 								<td>
 									<div class="row">

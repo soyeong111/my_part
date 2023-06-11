@@ -166,6 +166,20 @@ public class GoodsController {
 	}
 	
 	
+//---------------------------------------------퍼블릭------------------------------------------------------
+	
+	@GetMapping("/goodsList")
+	public String goodsListForPublic(GoodsVO goodsVO, Model model) {
+		model.addAttribute("goodsList", goodsService.goodsListForPublic(goodsVO));
+		return "content/goods/goods_list";
+	}
+	
+	@GetMapping("goodsDetail")
+	public String goodsDetail(String goodsCode, Model model) {
+		model.addAttribute("goods", goodsService.goodsDetailForPublic(goodsCode)) ;
+		return "content/goods/goods_detail";
+	}
+	
 	
 	
 	

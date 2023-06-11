@@ -42,5 +42,11 @@ public interface GoodsService {
 	
 	//굿즈 삭제
 	void deleteGoods(String goodsCode);
+	
+	//굿즈 리스트 조회 (퍼블릭)
+	List<GoodsVO> goodsListForPublic(GoodsVO goodsVO);
+	
+	//굿즈 상세 조회(퍼블릭)
+	GoodsVO goodsDetailForPublic(String goodsCode);
 
 }

@@ -12,12 +12,16 @@ import lombok.ToString;
 public class GoodsVO {
 	private String goodsCode;
 	private String goodsCateCode;
+	private int goodsNum;
 	private String goodsName;
 	private int goodsPrice;
 	private int goodsStockCnt;
 	private String goodsIntro;
 	private int goodsStatus;
 	private String goodsStatusStr;
+	private int rowNum;
+	private int rowNumber;
+	
 	//이미지
 	private List<GoodsImgVO> goodsImgList;
 	
