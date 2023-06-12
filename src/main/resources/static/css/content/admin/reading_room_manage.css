@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 .reading-room-manage-div{
 	margin-left: 2rem;	
 	margin-right: 2rem;	
@@ -7,6 +8,7 @@
 
 .rrm-head{
 	font-size: 30px;
+	font-weight: bold;
 	text-align: center;
 	margin-top: 4rem;
 	margin-bottom: 3rem;

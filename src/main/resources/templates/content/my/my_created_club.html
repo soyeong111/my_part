@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/member_layout}">
+
+<!-- 연결해야 할 외부 css파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/my/my_created_club.css">
+</th:block>
+
+<!-- 본문 내용 -->
+<th:block layout:fragment="content">
+	<th:block th:if="${memberList == null}">
+		<div class="noClub-div">
+			<table class="table text-center">
+				<thead>
+					<tr>
+						<td colspan="5"></td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="5">생성한 북클럽이 없습니다.</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="create-btn">
+				<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="|location.href='@{/club/regClubForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+			</div>
+		</div>
+	</th:block>
+	<th:block th:if="${memberList != null}">
+		<div class="my-created-club-div">
+			<div class="mcc-div">북클럽 멤버 조회</div>
+			<table class="table text-center">
+				<thead>
+					<tr>
+						<td>No</td>
+						<td>아이디</td>
+						<td>이름</td>
+						<td>가입날짜</td>
+						<td>강퇴</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="member, state : ${memberList}">
+						<td>[[${state.count}]]</td>
+						<td>[[${member.memId}]]</td>
+						<td>[[${member.memberVO.memName}]]</td>
+						<td>[[${member.clubRegDate}]]</td>
+						<td th:if="${member.memId != bossId}">
+							<input type="button" class="btn custom-btn-del" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]], [[${clubCode}]]);">
+						</td>
+						<td th:if="${member.memId == bossId}">
+							클럽장
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="apply-list">북클럽 신청 내역</div>
+			<table class="table text-center">
+				<colgroup>
+					<col width="10%">
+					<col width="*">
+					<col width="30%">
+				</colgroup>
+				<thead>
+					<tr>
+						<td>No</td>
+						<td>아이디</td>
+						<td>이름</td>
+						<td>승인/거절</td>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:if="${#lists.size(applyList) == 0}">
+						<tr><td colspan=5>가입신청 내역이 없습니다.</td></tr>
+					</th:block>
+					<tr th:each="apply, state : ${applyList}">
+						<td>[[${#lists.size(applyList) - state.index}]]</td>
+						<td>[[${apply.memId}]]</td>
+						<td>[[${apply.memberVO.memName}]]</td>
+						<td>
+							<input type="button" class="btn custom-btn" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]]);">
+							<input type="button" class="btn custom-btn-del" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]]);">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</th:block>
+	<div class="go-club">
+		<input type="button" class="btn custom-btn" value="북클럽 바로가기" th:onclick="|location.href='@{/club/clubDetail(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+	</div>
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/my/my_created_club.js"></script>
+</th:block>
+
+</html>

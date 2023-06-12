@@ -18,7 +18,13 @@ import com.study.bookspace.util.PageVO;
 public class ClubServiceImpl implements ClubService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	
+	//클럽장 클럽코드 조회
+	@Override
+	public String getClubCode(String memId) {
+		return sqlSession.selectOne("clubMapper.getClubCode", memId);
+	}
+	
 	//북클럽 생성 + 이미지 삽입
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -213,6 +219,9 @@ public class ClubServiceImpl implements ClubService{
 	public List<BookClubMemberVO> getMyClubDetail(String memId) {
 		return sqlSession.selectList("clubMapper.getMyClubDetail", memId);
 	}
+
+
+	
 
 	
 

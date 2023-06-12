@@ -11,6 +11,9 @@ import com.study.bookspace.util.PageVO;
 
 public interface ClubService {
 	
+	//클럽장 클럽코드 조회
+	String getClubCode(String memId);
+	
 	//클럽 가지고 있는지 확인
 	boolean hasClub(String memId);
 	

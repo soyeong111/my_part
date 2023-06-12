@@ -43,8 +43,8 @@
 		<result column="READ_CNT" 			property="readCnt"/>
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="CLUB_CODE" 			property="clubCode"/>
-		<result column="ROW_NUM" 		 property="rowNum"/>
-		<result column="ROW_NUMBER" 	 property="rowNumber"/>
+		<result column="ROW_NUM" 		 	property="rowNum"/>
+		<result column="ROW_NUMBER" 	 	property="rowNumber"/>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityReplyVO" id="communityReply">
@@ -55,6 +55,12 @@
 		<result column="BOARD_NUM" 			property="boardNum"/>
 		<result column="CLUB_CODE" 			property="clubCode"/>
 	</resultMap>
+	
+	<select id="getClubCode" resultType="String">
+		SELECT CLUB_CODE
+		FROM BOOK_CLUB
+		WHERE MEM_ID = #{memId}
+	</select>
 	
 	<select id="hasClub" resultType="int">
 		SELECT COUNT(MEM_ID)
