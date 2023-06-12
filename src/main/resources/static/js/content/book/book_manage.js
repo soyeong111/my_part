@@ -83,4 +83,3 @@ function borrowAjax(bookCode) {
 
 
 
-
