@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,10 @@ public class MyMemberController {
 	
 	// 내정보변경 페이지
 	@GetMapping("/myInfo")
-	public String myInfo(SubMenuVO subMenuVO) {
+	public String myInfo(SubMenuVO subMenuVO, Model model, Authentication authentication) {
+		MemberVO memberVO = myMemberService.getMemberInfo(((User)authentication.getPrincipal()).getUsername());
+		System.out.println(memberVO);
+		model.addAttribute("memberVO", memberVO);
 		return "content/my/my_info";
 	}
 	

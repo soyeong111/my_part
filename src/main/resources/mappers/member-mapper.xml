@@ -117,5 +117,19 @@
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 	</select>
+	
+	<!-- 내 정보 정보 조회 -->
+	<select id="getMemberInfo" resultMap="member">
+		SELECT MEM_ID
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_TELL
+			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') MEM_BIRTHDAY
+			, MEM_GENDER
+			, MEM_ADDR
+			, MEM_ADDR_DETAIL
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
 
 </mapper>

@@ -1,4 +1,13 @@
 
+/* 타이머 시작 */
+function startTimer() {
+	setTimeout(() => {
+		const main_menu_code = document.querySelector('#main-menu-code').value;
+		const sub_menu_code = document.querySelector('#sub-menu-code').value;
+		location.href = `/mMember/myPassword?mainMenuCode=${main_menu_code}&subMenuCode=${sub_menu_code}`;
+	}, 300000);
+}
+
 /* 현재 비밀번호 입력 시 */
 function mem_pw_keyup(mem_pw_input) {
 	mem_pw_input.value = mem_pw_input.value.replaceAll(' ', '');
@@ -35,13 +44,13 @@ function draw_pw_change() {
 	str += '<div class="offset-1 col-8 mt-3">';
 	str += '<div class="input-group">';
 	str += '<span class="input-group-text">변경 비밀번호</span>';
-	str += '<input type="password" class="form-control" id="new-pw" onkeyup="new_pw_validation(this)">';
+	str += '<input type="password" class="form-control" id="new-pw" onkeyup="new_pw_validation(this)" maxlength="16">';
 	str += '</div>';
 	str += '</div>';
 	str += '<div class="offset-1 col-8 mt-4">';
 	str += '<div class="input-group">';
 	str += '<span class="input-group-text">비밀번호 확인</span>';
-	str += '<input type="password" class="form-control" id="new-pw-check" onkeyup="new_pw_check_validation(this)">';
+	str += '<input type="password" class="form-control" id="new-pw-check" onkeyup="new_pw_check_validation(this)" maxlength="16">';
 	str += '</div>';
 	str += '</div>';
 	str += '<div class="offset-1 col-8 mt-5 d-grid">';
@@ -49,6 +58,7 @@ function draw_pw_change() {
 	str += '</div>';
 	pw_change_div.replaceChildren();
 	pw_change_div.insertAdjacentHTML('afterbegin', str);
+	startTimer();
 }
 
 /* 새비밀번호 유효성 검사 */
