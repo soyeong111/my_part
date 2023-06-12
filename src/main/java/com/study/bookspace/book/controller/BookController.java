@@ -1,5 +1,6 @@
 package com.study.bookspace.book.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +20,10 @@ import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
+import com.study.bookspace.book.vo.CategoryVO;
 import com.study.bookspace.book.vo.ImgVO;
+import com.study.bookspace.book.vo.ReserveVO;
+import com.study.bookspace.book.vo.SearchBookVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -31,17 +36,41 @@ public class BookController {
 	@Resource(name = "bookService")
 	private BookService bookService;
 	
+	
+	
 //	도서 목록 조회
-	@GetMapping("/bookList")
-	public String bookList(Model model, SubMenuVO subMenuVO) {
+	@RequestMapping("/bookList")
+	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO) {
 		
 		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
 		
-		model.addAttribute("bookList", bookService.getBookListForUser());
-		
+		List<BookVO> bookList = bookService.getBookListForUser(searchBookVO);
+		model.addAttribute("bookList", bookList);
 		return "content/book/book_list";
 	}
 
+	
+//	신작도서
+	@GetMapping("/newBook")
+	public String newBook(Model model, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("bookList", bookService.getNewBookList());
+		
+		return "content/book/new_book";
+	}
+	
+	
+	
+//	베스트 셀러
+	@GetMapping("/bestBook")
+	public String bestBook(Model model, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("bookList", bookService.getBestBookList());
+		
+		return "content/book/best_book";
+	}
+	
+	
 	
 //	도서 등록
 	@PostMapping("/regBookProcess")
@@ -118,44 +147,206 @@ public class BookController {
 //	}
 	
 	
+
 //	도서 대여
 	@ResponseBody
 	@PostMapping("/borrowAjax")
-	public void borrowAjax(BorrowVO borrowVO, HttpSession session) {
+	public int borrowAjax(BorrowVO borrowVO, HttpSession session, ReserveVO reserveVO) {
 		
 		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
-		bookService.borrowBook(borrowVO);
+//		중복 대여
+		int checkBorrowStatus = bookService.checkBorrowStatus(borrowVO);
+//			중복 대여 시
+		if(checkBorrowStatus != 0) {
+				return 1;
+			}
+		
+//		대여 개수 제한 (5권 이상 대여 금지)
+		int getBorrowLimit = bookService.getBorrowLimit(borrowVO);
+			if(getBorrowLimit == 4) {
+				return 4;
+			}
+			 
+//		도서 대여
+		 bookService.borrowBook(borrowVO);
+		 return 0;
+		 
 	}
 	
-//	도서 대여 개수
+	
+
+	
 	@ResponseBody
-	@PostMapping("/getBorrowCntAjax")
-	public Map<String, Object> getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
-	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-	    Map<String, Object> response = bookService.getBorrowAndStockCnt(borrowVO.getBookCode());
-	    return response;
-	}
-
-
-
-	
-	
-	
-//	신작도서
-	@GetMapping("/newBook")
-	public String newBook() {
+	@PostMapping("/reserveAjax")
+	public int reserveAjax(HttpSession session, ReserveVO reserveVO) {
+		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
-		return "content/book/new_book";
-	}
-	
-	
-	
-//	베스트 셀러
-	@GetMapping("/bestBook")
-	public String bestBook() {
+		BorrowVO borrowVO = new BorrowVO();
 		
-		return "content/book/best_book";
+//		중복 대여
+		int checkBorrowStatus = bookService.checkBorrowStatus(borrowVO);
+//			중복 대여 시
+		if(checkBorrowStatus != 0) {
+				return 1;
+			}
+		
+//		 중복 예약
+		 int checkReserveStatus = bookService.checkReserveStatus(reserveVO);
+//		 	중복 예약 시
+		 if(checkReserveStatus !=0) {
+			 return 11;
+		 }
+		 
+//		 예약 개수 제한 (2권 이상 예약 금지)
+		 int getReserveLimit = bookService.getReserveLimit(reserveVO);
+		 if(getReserveLimit == 2) {
+			 return 2;
+		 }
+		 
+//		 도서 예약 
+		 bookService.reserveBook(reserveVO);
+		 return 0;
 	}
+	
+	
+// 	내 정보)) 도서 대여 관리
+	@GetMapping("/myBorrow")
+	public String borrowManage(Model model, SubMenuVO subMenuVO, HttpSession session) {
+		
+		String memId = SecurityContextHolder.getContext().getAuthentication().getName();
+	    BorrowVO borrowVO = new BorrowVO();
+	    borrowVO.setMemId(memId);
+	    
+
+		model.addAttribute("myBorrowList", bookService.myBorrow(borrowVO));
+		
+		return "content/my/my_borrow";
+	}
+	
+
+//	도서 반납
+	@ResponseBody
+	@PostMapping("/returnBookAjax")
+	public void returnBookAjax(BorrowVO borrowVO, HttpSession session) {
+		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+//		도서 반납
+		bookService.returnBook(borrowVO);
+	}
+	
+	
+//	내 정보) 도서 반납 연장
+	@ResponseBody
+	@PostMapping("/extendAjax")
+		public String extendAjax(HttpSession session, BorrowVO borrowVO) {
+			borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+//			반납 연장
+			bookService.extendBorrow(borrowVO);
+			
+//			변경 된 반납기한
+			return bookService.getReturnDuedate(borrowVO.getBorrowCode());
+		}
+	
+	
+//	내 정보) 다른 회원이 예약한 도서인지 확인
+	
+	@ResponseBody
+	@PostMapping("/checkReserveBeforeExtendAjax")
+	public int checkReserveBeforeExtendAjax(HttpSession session, ReserveVO reserveVO) {
+		
+		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+		
+		
+//		예약여부 확인
+		int checkReserveBeforeExtend = bookService.checkReserveBeforeExtend(reserveVO);
+//			예약 시
+		if(checkReserveBeforeExtend >= 1) {
+			return 1;
+		}
+		return 0;
+	}
+	
+
+	
+//	도서 관리) 소장 도서 관리
+	@RequestMapping("/bookManage")
+	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO) {
+		
+//		카테고리 목록 (전체)
+		model.addAttribute("categoryList", bookService.getCateListForAdmin());
+		
+//		이미지 목록 (전체)
+		model.addAttribute("imgList", bookService.getImgListForAdmin());
+		
+//		도서 목록 조회
+		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));
+		return "content/admin/book_manage";
+	}
+	
+	@ResponseBody
+	@PostMapping("/categoryListAjax")
+	public List<CategoryVO> categoryListAjax() {
+		
+//		카테고리 목록 (전체)
+		return bookService.getCateListForAdmin();
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/imgListAjax")
+	public List<ImgVO> imgListAjax() {
+		
+//		이미지목록 (전체)
+		return bookService.getImgListForAdmin();
+	}
+	
+
+//	도서 관리) 도서 삭제
+	@GetMapping("/deleteBook")
+	public String deleteBook(String[] bookCodes ,BookVO bookVO) {
+		
+//		배열을 리스트로
+		List<String> bookCodeList = Arrays.asList(bookCodes);
+		
+		bookVO.setBookCodeList(bookCodeList);
+		// 도서 삭제
+		bookService.deleteBook(bookVO);
+		
+		return "redirect:/book/bookManage";
+		
+	}
+	
+	
+//	도서 관리) 도서 수정
+	@ResponseBody
+	@PostMapping("/updateBookAjax")
+	public void updateBookAjax(BookVO bookVO) {
+		bookService.updateBook(bookVO);
+		
+	}
+	
+	
+	
+	
+	
+////	도서 대여 개수
+//	@ResponseBody
+//	@PostMapping("/getBorrowCntAjax")
+//	public Map<String, Object> getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
+//		
+//	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+//	    Map<String, Object> response = bookService.getBorrowAndStockCnt(borrowVO.getBookCode());
+//	    
+//	    return response;
+//	}
+//
+//
+//
+//	
+	
+	
+
 	
 }

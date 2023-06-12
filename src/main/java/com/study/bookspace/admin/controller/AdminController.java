@@ -1,14 +1,21 @@
 package com.study.bookspace.admin.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.study.bookspace.admin.vo.SubMenuVO;
+import com.study.bookspace.room.service.RoomService;
+import com.study.bookspace.room.vo.SeatListSearchVO;
+
+import jakarta.annotation.Resource;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+	@Resource(name = "roomService")
+	private RoomService roomService;
 	
 	// 도서관리 페이지로 이동
 	@GetMapping("/bookManage")
@@ -57,5 +64,13 @@ public class AdminController {
 	public String buyManage(SubMenuVO subMenuVO) {
 		return "content/admin/buy_manage";
 	}
-
+	
+	//열람실 관리 페이지로 이동
+	@RequestMapping("/readingRoomManage")
+	public String readingRoomManage(SubMenuVO subMenuVO, Model model, SeatListSearchVO seatListSearchVO) {
+		
+		model.addAttribute("useList", roomService.getSeatUseList(seatListSearchVO));
+		
+		return "content/admin/reading_room_manage";
+	}
 }

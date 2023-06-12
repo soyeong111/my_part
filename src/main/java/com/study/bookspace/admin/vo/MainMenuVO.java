@@ -17,6 +17,7 @@ public class MainMenuVO {
 	private String mainMenuRole;
 	private int mainMenuOrder;
 	private String mainMenuIsUse;
+	private String mainSubMenuCode;
 	private List<SubMenuVO> subMenuList;
 
 }

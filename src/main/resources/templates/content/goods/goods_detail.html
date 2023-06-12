@@ -10,10 +10,16 @@
 </th:block>
 
 <th:block layout:fragment="content">
-   	<th:block th:each=" goods : ${goodsList} ">
-		<div>[[${goods.goodsName}]]</div>
-		<div>[[${goods.goodsIntro}]]</div>
-		</th:block>
+		  <th:block th:each="img : ${goods.goodsImgList}">
+				<th:bolck th:if="${img.isMain == 'Y'}">
+					<img width="100%;" height="280px;" th:src="${'/image/goods' + img.attachedFileName}">
+				</th:bolck>
+			</th:block>
+ 	[[${goods.goodsName}]]
+ 	[[${goods.goodsPrice}]]
+ 	[[${goods.goodsIntro}]]
+ 	
+ 	<a th:href="@{/buy/cartForm}">장바구니</a>
 </th:block>
 
 <!--연결해야 할 외부 js 파일  -->

@@ -20,10 +20,18 @@
 		<result column="ISBN" 								property="isbn"/>
 		<result column="BORROW_CNT"							property="borrowCnt"/>
 		<result column="RESERVE_CNT"						property="reserveCnt"/>
-		<result column="AVAILABLE_STOCK_CNT"				property="availableStockCnt"/>
 		<association property="categoryVO" 					resultMap="category"></association> 		
+		<association property="borrowVO" 					resultMap="borrow"></association> 		
+		<association property="bookStatusVO" 				resultMap="bookStatus"></association> 		
 		<collection property="imgList" 						resultMap="img"></collection>
 	</resultMap>
+	
+		
+		<resultMap type="com.study.bookspace.book.vo.BookStatusVO" id="bookStatus">
+		    <id column="BOOK_STATUS_NO" 					property="bookStatusNo" />
+		    <result column="BOOK_STATUS_STR" 				property="bookStatusStr" />
+		</resultMap>
+	
 	
 	<resultMap type="com.study.bookspace.book.vo.ImgVO" 	id="img">	
 		<id column="BOOK_IMG_CODE" 							property="bookImgCode"/>
@@ -41,18 +49,18 @@
 		<result column="BORROW_DATE" 						property="borrowDate"/>
 		<result column="RETURN_DUEDATE" 					property="returnDueDate"/>
 		<result column="RETURN_DATE" 						property="returnDate"/>
-		<result column="BOOK_STATUS_NO"						property="bookStatusNo"/>
+		<result column="BOOK_TITLE"							property="bookTitle"/>
+		<result column="EXTENDED"							property="extended"/>
 	</resultMap>
 
 	
 	<resultMap type="com.study.bookspace.book.vo.ReserveVO" id="reserve">
-		<id column="BOOK_RESERVE_CODE" 						property="bookReserveCode"/>
+		<id column="RESERVE_CODE" 							property="reserveCode"/>
 		<result column="BOOK_CODE" 							property="bookCode"/>
 		<result column="MEM_ID" 							property="memId"/>
-		<result column="BOOK_RESERVE_DATE" 					property="bookReserveDate"/>
+		<result column="RESERVE_DATE" 						property="reserveDate"/>
+		<result column="RESERVE_DUEDATE" 					property="reserveDueDate"/>
 	</resultMap>
-	
-	
 	
 	<!-- 전체 카테고리 목록 조회 -->
 	<select id="getCateListForAdmin" resultMap="category">
@@ -60,6 +68,16 @@
 			, BOOK_CATE_STR
 			, BOOK_CATE_IS_USE
 		FROM BOOK_CATEGORY
+	</select>
+	
+	<!-- 전체 이미지 목록 조회  -->
+	<select id="getImgListForAdmin" resultMap="img">
+		SELECT BOOK_IMG_CODE
+			, BOOK_CODE
+			, ORIGIN_FILE_NAME 
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG 
+		FROM BOOK_IMAGE
 	</select>
 	
 	<!-- 도서관리 도서 상세 조회 -->
@@ -77,27 +95,10 @@
 			, ORIGIN_FILE_NAME
 			, ATTACHED_FILE_NAME
 			, IS_MAIN_IMG
-			, BOOK_STATUS_NO
 		FROM BOOK BOOK, BOOK_IMAGE IMG
 		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
 		AND BOOK.BOOK_CODE = #{bookCode}
 	</select>
-	
-	
-	<!-- 도서 정보 수정 -->
-	<update id="updateBook">
-		UPDATE BOOK
-		SET BOOK_CODE
-			, BOOK_TITLE = #{bookTitle}
-			, BOOK_AUTHOR = #{bookAuthor}
-			, BOOK_PUBLICATION_DATE = #{bookPublicationDate}
-			, BOOK_PUBLISHER = #{bookPublisher}
-			, BOOK_INTRO = #{bookIntro}
-			, BOOK_CATE_NO = #{bookCateNo}
-			, BOOK_STOCK_CNT = #{bookStockCnt}
-			, ISBN = #{isbn}
-			, BOOK_STATUS_NO = #{bookStatusNo}
-	</update>
 	
 	
 	<!-- 도서 대여  -->
@@ -109,17 +110,44 @@
 	    	, RETURN_DUEDATE
 	    ) VALUES (
 	    	(SELECT 'BK_BOR_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BORROW_CODE, 8))), 0) + 1, 3, '0')
-			FROM BOOK_BORROW)
+			FROM BOOK_BORROW
+			WHERE BORROW_CODE LIKE 'BK_BOR_%')
 	    	, #{bookCode}
 	    	, #{memId}
 	    	, SYSDATE + 7
 	    )
 	</insert>
 	
-	<!-- 업데이트 쿼리 -->
+	<!-- 대여 업데이트 쿼리 -->
 	<update id="updateBorrowCnt">
-		UPDATE BOOK
+		UPDATE BOOKf
 		SET BORROW_CNT = BORROW_CNT + 1
+		WHERE BOOK_CODE = #{bookCode}
+	</update>
+	
+
+	
+	<!-- 도서 예약  -->
+	<insert id="reserveBook">
+		INSERT INTO BOOK_RESERVE (
+	    	RESERVE_CODE
+	    	, BOOK_CODE
+	    	, MEM_ID
+	    	, RESERVE_DUEDATE
+	    ) VALUES (
+	    	(SELECT 'BK_RES_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(RESERVE_CODE, 8))), 0) + 1, 3, '0')
+			FROM BOOK_RESERVE
+			WHERE RESERVE_CODE LIKE 'BK_RES_%')
+	    	, #{bookCode}
+	    	, #{memId}
+	    	, SYSDATE + 3
+	    )
+	</insert>
+	
+	<!-- 예약 업데이트 쿼리 -->
+	<update id="updateReserveCnt">
+		UPDATE BOOK
+		SET RESERVE_CNT = RESERVE_CNT + 1
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
@@ -134,40 +162,40 @@
 	WHERE BOOK_CODE = #{bookCode}
 	</select>
 	
-	<!-- 대여 가능한 권수를 초과하거나 중복 대여한 경우 -->
-	<select id="checkBorrowStatus" resultType="int">
-	    SELECT COUNT(*) 
-	    FROM BOOK_BORROW 
-	    WHERE MEM_ID = #{memId}
-	</select>
-		
-
-
-
-
-	<!-- 도서 반납  -->
-	<update id="returnBook">
-		  UPDATE BOOK_STATUS
-		  SET BOOK_STATUS_NO = 1
-		  WHERE BOOK_CODE = #{bookCode}
-		  AND MEM_ID = #{memId}
-	</update>
 	
-	<!-- 도서 예약  -->
-	<insert id="reserveBook">
-		  INSERT INTO BOOK_RESERVE (
-		  	BOOK_RESERVE_CODE
-		  	, BOOK_CODE
-		  	, MEM_ID
-		  	, BOOK_RESERVE_DATE
-		  ) VALUES (
-			#{bookReserveCode}
-		  	, #{bookCode}
-		  	, #{memId}
-		  	, #{bookReserveDate}
-		  )
-	</insert>
+	
+	<!-- 중복 대여 -->
+	<select id="checkBorrowStatus" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM BOOK_BORROW
+	  WHERE MEM_ID = #{memId} 
+	  AND BOOK_CODE = #{bookCode} 
+	  AND RETURN_DATE IS NULL
+	</select>
+	
+	<!-- 회원의 도서 대여 개수 확인 -->
+	<select id="getBorrowLimit" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM BOOK_BORROW
+	  WHERE MEM_ID = #{memId} 
+	  AND RETURN_DATE IS NULL
+	</select>
 
+		<!-- 중복 예약 -->
+	<select id="checkReserveStatus" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM BOOK_RESERVE
+	  WHERE MEM_ID = #{memId} 
+	  AND BOOK_CODE = #{bookCode} 
+	</select>
+	
+	<!-- 회원의 도서 예약 개수 확인 -->
+	<select id="getReserveLimit" resultType="int">
+	  SELECT COUNT(*) 
+	  FROM BOOK_RESERVE
+	  WHERE MEM_ID = #{memId} 
+	</select>
+	
 
 
 	<!-- 사용 중인 카테고리 목록 -->
@@ -250,12 +278,58 @@
 			, BORROW_CNT
 		FROM BOOK BOOK, BOOK_IMAGE IMG
 		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		  <if test="searchOption == 'title'">
+        AND LOWER(BOOK_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
+    <if test="searchOption == 'author'">
+        AND LOWER(BOOK_AUTHOR) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
 		AND IS_MAIN_IMG = 'Y' 
 	</select>
 
+
+	<!-- 신작 조회 -->
+		<select id="getNewBookList" resultMap="book">
+	  SELECT BOOK.BOOK_CODE
+	    , BOOK_TITLE
+	    , BOOK_AUTHOR
+	    , BOOK_PUBLICATION_DATE
+	    , BOOK_PUBLISHER
+	    , BOOK_INTRO
+	    , BOOK_CATE_NO
+	    , BOOK_STOCK_CNT
+	    , ISBN
+	    , ATTACHED_FILE_NAME
+	    , BORROW_CNT
+	  FROM BOOK BOOK, BOOK_IMAGE IMG
+	  WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+	    AND IS_MAIN_IMG = 'Y'
+	    AND BOOK_PUBLICATION_DATE >= TRUNC(SYSDATE, 'IW')
+	  ORDER BY BOOK_PUBLICATION_DATE DESC
+	</select>
+	
+	<!-- 베스트 셀러 -->
+	<select id="getBestBookList" resultMap="book">
+	    SELECT BOOK.BOOK_CODE
+	        , BOOK_TITLE
+	        , BOOK_AUTHOR
+	        , BOOK_PUBLICATION_DATE
+	        , BOOK_PUBLISHER
+	        , BOOK_INTRO
+	        , BOOK_CATE_NO
+	        , BOOK_STOCK_CNT
+	        , ISBN
+	        , ATTACHED_FILE_NAME
+	        , BORROW_CNT
+	    FROM BOOK BOOK, BOOK_IMAGE IMG
+	    WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+	    AND IS_MAIN_IMG = 'Y'
+	    ORDER BY BORROW_CNT DESC
+	</select>
 	
 	
-	<!-- 도서 상세조회  -->
+	
+	<!-- 도서 상세 조회  -->
 	<select id="getBookDetail" resultMap="book">
 		SELECT BOOK.BOOK_CODE
 			, BOOK_TITLE
@@ -266,24 +340,190 @@
 			, BOOK_CATE_NO
 			, BOOK_STOCK_CNT
 			, BORROW_CNT
+			, RESERVE_CNT
 			, ISBN
 			, ATTACHED_FILE_NAME
 			, IS_MAIN_IMG
-		FROM BOOK BOOK, BOOK_IMAGE IMG
-		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
-		AND BOOK.BOOK_CODE = #{bookCode}
+    FROM BOOK BOOK, BOOK_IMAGE IMG
+    WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+    AND BOOK.BOOK_CODE = #{bookCode}
+	</select>
+	
+	
+	<!-- 도서관리 도서 목록 조회  -->
+	<select id="getBookListForAdminManage" resultMap="book">
+		SELECT BOOK.BOOK_CODE
+			, BOOK_TITLE
+		    , BOOK_AUTHOR
+		    , TO_CHAR(BOOK_PUBLICATION_DATE, 'YYYY-MM-DD') AS BOOK_PUBLICATION_DATE
+		    , BOOK_PUBLISHER
+		    , CATEGORY.BOOK_CATE_NO
+		    , CATEGORY.BOOK_CATE_STR
+		    , BOOK.BOOK_STATUS_NO
+		    , BOOK_STOCK_CNT
+		    , ISBN
+		    , BOOK_STATUS_STR
+		FROM BOOK BOOK, BOOK_STATUS STATUS, BOOK_CATEGORY CATEGORY
+		WHERE BOOK.BOOK_STATUS_NO = STATUS.BOOK_STATUS_NO
+		AND BOOK.BOOK_CATE_NO = CATEGORY.BOOK_CATE_NO
+		
+		
+					
+			<!-- 검색 조건 -->
+
+		<if test="searchBookVO != null">
+		    AND CATEGORY.BOOK_CATE_NO IN 
+		    <foreach collection="searchBookVO.searchBookCateNo" item="bookCateNo" open="(" close=")" separator=",">
+		    	#{bookCateNo}
+		    </foreach>
+		 </if>
+		<if test='searchBookVO != null and !searchBookVO.searchBookTitle.equals("")'>				
+		    AND UPPER(BOOK_TITLE) LIKE '%'||UPPER(#{searchBookVO.searchBookTitle})||'%'
+		</if>
+		
+		<if test='searchBookVO != null and !searchBookVO.searchBookAuthor.equals("")'>				
+		    AND UPPER(BOOK_AUTHOR) LIKE '%'||UPPER(#{searchBookVO.searchBookAuthor})||'%'
+		</if>
+		
+		<if test="searchBookVO != null and searchBookVO.searchPublicationDate != null">
+   			 AND TO_CHAR(BOOK_PUBLICATION_DATE, 'YYYY-MM-DD') LIKE '%'||#{searchBookVO.searchPublicationDate}||'%'
+		</if>
+		
+		<if test='searchBookVO != null and !searchBookVO.searchPublisher.equals("")'>				
+		    AND UPPER(BOOK_PUBLISHER) LIKE '%'||UPPER(#{searchBookVO.searchPublisher})||'%'
+		</if>
+	
+		  <if test="searchBookVO != null and searchBookVO.searchISBN != 0">
+     		   AND ISBN = #{searchBookVO.searchIsbn}
+   		 </if>
+
+		<if test="searchBookVO != null and !searchBookVO.searchBookStatusStr.equals('')">
+		   AND BOOK_STATUS_STR = #{searchBookVO.searchBookStatusStr}
+		</if>
+		
+		<if test='searchBookVO != null and !searchBookVO.searchFromBookStock.equals("")'>
+		    AND BOOK_STOCK_CNT &gt;= TO_NUMBER(#{searchBookVO.searchFromBookStock})			
+		</if>
+		<if test='searchBookVO != null and !searchBookVO.searchToBookStock.equals("")'>
+		    AND BOOK_STOCK_CNT &lt;= TO_NUMBER(#{searchBookVO.searchToBookStock})		
+		</if>  
+		ORDER BY BOOK_PUBLICATION_DATE DESC
+	</select>
+	
+	
+	<!-- 도서관리) 대여 관리 -->
+	<select id="borrowManage" resultMap="borrow">
+		SELECT B.BOOK_TITLE
+			, BR.BORROW_DATE
+			, BR.RETURN_DATE
+			, BR.RETURN_DUEDATE
+			, M.MEM_NAME
+		FROM BOOK_BORROW BR, BOOK B, MEMBER M
+		WHERE BR.BOOK_CODE = B.BOOK_CODE
+		AND BR.MEM_ID = M.MEM_ID
 	</select>
 	
 	
 	
+	<!-- 내가 대여한 책 -->
+	<select id="myBorrow" resultMap="borrow">
+		SELECT B.BOOK_TITLE
+			, BR.BORROW_DATE
+			, BR.RETURN_DATE
+			, BR.RETURN_DUEDATE
+			, BR.MEM_ID
+			, BR.BORROW_CODE
+			, B.BOOK_CODE
+			, EXTENDED
+		FROM BOOK_BORROW BR, BOOK B
+		WHERE BR.BOOK_CODE = B.BOOK_CODE
+		AND BR.MEM_ID = #{memId}
+		ORDER BY BR.BORROW_DATE DESC
+	</select>
 	
+		
+		<!-- 반납 연장 -->
+	<update id="extendBorrow">
+	    UPDATE BOOK_BORROW
+	    SET RETURN_DUEDATE = RETURN_DUEDATE + 3
+	    , EXTENDED = 'Y'
+	    WHERE BORROW_CODE = #{borrowCode}
+	</update>
+			
+			
+		<!-- 반납 연장 전, 예약 여부 확인 -->
+	<select id="checkReserveBeforeExtend" resultType="int">
+		  SELECT COUNT(*) 
+		  FROM BOOK_RESERVE
+		  WHERE BOOK_CODE = #{bookCode}
+	</select>
 	
+		
+	<!-- 도서관리) 도서 삭제  (자식 레코드)-->
+	<delete id="deleteBook">
+	  <foreach collection="bookCodeList" item="bookCode" separator=";">
+	    <![CDATA[
+	      BEGIN
+	        DELETE FROM BOOK_IMAGE WHERE BOOK_CODE = #{bookCode};
+	        DELETE FROM BOOK_RESERVE WHERE BOOK_CODE = #{bookCode};
+	        DELETE FROM BOOK_BORROW WHERE BOOK_CODE = #{bookCode};
+	        DELETE FROM BOOK WHERE BOOK_CODE = #{bookCode};
+	        COMMIT;
+	      END;
+	    ]]>
+	  </foreach>
+	</delete>
+
+
+		<!-- 도서 정보 수정 -->
+		<update id="updateBook">
+			UPDATE BOOK
+			SET
+				BOOK_TITLE = #{bookTitle}
+				, BOOK_AUTHOR = #{bookAuthor}
+				, BOOK_PUBLICATION_DATE = #{bookPublicationDate}
+				, BOOK_PUBLISHER = #{bookPublisher}
+				, BOOK_CATE_NO = #{bookCateNo}
+				, BOOK_STOCK_CNT = #{bookStockCnt}
+			  WHERE BOOK_CODE = #{bookCode}
+		</update>
+		
+		
+		<!-- 도서 이미지, 소개 수정 -->
+		<update id="updateBook2">
+			UPDATE BOOK, BOOK_IMAGE
+			SET
+				BOOK_INTRO = #{bookIntro}
+				, ORIGIN_FILE_NAME = #{originFileName}
+				, ATTACHED_FILE_NAME = #{attachedFileName}
+				, IS_MAIN_IMG = #{isMainImg}
+			  WHERE BOOK_CODE = #{bookCode}
+		</update>
+		
+		<!-- 도서 반납 -->
+	<update id="returnBook">
+	    UPDATE BOOK_BORROW
+	    SET RETURN_DATE = SYSDATE
+	    WHERE BORROW_CODE = #{borrowCode, jdbcType=VARCHAR}
+	</update>
+
+		<!-- 반납 업데이트 쿼리 -->
+	<update id="updateReturnCnt">
+	    UPDATE BOOK
+	    SET BORROW_CNT = BORROW_CNT - 1
+	    WHERE BOOK_CODE = #{bookCode, jdbcType=VARCHAR}
+	</update>
 	
+		
+		
+		<!-- 연장 버튼 클릭 후, 바뀐 반납 기한 -->
+	<select id="getReturnDuedate" resultType="String">
+		SELECT RETURN_DUEDATE
+		FROM BOOK_BORROW
+		WHERE BORROW_CODE = #{borrowCode}
+	</select>
 	
-	
-	
-	
-	
+
 	
 </mapper>
 

@@ -11,11 +11,14 @@ import com.study.bookspace.util.PageVO;
 
 public interface ClubService {
 	
+	//클럽 가지고 있는지 확인
+	boolean hasClub(String memId);
+	
 	//클럽명 중복확인
 	boolean isDuplicateClubName(String clubName);
 	
 	//북클럽 생성 @@ 
-	void regClub(BookClubVO bookClubVO);
+	void regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, BookClubMemberVO bookClubMemberVO);
 	
 	//북클럽 목록 조회
 	List<BookClubVO> getClubList();
@@ -23,11 +26,20 @@ public interface ClubService {
 	//북클럽 상세 조회
 	BookClubVO getClubDetail(String clubCode);
 	
+	//클럽 가입 이력
+	boolean alreadyApply(BookClubMemberVO bookClubMemberVO);
+	
 	//회원 북클럽 가입
 	void joinClub(BookClubMemberVO bookClubMemberVO);
 	
+	//북클럽장 아이디 조회
+	String getClubBossId(String clubCode);
+	
+	//나의 클럽 신청 대기 상태 조회
+	List<BookClubMemberVO> getMyClubDetail(String memId);
+	
 	//이미지 삽입
-	void insertImg(BookClubImageVO bookClubImageVO);
+	//void insertImg(BookClubImageVO bookClubImageVO);
 	
 	//다음 등록 클럽 코드 조회
 	String getNextClubCode();
@@ -37,6 +49,9 @@ public interface ClubService {
 	
 	//커뮤니티 글 작성
 	void regBoard(CommunityVO communityVO);
+	
+	//커뮤니티 공지사항 작성
+	void regNotice(CommunityVO communityVO);
 	
 	//커뮤니티 글 수정
 	void updateBoard(CommunityVO communityVO);
@@ -53,21 +68,29 @@ public interface ClubService {
 	//댓글 조회
 	List<CommunityReplyVO> getReplyList(String boardNum);
 	
+	//게시글 댓글 수정
+	void updateReply(CommunityReplyVO communityReplyVO);
+	
+	//게시글 댓글 삭제
+	void deleteReply(String replyNum);
+	
 	//클럽 멤버 승인
 	void acceptMember(String acceptCode);
 	
 	//클럽 회원 거절
 	void refuseMember(String acceptCode);
+
+	//클럽 멤버인지 확인
+	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
 	
 	//전체 게시글 수 조회
-	int getBoardCnt();
+	int getBoardCnt(String clubCode);
 	
 	//조회수 증가
-	int updateReadCnt(CommunityVO communityVO);
+	int updateReadCnt(String boardNum);
 	
-	//클럽 멤버인지 확인
-	//boolean isClubMember(BookClubMemberVO bookClubMemberVO);
-	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
+	//클럽 이미지 이름 조회
+	String getClubImageName(String clubCode);
 	
 	//클럽 삭제
 	void deleteClub(String clubCode);

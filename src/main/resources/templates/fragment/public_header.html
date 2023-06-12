@@ -25,22 +25,17 @@
 					</div>
 				</th:block>
 				<th:block sec:authorize="isAuthenticated()">
-					<div class="dropdown">
-						<a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">[[${#authentication.name}]]님 </a>
+					<div th:if="${adminMainMenuList != null}">
+						<a th:href="@{${adminMainMenuList[0].mainMenuUrl}(mainMenuCode=${adminMainMenuList[0].mainMenuCode}, subMenuCode=${adminMainMenuList[0].mainSubMenuCode})}" class="admin-a"></a>
+					</div>
+					<div th:if="${userMainMenuList != null}" class="dropdown pb-1">
+						<a th:href="@{${userMainMenuList[0].mainMenuUrl}(mainMenuCode=${userMainMenuList[0].mainMenuCode}, subMenuCode=${userMainMenuList[0].mainSubMenuCode})}" class="fs-5 me-1">[[${#authentication.name}]]</a>
+						<a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"></a>
 						<ul class="dropdown-menu">
-							<li th:if="${userMainMenuList != null}" class="text-center">마이메뉴</li>
-							<th:block th:each="mainMenu : ${userMainMenuList}" th:if="${userMainMenuList != null}">
-								<li><hr class="dropdown-divider"></li>
+							<th:block th:each="mainMenu : ${userMainMenuList}">
+								<li><hr th:if="${mainMenuStat.index != 0}" class="dropdown-divider"></li>
 								<li>
-									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
-								</li>
-							</th:block>
-							<li th:if="${adminMainMenuList != null}"><hr class="dropdown-divider"></li>
-							<li th:if="${adminMainMenuList != null}" class="text-center">관리자메뉴</li>
-							<th:block th:each="mainMenu : ${adminMainMenuList}" th:if="${adminMainMenuList != null}">
-								<li><hr class="dropdown-divider"></li>
-								<li>
-									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
+									<a th:href="@{${mainMenu.mainMenuUrl}(mainMenuCode=${mainMenu.mainMenuCode}, subMenuCode=${mainMenu.mainSubMenuCode})}" th:text="${mainMenu.mainMenuName}"></a>
 								</li>
 							</th:block>
 						</ul>

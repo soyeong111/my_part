@@ -11,8 +11,24 @@
 
 <th:block layout:fragment="content">
    qna 리스트
+   
+   
+   
+   	검색창 
+<form th:action="@{/info/searchQna}" method="post">
+   <div>
+      <div>
+         <input type="text" name="searchKeyword"
+            th:value="${qnaVO != null and qnaVO.searchQnaVO != null ? qnaVO.searchQnaVO.searchKeyword : ''}">
+      </div>
+      <input type="submit" value="검색">
+   </div>
+</form>
+
+   	
    <div class="library-intro-div">
-   	<table>
+   <div th:if="${qnaList != null}">
+   			<table id="qnaTable">
    		<thead>
    		
    		<!--답변 상태 추가해야 됨  -->
@@ -51,8 +67,22 @@
    			
    		</tbody>
    	</table>
+   </div>
+   
+   
    	
-   	<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+  <table>
+   <tr th:each="qnaVO : ${search}">
+   	  <td th:text="${qnaVO.getRowNumber}"></td> 
+   	  <td>[[${qnaVO.qnaTitle}]]</td>
+   	  <td>[[${qnaVO.memId}]]</td>
+   	  <td>[[${qnaVO.qnaCreateDate}]]</td>
+   	  <td>[[${qnaVO.qnaViewCnt}]]</td>
+   </tr>
+</table>
+
+   	
+   	<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;" th:if="${pageVO != null}">
    	
 			<th:block th:if="${pageVO.prevPageFlag}">
 				<a th:href="@{/info/qna(nowPageNum=${pageVO.startPageNum - 1})}">이전</a>
@@ -80,7 +110,7 @@
 
 <!--연결해야 할 외부 js 파일  -->
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/info/search_qna.js"></script>
 </th:block>
 
 </html>

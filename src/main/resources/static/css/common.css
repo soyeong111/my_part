@@ -29,7 +29,7 @@ h1 {
 
 .custom-btn:hover {
 	color: white;
-	background-color: #6c96d8
+	background-color: #6c96d8;
 }
 
 .custom-btn:disabled {
@@ -42,8 +42,32 @@ h1 {
 	background-color: #4e68b9 !important;
 }
 
+.custom-btn-del {
+	color: white;
+	background-color: #b94e51;
+}
+
+.custom-btn-del:hover {
+	color: white;
+	background-color: #de878a;
+}
+
+.custom-btn-del:disabled {
+	color: white;
+	background-color: #b94e51;
+}
+
+.custom-btn-del:active {
+	color: white !important;
+	background-color: #b94e51 !important;
+}
+
 .backgroud-img {
 	background-image: url("../../image/backImg.png"), linear-gradient(#e4ebfe, #e0ebff) !important;
 	background-repeat: no-repeat;
 	background-size: 100% 180px ;
+}
+
+.book-list-div {
+	margin-top: 10px;
 }

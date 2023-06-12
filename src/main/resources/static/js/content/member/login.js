@@ -1,4 +1,12 @@
 
+init();
+
+function init() {
+	const local_mem_id = localStorage.getItem('local_mem_id');
+	document.querySelector('#login-mem-id').value = local_mem_id;
+	document.querySelector('#id-save-btn').checked = local_mem_id != null;
+}
+
 /* 로그인 */
 function login() {
 	const mem_id_input = document.querySelector('#login-mem-id');
@@ -14,12 +22,17 @@ function login() {
 		return;
 	}
 	$.ajax({
-		url: '/member/loginAjax',
+		url: '/member/login',
 		type: 'post',
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'memId':mem_id_input.value, 'memPw':mem_pw_input.value},
 		success: function(result) {
 			if (result == 'success') {
+				if (document.querySelector('#id-save-btn').checked) {
+					localStorage.setItem('local_mem_id', mem_id_input.value);
+				} else {
+					localStorage.removeItem('local_mem_id');
+				}
 				alert('로그인 되었습니다!');
 				location.href = '/';
 			} else {

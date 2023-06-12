@@ -93,6 +93,7 @@
 		)
 		WHERE ROW_NUM &gt;= #{startDataNum} AND ROW_NUM &lt;= #{endDataNum}
 	</select>
+	<!-- searchVO 에 pageVO 를 상속... 어쩌구  -->
 	
 	<select id="selectQnaCnt" resultType="int">
 		SELECT COUNT(QNA_NUM)
@@ -130,7 +131,20 @@
 		
 	</update>
 	
-	
+	<select id="searchQna" resultMap="qna">
+	SELECT QNA_CODE
+		, MEM_ID
+		, QNA_TITLE
+		, QNA_CONTENT
+		, QNA_CREATE_DATE
+		, QNA_VIEW_CNT
+		, IS_ADMIN_ANSWER
+	FROM QNA
+	WHERE 1=1
+	<if test='searchQnaVO != null and !searchQnaVO.searchKeyword.equals("")'>             
+	    AND UPPER(QNA_TITLE) LIKE '%'||UPPER(#{searchQnaVO.searchKeyword})||'%'
+	</if>
+</select>
 	
 	
 	

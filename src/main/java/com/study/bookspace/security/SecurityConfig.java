@@ -18,23 +18,42 @@ public class SecurityConfig {
 		security.csrf().disable()
 				.authorizeHttpRequests()
 					.requestMatchers("/"
-									, "/**").permitAll()
+									, "/accessDeny"
+									, "/book/bookList"
+									, "/book/newBook"
+									, "/book/bestBook"
+									, "/book/bookDetail"
+									, "/club/clubInfo"
+									, "/club/club"
+									, "/club/clubDetail"
+									, "/goods/goodsList"
+									, "/info/libraryIntro"
+									, "/info/qna"
+									, "/info/qnaDetail"
+									, "/info/wayToLibrary"
+									, "/info/notice"
+									, "/info/searchQna"
+									, "/room/readingRoomInfo"
+									, "/room/readingRoom").permitAll()
 					.requestMatchers("/admin/**").hasRole("ADMIN")
+					.requestMatchers("/member/**").hasRole("ANONYMOUS")
 					.anyRequest().authenticated()
 				.and()
 					.formLogin()
 					.loginPage("/member/loginForm")
-					.loginProcessingUrl("/member/loginAjax")
+					.loginProcessingUrl("/member/login")
 					.usernameParameter("memId")
 					.passwordParameter("memPw")
 					.successHandler(getSucessHandler())
 					.failureHandler(getFailureHandler())
-					.permitAll()
 				.and()
 					.logout()
 					.logoutUrl("/member/logout")
 					.invalidateHttpSession(true)
-					.logoutSuccessUrl("/");
+					.logoutSuccessUrl("/")
+				.and()
+					.exceptionHandling()
+					.accessDeniedPage("/accessDeny");
 		return security.build();
 	}
 	

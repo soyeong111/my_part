@@ -91,8 +91,8 @@ function regClubValidate(){
 		str_clubName = '클럽명은 필수입력입니다.';
 		result_clubName = false;
 	}
-	else if(club_name.length > 20){
-		str_clubName = '클럽명은 20글자 이내로 작성해주세요.';
+	else if(club_name.length > 10){
+		str_clubName = '클럽명은 10글자 이내로 작성해주세요.';
 		result_clubName = false;
 	}
 	

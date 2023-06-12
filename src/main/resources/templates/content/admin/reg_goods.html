@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/member_layout}">
+
+<!--연결해야 할 외부 css파일  -->
+<th:block layout:fragment="content_css">
+	<!--<link rel="stylesheet" href=""> -->
+</th:block>
+
+<th:block layout:fragment="content">
+   <div class="row">
+	<div class="col-12">
+		<form id="" class="row g-3" th:action="@{/goods/regGoodsProcess}" method="post" enctype="multipart/form-data">
+			<div class="col-3">
+				<label for="" class="form-label">CATEGORY</label> 
+				<select id="" name="goodsCateCode" class="form-select">
+					<th:block th:each="category : ${goodsCategoryList}">
+						<option th:value="${category.goodsCateCode}">[[${category.goodsCateName}]]</option>
+					</th:block>
+				</select>
+			</div>
+			<div class="col-9">
+				<label for="" class="form-label">GOODS NAME</label> 
+				<input type="text" class="form-control" id="" name="goodsName" required>
+			</div>
+			<div class="col-6">
+				<label for="" class="form-label">GOODS PRICE</label> 
+				<input type="text" class="form-control" id="" name="goodsPrice" required>
+			</div>
+			<div class="col-6">
+				<label for="" class="form-label">GOODS STOCK COUNT</label> 
+				<input type="number" class="form-control" value="10" min="10" max="100" id="" name="goodsStockCnt" required>
+			</div>
+			<div class="col-12">
+				<label for="" class="form-label">ITEM INTRODUCTION</label> 
+				<textarea rows="5" class="form-control" name="goodsIntro"></textarea>
+			</div>
+			<div class="col-6">
+				<label for="" class="form-label">MAIN IMAGE</label> 
+				<input type="file" class="form-control" id="" name="mainImg" required>
+			</div>
+			<div class="col-6">
+				<label for="" class="form-label">SUB IMAGE</label> 
+				<input type="file" class="form-control" id="" name="subImg" multiple required>
+			</div>
+			<div class="col-12">
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" value="1" type="radio" id="" name="goodsStatus" checked>
+					<label class="form-check-label" for="">판매중</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" value="2" type="radio" id="" name="goodsStatus">
+					<label class="form-check-label" for="">준비중</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" value="3" type="radio" id="" name="goodsStatus">
+					<label class="form-check-label" for="">매진</label>
+				</div>
+			</div>
+			<div class="col-3">
+			
+				<button id="" type="submit" class="btn btn-primary" >REGISTRATION ITEM</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div>
+	<a th:href="@{/goods/goodsManage}">굿즈 목록 보기</a>
+</div>
+</th:block>
+
+<!--연결해야 할 외부 js 파일  -->
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src=""></script> -->
+</th:block>
+
+</html>

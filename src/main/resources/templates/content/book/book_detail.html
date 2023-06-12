@@ -14,16 +14,16 @@
 		<h2><label for="" class="col-9 col-form-label"> [[${book.bookTitle}]] </label></h2>
 		<div class="row mb=3">
 			<div class="col-5">
-		
-				<th:block th:each="img : ${book.imgList}"> <!-- img: 자료형shopItemVO  --> <!-- 메인 이미지 -->
+				<th:block th:each="img : ${book.imgList}"> 
  		  			<th:block th:if="${img.isMainImg == 'Y'}">
- 		  				<img width="430px;" th:src="${'/image/book/' + img.attachedFileName}">
+ 		  				<img width="380px;" th:src="${'/image/book/' + img.attachedFileName}">
  		  			</th:block>
  		  		</th:block>
 			</div>
 			
-	<div class="col-7">
+	<div class="col-5" style="margin-top: 8%;">
   
+  		
   		<div class="row mb-3">
   			<label for="" class="col-3 col-form-label"> 작가</label>
   			<label for="" class="col-9 col-form-label"> [[${book.bookAuthor}]] </label>
@@ -44,18 +44,22 @@
   			<label for="" class="col-3 col-form-label"> 책소개</label>
   			<label for="" class="col-9 col-form-label"> [[${book.bookIntro}]] </label>
   		</div>
+
   		<div class="row mb-3">
   			<div class="col d-grid">
   				<input type="button" class="btn custom-btn" id="brBtn" value="대여하기"
-      			 th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);"
-      			 th:disabled="${book.borrowCnt == book.bookStockCnt}">
+      			 th:onclick="borrow([[${#authentication.name}]], [[${book.bookCode}]]);">
+      	
   			</div>
   			<div class="col d-grid">
-  				<input type="button" class="btn custom-btn" value="예약하기" >
+  				<input type="button" class="btn custom-btn" id="reBtn" value="예약하기"
+      			 th:onclick="reserve([[${#authentication.name}]], [[${book.bookCode}]]);">
   			<form id="bookBr">
 				<input type="hidden" name="bookCode" th:value="${book.bookCode}">
 				<input type="hidden" name="bookStockCnt" th:value="${book.bookStockCnt}">
 				<input type="hidden" name="borrowCnt" th:value="${book.borrowCnt}">
+				<input type="hidden" name="reserveCnt" th:value="${book.reserveCnt}">
+				<input type="hidden" name="returnDate" th:value="${book.returnDate}">
   			</form>
   			</div>
 		</div>
@@ -70,7 +74,8 @@
 
 <!--연결해야할 외부 js 파일 -->
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/book/book_manage.js"></script> 
+	<script type="text/javascript" src="/js/content/book/book_detail.js"></script> 
+	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </th:block> 
 
 
