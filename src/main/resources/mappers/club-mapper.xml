@@ -8,6 +8,7 @@
 		<result column="CLUB_INTRO"		 	property="clubIntro"/>
 		<result column="CLUB_SHORT_INFO"	property="clubShortInfo"/>
 		<result column="CLUB_CREATE_DATE" 	property="clubCreateDate"/>
+		<result column="CLUB_MEM_CNT" 		property="clubMemCnt"/>
 		<result column="CLUB_STATUS_NO" 	property="clubStatusNo"/>
 		<result column="MEM_ID" 			property="memId"/>
 		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
@@ -78,15 +79,24 @@
 			, CLUB_NAME
 			, CLUB_SHORT_INFO
 			, CLUB_INTRO
+			, CLUB_MEM_CNT
 			, MEM_ID
 		) VALUES (
 			#{clubCode}
 			, #{clubName}
 			, #{clubShortInfo}
 			, #{clubIntro}
+			, #{clubMemCnt}
 			, #{memId}
 		)
 	</insert>
+	
+	<select id="countMemCnt" resultType="int">
+		SELECT COUNT(MEM_ID)
+		FROM BOOK_CLUB_MEMBER
+		WHERE CLUB_CODE = #{clubCode}
+		AND CLUB_MEM_STATUS = 2
+	</select>
 	
 	<update id="updateClubMemberStatus">
 		UPDATE BOOK_CLUB_MEMBER
@@ -134,6 +144,7 @@
 			, CLUB_NAME
 			, CLUB_SHORT_INFO
 			, CLUB_INTRO
+			, CLUB_MEM_CNT
 			, BC_ATTACHED_FILE_NAME
 		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
 		WHERE CLUB.CLUB_CODE = IMG.CLUB_CODE
