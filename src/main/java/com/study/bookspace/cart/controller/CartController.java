@@ -1,17 +1,28 @@
 package com.study.bookspace.cart.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.study.bookspace.cart.vo.GoodsCartVO;
 
 @Controller
-@RequestMapping("/buy")
+@RequestMapping("/cart")
 public class CartController {
 	
-	@GetMapping("/cartForm")
-	public String cartForm() {
+	@ResponseBody
+	@PostMapping("/regCartAjax")
+	public void regCartAjax(GoodsCartVO cartVO, Authentication authentication) {
 		
-		return "content/buy/buy_form";
+		User user = (User)authentication.getPrincipal();
+		cartVO.setMemId(user.getUsername());
+		
 	}
+		
+	
 
 }
