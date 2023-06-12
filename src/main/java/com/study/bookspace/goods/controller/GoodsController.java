@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.goods.service.GoodsService;
 import com.study.bookspace.goods.vo.GoodsCategoryVO;
 import com.study.bookspace.goods.vo.GoodsImgVO;
 import com.study.bookspace.goods.vo.GoodsVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;

@@ -17,6 +17,7 @@
 		<result column="MEM_ADDR_DETAIL"			property="memAddrDetail"/>
 		<result column="MEM_JOIN_DATE"				property="memJoinDate"/>
 		<result column="BORROW_RESTRICT_DUEDATE"	property="borrowRestrictDuedate"/>
+		<result column="MEM_LOGIN_DATE"				property="memLoginDate"/>
 		<result column="MEM_IMG_URL"				property="memImgUrl"/>
 	</resultMap>
 
@@ -65,7 +66,6 @@
 		SELECT MEM_ID
 			, MEM_PW
 			, MEM_ROLE
-			, MEM_STATUS
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 			AND MEM_STATUS != '탈퇴'
@@ -95,5 +95,27 @@
 		SET MEM_PW = #{memPw}
 		WHERE MEM_ID = #{memId}
 	</update>
+	
+	<!-- 로그인 후 회원 상태 조회 -->
+	<select id="checkMemStatus" resultType="String">
+		SELECT MEM_STATUS
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 로그인 후 회원 상태, 로그인 날짜 수정 -->
+	<update id="updateMemLoginDate">
+		UPDATE MEMBER
+		SET MEM_STATUS = '활동'
+			, MEM_LOGIN_DATE = SYSDATE
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 비밀번호 확인 -->
+	<select id="getPwById" resultType="String">
+		SELECT MEM_PW
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
 
 </mapper>

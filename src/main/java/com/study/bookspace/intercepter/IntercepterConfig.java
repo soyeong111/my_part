@@ -43,14 +43,19 @@ public class IntercepterConfig implements WebMvcConfigurer {
 								, "/room/checkOutSeat");
 		
 		registry.addInterceptor(getMyMenuIntercepter())
-			.addPathPatterns("/my/**");
+			.addPathPatterns("/mMember/**"
+							, "/mBook/**"
+							, "/mClub/**"
+							, "/mGoods/**")
+			.excludePathPatterns("/**/*Ajax");
 		
 		registry.addInterceptor(getAdminMenuIntercepter())
-			.addPathPatterns("/admin/**")
-			.excludePathPatterns("/admin/deleteGoodsCategory"
-								, "/admin/regGoodsProcess"
-								, "/admin/updateGoods"
-								, "/admin/deleteGoods");
+			.addPathPatterns("/aBook/**"
+							, "/aClub/**"
+							, "/aGoods/**"
+							, "/aMember/**"
+							, "/aLibrary/**")
+			.excludePathPatterns("/**/*Ajax");
 		
 	}
 	

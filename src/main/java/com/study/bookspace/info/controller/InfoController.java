@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.info.service.AnswerService;
 import com.study.bookspace.info.service.QnaService;
 import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.info.vo.SearchQnaVO;
 import com.study.bookspace.member.vo.MemberVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.PageVO;
 
 import jakarta.annotation.Resource;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="adminMapper">
+<mapper namespace="menuMapper">
 
-	<resultMap type="com.study.bookspace.admin.vo.MainMenuVO" id="mainMenu">
+	<resultMap type="com.study.bookspace.menu.vo.MainMenuVO" id="mainMenu">
 		<id		column="MAIN_MENU_CODE"		property="mainMenuCode"/>
 		<result column="MAIN_MENU_NAME"		property="mainMenuName"/>
 		<result column="MAIN_MENU_URL"		property="mainMenuUrl"/>
@@ -14,7 +14,7 @@
 		<collection property="subMenuList" resultMap="subMenu"></collection>
 	</resultMap>
 	
-	<resultMap type="com.study.bookspace.admin.vo.SubMenuVO" id="subMenu">
+	<resultMap type="com.study.bookspace.menu.vo.SubMenuVO" id="subMenu">
 		<id column="SUB_MENU_CODE"		property="subMenuCode"/>
 		<result column="SUB_MENU_NAME"	property="subMenuName"/>
 		<result column="SUB_MENU_URL"	property="subMenuUrl"/>

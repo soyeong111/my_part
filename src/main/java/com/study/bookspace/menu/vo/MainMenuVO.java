@@ -1,4 +1,4 @@
-package com.study.bookspace.admin.vo;
+package com.study.bookspace.menu.vo;
 
 import java.util.List;
 
