@@ -12,6 +12,7 @@ public class BookClubVO {
 	private String clubName;
 	private String clubIntro;
 	private String clubCreateDate;
+	private int clubMemCnt;
 	private int clubStatusNo;
 	private String memId;
 	private String clubShortInfo;

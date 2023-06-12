@@ -8,30 +8,26 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="club-info-div">
-		<div class="row">
+		<div class="club-title">
+			북클럽
+			<div>
+				<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-md-3 g-4 m-auto">
+		<th:block th:each="club : ${clubList}">
 			<div class="col">
-				<div class="row club-title">
-					북클럽
-				</div>
-				<div class="offset-9 col-2">
-					<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
-				</div>
-				<div class="row row-cols-1 row-cols-md-3 g-4 m-auto">
-				<th:block th:each="club : ${clubList}">
-					<div class="col">
-						<div class="card">
-							<a th:href="@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-								<img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}"
-								class="card-img-top" height="400px;"></a>
-							<div class="card-body" style="height: 130px;">
-								<h5 class="card-title">[[${club.clubName}]]</h5>
-								<p class="card-text">[[${club.clubShortInfo}]]</p>
-							</div>
-						</div>
+				<div class="card">
+					<a th:href="@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
+						<img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}"
+						class="card-img-top" height="400px;"></a>
+					<div class="card-body" style="height: 130px;">
+						<h5 class="card-title">[[${club.clubName}]]</h5>
+						<p class="card-text">[[${club.clubShortInfo}]]</p>
 					</div>
-				</th:block>
 				</div>
 			</div>
+		</th:block>
 		</div>
 	</div>
 

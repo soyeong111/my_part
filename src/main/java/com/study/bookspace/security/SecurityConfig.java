@@ -35,7 +35,11 @@ public class SecurityConfig {
 									, "/info/searchQna"
 									, "/room/readingRoomInfo"
 									, "/room/readingRoom").permitAll()
-					.requestMatchers("/admin/**").hasRole("ADMIN")
+					.requestMatchers("/aBook/**"
+									, "/aClub/**"
+									, "/aGoods/**"
+									, "/aMember/**"
+									, "/aLibrary/**").hasRole("ADMIN")
 					.requestMatchers("/member/**").hasRole("ANONYMOUS")
 					.anyRequest().authenticated()
 				.and()
@@ -50,7 +54,7 @@ public class SecurityConfig {
 					.logout()
 					.logoutUrl("/member/logout")
 					.invalidateHttpSession(true)
-					.logoutSuccessUrl("/")
+					.logoutSuccessUrl("/member/loginForm")
 				.and()
 					.exceptionHandling()
 					.accessDeniedPage("/accessDeny");

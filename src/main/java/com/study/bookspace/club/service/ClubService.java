@@ -26,6 +26,9 @@ public interface ClubService {
 	//북클럽 상세 조회
 	BookClubVO getClubDetail(String clubCode);
 	
+	//클럽 회원수 조회
+	int countMemCnt(String clubCode);
+	
 	//클럽 가입 이력
 	boolean alreadyApply(BookClubMemberVO bookClubMemberVO);
 	

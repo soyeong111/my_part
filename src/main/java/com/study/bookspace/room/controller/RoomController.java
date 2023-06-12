@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.study.bookspace.admin.vo.SubMenuVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.room.service.RoomService;
 import com.study.bookspace.room.vo.SeatListSearchVO;
 import com.study.bookspace.room.vo.SeatVO;
@@ -87,15 +87,6 @@ public class RoomController {
 			+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
-	//전체퇴실 버튼 클릭 시
-	@GetMapping("/allCheckOut")
-	public String allCheckOut(SubMenuVO subMenuVO) {
-		
-		roomService.allCheckOut();
-		
-		return "redirect:/room/readingRoom?mainMenuCode=" 
-				+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
-	}
 	
 	
 	

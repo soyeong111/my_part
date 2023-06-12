@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.PageVO;
 import com.study.bookspace.util.UploadUtil;
@@ -99,6 +99,8 @@ public class ClubController {
 		
 		clubService.regClub(bookClubVO, bookClubImageVO, bookClubMemberVO);
 		
+		System.out.println(bookClubVO.getClubMemCnt());
+		
 		return "redirect:/club/club?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
@@ -107,6 +109,8 @@ public class ClubController {
 	public String clubDetail(Model model, String clubCode, SubMenuVO subMenuVO) {
 		//클럽 상세 조회
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
+		//클럽 활동 중인 회원수
+		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		
 		return "content/club/club_detail";
 	}
