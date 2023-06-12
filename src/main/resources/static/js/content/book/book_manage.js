@@ -232,7 +232,6 @@ function getBookDetail(bookCode) {
 
 
 
-
 //------------체크박스-------------
 
 	
