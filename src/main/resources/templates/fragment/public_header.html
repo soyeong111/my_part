@@ -46,7 +46,7 @@
 				</th:block>
 			</div>
 		</div>
-		<div class="row header-unfixed-div z-1 shadow d-none" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
+		<div class="row header-unfixed-div shadow d-none" onmouseenter="fixed_menu_mouseenter();" onmouseleave="fixed_menu_mouseleave();">
 			<div class="col-8 offset-2 header-sub-menu-div d-flex justify-content-center">
 				<div th:each="mainMenu : ${publicMenuList}">
 					<div th:each="subMenu : ${mainMenu.subMenuList}">

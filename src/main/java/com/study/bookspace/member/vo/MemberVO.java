@@ -38,4 +38,14 @@ public class MemberVO {
 		this.memTell = memTellArr[0] + "-" + memTellArr[1] + "-" + memTellArr[2];
 	}
 	
+	public void setMemEmail(String memEmail) {
+		this.memEmail = memEmail;
+		this.memEmailArr = memEmail.split("@");
+	}
+	
+	public void setMemTell(String memTell) {
+		this.memTell = memTell;
+		this.memTellArr = memTell.split("-");
+	}
+	
 }

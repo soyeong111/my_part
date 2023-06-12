@@ -5,11 +5,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.bookspace.member.service.MemberService;
+import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myMember.service.MyMemberService;
 
@@ -22,6 +25,9 @@ public class MyMemberController {
 	@Resource(name = "myMemberService")
 	private MyMemberService myMemberService;
 	
+	@Resource(name = "memberService")
+	private MemberService memberService;
+	
 	@Autowired
 	private PasswordEncoder encoder;
 	
@@ -33,7 +39,10 @@ public class MyMemberController {
 	
 	// 내정보변경 페이지
 	@GetMapping("/myInfo")
-	public String myInfo(SubMenuVO subMenuVO) {
+	public String myInfo(SubMenuVO subMenuVO, Model model, Authentication authentication) {
+		MemberVO memberVO = myMemberService.getMemberInfo(((User)authentication.getPrincipal()).getUsername());
+		System.out.println(memberVO);
+		model.addAttribute("memberVO", memberVO);
 		return "content/my/my_info";
 	}
 	
@@ -49,6 +58,19 @@ public class MyMemberController {
 	public boolean checkPwAjax(String memPw, Authentication authentication) {
 		String encMemPw = myMemberService.getPwById(((User)authentication.getPrincipal()).getUsername());
 		return encoder.matches(memPw, encMemPw);
+	}
+	
+	// 비밀번호 변경
+	@ResponseBody
+	@PostMapping("/changePwAjax")
+	public int changePwAjax(MemberVO memberVO, Authentication authentication) {
+		memberVO.setMemId(((User)authentication.getPrincipal()).getUsername());
+		String encMemPw = myMemberService.getPwById(memberVO.getMemId());
+		if (encoder.matches(memberVO.getMemPw(), encMemPw)) {
+			return 2;
+		}
+		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
+		return memberService.changePw(memberVO);
 	}
 
 	// 로그인 회원 상태 조회

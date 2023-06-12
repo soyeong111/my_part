@@ -4,6 +4,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.study.bookspace.member.vo.MemberVO;
+
 @Service("myMemberService")
 public class MyMemberServiceImpl implements MyMemberService {
 	
@@ -26,6 +28,12 @@ public class MyMemberServiceImpl implements MyMemberService {
 	@Override
 	public String getPwById(String memId) {
 		return sqlSession.selectOne("memberMapper.getPwById", memId);
+	}
+
+	// 내 정보 정보 조회
+	@Override
+	public MemberVO getMemberInfo(String memId) {
+		return sqlSession.selectOne("memberMapper.getMemberInfo", memId);
 	}
 	
 }

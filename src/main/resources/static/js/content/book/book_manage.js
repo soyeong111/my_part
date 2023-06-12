@@ -172,6 +172,27 @@ function deleteBook(){
 
 //-----이미지 모달창-----
 
+//이미지 팝업 모달
+const imgModal = new bootstrap.Modal('#imgModal');  	//부트스트랩 내용
+
+
+
+//이미지명 클릭 시 이미지 모달 띄우기
+function openImgModal(attachedFileName, originFileName){
+	
+	//모달 안에서 보여질 이미지 정보 세팅
+	const modalTag = document.querySelector('#imgModal');		//
+	modalTag.querySelector('img').src = `/image/book/${attachedFileName}`;								//img 태그 자체
+
+	//제목 세팅
+	modalTag.querySelector('h1').textContent = originFileName;
+
+	
+	//모달 오픈
+	imgModal.show();									//부트스트랩 내용
+}
+
+
 function getBookDetail(bookCode) {
   // ajax start
   $.ajax({
@@ -185,42 +206,70 @@ function getBookDetail(bookCode) {
 
       //const imgList = result.imgList; // 이미지 데이터
 
-      const itemDetailDiv = document.querySelector('#itemDetailDiv');
+      const bookDetailDiv = document.querySelector('#bookDetailDiv');
+      bookDetailDiv.replaceChildren();
 
       let str = '';
 
       // 메인 이미지 처리
-      str += `<div class="row update-content">`;
-      str += `<label class="col-3 col-form-label text-end">메인 이미지</label>`;
-      str += `<div class="col-9">`;
-      str += `<input type="file" class="form-control">`;
-      str += `</div>`;
-      str += `<label class="col-3 col-form-label text-end"></label>`;
-      str += `<div class="col-9">`;
+       str += `    <div class="row">                                                           `;
+	        str += `       <div class="col sub-title">                                              `;
+	        str += `          <h5>도서 이미지</h5>                                                   `;
+	        str += `       </div>                                                                   `;
+	        str += `       <div class="col sub-title">                                              `;
+	        str += `          <h5>도서 소개</h5>                                                   `;
+	        str += `       </div>                                                                   `;
+	        str += `    </div>                                                                      `;
+	        str += `    <div class="row">                                                           `;
+	        str += `       <div class="col-1"></div>                                                `;
+	        str += `       <div class="col-4">                                                     `;
+	        str += `          <div class="row update-content">                                      `;
+	        str += `             <label class="col-3 col-form-label text-end">메인 이미지</label>   `;
+	        str += `             <div class="col-9">                                                `;
+	        str += `                <input type="file" class="form-control">                        `;
+	        str += `             </div>                                                             `;
+	        str += `             <label class="col-3 col-form-label text-end"></label> 				  `;
+	        str += `             <div class="col-9">                                                `;
       // 메인 이미지 데이터 처리
       for (const img of result) {
         if (img.isMainImg === 'Y') {
-          str += `<label class="form-label">${img.originFileName}</label>`;
-          // 여기에서 메인 이미지에 대한 추가 작업 수행
+           str += `<label class="form-label">
+           <a href="javascript:void(0)" 
+           onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a>
+           　<span style="color: red; font-weight: bold;">X</span>
+           </label>`;
+           
         }
       }
-      str += `</div>`;
-      str += `</div>`;
-
-      // 서브 이미지 처리
-      str += `<label class="col-3 col-form-label text-end">상세 이미지</label>`;
-      str += `<div class="col-9">`;
-      str += `<input type="file" class="form-control">`;
+      str += `             </div>                                                             `;
+	        str += `             <label class="col-3 col-form-label text-end">상세 이미지</label>   `;
+	        str += `             <div class="col-9">                                                `;
+	        str += `                <input type="file" class="form-control">                        `;
+ 
       // 서브 이미지 데이터 처리
       for (const img of result) {
         if (img.isMainImg === 'N') {
-          str += `<label class="form-label">${img.originFileName}</label>`;
-          // 여기에서 서브 이미지에 대한 추가 작업 수행
-        }
-      }
+          str += `<label class="form-label">
+            <a href="javascript:void(0)" 
+            onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a>
+            　<span style="color: red; font-weight: bold;">X</span>
+            </label>`;
+        
+      
       str += `</div>`;
+      str += `          </div>                                                                `;
+	        str += `          <div class="row update-content">                                      `;
+	        str += `             <label class="col-3 col-form-label text-end">소개</label>   `;
+	        str += `             <div class="col-9">                                                `;
+	        str += `                <textarea class="form-control" rows="3" name = "bookIntro">${img.bookIntro}</textarea>             `;
+	        str += `             </div>                                                             `;
+     	 }
+      }
+	   str += `       </div>   																  `;
+	    str += `       </div>   																  `;
+	   
 
-      itemDetailDiv.insertAdjacentHTML('afterbegin', str);
+      bookDetailDiv.insertAdjacentHTML('afterbegin', str);
     },
     error: function() {
       alert('실패');

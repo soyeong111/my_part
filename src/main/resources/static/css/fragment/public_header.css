@@ -45,6 +45,7 @@
 	right: 0;
 	background-color: white;
 	border-top: 1px solid #e7f0ff;
+	z-index: 9;
 }
 
 .header-sub-menu-div > div {
