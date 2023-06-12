@@ -48,11 +48,7 @@ public class MyMemberController {
 	@PostMapping("/checkPwAjax")
 	public boolean checkPwAjax(String memPw, Authentication authentication) {
 		String encMemPw = myMemberService.getPwById(((User)authentication.getPrincipal()).getUsername());
-		
-		
-		
-		
-		return true;
+		return encoder.matches(memPw, encMemPw);
 	}
 
 	// 로그인 회원 상태 조회
