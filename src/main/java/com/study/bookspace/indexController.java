@@ -3,8 +3,8 @@ package com.study.bookspace;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.vo.SearchBookVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 
 @Controller
 public class indexController {

@@ -1,10 +1,10 @@
-package com.study.bookspace.admin.service;
+package com.study.bookspace.menu.service;
 
 import java.util.List;
 
-import com.study.bookspace.admin.vo.MainMenuVO;
+import com.study.bookspace.menu.vo.MainMenuVO;
 
-public interface AdminService {
+public interface MenuService {
 	
 	// ROLE별 사용중인 전체 메뉴 목록
 	List<MainMenuVO> getMenuListByRoleAndUse(String mainMenuRole);

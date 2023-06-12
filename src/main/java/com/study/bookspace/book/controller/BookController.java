@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
@@ -24,6 +23,7 @@ import com.study.bookspace.book.vo.CategoryVO;
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.book.vo.SearchBookVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
