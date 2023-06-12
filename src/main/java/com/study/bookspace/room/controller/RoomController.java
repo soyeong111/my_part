@@ -87,15 +87,6 @@ public class RoomController {
 			+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
-	//전체퇴실 버튼 클릭 시
-	@GetMapping("/allCheckOut")
-	public String allCheckOut(SubMenuVO subMenuVO) {
-		
-		roomService.allCheckOut();
-		
-		return "redirect:/room/readingRoom?mainMenuCode=" 
-				+ subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
-	}
 	
 	
 	
