@@ -12,9 +12,9 @@
 			<div class="col">
 				<div class="row club-title">
 					북클럽
-				</div>
-				<div class="offset-9 col-2">
-					<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+					<div>
+						<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="regClub([[${#authentication.name}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+					</div>
 				</div>
 				<div class="row row-cols-1 row-cols-md-3 g-4 m-auto">
 				<th:block th:each="club : ${clubList}">
