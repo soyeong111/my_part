@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
+import com.study.bookspace.myMember.service.MyMemberService;
 import com.study.bookspace.sms.SmsService;
 import com.study.bookspace.sms.SmsVO;
 import com.study.bookspace.util.MailService;
@@ -29,6 +32,9 @@ public class MemberController {
 	
 	@Resource(name = "memberService")
 	private MemberService memberService;
+	
+	@Resource(name = "myMemberService")
+	private MyMemberService myMemberService;
 	
 	@Autowired
 	private PasswordEncoder encoder;
@@ -122,6 +128,10 @@ public class MemberController {
 	@ResponseBody
 	@PostMapping("/changePwAjax")
 	public int changePwAjax(MemberVO memberVO) {
+		String encMemPw = myMemberService.getPwById(memberVO.getMemId());
+		if (encoder.matches(memberVO.getMemPw(), encMemPw)) {
+			return 2;
+		}
 		memberVO.setMemPw(encoder.encode(memberVO.getMemPw()));
 		return memberService.changePw(memberVO);
 	}
