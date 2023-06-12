@@ -49,6 +49,15 @@ public interface BookService {
 //	도서관리) 도서 이미지 목록 조회
 	List<ImgVO> getImgListForAdmin();
 	
+//	도서관리) 특정 도서 이미지, 도서 소개 조회
+	List<ImgVO> getImgListForBook(String BookCode);
+	
+//	도서관리) 도서 메인 이미지 삭제
+	void deleteMainImg(String bookCode);
+	
+//	도서관리) 도서 메인 이미지 삭제
+	void deleteSubImg(String bookCode);
+
 //	도서관리) 도서 목록 조회
 	List<BookVO> getBookListForAdminManage(BookVO bookVO);
 	

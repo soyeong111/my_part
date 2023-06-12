@@ -277,8 +277,15 @@ public class BookController {
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
 		
-//		이미지 목록 (전체)
-		model.addAttribute("imgList", bookService.getImgListForAdmin());
+		
+		//전체 게시글 수 조회
+		//int totalDataCnt = bookService.getBoardCnt(bookVO.getBookCode());
+		
+		//전체 데이터 수 세팅
+		//bookVO.setTotalDataCnt(totalDataCnt);
+		
+		//페이징 정보 세팅
+		//bookVO.setPageInfo();
 		
 //		도서 목록 조회
 		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));
@@ -296,10 +303,10 @@ public class BookController {
 	
 	@ResponseBody
 	@PostMapping("/imgListAjax")
-	public List<ImgVO> imgListAjax() {
-		
+	public List<ImgVO> imgListAjax(String bookCode) {
+			
 //		이미지목록 (전체)
-		return bookService.getImgListForAdmin();
+		return bookService.getImgListForBook(bookCode);
 	}
 	
 

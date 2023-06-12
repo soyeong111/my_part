@@ -14,6 +14,7 @@ public class ImgVO {
 	private String originFileName;
 	private String attachedFileName;
 	private String isMainImg;
+	private String bookIntro;
 }
 
 
