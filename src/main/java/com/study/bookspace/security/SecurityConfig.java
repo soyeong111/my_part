@@ -54,7 +54,7 @@ public class SecurityConfig {
 					.logout()
 					.logoutUrl("/member/logout")
 					.invalidateHttpSession(true)
-					.logoutSuccessUrl("/")
+					.logoutSuccessUrl("/member/loginForm")
 				.and()
 					.exceptionHandling()
 					.accessDeniedPage("/accessDeny");

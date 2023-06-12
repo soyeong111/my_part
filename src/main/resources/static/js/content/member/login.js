@@ -33,12 +33,50 @@ function login() {
 				} else {
 					localStorage.removeItem('local_mem_id');
 				}
-				alert('로그인 되었습니다!');
-				location.href = '/';
+				check_mem_status(mem_id_input.value);
 			} else {
 				alert('아이디와 비밀번호를 확인해주세요.');
 				mem_pw_input.value = '';
 			}
+		},
+		error: function() {
+			alert('ajax 통신 실패');
+		}
+	});
+}
+
+/* 로그인 회원 상태 조회 */
+function check_mem_status(mem_id) {
+	$.ajax({
+		url: '/mMember/checkMemStatusAjax',
+		type: 'post',
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'memId':mem_id},
+		success: function(result) {
+			if (result == '휴면') {
+				if (!confirm('휴면 계정입니다.\로그인 하시겠습니까?')) {
+					location.href = '/member/logout';
+					return;
+				}
+			}
+			update_login_date(mem_id);
+		},
+		error: function() {
+			alert('ajax 통신 실패');
+		}
+	});
+}
+
+/* 마지막 로그인 날짜 수정 */
+function update_login_date(mem_id) {
+	$.ajax({
+		url: '/mMember/updateLoginDateAjax',
+		type: 'post',
+		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		data: {'memId':mem_id},
+		success: function(result) {
+			alert('로그인되었습니다.');
+			location.href = '/';
 		},
 		error: function() {
 			alert('ajax 통신 실패');
