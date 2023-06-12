@@ -7,3 +7,8 @@ function allCheckOut(){
 		location.href=`/aLibrary/allCheckOut`;
 	}
 }
+
+//초기화 버튼 클릭 시
+function allClear(){
+	
+}

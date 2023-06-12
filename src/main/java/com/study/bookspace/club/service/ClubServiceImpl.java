@@ -30,6 +30,12 @@ public class ClubServiceImpl implements ClubService{
 		sqlSession.update("clubMapper.updateClubMemberRole", bookClubMemberVO);
 	}
 	
+	//클럽 회원수 조회
+	@Override
+	public int countMemCnt(String clubCode) {
+		return sqlSession.selectOne("clubMapper.countMemCnt", clubCode);
+	}
+	
 	//북클럽 목록 조회
 	@Override
 	public List<BookClubVO> getClubList() {
@@ -74,12 +80,6 @@ public class ClubServiceImpl implements ClubService{
 	public String getNextClubCode() {
 		return sqlSession.selectOne("clubMapper.getNextClubCode");
 	}
-
-	//북클럽 이미지 삽입
-	//@Override
-	//public void insertImg(BookClubImageVO bookClubImageVO) {
-	//	sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
-	//}
 
 	//게시글 목록 조회
 	@Override
@@ -213,6 +213,8 @@ public class ClubServiceImpl implements ClubService{
 	public List<BookClubMemberVO> getMyClubDetail(String memId) {
 		return sqlSession.selectList("clubMapper.getMyClubDetail", memId);
 	}
+
+	
 
 
 

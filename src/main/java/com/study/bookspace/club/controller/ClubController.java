@@ -99,6 +99,8 @@ public class ClubController {
 		
 		clubService.regClub(bookClubVO, bookClubImageVO, bookClubMemberVO);
 		
+		System.out.println(bookClubVO.getClubMemCnt());
+		
 		return "redirect:/club/club?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
@@ -107,6 +109,8 @@ public class ClubController {
 	public String clubDetail(Model model, String clubCode, SubMenuVO subMenuVO) {
 		//클럽 상세 조회
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
+		//클럽 활동 중인 회원수
+		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		
 		return "content/club/club_detail";
 	}
