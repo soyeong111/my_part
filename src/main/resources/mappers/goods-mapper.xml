@@ -13,12 +13,15 @@
 	<resultMap type="com.study.bookspace.goods.vo.GoodsVO" id="goods">
 		<id		 column="GOODS_CODE"					property="goodsCode"/>
 		<result column="GOODS_CATE_CODE"			property="goodsCateCode"/>
+		<result column="GOODS_NUM"			property="goodsNum"/>
 		<result column="GOODS_NAME"					property="goodsName"/>
 		<result column="GOODS_PRICE"					property="goodsPrice"/>
 		<result column="GOODS_STOCK_CNT"			property="goodsStockCnt"/>
 		<result column="GOODS_INTRO"					property="goodsIntro"/>
 		<result column="GOODS_STATUS"				property="goodsStatus"/>
 		<result column="GOODS_STATUS_STR"		property="goodsStatusStr"/>
+		<result column="ROW_NUM"  					 property="rowNum"/>
+		<result column="ROW_NUMBER"  			 property="rowNumber"/>
 		<association property="goodsCategoryVO" 	resultMap="goodsCategory"></association>
 		<collection property="goodsImgList"   			resultMap="goodsImg" ></collection>
 	</resultMap>
@@ -38,6 +41,7 @@
 			, GOODS_CATE_ORDER_NO
 			, GOODS_CATE_IS_USE
 		FROM GOODS_CATEGORY
+		ORDER BY GOODS_CATE_ORDER_NO DESC
 	</select>
 	
 	<!--굿즈 카테고리 등록 -->
@@ -50,7 +54,7 @@
 		    (SELECT 'GOODS_CATE_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(GOODS_CATE_CODE, 12) ) ), '0')+ 1, 3, '0') 
             FROM GOODS_CATEGORY)
 		    , #{goodsCateName}
-		    , (SELECT NVL(MAX(TO_NUMBER(GOODS_CATE_ORDER_NO)), 0) + 1 FROM GOODS_CATEGORY)
+		    , (SELECT NVL(MAX(TO_NUMBER(GOODS_CATE_ORDER_NO), 0) + 1 FROM GOODS_CATEGORY)
 		)
 
 	</insert>
@@ -205,6 +209,30 @@
 		DELETE GOODS
 		WHERE GOODS_CODE =#{goodsCode}
 	</delete>
+	
+	
+	<!--굿즈 리스트 (퍼블릭)  -->
+	<select id="goodsListForPublic" resultMap="goods">
+		SELECT GOODS_CODE
+			, GOODS_NAME
+			, GOODS_PRICE
+			, GOODS_STATUS
+			, GOODS_STOCK_CNT
+		FROM GOODS
+	</select>
+	
+	<!-- 굿즈 상세 조회(퍼블릭) -->
+	<select id="goodsDetailForPublic" resultMap="goods">
+		SELECT GOODS.GOODS_CODE
+			, GOODS_NAME
+			, GOODS_PRICE
+			, GOODS_INTRO
+			, ATTACHED_FILE_NAME
+			, IS_MAIN
+		FROM GOODS GOODS, GOODS_IMAGE IMG
+		WHERE GOODS.GOODS_CODE = IMG.GOODS_CODE
+		AND GOODS.GOODS_CODE = #{goodsCode}
+		</select>
 	
 	
 	

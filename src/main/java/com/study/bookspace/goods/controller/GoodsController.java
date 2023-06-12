@@ -159,12 +159,26 @@ public class GoodsController {
 	//굿즈 삭제(굿즈 관리 페이지)
 	@GetMapping("/deleteGoods")
 	public String deleteGoods(String goodsCode) {
-		System.out.println(111);
+		
 		goodsService.deleteGoods(goodsCode);
 		
 		return "redirect:/goods/goodsManage";
 	}
 	
+	
+//---------------------------------------------퍼블릭------------------------------------------------------
+	
+	@GetMapping("/goodsList")
+	public String goodsListForPublic(GoodsVO goodsVO, Model model) {
+		model.addAttribute("goodsList", goodsService.goodsListForPublic(goodsVO));
+		return "content/goods/goods_list";
+	}
+	
+	@GetMapping("goodsDetail")
+	public String goodsDetail(String goodsCode, Model model) {
+		model.addAttribute("goods", goodsService.goodsDetailForPublic(goodsCode)) ;
+		return "content/goods/goods_detail";
+	}
 	
 	
 	

@@ -80,6 +80,16 @@ public class GoodsServiceImpl implements GoodsService {
 		sqlSession.delete("goodsMapper.deleteGoods",goodsCode);
 	}
 
+	@Override
+	public List<GoodsVO> goodsListForPublic(GoodsVO goodsVO) {
+		return sqlSession.selectList("goodsMapper.goodsListForPublic",goodsVO);
+	}
+
+	@Override
+	public GoodsVO goodsDetailForPublic(String goodsCode) {
+		return sqlSession.selectOne("goodsMapper.goodsDetailForPublic",goodsCode);
+	}
+
 
 
 	
