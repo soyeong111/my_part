@@ -55,7 +55,7 @@ public interface BookService {
 //	도서관리) 도서 메인 이미지 삭제
 	void deleteMainImg(String bookCode);
 	
-//	도서관리) 도서 메인 이미지 삭제
+//	도서관리) 도서 서브 이미지 삭제
 	void deleteSubImg(String bookCode);
 
 //	도서관리) 도서 목록 조회
