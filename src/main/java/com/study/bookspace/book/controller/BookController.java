@@ -325,6 +325,21 @@ public class BookController {
 		
 	}
 	
+//	도서 관리) 도서 메인 이미지 삭제
+	@ResponseBody
+	@PostMapping("/deleteMainImg")
+	public void deleteMainImg(String bookCode) {
+		bookService.deleteMainImg(bookCode);
+	}
+	
+	
+//	도서 관리) 도서 서브 이미지 삭제
+	@ResponseBody
+	@PostMapping("/deleteSubImg")
+	public void deleteSubImg(String bookCode) {
+		bookService.deleteSubImg(bookCode);
+	}
+	
 	
 //	도서 관리) 도서 수정
 	@ResponseBody
