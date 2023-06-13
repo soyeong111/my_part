@@ -26,7 +26,7 @@
 				</tbody>
 			</table>
 			<div class="create-btn">
-				<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="|location.href='@{/club/regClubForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+				<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="|location.href='@{/club/regClubForm(mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">
 			</div>
 		</div>
 	</th:block>
@@ -91,7 +91,7 @@
 		</div>
 	</th:block>
 	<div class="go-club">
-		<input type="button" class="btn custom-btn" value="북클럽 바로가기" th:onclick="|location.href='@{/club/clubDetail(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+		<input type="button" class="btn custom-btn" value="북클럽 바로가기" th:onclick="|location.href='@{/club/clubDetail(clubCode=${clubCode}, mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">
 	</div>
 </th:block>
 

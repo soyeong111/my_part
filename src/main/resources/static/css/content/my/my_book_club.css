@@ -9,10 +9,22 @@
 }
 
 .my-club-list{
-	
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 4rem;
+	margin-bottom: 3rem;
 }
 
 
 .my-apply-list{
-	
+	font-size: 30px;
+	font-weight: bold;
+	text-align: center;
+	margin-top: 4rem;
+	margin-bottom: 3rem;
+}
+
+thead{
+	font-weight: bold;
 }

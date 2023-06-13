@@ -220,6 +220,11 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectList("clubMapper.getMyClubDetail", memId);
 	}
 
+	@Override
+	public void cancelApply(String acceptCode) {
+		sqlSession.delete("clubMapper.cancelApply", acceptCode);
+	}
+
 
 	
 

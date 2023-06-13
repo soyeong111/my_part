@@ -85,6 +85,9 @@ public interface ClubService {
 	
 	//클럽 회원 거절
 	void refuseMember(String acceptCode);
+	
+	//클럽 신청 취소
+	void cancelApply(String acceptCode);
 
 	//클럽 멤버인지 확인
 	boolean isClubMember(BookClubMemberVO bookClubMemberVO);

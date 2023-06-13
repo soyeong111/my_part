@@ -381,6 +381,7 @@
 	<!-- 나의 클럽 상태 조회 -->
 	<select id="getMyClubDetail" resultMap="bookClubMember">
 		SELECT ACCEPT_CODE
+			, CM.CLUB_CODE
 			, CLUB_NAME
 			, TO_CHAR(CLUB_REG_DATE, 'YYYY-MM-DD') AS CLUB_REG_DATE
 			, DECODE(CLUB_MEM_STATUS, 1, '승인대기', 2, '승인', 3, '거절') AS MEM_STATUS
@@ -402,6 +403,11 @@
 			CLUB_MEM_STATUS = 3
 		WHERE ACCEPT_CODE = #{acceptCode}
 	</update>
+	
+	<delete id="cancelApply">
+		DELETE BOOK_CLUB_MEMBER
+		WHERE ACCEPT_CODE = #{acceptCode}
+	</delete>
 	
 	<select id="getBoardCnt" resultType="int">
 		SELECT COUNT(BOARD_NUM) 

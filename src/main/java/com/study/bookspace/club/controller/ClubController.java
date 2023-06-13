@@ -107,6 +107,7 @@ public class ClubController {
 	//북클럽 상세페이지
 	@GetMapping("/clubDetail")
 	public String clubDetail(Model model, String clubCode, SubMenuVO subMenuVO) {
+		System.out.println("@@@@@@@@@@@@@@" + subMenuVO);
 		//클럽 상세 조회
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
 		//클럽 활동 중인 회원수
