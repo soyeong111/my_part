@@ -4,33 +4,45 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/member_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/content/my/my_info.css">
 </th:block>
 <th:block layout:fragment="content">
 	<div class="my-info-div">
 		<form id="my-info-form">
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 			<div class="row mt-5 w-50 m-auto">
-				<div class="col ps-5">
+				<div class="col ps-4">
 					<h2>내 정보 변경</h2>
 				</div>
 			</div>
 			<div class="row mt-5 w-50 m-auto">
-				<div class="offset-1 col-8 mt-5">
+				<div class="offset-1 col-9 mt-4 validation-div text-end">
+					성별과 생년월일을 제외한 모든 정보는 필수 입력입니다.
+				</div>
+				<div class="offset-1 col-9 mt-3">
 					<div class="input-group">
 						<span class="input-group-text w-25">아이디</span>
 						<input type="text" name="memId" class="form-control" th:value="${memberVO.memId}" readonly>
 					</div>
 				</div>
-				<div class="offset-1 col-8 mt-4">
+				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">비밀번호</span>
-						<input type="password" id="mem-pw" class="form-control">
+						<input type="password" id="mem-pw" class="form-control" onkeyup="pw_keyup(this);" placeholder="비밀번호 확인">
 					</div>
 				</div>
-				<div class="offset-1 col-8 mt-4">
+				
+				
+				
+				
+				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">이름</span>
-						<input type="text" name="memName" class="form-control" th:value="${memberVO.memName}">
+						<input type="text" name="memName" class="form-control" th:value="${memberVO.memName}" onkeyup="name_keyup(this);">
+						
+						
+						
 						<span class="input-group-text">성별</span>
 						<input type="radio" class="btn-check" name="memGender" id="mem-gender-m" autocomplete="off">
 						<label class="btn btn-outline-secondary" for="mem-gender-m">남</label>
@@ -38,7 +50,11 @@
 						<label class="btn btn-outline-secondary" for="mem-gender-f">여</label>
 					</div>
 				</div>
-				<div class="offset-1 col-8 mt-4">
+				
+				
+				
+				
+				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">이메일</span>
 						<input type="text" name="memEmailArr" class="form-control" th:value="${memberVO.memEmailArr[0]}">
@@ -46,7 +62,7 @@
 						<input type="text" name="memEmailArr" class="form-control" th:value="${memberVO.memEmailArr[1]}">
 					</div>
 				</div>
-				<div class="offset-1 col-8 mt-4">
+				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">연락처</span>
 						<input type="text" name="memTellArr" class="form-control" th:value="${memberVO.memTellArr[0]}">
@@ -56,30 +72,28 @@
 						<input type="text" name="memTellArr" class="form-control" th:value="${memberVO.memTellArr[2]}">
 					</div>
 				</div>
-				<div class="offset-1 col-8 mt-4">
+				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">생년월일</span>
 						<input type="date" name="memBirthday" class="form-control" th:value="${memberVO.memBirthday}">
 					</div>
 				</div>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				<div class="offset-1 col-8 mt-5 d-grid">
+				<div class="offset-1 col-9 mt-4">
+					<div class="input-group">
+						<span class="input-group-text w-25">주소</span>
+						<input type="text" name="memAddr" id="mem-addr" class="form-control" onclick="search_addr();" placeholder="주소 검색 클릭"
+							th:value="${memberVO.memAddr}" readonly>
+						<button type="button" class="btn custom-btn" onclick="search_addr();">주소 검색</button>
+					</div>
+				</div>
+				<div class="offset-1 col-9 mt-4">
+					<div class="input-group">
+						<span class="input-group-text w-25">상세주소</span>
+						<input type="text" name="memAddrDetail" id="join-mem-addr-detail" class="form-control" th:value="${memberVO.memAddrDetail}"
+							placeholder="상세 주소 입력">
+					</div>
+				</div>
+				<div class="offset-1 col-9 mt-5 d-grid">
 					<button type="button" class="btn btn-primary custom-btn">수정</button>
 				</div>
 			</div>
@@ -87,6 +101,6 @@
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<script type="text/javascript" src="/js/content/my/my_info.js"></script>
 </th:block>
 </html>
