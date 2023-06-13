@@ -208,66 +208,83 @@ function getBookDetail(bookCode) {
 
       const bookDetailDiv = document.querySelector('#bookDetailDiv');
       bookDetailDiv.replaceChildren();
+		
+	// 숨길 버튼 요소들을 가져옴
+      const editBtn = document.querySelector('#editBtn');
+      const deleteBtn = document.querySelector('.btn.custom-btn-del');
 
+      // 버튼들을 숨김
+      editBtn.style.display = 'none';
+      deleteBtn.style.display = 'none';
+      
       let str = '';
 
-      // 메인 이미지 처리
-       str += `    <div class="row">                                                           `;
-	        str += `       <div class="col sub-title">                                              `;
-	        str += `          <h5>도서 이미지</h5>                                                   `;
-	        str += `       </div>                                                                   `;
-	        str += `       <div class="col sub-title">                                              `;
-	        str += `          <h5>도서 소개</h5>                                                   `;
-	        str += `       </div>                                                                   `;
-	        str += `    </div>                                                                      `;
-	        str += `    <div class="row">                                                           `;
-	        str += `       <div class="col-1"></div>                                                `;
-	        str += `       <div class="col-4">                                                     `;
-	        str += `          <div class="row update-content">                                      `;
-	        str += `             <label class="col-3 col-form-label text-end">메인 이미지</label>   `;
-	        str += `             <div class="col-9">                                                `;
-	        str += `                <input type="file" class="form-control">                        `;
-	        str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end"></label> 				  `;
-	        str += `             <div class="col-9">                                                `;
-      // 메인 이미지 데이터 처리
-      for (const img of result) {
-        if (img.isMainImg === 'Y') {
-           str += `<label class="form-label">
+		// 메인 이미지 처리
+		str += `    <div class="row">                                                           `;
+		str += `       <div class="col sub-title">                                              `;
+		str += `          <h5>도서 이미지</h5>                                                   `;
+		str += `       </div>                                                                   `;
+		str += `       <div class="col sub-title">                                              `;
+		str += `          <h5>도서 소개</h5>                                                   `;
+		str += `       </div>                                                                   `;
+		str += `    </div>                                                                      `;
+		str += `    <div class="row">                                                           `;
+		str += `       <div class="col-1"></div>                                                `;
+		str += `       <div class="col-5">                                                     `;
+		str += `          <div class="row update-content">                                      `;
+		str += `             <label class="col-3 col-form-label text-end">메인 이미지</label>   `;
+		str += `             <div class="col-9">                                                `;
+		str += `                <input type="file" class="form-control">                        `;
+		str += `             </div>                                                             `;
+		str += `             <label class="col-3 col-form-label text-end"></label> 				  `;
+		str += `             <div class="col-9">                                                `;
+		// 메인 이미지 데이터 처리
+		for (const img of result) {
+			if (img.isMainImg === 'Y') {
+				str += `<label class="form-label">
            <a href="javascript:void(0)" 
            onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a>
-           　<span style="color: red; font-weight: bold;">X</span>
+          	 　<img width="20px;" src="/image/icon-del.png" id="mainImgDel" 
+          	 onclick="deleteMainImg('${img.attachedFileName}', '${img.bookCode}', '${img.bookImgCode}', '${img.originFileName}');">
            </label>`;
-           
-        }
-      }
-      str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end">상세 이미지</label>   `;
-	        str += `             <div class="col-9">                                                `;
-	        str += `                <input type="file" class="form-control">                        `;
- 
-      // 서브 이미지 데이터 처리
-      for (const img of result) {
-        if (img.isMainImg === 'N') {
-          str += `<label class="form-label">
+
+			}
+		}
+		str += `             </div>                                                             `;
+		str += `             <label class="col-3 col-form-label text-end">상세 이미지</label>   `;
+		str += `             <div class="col-9">                                                `;
+		str += `                <input type="file" class="form-control">                        `;
+
+		// 서브 이미지 데이터 처리
+		for (const img of result) {
+			if (img.isMainImg === 'N') {
+				str += `<label class="form-label">
             <a href="javascript:void(0)" 
             onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a>
-            　<span style="color: red; font-weight: bold;">X</span>
+            　<img width="20px;" src="/image/icon-del.png" id="subImgDel" 
+            onclick="deleteSubImg('${img.attachedFileName}', '${img.bookCode}', '${img.bookImgCode}', '${img.originFileName}');">
             </label>`;
-        
-      
-      str += `</div>`;
-      str += `          </div>                                                                `;
-	        str += `          <div class="row update-content">                                      `;
-	        str += `             <label class="col-3 col-form-label text-end">소개</label>   `;
-	        str += `             <div class="col-9">                                                `;
-	        str += `                <textarea class="form-control" rows="3" name = "bookIntro">${img.bookIntro}</textarea>             `;
-	        str += `             </div>                                                             `;
-     	 }
-      }
-	   str += `       </div>   																  `;
-	    str += `       </div>   																  `;
-	   
+
+
+				str += `</div>`;
+				str += `          </div>                                                                `;
+				str += `       </div>   																  `;
+				str += `       <div class="col-5">                                                     `;
+				str += `          <div class="row update-content">                                      `;
+				str += `             <label class="col-2 col-form-label text-end">소개</label>   `;
+				str += `             <div class="col-10">                                                `;
+				str += `                <textarea class="form-control" rows="5" name = "bookIntro" style="resize: none;">${img.bookIntro}</textarea>             `;
+				str += `             </div>                                                             `;
+			}
+		}
+		str += `       </div>   																  `;
+		str += `       </div>   																  `;
+		str += `       </div>   																  `;
+		str += `<div class="offset-5 col-2 d-grid">												  `;
+		str += `				<input type="button" id="editBtn" class="btn custom-btn"		  `;
+		str += `					value="수정" onclick="editBook();">							  `;
+		str += `			</div>																  `;
+
 
       bookDetailDiv.insertAdjacentHTML('afterbegin', str);
     },
@@ -276,6 +293,52 @@ function getBookDetail(bookCode) {
     }
   });
   // ajax end
+}
+
+function deleteMainImg(attachedFileName, bookCode) {
+  // 이미지 삭제 
+  
+  
+  // AJAX를 사용하여 /book/bookdelete로 요청 보내기
+  $.ajax({
+    url: '/book/deleteMainImg',
+    type: 'post',
+    async: true,
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: { 'attachedFileName': attachedFileName , 'bookCode':bookCode},
+    success: function(result) {
+      console.log(result); // 성공 처리
+
+      // 이미지 삭제 성공 후의 추가 로직 구현
+
+    },
+    error: function() {
+      alert('실패'); // 실패 처리
+    }
+  });
+}
+
+
+function deleteSubImg(attachedFileName, bookCode) {
+  // 이미지 삭제 로직 구현
+
+  // AJAX를 사용하여 /book/bookdelete로 요청 보내기
+  $.ajax({
+    url: '/book/deleteSubImg',
+    type: 'post',
+    async: true,
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: { 'attachedFileName': attachedFileName , 'bookCode':bookCode},
+    success: function(result) {
+      console.log(result); // 성공 처리
+
+      // 이미지 삭제 성공 후의 추가 로직 구현
+
+    },
+    error: function() {
+      alert('실패'); // 실패 처리
+    }
+  });
 }
 
 
