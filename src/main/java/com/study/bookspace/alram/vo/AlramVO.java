@@ -13,7 +13,7 @@ public class AlramVO {
 	private String memId;
 	private String alramDate;
 	private String aContent;
-	private int div;
+	private int section;
 	private String aCheck;
 
 }

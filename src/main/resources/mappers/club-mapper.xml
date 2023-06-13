@@ -424,8 +424,11 @@
 	</update>
 	
 	
-	
-	
+	<select id="getMemIdByClubCode" resultType="String">
+		SELECT MEM_ID
+		FROM BOOK_CLUB
+		WHERE CLUB_CODE = #{clubCode}
+	</select>
 	
 	
 	

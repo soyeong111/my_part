@@ -26,7 +26,7 @@ function login() {
 		type: 'post',
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'memId':mem_id_input.value, 'memPw':mem_pw_input.value},
-		success: function(result) {
+		success: function(result) { 
 			if (result == 'success') {
 				if (document.querySelector('#id-save-btn').checked) {
 					localStorage.setItem('local_mem_id', mem_id_input.value);
@@ -34,6 +34,7 @@ function login() {
 					localStorage.removeItem('local_mem_id');
 				}
 				check_mem_status(mem_id_input.value);
+				
 			} else {
 				alert('아이디와 비밀번호를 확인해주세요.');
 				mem_pw_input.value = '';

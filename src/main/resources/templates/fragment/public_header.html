@@ -42,7 +42,7 @@
 								</li>
 							</th:block>
 						</ul>
-						<span class="badge rounded-pill text-bg-danger">1</span>
+						<span th:if="${session.alramCnt > 0}" class="badge rounded-pill text-bg-danger" id="alram_cnt" onclick="getAlramList();" style="cursor: pointer;">[[${session.alramCnt}]]</span>
 					</div>
 					<div>
 						<a href="/member/logout">로그아웃</a>

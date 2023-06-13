@@ -7,11 +7,46 @@
 		<result column="MEM_ID" 							property="memId"/>
 		<result column="ALRAM_DATE" 						property="alramDate"/>
 		<result column="A_CONTENT" 							property="aContent"/>
-		<result column="DIV" 								property="div"/>
+		<result column="SECTION" 							property="section"/>
 		<result column="A_CHECK" 							property="aCheck"/>
 	</resultMap>
 	
+	<!-- 클럽 -->
+	<insert id="insertAlram">
+		INSERT INTO ALRAM (
+		    ALRAM_CODE
+		    , MEM_ID
+		    , A_CONTENT
+		    , SECTION
+		) VALUES (
+		    (SELECT 'ALRAM_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ALRAM_CODE, 7))), 0) + 1,3 , '0') 
+					FROM ALRAM)
+		    , #{memId}
+		    , #{aContent}
+		    , #{section}
+		)
+	</insert>
 	
+	<select id="getAlramCnt" resultType="int">
+		SELECT COUNT(ALRAM_CODE)
+		FROM ALRAM
+		WHERE MEM_ID = #{memId}
+		AND A_CHECK = 'N'
+	</select>
 	
+	<select id="getAlramList" resultMap="alram">
+		SELECT ALRAM_CODE
+		    , TO_CHAR(ALRAM_DATE, 'YYYY-MM-DD HH24:MI') AS ALRAM_DATE
+		    , A_CONTENT
+		FROM ALRAM
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<update id="readAlram">
+		UPDATE ALRAM
+		SET 
+			A_CHECK = 'Y'
+		WHERE ALRAM_CODE = #{alramCode}
+	</update>
 	
 </mapper>

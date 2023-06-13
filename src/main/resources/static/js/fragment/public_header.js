@@ -16,3 +16,9 @@ function public_menu_mouseout(index) {
 	const menus = document.querySelectorAll('.header-sub-menu-div > div');
 	menus[index].classList.remove('main-sub-menu-hover');
 }
+
+
+//alramCnt 클릭 시
+function getAlramList(){
+	
+}

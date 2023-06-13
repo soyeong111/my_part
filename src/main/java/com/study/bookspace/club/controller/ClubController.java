@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.study.bookspace.alram.service.AlramService;
+import com.study.bookspace.alram.vo.AlramVO;
 import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
@@ -30,6 +32,10 @@ import jakarta.annotation.Resource;
 public class ClubController {
 	@Resource(name = "clubService")
 	private ClubService clubService;
+	
+	@Resource(name = "alramService")
+	private AlramService alramService;
+	
 	
 	//북클럽 이용안내
 	@GetMapping("/clubInfo")
@@ -125,14 +131,21 @@ public class ClubController {
 	
 	//회원 북클립 가입
 	@PostMapping("/joinClubAjax")
-	public String joinClubAjax(BookClubMemberVO bookClubMemberVO, Authentication authentication) {
-		
+	public String joinClubAjax(BookClubMemberVO bookClubMemberVO, Authentication authentication, String clubCode, AlramVO alramVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
 		bookClubMemberVO.setMemId(memId);
 		
 		clubService.joinClub(bookClubMemberVO);
+		
+		String bossId = clubService.getClubBossId(clubCode);
+		
+		alramVO.setMemId(bossId);
+		alramVO.setAContent("소유한 북클럽에 가입을 신청한 회원이 있습니다.");
+		alramVO.setSection(2);
+		
+		alramService.insertAlram(alramVO);
 		
 		return "redirect:/club/club";
 	}

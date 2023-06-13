@@ -220,12 +220,24 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectList("clubMapper.getMyClubDetail", memId);
 	}
 
+	//클럽가입 취소하기
 	@Override
 	public void cancelApply(String acceptCode) {
 		sqlSession.delete("clubMapper.cancelApply", acceptCode);
 	}
 
+	
+	//클럽코드로 클럽장 아이디 구하기
+	@Override
+	public String getMemIdByClubCode(String clubCode) {
+		return sqlSession.selectOne("clubMapper.getMemIdByClubCode", clubCode);
+	}
 
+	
+	
+
+
+	
 	
 
 	

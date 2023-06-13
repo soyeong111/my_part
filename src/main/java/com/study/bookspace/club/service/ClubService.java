@@ -113,8 +113,8 @@ public interface ClubService {
 	//클럽 가입 신청 회원 목록 조회(승인 전)
 	List<BookClubMemberVO> getApplyMemberList(String clubCode);
 	
-	
-	
+	//클럽코드로 클럽장 아이디 구하기
+	String getMemIdByClubCode(String clubCode);
 	
 	
 	
