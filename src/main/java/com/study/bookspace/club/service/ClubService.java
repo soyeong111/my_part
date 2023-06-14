@@ -123,6 +123,9 @@ public interface ClubService {
 	//다음 게시글 번호 조회
 	String getNextBoardNum();
 	
+	//게시글 이미지 이름
+	String getCommunityImageName(String boardNum);
+	
 	
 	
 	

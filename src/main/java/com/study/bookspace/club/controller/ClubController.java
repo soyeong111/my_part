@@ -267,30 +267,23 @@ public class ClubController {
 	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO, MultipartFile communityImg ,CommunityImageVO communityImageVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
-		
 		communityVO.setBoardWriter(memId);
 		
+		//등록될 게시글번호 조회
 		String boardNum = clubService.getNextBoardNum();
 		communityVO.setBoardNum(boardNum);
-			// -- 파일 첨부 -- //
-			CommunityImageVO attachedCommunityImageVO = UploadUtil.communityUploadFile(communityImg);
-			
-			//등록될 게시글번호 조회
-			
+		clubService.regBoard(communityVO);
+		
+		// -- 파일 첨부 -- //
+		CommunityImageVO attachedCommunityImageVO = UploadUtil.communityUploadFile(communityImg);
+		if(attachedCommunityImageVO != null) {
 			communityImageVO.setBoardNum(boardNum);
 			communityImageVO.setBcOriginFileName(attachedCommunityImageVO.getBcOriginFileName());
 			communityImageVO.setBcAttachedFileName(attachedCommunityImageVO.getBcAttachedFileName());
-		
-	
-		System.out.println("@@@@@@@@@@@@" + communityImageVO.getBoardNum());
-		System.out.println(communityImageVO);
-		System.out.println(communityVO);
-		
+			clubService.insertCommunityImg(communityImageVO);
+		}
 		
 		// -- 게시글 등록 -- //
-		clubService.regBoard(communityVO);
-		clubService.insertCommunityImg(communityImageVO);
-		
 		
 		return "redirect:/club/community?clubCode=" + communityVO.getClubCode() 
 		+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
@@ -331,6 +324,13 @@ public class ClubController {
 	//게시글 삭제
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(String boardNum, String clubCode, SubMenuVO subMenuVO) {
+		
+		String communityImgName = clubService.getCommunityImageName(boardNum);
+		
+		System.out.println(ConstVariable.COMMUNITY_UPLOAD_PATH + communityImgName);
+		File file = new File(ConstVariable.COMMUNITY_UPLOAD_PATH + communityImgName);
+		file.delete();	
+		
 		
 		clubService.deleteBoard(boardNum);
 		

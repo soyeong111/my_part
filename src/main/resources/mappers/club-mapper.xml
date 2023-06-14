@@ -216,6 +216,12 @@
 		WHERE CLUB_CODE = #{clubCode}
 	</select>
 	
+	<select id="getCommunityImageName" resultType="String">
+		SELECT BC_ATTACHED_FILE_NAME
+		FROM COMMUNITY_IMAGE
+		WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
 	<delete id="deleteClub">
 		DELETE BOOK_CLUB
 		WHERE CLUB_CODE = #{clubCode}
@@ -327,7 +333,7 @@
 			, CLUB_CODE
 			, BC_ATTACHED_FILE_NAME
 		FROM COMMUNITY_BOARD CB, COMMUNITY_IMAGE CM
-		WHERE CB.BOARD_NUM = CM.BOARD_NUM
+		WHERE CB.BOARD_NUM = CM.BOARD_NUM(+)
 		AND CB.BOARD_NUM = #{boardNum}
 	</select>
 	

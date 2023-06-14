@@ -245,6 +245,12 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectOne("clubMapper.getNextBoardNum");
 	}
 
+	//게시글 이미지 이름
+	@Override
+	public String getCommunityImageName(String boardNum) {
+		return sqlSession.selectOne("clubMapper.getCommunityImageName", boardNum);
+	}
+
 	
 	
 
