@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.util.PageVO;
@@ -231,6 +232,17 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public String getMemIdByClubCode(String clubCode) {
 		return sqlSession.selectOne("clubMapper.getMemIdByClubCode", clubCode);
+	}
+	
+	//커뮤니티 이미지 삽입
+	@Override
+	public void insertCommunityImg(CommunityImageVO communityImageVO) {
+		sqlSession.insert("clubMapper.insertCommunityImg", communityImageVO);
+	}
+
+	@Override
+	public String getNextBoardNum() {
+		return sqlSession.selectOne("clubMapper.getNextBoardNum");
 	}
 
 	

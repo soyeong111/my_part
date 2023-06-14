@@ -88,3 +88,8 @@
 	width: 30px;
 	height: 30px;
 }
+
+#alramModalLabel{
+	font-weight: bold;
+	padding-left: 17px;
+}

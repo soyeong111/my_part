@@ -25,17 +25,24 @@ public class AlramServiceImpl implements AlramService{
 		return sqlSession.selectOne("alramMapper.getAlramCnt", memId);
 	}
 
-	//알람 읽음 N -> Y
-	@Override
-	public void readAlram(String alramCode) {
-		sqlSession.update("alramMapper.readAlram", alramCode);
-	}
-
 	//알람 목록 조회
 	@Override
 	public List<AlramVO> getAlramList(String memId) {
 		return sqlSession.selectList("alramMapper.getAlramList", memId);
 	}
+
+	//알람 읽음
+	@Override
+	public void updateAlramACheck(AlramVO alramVO) {
+		sqlSession.update("alramMapper.updateAlramACheck", alramVO);
+	}
+
+	//알람 삭제
+	@Override
+	public void deleteAlram(String alramCode) {
+		sqlSession.delete("alramMapper.deleteAlram", alramCode);
+	}
+
 	
 	
 }

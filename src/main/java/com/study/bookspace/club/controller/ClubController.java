@@ -18,6 +18,7 @@ import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
@@ -263,13 +264,33 @@ public class ClubController {
 	
 	//글 작성
 	@PostMapping("/regBoard")
-	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO) {
+	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO, MultipartFile communityImg ,CommunityImageVO communityImageVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
 		communityVO.setBoardWriter(memId);
 		
+		String boardNum = clubService.getNextBoardNum();
+		communityVO.setBoardNum(boardNum);
+			// -- 파일 첨부 -- //
+			CommunityImageVO attachedCommunityImageVO = UploadUtil.communityUploadFile(communityImg);
+			
+			//등록될 게시글번호 조회
+			
+			communityImageVO.setBoardNum(boardNum);
+			communityImageVO.setBcOriginFileName(attachedCommunityImageVO.getBcOriginFileName());
+			communityImageVO.setBcAttachedFileName(attachedCommunityImageVO.getBcAttachedFileName());
+		
+	
+		System.out.println("@@@@@@@@@@@@" + communityImageVO.getBoardNum());
+		System.out.println(communityImageVO);
+		System.out.println(communityVO);
+		
+		
+		// -- 게시글 등록 -- //
 		clubService.regBoard(communityVO);
+		clubService.insertCommunityImg(communityImageVO);
+		
 		
 		return "redirect:/club/community?clubCode=" + communityVO.getClubCode() 
 		+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();

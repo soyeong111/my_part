@@ -17,6 +17,12 @@
 		</div>
 		<div class="row">
 			<div class="col">
+			
+				<div>[[${board.boardTitle}]]</div>
+				<div>[[${board.boardWriter}]]</div>
+				
+				
+				
 				<table class="table">
 					<colgroup>
 						<col width="">
@@ -36,7 +42,9 @@
 					</tr>
 					<tr>
 						<td>내용</td>
-						<td colspan="3">[[${board.boardContent}]]</td>
+						<td colspan="3">[[${board.boardContent}]]
+						<div><img th:src="${'/image/community/' + board.communityImageVO.bcAttachedFileName}" height="200px;"></div>
+						</td>
 					</tr>
 				</table>
 			</div>
