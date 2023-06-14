@@ -16,4 +16,7 @@ public interface MyMemberService {
 	// 내 정보 정보 조회
 	MemberVO getMemberInfo(String memId);
 	
+	// 내 정보 변경
+	int updateMember(MemberVO memberVO);
+	
 }
