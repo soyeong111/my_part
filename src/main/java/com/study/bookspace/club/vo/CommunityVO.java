@@ -6,6 +6,7 @@ import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class CommunityVO extends CommunityListSearchVO{
 	private String boardNum;
 	private String boardTitle;
@@ -17,13 +18,7 @@ public class CommunityVO extends CommunityListSearchVO{
 	private String clubCode;
 	private int rowNum;
 	private int rowNumber;
-	@Override
-	public String toString() {
-		return "CommunityVO [boardNum=" + boardNum + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
-				+ ", boardWriter=" + boardWriter + ", regDate=" + regDate + ", readCnt=" + readCnt + ", replyCnt="
-				+ replyCnt + ", clubCode=" + clubCode + ", rowNum=" + rowNum + ", rowNumber=" + rowNumber
-				+ ", toString()=" + super.toString() + "]";
-	}
+	private CommunityImageVO communityImageVO;
 	
 	
 	

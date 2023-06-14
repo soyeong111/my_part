@@ -38,7 +38,6 @@ public class MyClubController {
 	//내가 만든 북클럽
 	@GetMapping("/myCreatedClub")
 	public String myCreatedClub(SubMenuVO subMenuVO, Model model, Authentication authentication) {
-		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
@@ -72,7 +71,12 @@ public class MyClubController {
 		clubService.refuseMember(acceptCode);
 	}
 	
-	
+	//북클럽 신청 취소
+	@ResponseBody
+	@PostMapping("/cancelApplyAjax")
+	public void cancelApplyAjax(String acceptCode) {
+		clubService.cancelApply(acceptCode);
+	}
 	
 	
 	

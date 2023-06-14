@@ -26,7 +26,7 @@
 				</tbody>
 			</table>
 			<div class="create-btn">
-				<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="|location.href='@{/club/regClubForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+				<input type="button" class="btn custom-btn" value="북클럽 만들기" th:onclick="|location.href='@{/club/regClubForm(mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">
 			</div>
 		</div>
 	</th:block>
@@ -70,6 +70,7 @@
 						<td>No</td>
 						<td>아이디</td>
 						<td>이름</td>
+						<td>신청날짜</td>
 						<td>승인/거절</td>
 					</tr>
 				</thead>
@@ -81,6 +82,7 @@
 						<td>[[${#lists.size(applyList) - state.index}]]</td>
 						<td>[[${apply.memId}]]</td>
 						<td>[[${apply.memberVO.memName}]]</td>
+						<td>[[${apply.clubRegDate}]]</td>
 						<td>
 							<input type="button" class="btn custom-btn" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]]);">
 							<input type="button" class="btn custom-btn-del" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]]);">
@@ -90,9 +92,11 @@
 			</table>
 		</div>
 	</th:block>
-	<div class="go-club">
-		<input type="button" class="btn custom-btn" value="북클럽 바로가기" th:onclick="|location.href='@{/club/clubDetail(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
-	</div>
+	<th:block th:if="${memberList != null}">
+		<div class="go-club">
+			<input type="button" class="btn custom-btn" value="북클럽 바로가기" th:onclick="|location.href='@{/club/clubDetail(clubCode=${clubCode}, mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">
+		</div>
+	</th:block>
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->

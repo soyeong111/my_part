@@ -109,6 +109,51 @@
  	 AND BOOK_CODE = #{bookCode}
 	</delete>
 	
+	
+	<!-- 메인 이미지 수정 --> 
+	<insert id="insertMainImges">
+		INSERT INTO BOOK_IMAGE (
+			BOOK_IMG_CODE
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_CODE 
+			, IS_MAIN_IMG
+		)
+		<foreach collection="imgList" item="img" index="i" separator="UNION ALL">
+		SELECT (SELECT 'BK_IMG_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOOK_IMG_CODE, 8))), 0) + 1 + #{i}, 3, '0')
+  				  FROM BOOK_IMAGE)
+			, #{img.originFileName}
+			, #{img.attachedFileName}
+			, #{img.isMainImg}
+			, #{img.bookCode}
+			, 'Y'
+		FROM DUAL  
+		</foreach>
+	</insert>
+	
+	<!-- 서브 이미지 수정 -->
+	<insert id="insertSubImges">
+		INSERT INTO BOOK_IMAGE (
+			BOOK_IMG_CODE
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_CODE 
+			, IS_MAIN_IMG
+		)
+		<foreach collection="imgList" item="img" index="i" separator="UNION ALL">
+		SELECT (SELECT 'BK_IMG_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOOK_IMG_CODE, 8))), 0) + 1 + #{i}, 3, '0')
+  				  FROM BOOK_IMAGE)
+			, #{img.originFileName}
+			, #{img.attachedFileName}
+			, #{img.isMainImg}
+			, #{img.bookCode}
+			, 'N'
+		FROM DUAL  
+		</foreach>
+	</insert>
+	
 	<!-- 페이징 처리  -->
 	<select id="getBoardCnt" resultType="int">
 		SELECT COUNT(BOOK_CODE) 
