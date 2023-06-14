@@ -35,5 +35,11 @@ public class MyMemberServiceImpl implements MyMemberService {
 	public MemberVO getMemberInfo(String memId) {
 		return sqlSession.selectOne("memberMapper.getMemberInfo", memId);
 	}
+
+	// 내 정보 변경
+	@Override
+	public int updateMember(MemberVO memberVO) {
+		return sqlSession.update("memberMapper.updateMember", memberVO);
+	}
 	
 }

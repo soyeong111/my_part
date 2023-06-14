@@ -1,5 +1,8 @@
 package com.study.bookspace.myMember.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -15,6 +18,10 @@ import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myMember.service.MyMemberService;
+import com.study.bookspace.sms.SmsService;
+import com.study.bookspace.sms.SmsVO;
+import com.study.bookspace.util.MailService;
+import com.study.bookspace.util.MailVO;
 
 import jakarta.annotation.Resource;
 
@@ -31,6 +38,12 @@ public class MyMemberController {
 	@Autowired
 	private PasswordEncoder encoder;
 	
+	@Resource(name = "mailService")
+	private MailService mailService;
+	
+	@Resource(name = "smsService")
+	private SmsService smsService;
+	
 	// 내프로필 페이지
 	@GetMapping("/myProfile")
 	public String myProfile(SubMenuVO subMenuVO) {
@@ -41,9 +54,41 @@ public class MyMemberController {
 	@GetMapping("/myInfo")
 	public String myInfo(SubMenuVO subMenuVO, Model model, Authentication authentication) {
 		MemberVO memberVO = myMemberService.getMemberInfo(((User)authentication.getPrincipal()).getUsername());
-		System.out.println(memberVO);
 		model.addAttribute("memberVO", memberVO);
 		return "content/my/my_info";
+	}
+	
+	// 내정보변경
+	@ResponseBody
+	@PostMapping("/updateMemberAjax")
+	public boolean updateMemberAjax(MemberVO memberVO) {
+		return myMemberService.updateMember(memberVO) == 1;
+	}
+	
+	// 이메일 인증
+	@ResponseBody
+	@PostMapping("/emailAuthAjax")
+	public String emailAuthAjax(String email, MailVO mailVO) {
+		List<String> recipientList = new ArrayList<>();
+		recipientList.add(email);
+		mailVO.setRecipientList(recipientList);
+		mailVO.setTitle("한울도서관");
+		String pw = mailService.createRandomPassword(6);
+		mailVO.setContent("인증 번호 : " + pw);
+		mailService.sendSimpleEmail(mailVO);
+		return pw;
+	}
+	
+	// 휴대폰 인증
+	@ResponseBody
+	@PostMapping("/tellAuthAjax")
+	public String tellAuthAjax(SmsVO smsVO) throws Exception {
+		List<SmsVO> messages = new ArrayList<>();
+		String pw = smsService.createRandomNumber(6);
+		smsVO.setContent("[한울도서관]\n인증 번호 : " + pw);
+		messages.add(smsVO);
+		smsService.sendSms(messages);
+		return pw;
 	}
 	
 	// 비밀번호변경 페이지
