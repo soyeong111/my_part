@@ -35,7 +35,7 @@
 							<form id="buyForm">
 								<input type="hidden" name="goodsCode" th:value="${goods.goodsCode}">
 								<input type="hidden" name="goodsPrice" th:value="${goods.goodsPrice}">
-								<input id="goodsCnt" name="buyCnt" type="number" class="form-control" value="1">
+								<input id="goodsCnt" name="cartRegCnt" type="number" class="form-control" min="1" value="1">
 							</form>
 						</div>
 					</div>
@@ -45,7 +45,7 @@
 					</div>
 					<div class="row mb-3">
 						<div class="col d-grid">
-							<input type="button" class="btn btn-success" value="장 바 구 니" th:onclick="regCart([[${#authentication.name}]], [[${goods.goodsCode}]]);">
+							<input type="button" class="btn btn-success" value="장 바 구 니" th:onclick="regCart([[${#authentication.name}]], [[${goods.goodsCode}]],[[${cartRegCnt}]]);">
 						</div>
 					</div>
 				</div>

@@ -180,7 +180,11 @@ public class GoodsController {
 		return "content/goods/goods_detail";
 	}
 	
-	
+	@GetMapping("/bestGoods")
+	public String bestGoods(GoodsVO goodsVO, Model model) {
+		model.addAttribute("bestGoodsList", goodsService.goodsListForBest(goodsVO));
+		return "content/goods/best_goods";
+	}
 	
 	
 }

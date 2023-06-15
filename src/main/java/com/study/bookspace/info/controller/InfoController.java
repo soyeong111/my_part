@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.admin.vo.SubMenuVO;
+import com.study.bookspace.goods.service.GoodsService;
+import com.study.bookspace.goods.vo.NoticeVO;
 import com.study.bookspace.info.service.AnswerService;
 import com.study.bookspace.info.service.QnaService;
 import com.study.bookspace.info.vo.AnswerVO;
@@ -33,6 +35,8 @@ public class InfoController {
 	private QnaService qnaService;
 	@Resource(name = "answerService")
 	private AnswerService answerService;
+	@Resource(name = "goodsService")
+	private GoodsService goodsService;
 	
 	//도서관 소개글
 	@GetMapping("/libraryIntro")
@@ -152,10 +156,17 @@ public class InfoController {
 		
 		return "content/info/way_to_library";
 	}
+	
+
 	@GetMapping("/notice")
-	public String notice(SubMenuVO subMenuVO) {
-		
+	public String notice(SubMenuVO subMenuVO, NoticeVO noticeVO, Model model) {
+		model.addAttribute(goodsService.noticeForPublic(noticeVO));
 		return "content/info/notice";
+	}
+	@GetMapping("/noticeDetail")
+	public String noticeDetail(SubMenuVO subMenuVO, String noticeNo, Model model) {
+		model.addAttribute(goodsService.noticeDetailForPublic(noticeNo));
+		return "content/info/notice_detail";
 	}
 	
 	
@@ -177,7 +188,6 @@ public class InfoController {
 		
 		return "content/info/qna_list";
 	}
-	
 	
 	
 	
