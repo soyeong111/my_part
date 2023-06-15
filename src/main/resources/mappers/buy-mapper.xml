@@ -2,5 +2,122 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="buyMapper">
+	<resultMap type="com.study.bookspace.myBuy.vo.GoodsBuyVO" id="buy">
+		<id	 column="BUY_CODE"	property="buyCode" />
+		<result	 column="MEM_ID"	property="memId" />
+		<result	 column="BUY_PRICE"	property="buyPrice" />
+		<result	 column="BUY_DATE"	property="buyDate" />
+		<result	 column="ETC"	property="etc" />
+		<collection property="buyDetailList" resultMap="buyDetail"></collection>
+	</resultMap>
+	
+	<resultMap type="com.study.bookspace.myBuy.vo.GoodsBuyDetailVO" id="buyDetail">
+		<id			column="BUY_DETAIL_CODE" 			property="buyDetailCode"	/>
+		<result		column="GOODS_CODE" 				property="goodsCode"	/>
+		<result		column="BUY_DETAIL_CNT" 			property="buyDetailCnt"	/>
+		<result		column="BUY_DETAIL_PRICE" 		property="buyDetailPrice"	/>
+		<result		column="BUY_CODE" 						property="buyCode"	/>
+		<association property="goodsVO"	resultMap="goodsMapper.goods"></association>
+	</resultMap>
+	
+		<select id="getBuyList" resultMap="buy">
+		SELECT BUY.BUY_CODE
+		    , BUY_PRICE
+		    , TO_CHAR(BUY_DATE, 'YYYY-MM-DD HH24:MI') AS BUY_DATE
+		    , ATTACHED_FILE_NAME
+		    , GOODS_NAME
+		    , GOODS_PRICE
+		    , BUY_DETAIL_CNT
+		    , BUY_DETAIL_PRICE
+		    
+		    , (SELECT COUNT(BUY_DETAIL_CODE)
+		        FROM GOODS_BUY_DETAIL
+		        WHERE BUY_CODE = BUY.BUY_CODE) AS ETC
+		        
+		FROM GOODS_BUY BUY, GOODS GOODS, GOODS_IMAGE IMG, GOODS_BUY_DETAIL BD
+		WHERE BD.GOODS_CODE = GOODS.GOODS_CODE
+		AND GOODS.GOODS_CODE = IMG.GOODS_CODE
+		AND BUY.BUY_CODE = BD.BUY_CODE
+		AND MEM_ID = #{memId}
+		AND IS_MAIN = 'Y'
+		<if test="month != null and month != 0">
+		AND TO_CHAR(BUY_DATE, 'YYYYMMDD') &gt;= TO_CHAR(ADD_MONTHS(SYSDATE, #{month}), 'YYYYMMDD')
+		</if>
+		<if test="fromDate != null">
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD')	&gt;= #{fromDate}
+		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}	
+		</if>
+	</select>		
+	
+		
+	<insert id="buy">
+		INSERT INTO GOODS_BUY (
+			BUY_CODE
+			, MEM_ID
+			, BUY_PRICE
+		) VALUES (
+			#{buyCode}
+			, #{memId}
+			, #{buyPrice}
+		)
+	</insert>
+	
+	<insert id="buyDetails">
+		INSERT INTO GOODS_BUY_DETAIL (
+			BUY_DETAIL_CODE
+			, GOODS_CODE
+			, BUY_DETAIL_CNT
+			, BUY_DETAIL_PRICE
+			, BUY_CODE
+		)
+		<foreach collection="buyDetailList" item="buyDetail" separator="UNION ALL" index="i">
+			SELECT(SELECT 'BUY_DETAIL_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_DETAIL_CODE, 12))), 0) + 1 + #{i}, 3, '0') 
+					FROM GOODS_BUY_DETAIL)
+				, #{buyDetail.goodsCode}
+				, #{buyDetail.buyDetailCnt}
+				, #{buyDetail.buyDetailPrice}
+				, #{buyDetail.buyCode}
+			FROM DUAL
+		</foreach>
+	</insert>
+	
+	
+	<select id="getNextBuyCode" resultType="String">
+		SELECT 'BUY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_CODE, 5))), 0) + 1, 3, '0') 
+		FROM GOODS_BUY
+	</select>
+	
+		<insert id="insertOrderStatus">
+		INSERT INTO ORDER_STATUS (
+			ORDER_NO
+			, STATUS_CODE
+			, BUY_CODE
+			, MEM_ID
+		) VALUES (
+			(SELECT NVL(MAX(ORDER_NO), 0) + 1 FROM ORDER_STATUS)
+			, 1
+			, #{buyCode}
+			, #{memId}
+		)
+	</insert>
+	
+		<select id="getSaleStatueByCategory" resultType="Map">
+	WITH IMSI_TABLE AS
+		(
+		    SELECT GOODS_CODE
+		        , (SELECT GOODS_CATE_CODE
+		            FROM GOODS
+		            WHERE GOODS_CODE = GOODS_BUY_DETAIL.GOODS_CODE) AS CATE_CODE
+		        , BUY_DETAIL_CNT
+		    FROM GOODS_BUY_DETAIL
+		)
+		SELECT CATE_CODE
+		    , (SELECT GOODS_CATE_NAME
+		        FROM GOODS_CATEGORY
+		        WHERE GOODS_CATE_CODE = IMSI_TABLE.CATE_CODE) AS CATE_NAME
+		    , SUM(BUY_DETAIL_CNT) AS SUM_BUY_CNT
+		FROM IMSI_TABLE
+		GROUP BY CATE_CODE
+	</select>
 	
 </mapper>

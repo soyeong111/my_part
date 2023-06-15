@@ -154,3 +154,51 @@ function goodsDetail(goodsCode){
 	//ajax end
 
 }
+
+//검색 영역 체크박스 컨트롤
+//전체 체크박스 선택, 해제 시 ...
+function setAllCheck(all_chk){
+	const is_checked = all_chk.checked;
+	const chk_boxes =  document.querySelectorAll('.chk');
+	
+	if(is_checked){
+		for(const chk of chk_boxes){
+			chk.checked = true;
+		}
+	}
+	else{
+		for(const chk of chk_boxes){
+			chk.checked = false;
+		}
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

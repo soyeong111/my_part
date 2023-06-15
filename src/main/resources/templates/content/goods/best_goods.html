@@ -3,49 +3,51 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/public_layout}">
+
+<!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<link rel="stylesheet" href="/css/content/goods/goods.css">
+	<!--<link rel="stylesheet" href=""> -->
 </th:block>
+
 <th:block layout:fragment="content">
-	<div>
-	
-	<table class="table table-hover text-center goodsListTable">
-		<colgroup>
-			<col width="10%">
-			<col width="*">
-			<col width="20%">
-			<col width="10%">
-		</colgroup>
-		<thead class="table-primary">
+   best_goods
+  
+   	<table>
+		<thead>
 			<tr>
 				<td>no</td>
-				<td>
-					상 품 명
-				</td>
+				<td>상품명</td>
 				<td>가격</td>
+				<td>상태</td>
 				<td>재고</td>
 			</tr>
 		</thead>
 		<tbody>
-		<th:block th:if="${#lists.size(goodsList) == 0}">
+		<th:block th:if="${#lists.size(bestGoodsList) == 0}">
 			 <tr>
    				<td colspan="5"> 판매 중인 굿즈가 없습니다</td>
    			</tr>
 		</th:block>
-		<th:block  th:if="${#lists.size(goodsList) != 0}">
-			<tr th:each=" goods , state : ${goodsList}">
+		<th:block  th:if="${#lists.size(bestGoodsList) != 0}">
+			<tr th:each=" goods , state : ${bestGoodsList}">
 				<td th:text="${state.count}"></td> 
 			   	<td> <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode})}"><span th:text="${goods.goodsName}"></span></a> </td>
+
+
+			
 				<td>[[${goods.goodsPrice}]]원</td>
+				<td>[[${goods.goodsStatus}]]</td> <!--상태: 숫자-> 글자  -->
 				<td>[[${goods.goodsStockCnt}]]</td>
 			</tr>
 		</th:block>
 			
 		</tbody>
 	</table>
-	</div>
 </th:block>
+
+<!--연결해야 할 외부 js 파일  -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<!--<script type="text/javascript" src=""></script> -->
 </th:block>
+
 </html>
