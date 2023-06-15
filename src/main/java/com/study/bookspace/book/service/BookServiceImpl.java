@@ -164,13 +164,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void deleteMainImg(String bookCode) {
-		sqlSession.delete("bookMapper.deleteMainImg", bookCode);
+	public void deleteMainImg(String bookImgCode) {
+		sqlSession.delete("bookMapper.deleteMainImg", bookImgCode);
 	}
 
 	@Override
-	public void deleteSubImg(String bookCode) {
-		sqlSession.delete("bookMapper.deleteSubImg", bookCode);
+	public void deleteSubImg(String bookImgCode) {
+		sqlSession.delete("bookMapper.deleteSubImg", bookImgCode);
 	}
 
 	@Override
@@ -186,6 +186,11 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public void updateBookDetail(ImgVO imgVO) {
 		sqlSession.update("bookMapper.updateBookDetail", imgVO);
+	}
+
+	@Override
+	public int getBookCnt() {
+		return sqlSession.selectOne("bookMapper.getBookCnt");
 	}
 
 

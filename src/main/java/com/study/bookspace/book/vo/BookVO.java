@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BookVO {
+public class BookVO extends SearchBookVO {
 
 	private String bookCode;
 	private String bookTitle;
