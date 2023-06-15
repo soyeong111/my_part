@@ -293,3 +293,105 @@ function reserveAjax(memId, bookCode) {
 }
 
 
+
+//----------------이미지회전-----
+
+const bookCovers = /*[[${bookCovers}]]*/ null;
+
+function getBookMaterials(urlMap) {
+	const materialNames = ['edge', 'spine', 'top', 'bottom', 'front', 'back'];
+	return materialNames.map((name) => {
+		if (!urlMap[name]) return new THREE.MeshBasicMaterial(0xffffff);
+
+		const texture = new THREE.TextureLoader().load(urlMap[name]);
+
+		// to create high quality texture
+		texture.generateMipmaps = false;
+		texture.minFilter = THREE.LinearFilter;
+		texture.needsUpdate = true;
+
+		return new THREE.MeshBasicMaterial({ map: texture });
+	});
+}
+
+const aspect = 400 / 600;
+const refCurrent = document.getElementById('book-container');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
+
+const planeGeometry = new THREE.PlaneGeometry(500, 500, 32, 32);
+const planeMaterial = new THREE.ShadowMaterial();
+planeMaterial.opacity = 0.5;
+
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.receiveShadow = true;
+scene.add(plane);
+
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(-10, 10, 10);
+light.castShadow = true;
+scene.add(light);
+
+const geometry = new THREE.BoxGeometry(3.5, 5, 0.5);
+const cube = new THREE.Mesh(geometry, getBookMaterials(bookCovers));
+cube.castShadow = true;
+cube.position.set(0, 0, 0);
+scene.add(cube);
+
+let isMouseOver = false;
+refCurrent.addEventListener('mouseover', () => {
+	isMouseOver = true;
+});
+refCurrent.addEventListener('mouseleave', () => {
+	isMouseOver = false;
+});
+
+let degrees = 90;
+
+const camera = new THREE.PerspectiveCamera(70, aspect, 1, 1000);
+camera.position.set(0, 0, 6);
+
+const renderer = new THREE.WebGLRenderer();
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setSize(400, 600);
+
+const distance = camera.position.distanceTo(cube.position);
+
+const rotate = () => {
+	if (degrees < 135) {
+		degrees += 2;
+		const radian = degrees * (Math.PI / 180);
+		camera.position.x = Math.cos(radian) * distance;
+		camera.position.z = Math.sin(radian) * distance;
+	}
+};
+
+const rotateBack = () => {
+	if (degrees > 90) {
+		degrees -= 2;
+		const radian = degrees * (Math.PI / 180);
+		camera.position.x = Math.cos(radian) * distance;
+		camera.position.z = Math.sin(radian) * distance;
+	}
+};
+
+const animate = () => {
+	requestAnimationFrame(animate);
+	isMouseOver ? rotate() : rotateBack();
+	camera.lookAt(scene.position);
+	renderer.render(scene, camera);
+};
+
+refCurrent.appendChild(renderer.domElement);
+animate();
+
+
+
+
+
+
+
+
+
+

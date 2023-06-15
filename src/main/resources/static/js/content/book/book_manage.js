@@ -327,7 +327,7 @@ function deleteMainImg(attachedFileName, bookCode) {
   
   // AJAX
   $.ajax({
-    url: '/book/updateBookDetail',
+    url: '/book/deleteSubImg',
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',

@@ -75,15 +75,19 @@ public class BookController {
 	
 //	도서 등록
 	@PostMapping("/regBookProcess")
-	public String regBook(BookVO bookVO ,MultipartFile mainImg, MultipartFile[] subImg) {
+	public String regBook(BookVO bookVO ,MultipartFile mainImg, MultipartFile[] subImg, MultipartFile sideImg) {
 		
 		//--- 파일 첨부 ---//
-//		메인 이미지 업로드
+//		메인 이미지 업로드 (앞)
 		ImgVO attachedimgVO = UploadUtil.uploadFile(mainImg);
 		
-//		서브 이미지 업로드
+//		서브 이미지 업로드 (뒤)
 	    List<ImgVO> attachedImgList = UploadUtil.multiFileUpload(subImg);
-
+	    
+// 		옆 이미지 업로드
+	    ImgVO sideImgVO = UploadUtil.uploadSideImage(sideImg);
+	    
+	    
 //	    등록될 도서코드 조회
 	    String bookCode = bookService.getNextBookCode();
 	    bookVO.setBookCode(bookCode);
@@ -94,6 +98,7 @@ public class BookController {
 //		도서 이미지 등록 쿼리 실행 시 모든 빈 값을 채워줄 데이터를 가진 List
 	    List<ImgVO> imgList = attachedImgList;
 	    imgList.add(attachedimgVO);
+	    imgList.add(sideImgVO);
 	    
 //		BOOK_CODE 데이터 추가
 		for(ImgVO img : imgList) {
