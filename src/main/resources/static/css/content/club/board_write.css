@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.write-div{
+	margin-bottom: 7rem; 
+	margin-top: 3rem; 
+	margin-left: 2rem;  
+	font-size: 20px; 
+	font-weight: bold;
+}
+
+tr td:first-child {
+	font-weight: bold;
+}
+
+.table-div{
+	margin-left: 2rem;
+	margin-right: 2rem;
+}

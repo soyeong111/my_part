@@ -22,6 +22,7 @@ public class MemberVO {
 	private String memAddrDetail;
 	private String memJoinDate;
 	private String borrowRestrictDuedate; // 대여 제한 마지막 날짜
+	private String memLoginDate; // 마지막 로그인 날짜
 	private String memImgUrl;
 	
 	private String[] memEmailArr;
@@ -35,6 +36,16 @@ public class MemberVO {
 	public void setMemTellArr(String[] memTellArr) {
 		this.memTellArr = memTellArr;
 		this.memTell = memTellArr[0] + "-" + memTellArr[1] + "-" + memTellArr[2];
+	}
+	
+	public void setMemEmail(String memEmail) {
+		this.memEmail = memEmail;
+		this.memEmailArr = memEmail.split("@");
+	}
+	
+	public void setMemTell(String memTell) {
+		this.memTell = memTell;
+		this.memTellArr = memTell.split("-");
 	}
 	
 }

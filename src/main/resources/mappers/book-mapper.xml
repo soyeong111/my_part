@@ -39,6 +39,7 @@
 		<result column="ORIGIN_FILE_NAME" 					property="originFileName"/>
 		<result column="ATTACHED_FILE_NAME" 				property="attachedFileName"/>
 		<result column="IS_MAIN_IMG" 						property="isMainImg"/>
+		<result column="BOOK_INTRO" 						property="bookIntro"/>
 	</resultMap>
 	
 
@@ -80,6 +81,87 @@
 		FROM BOOK_IMAGE
 	</select>
 	
+	
+		<!-- 특정 도서 이미지, 도서 소개 조회 -->
+	<select id="getImgListForBook" resultMap="img">
+		SELECT BOOK_IMG_CODE
+			, B.BOOK_CODE
+			, ORIGIN_FILE_NAME 
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG 
+			, BOOK_INTRO
+		FROM BOOK_IMAGE IMG, BOOK B
+		WHERE IMG.BOOK_CODE = B.BOOK_CODE 
+		AND IMG.BOOK_CODE = #{bookCode}
+	</select>
+	
+	<!-- 메인 이미지 삭제 -->
+	<delete id="deleteMainImg">
+	 DELETE BOOK_IMAGE
+ 	 WHERE IS_MAIN_IMG = 'Y'
+ 	 AND BOOK_CODE = #{bookCode}
+	</delete>
+	
+	<!-- 서브 이미지 삭제 -->
+	<delete id="deleteSubImg">
+	 DELETE BOOK_IMAGE
+ 	 WHERE IS_MAIN_IMG = 'N'
+ 	 AND BOOK_CODE = #{bookCode}
+	</delete>
+	
+	
+	<!-- 메인 이미지 수정 --> 
+	<insert id="insertMainImges">
+		INSERT INTO BOOK_IMAGE (
+			BOOK_IMG_CODE
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_CODE 
+			, IS_MAIN_IMG
+		)
+		<foreach collection="imgList" item="img" index="i" separator="UNION ALL">
+		SELECT (SELECT 'BK_IMG_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOOK_IMG_CODE, 8))), 0) + 1 + #{i}, 3, '0')
+  				  FROM BOOK_IMAGE)
+			, #{img.originFileName}
+			, #{img.attachedFileName}
+			, #{img.isMainImg}
+			, #{img.bookCode}
+			, 'Y'
+		FROM DUAL  
+		</foreach>
+	</insert>
+	
+	<!-- 서브 이미지 수정 -->
+	<insert id="insertSubImges">
+		INSERT INTO BOOK_IMAGE (
+			BOOK_IMG_CODE
+			, ORIGIN_FILE_NAME
+			, ATTACHED_FILE_NAME
+			, IS_MAIN_IMG
+			, BOOK_CODE 
+			, IS_MAIN_IMG
+		)
+		<foreach collection="imgList" item="img" index="i" separator="UNION ALL">
+		SELECT (SELECT 'BK_IMG_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOOK_IMG_CODE, 8))), 0) + 1 + #{i}, 3, '0')
+  				  FROM BOOK_IMAGE)
+			, #{img.originFileName}
+			, #{img.attachedFileName}
+			, #{img.isMainImg}
+			, #{img.bookCode}
+			, 'N'
+		FROM DUAL  
+		</foreach>
+	</insert>
+	
+	<!-- 페이징 처리  -->
+	<select id="getBoardCnt" resultType="int">
+		SELECT COUNT(BOOK_CODE) 
+		FROM BOOK
+		WHERE CLUB_CODE = #{clubCode}
+	</select>
+	
+	
 	<!-- 도서관리 도서 상세 조회 -->
 	<select id="getBookDetailForBookManage" resultMap="book">
 		SELECT BOOK.BOOK_CODE
@@ -120,7 +202,7 @@
 	
 	<!-- 대여 업데이트 쿼리 -->
 	<update id="updateBorrowCnt">
-		UPDATE BOOKf
+		UPDATE BOOK
 		SET BORROW_CNT = BORROW_CNT + 1
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
@@ -490,7 +572,7 @@
 		
 		
 		<!-- 도서 이미지, 소개 수정 -->
-		<update id="updateBook2">
+		<update id="updateBookDetail">
 			UPDATE BOOK, BOOK_IMAGE
 			SET
 				BOOK_INTRO = #{bookIntro}
@@ -523,7 +605,29 @@
 		WHERE BORROW_CODE = #{borrowCode}
 	</select>
 	
-
+	
+	<!-- 예약 취소 -->
+	<delete id="delReserve">
+		DELTE FROM BOOK_RESERVE
+		WHERE BOOK_CODE = #{bookCode}
+		AND MEM_ID = #{memId}
+	</delete>
+	
+	<!-- 첫번째로 예약한 사람 ID  -->
+	<select id="getFirstReserveId" resultType="String">
+		SELECT MEM_ID
+		FROM BOOK_RESERVE
+		WHERE BOOK_CODE = #{bookCode}
+		ORDER BY RESERVE_DATE ASC
+	</select>
+	
+	
+	<!-- 예약한 사람 ID  -->
+	<select id="getReserveId" resultType="String">
+		SELECT MEM_ID
+		FROM BOOK_RESERVE
+		WHERE BOOK_CODE = #{bookCode}
+	</select>
 	
 </mapper>
 

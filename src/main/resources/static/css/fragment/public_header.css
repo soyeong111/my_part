@@ -45,6 +45,7 @@
 	right: 0;
 	background-color: white;
 	border-top: 1px solid #e7f0ff;
+	z-index: 9;
 }
 
 .header-sub-menu-div > div {
@@ -86,4 +87,9 @@
 	display: block;
 	width: 30px;
 	height: 30px;
+}
+
+#alramModalLabel{
+	font-weight: bold;
+	padding-left: 17px;
 }

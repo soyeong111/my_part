@@ -12,13 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.study.bookspace.admin.vo.SubMenuVO;
+import com.study.bookspace.alram.service.AlramService;
+import com.study.bookspace.alram.vo.AlramVO;
 import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.PageVO;
 import com.study.bookspace.util.UploadUtil;
@@ -30,6 +33,10 @@ import jakarta.annotation.Resource;
 public class ClubController {
 	@Resource(name = "clubService")
 	private ClubService clubService;
+	
+	@Resource(name = "alramService")
+	private AlramService alramService;
+	
 	
 	//북클럽 이용안내
 	@GetMapping("/clubInfo")
@@ -99,14 +106,19 @@ public class ClubController {
 		
 		clubService.regClub(bookClubVO, bookClubImageVO, bookClubMemberVO);
 		
+		System.out.println(bookClubVO.getClubMemCnt());
+		
 		return "redirect:/club/club?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//북클럽 상세페이지
 	@GetMapping("/clubDetail")
 	public String clubDetail(Model model, String clubCode, SubMenuVO subMenuVO) {
+		System.out.println("@@@@@@@@@@@@@@" + subMenuVO);
 		//클럽 상세 조회
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
+		//클럽 활동 중인 회원수
+		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		
 		return "content/club/club_detail";
 	}
@@ -120,14 +132,21 @@ public class ClubController {
 	
 	//회원 북클립 가입
 	@PostMapping("/joinClubAjax")
-	public String joinClubAjax(BookClubMemberVO bookClubMemberVO, Authentication authentication) {
-		
+	public String joinClubAjax(BookClubMemberVO bookClubMemberVO, Authentication authentication, String clubCode, AlramVO alramVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		
 		bookClubMemberVO.setMemId(memId);
 		
 		clubService.joinClub(bookClubMemberVO);
+		
+		String bossId = clubService.getClubBossId(clubCode);
+		
+		alramVO.setMemId(bossId);
+		alramVO.setAContent("소유한 북클럽에 가입을 신청한 회원이 있습니다.");
+		alramVO.setSection(2);
+		
+		alramService.insertAlram(alramVO);
 		
 		return "redirect:/club/club";
 	}
@@ -245,13 +264,26 @@ public class ClubController {
 	
 	//글 작성
 	@PostMapping("/regBoard")
-	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO) {
+	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO, MultipartFile communityImg ,CommunityImageVO communityImageVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
-		
 		communityVO.setBoardWriter(memId);
 		
+		//등록될 게시글번호 조회
+		String boardNum = clubService.getNextBoardNum();
+		communityVO.setBoardNum(boardNum);
 		clubService.regBoard(communityVO);
+		
+		// -- 파일 첨부 -- //
+		CommunityImageVO attachedCommunityImageVO = UploadUtil.communityUploadFile(communityImg);
+		if(attachedCommunityImageVO != null) {
+			communityImageVO.setBoardNum(boardNum);
+			communityImageVO.setBcOriginFileName(attachedCommunityImageVO.getBcOriginFileName());
+			communityImageVO.setBcAttachedFileName(attachedCommunityImageVO.getBcAttachedFileName());
+			clubService.insertCommunityImg(communityImageVO);
+		}
+		
+		// -- 게시글 등록 -- //
 		
 		return "redirect:/club/community?clubCode=" + communityVO.getClubCode() 
 		+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
@@ -292,6 +324,13 @@ public class ClubController {
 	//게시글 삭제
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(String boardNum, String clubCode, SubMenuVO subMenuVO) {
+		
+		String communityImgName = clubService.getCommunityImageName(boardNum);
+		
+		System.out.println(ConstVariable.COMMUNITY_UPLOAD_PATH + communityImgName);
+		File file = new File(ConstVariable.COMMUNITY_UPLOAD_PATH + communityImgName);
+		file.delete();	
+		
 		
 		clubService.deleteBoard(boardNum);
 		

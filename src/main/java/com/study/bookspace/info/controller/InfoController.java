@@ -1,21 +1,12 @@
 package com.study.bookspace.info.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.study.bookspace.admin.vo.SubMenuVO;
 import com.study.bookspace.goods.service.GoodsService;
 import com.study.bookspace.goods.vo.NoticeVO;
 import com.study.bookspace.info.service.AnswerService;
@@ -23,7 +14,7 @@ import com.study.bookspace.info.service.QnaService;
 import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.info.vo.SearchQnaVO;
-import com.study.bookspace.member.vo.MemberVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.PageVO;
 
 import jakarta.annotation.Resource;

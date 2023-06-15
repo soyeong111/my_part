@@ -17,6 +17,7 @@
 		<result column="MEM_ADDR_DETAIL"			property="memAddrDetail"/>
 		<result column="MEM_JOIN_DATE"				property="memJoinDate"/>
 		<result column="BORROW_RESTRICT_DUEDATE"	property="borrowRestrictDuedate"/>
+		<result column="MEM_LOGIN_DATE"				property="memLoginDate"/>
 		<result column="MEM_IMG_URL"				property="memImgUrl"/>
 	</resultMap>
 
@@ -65,7 +66,6 @@
 		SELECT MEM_ID
 			, MEM_PW
 			, MEM_ROLE
-			, MEM_STATUS
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 			AND MEM_STATUS != '탈퇴'
@@ -93,6 +93,59 @@
 	<update id="changePw">
 		UPDATE MEMBER
 		SET MEM_PW = #{memPw}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 로그인 후 회원 상태 조회 -->
+	<select id="checkMemStatus" resultType="String">
+		SELECT MEM_STATUS
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 로그인 후 회원 상태, 로그인 날짜 수정 -->
+	<update id="updateMemLoginDate">
+		UPDATE MEMBER
+		SET MEM_STATUS = '활동'
+			, MEM_LOGIN_DATE = SYSDATE
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 비밀번호 확인 -->
+	<select id="getPwById" resultType="String">
+		SELECT MEM_PW
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 내 정보 정보 조회 -->
+	<select id="getMemberInfo" resultMap="member">
+		SELECT MEM_ID
+			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_TELL
+			, TO_CHAR(MEM_BIRTHDAY, 'YYYY-MM-DD') MEM_BIRTHDAY
+			, MEM_GENDER
+			, MEM_ADDR
+			, MEM_ADDR_DETAIL
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 내 정보 변경 -->
+	<update id="updateMember">
+		UPDATE MEMBER
+		SET MEM_NAME = #{memName}
+			, MEM_EMAIL = #{memEmail}
+			, MEM_TELL = #{memTell}
+			<if test="!memBirthday.equals('')">
+			, MEM_BIRTHDAY = #{memBirthday}
+			</if>
+			<if test="memGender != null">
+			, MEM_GENDER = #{memGender}
+			</if>
+			, MEM_ADDR = #{memAddr}
+			, MEM_ADDR_DETAIL = #{memAddrDetail}
 		WHERE MEM_ID = #{memId}
 	</update>
 

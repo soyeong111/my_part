@@ -36,24 +36,6 @@ thead{
 	font-size: 25px;
 }
 
-.my-scroll{
-	max-height: 24.5rem;
-	overflow-y: auto; 
-}
-
-.my-scroll::-webkit-scrollbar{
-	width: 8px;
-}
-
-.my-scroll::-webkit-scrollbar-thumb{
-	height: 30%;
-	background: #b7b7b7;
-	border-radius: 10px;
-}
-
-.my-scroll::-webkit-scrollbar-track{
-	background: #84848447;
-}
 
 
 

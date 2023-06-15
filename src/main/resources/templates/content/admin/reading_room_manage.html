@@ -6,38 +6,41 @@
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/admin/reading_room_manage.css">
 </th:block>
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="reading-room-manage-div">
+		<div class="rrm-head">
+			열람실 이용 현황
+		</div>
 		<div class="row">
 			<div class="col">
-				<form th:action="@{/admin/readingRoomManage}" method="post">
+				<form th:action="@{/aLibrary/readingRoomManage}" method="post" class="search-div">
 					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
 					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<div class="row">
 						<div class="offset-2 col-2">
 							<div class="input-group">
 								<span class="input-group-text">From</span>
-								<input type="date" class="form-control" name="searchFromDate" th:value="${seatListSearchVO.searchFromDate}">
+								<input type="date" class="form-control" name="searchFromDate" th:value="${seatListSearchVO.searchFromDate == null ? firstDate : seatListSearchVO.searchFromDate}">
 							</div>
 						</div>		
 						<div class="col-2">
 							<div class="input-group">
 								<span class="input-group-text">To</span>
-								<input type="date" class="form-control" name="searchToDate" th:value="${seatListSearchVO.searchToDate}">
+								<input type="date" class="form-control" name="searchToDate" th:value="${seatListSearchVO.searchToDate == null ? nowDate : seatListSearchVO.searchToDate}">
 							</div>
 						</div>
 						<div class="col-2">
 							<input type="text" class="form-control" name="searchId" th:value="${seatListSearchVO.searchId}" placeholder="사용자 ID를 입력하세요.">
 						</div>
-						<div class="col-1 px-0">
+						<div class="col-2 px-0">
 							<input type="submit" class="btn custom-btn" value="검색">
+							<input type="button" class="btn custom-btn" value="초기화" th:onclick="|location.href='@{/aLibrary/readingRoomManage}';|">
 						</div>
-						<div class="col-3 px-0">
-							<input type="button" class="btn custom-btn" value="전체조회" th:onclick="|location.href='@{/admin/readingRoomManage(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+						<div class="col-1 px-0">
 							<input type="button" class="btn custom-btn" value="전체퇴실" th:onclick="allCheckOut([[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 						</div>
 					</div>
@@ -88,7 +91,7 @@
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/admin/reading_room_manage.js"></script>
 </th:block>
 
 </html>

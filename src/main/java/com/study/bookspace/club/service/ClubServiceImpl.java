@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.util.PageVO;
@@ -18,7 +19,13 @@ import com.study.bookspace.util.PageVO;
 public class ClubServiceImpl implements ClubService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
+	
+	//클럽장 클럽코드 조회
+	@Override
+	public String getClubCode(String memId) {
+		return sqlSession.selectOne("clubMapper.getClubCode", memId);
+	}
+	
 	//북클럽 생성 + 이미지 삽입
 	@Override
 	@Transactional(rollbackFor = Exception.class)
@@ -28,6 +35,12 @@ public class ClubServiceImpl implements ClubService{
 		sqlSession.insert("clubMapper.joinClub", bookClubMemberVO);
 		sqlSession.update("clubMapper.updateClubMemberStatus", bookClubMemberVO);
 		sqlSession.update("clubMapper.updateClubMemberRole", bookClubMemberVO);
+	}
+	
+	//클럽 회원수 조회
+	@Override
+	public int countMemCnt(String clubCode) {
+		return sqlSession.selectOne("clubMapper.countMemCnt", clubCode);
 	}
 	
 	//북클럽 목록 조회
@@ -74,12 +87,6 @@ public class ClubServiceImpl implements ClubService{
 	public String getNextClubCode() {
 		return sqlSession.selectOne("clubMapper.getNextClubCode");
 	}
-
-	//북클럽 이미지 삽입
-	//@Override
-	//public void insertImg(BookClubImageVO bookClubImageVO) {
-	//	sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
-	//}
 
 	//게시글 목록 조회
 	@Override
@@ -213,6 +220,45 @@ public class ClubServiceImpl implements ClubService{
 	public List<BookClubMemberVO> getMyClubDetail(String memId) {
 		return sqlSession.selectList("clubMapper.getMyClubDetail", memId);
 	}
+
+	//클럽가입 취소하기
+	@Override
+	public void cancelApply(String acceptCode) {
+		sqlSession.delete("clubMapper.cancelApply", acceptCode);
+	}
+
+	
+	//클럽코드로 클럽장 아이디 구하기
+	@Override
+	public String getMemIdByClubCode(String clubCode) {
+		return sqlSession.selectOne("clubMapper.getMemIdByClubCode", clubCode);
+	}
+	
+	//커뮤니티 이미지 삽입
+	@Override
+	public void insertCommunityImg(CommunityImageVO communityImageVO) {
+		sqlSession.insert("clubMapper.insertCommunityImg", communityImageVO);
+	}
+
+	@Override
+	public String getNextBoardNum() {
+		return sqlSession.selectOne("clubMapper.getNextBoardNum");
+	}
+
+	//게시글 이미지 이름
+	@Override
+	public String getCommunityImageName(String boardNum) {
+		return sqlSession.selectOne("clubMapper.getCommunityImageName", boardNum);
+	}
+
+	
+	
+
+
+	
+	
+
+	
 
 
 

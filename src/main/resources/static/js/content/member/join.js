@@ -129,7 +129,7 @@ function pw_check(pw_check_input) {
 
 /* 이름 유효성 검사  */
 function name_validation(name_input) {
-	const regexp = /[^가-힣a-zA-Z ]/;
+	const regexp = /[^가-힣a-zA-Z ]/g;
 	name_input.value = name_input.value.replace(regexp, '');
 	name_input.value = name_input.value.trimStart();
 	if (name_input.value == '') {
@@ -266,14 +266,12 @@ function tell_pw_send(btn) {
 	const tell_2_input = document.querySelector('#join-mem-tell-2');
 	btn.disabled = true;
 	const tell = tell_0_input.value + tell_1_input.value + tell_2_input.value;
-	console.log(tell);
 	$.ajax({
 		url: '/member/tellAuthAjax',
 		type: 'post',
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'to':tell},
 		success: function(result) {
-			console.log(result);
 			join_tell_obj.pw = result;
 			let str = '<div id="tell-check-div" class="row d-flex align-items-center mt-2">';
 			str += '<div class="col-6 text-end">인증 문자가 발송되었습니다.</div>';
@@ -342,6 +340,8 @@ function addr_validation(addr_input) {
 
 /* 필수 사항 체크 */
 function require_check() {
+	document.querySelector('#join-mem-name').value = document.querySelector('#join-mem-name').value.trim();
+	document.querySelector('#join-mem-addr-detail').value = document.querySelector('#join-mem-addr-detail').value.trim();
 	const tags = document.querySelectorAll('.is-valid');
 	if (tags.length == 11) {
 		join();

@@ -137,6 +137,11 @@ public class BookServiceImpl implements BookService {
 		return sqlSession.selectList("bookMapper.getImgListForAdmin");
 	}
 
+	@Override
+	public List<ImgVO> getImgListForBook(String bookCode) {
+		return sqlSession.selectList("bookMapper.getImgListForBook", bookCode);
+	}
+
 
 	@Override
 	public List<BorrowVO> myBorrow(BorrowVO borrowVO) {
@@ -158,6 +163,30 @@ public class BookServiceImpl implements BookService {
 		return sqlSession.selectOne("bookMapper.getReturnDuedate", borrowCode);
 	}
 
+	@Override
+	public void deleteMainImg(String bookCode) {
+		sqlSession.delete("bookMapper.deleteMainImg", bookCode);
+	}
+
+	@Override
+	public void deleteSubImg(String bookCode) {
+		sqlSession.delete("bookMapper.deleteSubImg", bookCode);
+	}
+
+	@Override
+	public void delReserve(String bookCode) {
+		    sqlSession.delete("bookMapper.delReserve", bookCode);
+	}
+
+	@Override
+	public String getReserveId(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getReserveId", bookCode);
+	}
+
+	@Override
+	public void updateBookDetail(ImgVO imgVO) {
+		sqlSession.update("bookMapper.updateBookDetail", imgVO);
+	}
 
 
 
