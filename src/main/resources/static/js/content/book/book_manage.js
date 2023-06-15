@@ -193,14 +193,14 @@ function openImgModal(attachedFileName, originFileName){
 }
 
 
-function getBookDetail(bookCode) {
+function getBookDetail(bookCode, bookImgCode) {
   // ajax start
   $.ajax({
     url: '/book/imgListAjax', // 요청경로
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 'bookCode': bookCode }, // 도서 코드 전달
+    data: { 'bookCode': bookCode , 'bookImgCode':bookImgCode}, // 도서 코드 전달
     success: function(result) {
       console.log(result); // 이미지 데이터 확인
 
@@ -322,20 +322,21 @@ function editBookDetail(bookIntro, originFileName, attachedFileName, isMainImg, 
 
 
   // 이미지 삭제 
-function deleteMainImg(attachedFileName, bookCode) {
+function deleteMainImg(attachedFileName, bookImgCode) {
   
   
   // AJAX
   $.ajax({
-    url: '/book/deleteSubImg',
+    url: '/book/deleteSubImgAjax',
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 'attachedFileName': attachedFileName , 'bookCode':bookCode},
+    data: { 'attachedFileName': attachedFileName , 'bookImgCode':bookImgCode},
     success: function(result) {
       console.log(result); // 성공 처리
 
       // 이미지 삭제 성공 후의 추가 로직 구현
+      alert('삭제성공');
 
     },
     error: function() {
@@ -345,20 +346,20 @@ function deleteMainImg(attachedFileName, bookCode) {
 }
 
 
-function deleteSubImg(attachedFileName, bookCode) {
+function deleteSubImg(attachedFileName, bookImgCode) {
   // 이미지 삭제 로직 구현
 
   // AJAX를 사용하여 /book/bookdelete로 요청 보내기
   $.ajax({
-    url: '/book/deleteSubImg',
+    url: '/book/deleteSubImgAjax',
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 'attachedFileName': attachedFileName , 'bookCode':bookCode},
+    data: { 'attachedFileName': attachedFileName , 'bookImgCode':bookImgCode},
     success: function(result) {
       console.log(result); // 성공 처리
 
-      // 이미지 삭제 성공 후의 추가 로직 구현
+       alert('삭제성공');
 
     },
     error: function() {

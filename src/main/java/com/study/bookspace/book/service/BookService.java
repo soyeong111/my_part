@@ -59,10 +59,10 @@ public interface BookService {
 	List<ImgVO> getImgListForBook(String BookCode);
 	
 //	도서관리) 도서 메인 이미지 삭제
-	void deleteMainImg(String bookCode);
+	void deleteMainImg(String bookImgCode);
 	
 //	도서관리) 도서 서브 이미지 삭제
-	void deleteSubImg(String bookCode);
+	void deleteSubImg(String bookImgCode);
 
 //	도서관리) 도서 목록 조회
 	List<BookVO> getBookListForAdminManage(BookVO bookVO);
@@ -103,5 +103,8 @@ public interface BookService {
 	
 //	반납 기한 연장 후, 연장된 반납기한
 	String getReturnDuedate(String borrowCode);
+	
+//	페이징 처리 위한 전체 도서 개수
+	int getBookCnt();
 	
 }

@@ -99,14 +99,14 @@
 	<delete id="deleteMainImg">
 	 DELETE BOOK_IMAGE
  	 WHERE IS_MAIN_IMG = 'Y'
- 	 AND BOOK_CODE = #{bookCode}
+ 	 AND BOOK_IMG_CODE = #{bookImgCode}
 	</delete>
 	
 	<!-- 서브 이미지 삭제 -->
 	<delete id="deleteSubImg">
 	 DELETE BOOK_IMAGE
  	 WHERE IS_MAIN_IMG = 'N'
- 	 AND BOOK_CODE = #{bookCode}
+ 	 AND BOOK_IMG_CODE = #{bookImgCode}
 	</delete>
 	
 	
@@ -627,6 +627,13 @@
 		SELECT MEM_ID
 		FROM BOOK_RESERVE
 		WHERE BOOK_CODE = #{bookCode}
+	</select>
+	
+	
+	<!-- 페이징 -->
+	<select id="getBookCnt" resultType="int">
+		SELECT COUNT(*) 
+		FROM BOOK
 	</select>
 	
 </mapper>

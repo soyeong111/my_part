@@ -41,12 +41,23 @@ public class BookController {
 	
 //	도서 목록 조회
 	@RequestMapping("/bookList")
-	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO) {
+	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO, BookVO bookVO) {
 		
 		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
 		
+		//전체 게시글 수 조회
+		int totalDataCnt = bookService.getBookCnt();
+		
+		//전체 데이터 수 세팅
+		bookVO.setTotalDataCnt(totalDataCnt);
+		
+		//페이징 정보 세팅
+		bookVO.setPageInfo();
+		
 		List<BookVO> bookList = bookService.getBookListForUser(searchBookVO);
 		model.addAttribute("bookList", bookList);
+		
+		
 		return "content/book/book_list";
 	}
 
@@ -294,7 +305,8 @@ public class BookController {
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
 		
-		
+		ImgVO imgVO = new ImgVO();
+		String bookImgCode = imgVO.getBookImgCode();
 		//전체 게시글 수 조회
 		//int totalDataCnt = bookService.getBoardCnt(bookVO.getBookCode());
 		
@@ -345,17 +357,17 @@ public class BookController {
 	
 //	도서 관리) 도서 메인 이미지 삭제
 	@ResponseBody
-	@PostMapping("/deleteMainImg")
-	public void deleteMainImg(String bookCode) {
-		bookService.deleteMainImg(bookCode);
+	@PostMapping("/deleteMainImgAjax")
+	public void deleteMainImgAjax(String bookImgCode) {
+		bookService.deleteMainImg(bookImgCode);
 	}
 	
 	
 //	도서 관리) 도서 서브 이미지 삭제
 	@ResponseBody
-	@PostMapping("/deleteSubImg")
-	public void deleteSubImg(String bookCode) {
-		bookService.deleteSubImg(bookCode);
+	@PostMapping("/deleteSubImgAjax")
+	public void deleteSubImgAjax(String bookImgCode) {
+		bookService.deleteSubImg(bookImgCode);
 	}
 	
 	

@@ -1,5 +1,8 @@
 package com.study.bookspace.book.vo;
 
+import com.study.bookspace.util.BookPageVO;
+import com.study.bookspace.util.PageVO;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class SearchBookVO {
+public class SearchBookVO  extends BookPageVO{
 
 	private String searchBookTitle;
 	private String searchBookAuthor;
