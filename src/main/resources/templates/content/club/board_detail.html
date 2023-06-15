@@ -18,7 +18,7 @@
 		<div class="detail-body">
 		<div class="row">
 			<div class="col">
-				<table style="border-collapse: collapse; border: solid 1px black;">
+				<table>
 					<tr>
 						<td>[[${board.boardTitle}]]</td>
 					</tr>
@@ -52,6 +52,12 @@
 						</td>
 					</tr>
 				</table>
+				<div class="board-body">
+					<div>[[${board.boardContent}]]</div>
+					<div th:if="${board.communityImageVO.bcAttachedFileName != null}">
+							<img th:src="${'/image/community/' + board.communityImageVO.bcAttachedFileName}" height="300px;">
+						</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -76,15 +82,22 @@
 					<input sec:authorize="isAuthenticated()" class="btn custom-btn" type="submit" value="댓글 등록">
 				</div>
 			</form>
-			<div th:each="reply : ${replyList}">
-				<div>[[${reply.replyWriter}]]</div>
-				<div>[[${reply.regDate}]]</div>
+			<th:block th:each="reply : ${replyList}">
+				<table>
+					<tr>
+						<td rowspan="2">이미지</td>
+						<td>[[${reply.replyWriter}]]</td>
+					</tr>
+					<tr>
+						<td>[[${reply.regDate}]]</td>
+					</tr>
+				</table>
 				<div>[[${reply.replyContent}]]</div>
 				<div th:if="${reply.replyWriter == #authentication.name}" class="offset-10">
 					<input type="button" class="btn update-btn" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 					<input type="button" class="btn delete-btn" value="삭제" th:onclick="deleteReply([[${reply.replyNum}]], [[${board.boardNum}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 				</div>
-			</div>
+			</th:block>
 		</div>
 		</div>
 	</div>

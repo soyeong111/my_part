@@ -16,6 +16,7 @@ public class CommunityVO extends CommunityListSearchVO{
 	private int readCnt;
 	private int replyCnt;
 	private String clubCode;
+	private String clubNotice;
 	private int rowNum;
 	private int rowNumber;
 	private CommunityImageVO communityImageVO;

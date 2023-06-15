@@ -39,16 +39,18 @@
 							<tr><td colspan=5>등록된 게시글이 없습니다.</td></tr>
 						</th:block>
 						<th:block th:unless="${#lists.size(boardList) == 0}">
-							<tr th:each="board, state : ${boardList}">
-								<td><span th:text="${board.rowNumber}"></span></td>
-								<td>
-									<a th:href="@{/club/boardDetail(boardNum=${board.boardNum}, clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">[[${board.boardTitle}]]</a>
-									<span th:text="${board.replyCnt == 0 ? '' : '[' + board.replyCnt + ']'}"></span>
-								</td>
-								<td>[[${board.boardWriter}]]</td>
-								<td>[[${board.regDate}]]</td>
-								<td>[[${board.readCnt}]]</td>
-							</tr>
+							<th:block th:each="board, state : ${boardList}">
+								<tr>
+									<td><span th:text="${board.rowNumber}"></span></td>
+									<td>
+										<a th:href="@{/club/boardDetail(boardNum=${board.boardNum}, clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">[[${board.boardTitle}]]</a>
+										<span th:text="${board.replyCnt == 0 ? '' : '[' + board.replyCnt + ']'}"></span>
+									</td>
+									<td>[[${board.clubNotice}]]</td>
+									<td>[[${board.regDate}]]</td>
+									<td>[[${board.readCnt}]]</td>
+								</tr>
+							</th:block>
 						</th:block>
 					</tbody>
 				</table>

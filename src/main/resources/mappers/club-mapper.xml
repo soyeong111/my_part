@@ -11,6 +11,7 @@
 		<result column="CLUB_MEM_CNT" 		property="clubMemCnt"/>
 		<result column="CLUB_STATUS_NO" 	property="clubStatusNo"/>
 		<result column="MEM_ID" 			property="memId"/>
+		<result column="CLUB_NOTICE" 			property="clubNotice"/>
 		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
 		<association property="bookClubMemberVO" resultMap="bookClubMember"></association>
 	</resultMap>
@@ -295,33 +296,21 @@
 			, BOARD_CONTENT
 			, BOARD_WRITER
 			, CLUB_CODE
+			<if test="clubNotice != null">
+			, CLUB_NOTICE
+			</if>
 		) VALUES (
 			#{boardNum}
 			, #{boardTitle}
 			, #{boardContent}
 			, #{boardWriter}
 			, #{clubCode}
+			<if test="clubNotice != null">
+			, #{clubNotice}
+			</if>
 		)
 	</insert>
 	
-	<insert id="regNotice">
-		INSERT INTO COMMUNITY_BOARD (
-			BOARD_NUM
-			, BOARD_TITLE
-			, BOARD_CONTENT
-			, BOARD_WRITER
-			, CLUB_CODE
-			, CLUB_NOTICE
-		) VALUES (
-			(SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NUM, 7))), 0) + 1,3 , '0') 
-			FROM COMMUNITY_BOARD)
-			, #{boardTitle}
-			, #{boardContent}
-			, #{boardWriter}
-			, #{clubCode}
-			, 1
-		)
-	</insert>
 	
 	<select id="getBoardDetail" resultMap="community">
 		SELECT CB.BOARD_NUM

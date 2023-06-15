@@ -258,7 +258,7 @@ public class ClubController {
 	public String regBoardForm(String clubCode, Model model, SubMenuVO subMenuVO) {
 		
 		model.addAttribute("clubCode", clubCode);
-		
+		model.addAttribute("bossId", clubService.getClubBossId(clubCode));
 		return "content/club/board_write";
 	}
 	
