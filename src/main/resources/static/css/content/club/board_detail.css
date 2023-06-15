@@ -13,6 +13,24 @@ table {
 	margin-top: 2rem;
 }
 
+.detail-body{
+	margin-left: 2rem;  
+	margin-right: 2rem;
+}
+
 .reply-div{
 	margin-top: 2rem; 
+}
+
+.update-btn{
+	background-color: white;
+}
+
+.delete-btn{
+	background-color: white;
+	color: #b94e51;
+}
+
+tr:first-child > td {
+	font-weight: bold;
 }

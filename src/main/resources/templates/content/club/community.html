@@ -11,10 +11,10 @@
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
+	<div class="community-head-div">
+		<div>커뮤니티</div>
+	</div>
 	<div class="community-div">
-		<div class="community-head-div">
-			<div>커뮤니티</div>
-		</div>
 		<div class="row">
 			<div class="col">
 				<table class="table">
@@ -62,16 +62,15 @@
 		<div class="row">
 			<div class="col" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 				<th:block th:if="${communityVO.prevPageFlag}">
-					<a
-						th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1}, clubCode=${clubCode})}">이전</a>
+					<a th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">이전</a>
 				</th:block>
 				<th:block
 					th:each="pageNum : ${#numbers.sequence(communityVO.startPageNum, communityVO.endPageNum)}">
-					<a th:href="@{/club/community(nowPageNum=${pageNum}, clubCode=${clubCode})}"><span
+					<a th:href="@{/club/community(nowPageNum=${pageNum}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}"><span
 						th:text="${pageNum}"></span></a>
 				</th:block>
 				<th:block th:if="${communityVO.nextPageFlag}">
-					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1}, clubCode=${clubCode})}">다음</a>
+					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">다음</a>
 				</th:block>
 			</div>
 		</div>
