@@ -15,7 +15,9 @@ public interface AlramService {
 	//알람 목록 조회
 	List<AlramVO> getAlramList(String memId);
 	
-	//알람 읽음 N -> Y
-	void readAlram(String alramCode);
+	//알람 체크 변경
+	void updateAlramACheck(AlramVO alramVO);
 	
+	//알람 삭제
+	void deleteAlram(String alramCode);
 }

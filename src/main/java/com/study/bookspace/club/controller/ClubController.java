@@ -18,6 +18,7 @@ import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
@@ -263,13 +264,26 @@ public class ClubController {
 	
 	//글 작성
 	@PostMapping("/regBoard")
-	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO) {
+	public String regBoard(CommunityVO communityVO, Authentication authentication, SubMenuVO subMenuVO, MultipartFile communityImg ,CommunityImageVO communityImageVO) {
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
-		
 		communityVO.setBoardWriter(memId);
 		
+		//등록될 게시글번호 조회
+		String boardNum = clubService.getNextBoardNum();
+		communityVO.setBoardNum(boardNum);
 		clubService.regBoard(communityVO);
+		
+		// -- 파일 첨부 -- //
+		CommunityImageVO attachedCommunityImageVO = UploadUtil.communityUploadFile(communityImg);
+		if(attachedCommunityImageVO != null) {
+			communityImageVO.setBoardNum(boardNum);
+			communityImageVO.setBcOriginFileName(attachedCommunityImageVO.getBcOriginFileName());
+			communityImageVO.setBcAttachedFileName(attachedCommunityImageVO.getBcAttachedFileName());
+			clubService.insertCommunityImg(communityImageVO);
+		}
+		
+		// -- 게시글 등록 -- //
 		
 		return "redirect:/club/community?clubCode=" + communityVO.getClubCode() 
 		+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
@@ -310,6 +324,13 @@ public class ClubController {
 	//게시글 삭제
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(String boardNum, String clubCode, SubMenuVO subMenuVO) {
+		
+		String communityImgName = clubService.getCommunityImageName(boardNum);
+		
+		System.out.println(ConstVariable.COMMUNITY_UPLOAD_PATH + communityImgName);
+		File file = new File(ConstVariable.COMMUNITY_UPLOAD_PATH + communityImgName);
+		file.delete();	
+		
 		
 		clubService.deleteBoard(boardNum);
 		

@@ -8,9 +8,9 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="my-info-div">
+		<input type="hidden" id="main-menu-code" th:value="${subMenuVO.mainMenuCode}">
+		<input type="hidden" id="sub-menu-code" th:value="${subMenuVO.subMenuCode}">
 		<form id="my-info-form">
-			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
-			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 			<div class="row mt-5 w-50 m-auto">
 				<div class="col ps-4">
 					<h2>내 정보 변경</h2>
@@ -29,72 +29,73 @@
 				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">비밀번호</span>
-						<input type="password" id="mem-pw" class="form-control" onkeyup="pw_keyup(this);" placeholder="비밀번호 확인">
+						<input type="password" id="mem-pw" class="form-control" onkeyup="pw_keyup(this);" placeholder="비밀번호를 입력하세요">
 					</div>
 				</div>
-				
-				
-				
-				
 				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">이름</span>
-						<input type="text" name="memName" class="form-control" th:value="${memberVO.memName}" onkeyup="name_keyup(this);">
-						
-						
-						
+						<input type="text" name="memName" id="mem-name" class="form-control" th:value="${memberVO.memName}" onkeyup="name_keyup(this);"
+							th:data-origin="${memberVO.memName}">
 						<span class="input-group-text">성별</span>
-						<input type="radio" class="btn-check" name="memGender" id="mem-gender-m" autocomplete="off">
+						<input type="radio" class="btn-check" name="memGender" id="mem-gender-m" value="M"
+							th:checked="${memberVO.memGender == 'M'}" autocomplete="off">
 						<label class="btn btn-outline-secondary" for="mem-gender-m">남</label>
-						<input type="radio" class="btn-check" name="memGender" id="mem-gender-f" autocomplete="off">
+						<input type="radio" class="btn-check" name="memGender" id="mem-gender-f" value="F"
+							th:checked="${memberVO.memGender == 'F'}" autocomplete="off">
 						<label class="btn btn-outline-secondary" for="mem-gender-f">여</label>
 					</div>
 				</div>
-				
-				
-				
-				
-				<div class="offset-1 col-9 mt-4">
+				<div id="email-div" class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">이메일</span>
-						<input type="text" name="memEmailArr" class="form-control" th:value="${memberVO.memEmailArr[0]}">
+						<input type="text" name="memEmailArr" id="mem-email-0" class="form-control" th:value="${memberVO.memEmailArr[0]}"
+							onkeyup="email_keyup();" th:data-origin="${memberVO.memEmailArr[0]}">
 						<span class="input-group-text">@</span>
-						<input type="text" name="memEmailArr" class="form-control" th:value="${memberVO.memEmailArr[1]}">
+						<input type="text" name="memEmailArr" id="mem-email-1" class="form-control" th:value="${memberVO.memEmailArr[1]}"
+							onkeyup="email_keyup();" th:data-origin="${memberVO.memEmailArr[1]}">
 					</div>
 				</div>
-				<div class="offset-1 col-9 mt-4">
+				<div id="tell-div" class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">연락처</span>
-						<input type="text" name="memTellArr" class="form-control" th:value="${memberVO.memTellArr[0]}">
+						
+						<select name="memTellArr" id="mem-tell-0" class="form-select" onchange="tell_keyup();" th:data-origin="${memberVO.memTellArr[0]}">
+							<option value="010" th:selected="${memberVO.memTellArr[0] == '010'}">010</option>
+							<option value="011" th:selected="${memberVO.memTellArr[0] == '011'}">011</option>
+						</select>
 						<span class="input-group-text">-</span>
-						<input type="text" name="memTellArr" class="form-control" th:value="${memberVO.memTellArr[1]}">
+						<input type="text" name="memTellArr" id="mem-tell-1" class="form-control" th:value="${memberVO.memTellArr[1]}"
+							onkeyup="tell_keyup();" th:data-origin="${memberVO.memTellArr[1]}">
 						<span class="input-group-text">-</span>
-						<input type="text" name="memTellArr" class="form-control" th:value="${memberVO.memTellArr[2]}">
+						<input type="text" name="memTellArr" id="mem-tell-2" class="form-control" th:value="${memberVO.memTellArr[2]}"
+							onkeyup="tell_keyup();" th:data-origin="${memberVO.memTellArr[2]}">
 					</div>
 				</div>
 				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">생년월일</span>
-						<input type="date" name="memBirthday" class="form-control" th:value="${memberVO.memBirthday}">
+						<input type="date" name="memBirthday" class="form-control" th:value="${memberVO.memBirthday}"
+							th:max="${#dates.format(#dates.createNow(), 'YYYY-MM-dd')}">
 					</div>
 				</div>
 				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">주소</span>
 						<input type="text" name="memAddr" id="mem-addr" class="form-control" onclick="search_addr();" placeholder="주소 검색 클릭"
-							th:value="${memberVO.memAddr}" readonly>
+							th:value="${memberVO.memAddr}" th:data-origin="${memberVO.memAddr}" readonly>
 						<button type="button" class="btn custom-btn" onclick="search_addr();">주소 검색</button>
 					</div>
 				</div>
 				<div class="offset-1 col-9 mt-4">
 					<div class="input-group">
 						<span class="input-group-text w-25">상세주소</span>
-						<input type="text" name="memAddrDetail" id="join-mem-addr-detail" class="form-control" th:value="${memberVO.memAddrDetail}"
-							placeholder="상세 주소 입력">
+						<input type="text" name="memAddrDetail" id="mem-addr-detail" class="form-control" th:value="${memberVO.memAddrDetail}"
+							onkeyup="addr_detail_keyup(this);" th:data-origin="${memberVO.memAddrDetail}" placeholder="상세 주소 입력">
 					</div>
 				</div>
 				<div class="offset-1 col-9 mt-5 d-grid">
-					<button type="button" class="btn btn-primary custom-btn">수정</button>
+					<button type="button" class="btn btn-primary custom-btn" onclick="update_check();">변경하기</button>
 				</div>
 			</div>
 		</form>

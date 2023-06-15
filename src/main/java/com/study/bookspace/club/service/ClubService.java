@@ -5,6 +5,7 @@ import java.util.List;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
+import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.util.PageVO;
@@ -116,7 +117,14 @@ public interface ClubService {
 	//클럽코드로 클럽장 아이디 구하기
 	String getMemIdByClubCode(String clubCode);
 	
+	//커뮤니티 이미지 삽입
+	void insertCommunityImg(CommunityImageVO communityImageVO);
 	
+	//다음 게시글 번호 조회
+	String getNextBoardNum();
+	
+	//게시글 이미지 이름
+	String getCommunityImageName(String boardNum);
 	
 	
 	

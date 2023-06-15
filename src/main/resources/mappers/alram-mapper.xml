@@ -38,15 +38,21 @@
 		SELECT ALRAM_CODE
 		    , TO_CHAR(ALRAM_DATE, 'YYYY-MM-DD HH24:MI') AS ALRAM_DATE
 		    , A_CONTENT
+		    , A_CHECK
 		FROM ALRAM
 		WHERE MEM_ID = #{memId}
 	</select>
 	
-	<update id="readAlram">
+	<update id="updateAlramACheck">
 		UPDATE ALRAM
 		SET 
-			A_CHECK = 'Y'
+			A_CHECK = #{aCheck}
 		WHERE ALRAM_CODE = #{alramCode}
 	</update>
+	
+	<delete id="deleteAlram">
+		DELETE ALRAM
+		WHERE ALRAM_CODE = #{alramCode}
+	</delete>
 	
 </mapper>
