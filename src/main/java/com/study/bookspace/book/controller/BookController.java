@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.study.bookspace.alram.vo.AlramVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
@@ -35,8 +38,6 @@ import jakarta.servlet.http.HttpSession;
 public class BookController {
 	@Resource(name = "bookService")
 	private BookService bookService;
-	
-	
 	
 //	도서 목록 조회
 	@RequestMapping("/bookList")
@@ -151,7 +152,7 @@ public class BookController {
 //	도서 대여
 	@ResponseBody
 	@PostMapping("/borrowAjax")
-	public int borrowAjax(BorrowVO borrowVO, HttpSession session, ReserveVO reserveVO) {
+	public int borrowAjax(BorrowVO borrowVO, HttpSession session, ReserveVO reserveVO, String bookCode) {
 		
 		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
@@ -170,6 +171,9 @@ public class BookController {
 			 
 //		도서 대여
 		 bookService.borrowBook(borrowVO);
+		 
+//		 예약자 ID
+//		 bookService.delReserve(bookCode);
 		 return 0;
 		 
 	}
@@ -225,14 +229,22 @@ public class BookController {
 	}
 	
 
+	
 //	도서 반납
 	@ResponseBody
 	@PostMapping("/returnBookAjax")
-	public void returnBookAjax(BorrowVO borrowVO, HttpSession session) {
+	public void returnBookAjax(BorrowVO borrowVO, HttpSession session, AlramVO alramVO, String bookCode) {
 		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
 //		도서 반납
 		bookService.returnBook(borrowVO);
+		
+//		String reserveId = bookService.getReserveId(bookCode);
+//		
+//		alramVO.setMemId(reserveId);
+//		alramVO.setAContent("예약하신 도서를 대여할 수 있습니다.");
+//		alramVO.setSection(1);
+		
 	}
 	
 	
@@ -289,6 +301,7 @@ public class BookController {
 		
 //		도서 목록 조회
 		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));
+		
 		return "content/admin/book_manage";
 	}
 	
@@ -341,11 +354,11 @@ public class BookController {
 	}
 	
 	
-//	도서 관리) 도서 수정
+//	도서 관리) 도서 이미지, 소개 수정
 	@ResponseBody
-	@PostMapping("/updateBookAjax")
-	public void updateBookAjax(BookVO bookVO) {
-		bookService.updateBook(bookVO);
+	@PostMapping("/updateBookDetail")
+	public void updateBookDetail(ImgVO imgVO) {
+		bookService.updateBookDetail(imgVO);
 		
 	}
 	

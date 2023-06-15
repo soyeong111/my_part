@@ -43,6 +43,12 @@ public interface BookService {
 //	도서 예약
 	void reserveBook(ReserveVO reserveVO);
 	
+//	도서 예약 취소
+	void delReserve(String bookCode);
+	
+//	도서 예약 ID
+	String getReserveId(String bookCode);
+	
 //	도서관리) 도서 카테고리 조회
 	List<CategoryVO> getCateListForAdmin();
 	
@@ -69,6 +75,9 @@ public interface BookService {
 	
 //	도서관리) 도서 수정
 	void updateBook(BookVO bookVO);
+	
+//	도서관리) 도서 이미지, 소개 수정
+	void updateBookDetail(ImgVO imgVO);
 	
 ////	도서 대여 개수
 //	Map<String, Object> getBorrowAndStockCnt(String bookCode);

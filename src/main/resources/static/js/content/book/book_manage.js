@@ -281,8 +281,8 @@ function getBookDetail(bookCode) {
 		str += `       </div>   																  `;
 		str += `       </div>   																  `;
 		str += `<div class="offset-5 col-2 d-grid">												  `;
-		str += `				<input type="button" id="editBtn" class="btn custom-btn"		  `;
-		str += `					value="수정" onclick="editBook();">							  `;
+		str += `				<input type="button" class="btn custom-btn"		  `;
+		str += `					value="수정" onclick="editBookDetail();">					  `;
 		str += `			</div>																  `;
 
 
@@ -295,13 +295,39 @@ function getBookDetail(bookCode) {
   // ajax end
 }
 
-function deleteMainImg(attachedFileName, bookCode) {
-  // 이미지 삭제 
-  
+
+// 이미지, 소개 수정
+function editBookDetail(bookIntro, originFileName, attachedFileName, isMainImg, bookCode){
+
   
   // AJAX를 사용하여 /book/bookdelete로 요청 보내기
   $.ajax({
-    url: '/book/deleteMainImg',
+    url: '/book/updateBookDetail',
+    type: 'post',
+    async: true,
+    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: { 'attachedFileName': attachedFileName , 'bookCode':bookCode, 'bookIntro':bookIntro, 'originFileName':originFileName, 'isMainImg':isMainImg},
+    success: function(result) {
+      console.log(result); // 성공 처리
+
+      // 이미지 삭제 성공 후의 추가 로직 구현
+
+    },
+    error: function() {
+      alert('실패'); // 실패 처리
+    }
+  });
+	
+}
+
+
+  // 이미지 삭제 
+function deleteMainImg(attachedFileName, bookCode) {
+  
+  
+  // AJAX
+  $.ajax({
+    url: '/book/updateBookDetail',
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
