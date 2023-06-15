@@ -272,6 +272,8 @@ public class ClubController {
 		//등록될 게시글번호 조회
 		String boardNum = clubService.getNextBoardNum();
 		communityVO.setBoardNum(boardNum);
+		
+		// -- 게시글 등록 -- //
 		clubService.regBoard(communityVO);
 		
 		// -- 파일 첨부 -- //
@@ -283,11 +285,12 @@ public class ClubController {
 			clubService.insertCommunityImg(communityImageVO);
 		}
 		
-		// -- 게시글 등록 -- //
+		
 		
 		return "redirect:/club/community?clubCode=" + communityVO.getClubCode() 
 		+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
+	
 	
 	//게시글 상세페이지 이동
 	@GetMapping("/boardDetail")
@@ -312,13 +315,14 @@ public class ClubController {
 	
 	//게시글 수정
 	@PostMapping("/updateBoard")
-	public String updateBoard(CommunityVO communityVO) {
+	public String updateBoard(CommunityVO communityVO, SubMenuVO subMenuVO) {
 
 		System.out.println(communityVO);
 		clubService.updateBoard(communityVO);
 		
 		return "redirect:/club/boardDetail?clubCode=" 
-				+ communityVO.getClubCode() + "&boardNum=" + communityVO.getBoardNum();
+				+ communityVO.getClubCode() + "&boardNum=" + communityVO.getBoardNum()
+				+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}	
 	
 	//게시글 삭제

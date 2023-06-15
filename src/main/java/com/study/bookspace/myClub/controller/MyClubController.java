@@ -23,11 +23,13 @@ public class MyClubController {
 	
 	//내가 가입한 북클럽
 	@GetMapping("/myBookClub")
-	public String myBookClub(SubMenuVO subMenuVO,Model model, Authentication authentication, BookClubMemberVO bookClubMemberVO) {
+	public String myBookClub(SubMenuVO subMenuVO,Model model, Authentication authentication, BookClubMemberVO bookClubMemberVO, String clubCode) {
 		
 		User user = (User)authentication.getPrincipal();
 		String memId = user.getUsername();
 		bookClubMemberVO.setMemId(memId);
+		
+		
 		
 		//내 북클럽 상태 조회
 		model.addAttribute("myClubDetail", clubService.getMyClubDetail(memId));
