@@ -8,47 +8,72 @@
 </th:block>
 <th:block layout:fragment="content">
 
-
-<div class="search">
-    <form th:action="@{/book/bookList}" method="post" th:object="${searchBookVO}">
-        <div class="row p-5">
-            <div class="col-2">
-                <select class="form-select" th:field="*{searchOption}">
-                    <option value="title">제목</option>
-                    <option value="author">저자</option>
-                </select>
-            </div>
-            <div class="col-8">
-                <input class="form-control" th:field="*{searchText}">
-            </div>
-            <div class="col-2 d-grid">
-                <input type="submit" value="검색" class="btn btn-primary custom-btn">
-            </div>
-        </div>
-    </form>
-</div>
+	<div class="search">
+		<form th:action="@{/book/bookList}" method="post"
+			th:object="${searchBookVO}">
+			<div class="row p-5">
+				<div class="col-2">
+					<select class="form-select" th:field="*{searchOption}">
+						<option value="title">제목</option>
+						<option value="author">저자</option>
+					</select>
+				</div>
+				<div class="col-8">
+					<input class="form-control" th:field="*{searchText}">
+				</div>
+				<div class="col-2 d-grid">
+					<input type="submit" value="검색" class="btn btn-primary custom-btn">
+				</div>
+			</div>
+		</form>
+	</div>
 
 
 
 	<div class="book-list-div">
-  <div class="row row-cols-5 g-4">
-    <th:block th:each="book, iterStat : ${bookList}">
-      <div class="col">
-        <div class="bookList" style="text-align: center;">
-        <a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}">
-          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width:168px; height: 255px;">
-          </a>
-            <div class="bookList-title">
-              <[[${book.bookTitle}]]>
-            </div>
-        </div>
-      </div>
-    </th:block>
-     </div>
-</div>
-    
-    
- </th:block>
+		<div class="row row-cols-5 g-4">
+			<th:block th:each="book, iterStat : ${bookList}">
+				<div class="col">
+					<div class="bookList" style="text-align: center;">
+						<a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}"> <img
+							th:src="${'/image/book/' + book.imgList[0].attachedFileName}"
+							style="width: 168px; height: 255px;">
+						</a>
+						<div class="bookList-title"><[[${book.bookTitle}]]></div>
+					</div>
+				</div>
+			</th:block>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="pagination">
+			<div class="col"
+				style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+				<th:block th:if="${bookVO.prevPageFlag}">
+					<a
+						th:href="@{/book/bookList(nowPageNum=${bookVO.startPageNum - 1}, 
+						mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">이전</a>
+				</th:block>
+				<th:block
+					th:each="pageNum : ${#numbers.sequence(bookVO.startPageNum, bookVO.endPageNum)}">
+					<a
+						th:href="@{/book/bookList(nowPageNum=${pageNum},
+					mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
+						<span th:text="${pageNum}"></span>
+					</a>
+				</th:block>
+				<th:block th:if="${bookVO.nextPageFlag}">
+					<a
+						th:href="@{/book/bookList(nowPageNum=${bookVO.endPageNum + 1},
+					mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">다음</a>
+				</th:block>
+			</div>
+		</div>
+	</div>
+
+
+</th:block>
 
 
 <th:block layout:fragment="content_js">

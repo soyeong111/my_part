@@ -71,3 +71,30 @@ h1 {
 .book-list-div {
 	margin-top: 10px;
 }
+
+
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.pagination a {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: 30px;
+	height: 30px;
+	background-color: #eaeaea;
+	border-radius: 50%;
+	margin-right: 5px;
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+
+.pagination a:hover {
+	background-color: #ccc;
+	color: #fff;
+}
