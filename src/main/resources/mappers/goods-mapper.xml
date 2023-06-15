@@ -34,6 +34,15 @@
 		<result  column="GOODS_CODE"  				property="goodsCode"/>
 	</resultMap>
 	
+	<!-- 공지 -->
+	<resultMap type="com.study.bookspace.goods.vo.NoticeVO" id="notice">
+		<id		column="NOTICE_NO"								property="noticeNo"/>
+		<result		column="NOTICE_TITLE"						property="noticeTitle"/>
+		<result		column="NOTICE_CONTENT"				property="noticeContent"/>
+		<result		column="NOTICE_CREATE_DATE"		property="noticeCreateDate"/>
+		<result		column="MEM_ID"								property="memId"/>
+	</resultMap>
+	
 	<!-- 굿즈 카테고리 관리페이지에서 목록 조회(관리자) -->
 	<select id="selectGoodsCateList" resultMap="goodsCategory">
 		SELECT GOODS_CATE_CODE
@@ -219,6 +228,28 @@
 			, GOODS_STATUS
 			, GOODS_STOCK_CNT
 		FROM GOODS
+		ORDER BY REG_DATE
+	</select>
+	
+		<!-- 베스트 굿즈 리스트 (퍼블릭) : 구매수가 많은 상위 10개 상품 순서대로 조회  -->
+	<select id="goodsListForBest" resultMap="goods">
+		SELECT GOODS_CODE
+		    , GOODS_NAME
+		    , GOODS_PRICE
+		    , GOODS_STATUS
+		    , GOODS_STOCK_CNT
+		FROM GOODS
+		WHERE GOODS_CODE IN (
+							                        SELECT GOODS_CODE
+							                        FROM 
+							                        (
+							                            SELECT GOODS_CODE, COUNT(GOODS_CODE) AS BUY_CNT
+							                            FROM GOODS_BUY_DETAIL
+							                            GROUP BY GOODS_CODE
+							                            ORDER BY BUY_CNT DESC
+							                        )
+							                        WHERE ROWNUM &lt;= 10
+							                    )
 	</select>
 	
 	<!-- 굿즈 상세 조회(퍼블릭) -->
@@ -232,6 +263,30 @@
 		FROM GOODS GOODS, GOODS_IMAGE IMG
 		WHERE GOODS.GOODS_CODE = IMG.GOODS_CODE
 		AND GOODS.GOODS_CODE = #{goodsCode}
+		</select>
+		
+		
+		
+		
+		
+			<!--공지 리스트 (퍼블릭)  -->
+	<select id="noticeForPublic" resultMap="notice">
+		SELECT NOTICE_NO
+			, NOTICE_TITLE
+			, NOTICE_CREATE_DATE
+			, MEM_ID
+		FROM NOTICE
+		ORDER BY NOTICE_CREATE_DATE
+	</select>
+	
+	<!-- 공지 상세 조회(퍼블릭) -->
+	<select id="noticeDetailForPublic" resultMap="notice">
+		SELECT NOTICE_NO
+			, NOTICE_TITLE
+			, NOTICE_CONTENT
+			, NOTICE_CREATE_DATE
+			, MEM_ID
+		FROM NOTICE
 		</select>
 	
 	
