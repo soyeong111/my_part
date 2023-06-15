@@ -91,6 +91,7 @@ public class GoodsController {
 	//굿즈 조회(굿즈 관리 페이지)
 	@RequestMapping("/goodsManage")
 	public String goodsManage(SubMenuVO subMenuVO, Model model, GoodsVO goodsVO) {
+		System.out.println(goodsVO.getGoodsSearchVO());
 		
 		model.addAttribute("goodsCateList", goodsService.selectGoodsCateList());
 		model.addAttribute("goodsList", goodsService.selectGoodsListAdmin(goodsVO));

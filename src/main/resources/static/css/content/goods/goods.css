@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.goodsListTable{
+	width: 85%;
+	margin-top: 12rem;
+	font-size: large;
+}
+
+.goodsDetail{
+	margin-top: 12rem;
+	width: 90%;
+}
