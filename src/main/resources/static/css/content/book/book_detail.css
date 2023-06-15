@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#test{
+   width: 300px;
+   background-color: blue;
+   margin: 60px auto;
+   transition:all 1s linear;
+}
+
+#test:hover{
+   transform:rotateY(180deg);
+   cursor: url("/image/ico_flip.svg") 20 30, auto;
+}
+
+
+#book-container {
+            width: 400px;
+            height: 600px;
+}

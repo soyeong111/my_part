@@ -173,7 +173,20 @@ public class BookServiceImpl implements BookService {
 		sqlSession.delete("bookMapper.deleteSubImg", bookCode);
 	}
 
+	@Override
+	public void delReserve(String bookCode) {
+		    sqlSession.delete("bookMapper.delReserve", bookCode);
+	}
 
+	@Override
+	public String getReserveId(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getReserveId", bookCode);
+	}
+
+	@Override
+	public void updateBookDetail(ImgVO imgVO) {
+		sqlSession.update("bookMapper.updateBookDetail", imgVO);
+	}
 
 
 

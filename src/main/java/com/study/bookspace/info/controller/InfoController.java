@@ -1,26 +1,19 @@
 package com.study.bookspace.info.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import com.study.bookspace.goods.service.GoodsService;
+import com.study.bookspace.goods.vo.NoticeVO;
 import com.study.bookspace.info.service.AnswerService;
 import com.study.bookspace.info.service.QnaService;
 import com.study.bookspace.info.vo.AnswerVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.info.vo.SearchQnaVO;
-import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.PageVO;
 
@@ -33,6 +26,8 @@ public class InfoController {
 	private QnaService qnaService;
 	@Resource(name = "answerService")
 	private AnswerService answerService;
+	@Resource(name = "goodsService")
+	private GoodsService goodsService;
 	
 	//도서관 소개글
 	@GetMapping("/libraryIntro")
@@ -152,10 +147,17 @@ public class InfoController {
 		
 		return "content/info/way_to_library";
 	}
+	
+
 	@GetMapping("/notice")
-	public String notice(SubMenuVO subMenuVO) {
-		
+	public String notice(SubMenuVO subMenuVO, NoticeVO noticeVO, Model model) {
+		model.addAttribute(goodsService.noticeForPublic(noticeVO));
 		return "content/info/notice";
+	}
+	@GetMapping("/noticeDetail")
+	public String noticeDetail(SubMenuVO subMenuVO, String noticeNo, Model model) {
+		model.addAttribute(goodsService.noticeDetailForPublic(noticeNo));
+		return "content/info/notice_detail";
 	}
 	
 	
@@ -177,7 +179,6 @@ public class InfoController {
 		
 		return "content/info/qna_list";
 	}
-	
 	
 	
 	

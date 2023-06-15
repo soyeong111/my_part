@@ -83,10 +83,10 @@
 						</td>
 						<td colspan="3" class="text-start">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" value="all" type="checkbox" id="checkAll" name="goodsSearchVO.searchCateCode" th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, 'all')}">
+								<input onclick="setAllCheck(this);" class="form-check-input" value="all" type="checkbox" id="checkAll" name="goodsSearchVO.searchCateCode" th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, 'all')}">
 								<label class="form-check-label" for="">전체</label>
 							</div>
-							<th:block th:each="category : ${categoryList}">
+							<th:block th:each="category : ${goodsCateList}">
 								<div class="form-check form-check-inline">
 									<input class="form-check-input chk" th:value="${category.goodsCateCode}" type="checkbox" id="" name="goodsSearchVO.searchCateCode" 
 										th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, category.goodsCateCode)}">
@@ -106,10 +106,15 @@
 						</td>
 						<td>
 							<select id="" name="goodsSearchVO.searchGoodsStatus" class="form-select">
-								<option value="0" th:selected="${goodsVO.goodsSearchVO == null or goodsVO.goodsSearchVO.searchGoodsStatus == 0}">전체</option>
+								<!-- <option value="0" th:selected="${goodsVO.goodsSearchVO == null or goodsVO.goodsSearchVO.searchGoodsStatus == 0}">전체</option>
 								<option value="1" th:selected="${goodsVO.goodsSearchVO == null or goodsVO.goodsSearchVO.searchGoodsStatus  == 1}">판매중</option>
 								<option value="2" th:selected="${goodsVO.goodsSearchVO == null or goodsVO.goodsSearchVO.searchGoodsStatus  == 2}">준비중</option>
-								<option value="3" th:selected="${goodsVO.goodsSearchVO == null or goodsVO.goodsSearchVO.searchGoodsStatus  == 3}">매진</option>
+								<option value="3" th:selected="${goodsVO.goodsSearchVO == null or goodsVO.goodsSearchVO.searchGoodsStatus  == 3}">매진</option> -->
+								
+								<option value="0" th:selected="${goodsVO.goodsSearchVO == null}">전체</option>
+								<option value="1" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 1}">판매중</option>
+								<option value="2" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 2}">준비중</option>
+								<option value="3" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 3}">매진</option>
 							</select>
 						</td>
 						<td class="table-secondary">
@@ -122,14 +127,14 @@
 								<div class="col-6">
 									<div class="input-group">
 									  <span class="input-group-text">From</span>
-									  <input type="text" class="form-control" name="goodsSearchVO.searchFromGoodsStock" 
+									  <input type="number" class="form-control" name="goodsSearchVO.searchFromGoodsStock" 
 									  	th:value="${goodsVO.goodsSearchVO == null ? '' : goodsVO.goodsSearchVO.searchFromGoodsStock}" >
 									</div>
 								</div>
 								<div class="col-6">
 									<div class="input-group">
 									  <span class="input-group-text">To</span>
-									  <input type="text" class="form-control" name="goodsSearchVO.searchToGoodsStock"
+									  <input type="number" class="form-control" name="goodsSearchVO.searchToGoodsStock"
 									  	th:value="${goodsVO.goodsSearchVO == null ? '' : goodsVO.goodsSearchVO.searchToGoodsStock}">
 									</div>
 								</div>
