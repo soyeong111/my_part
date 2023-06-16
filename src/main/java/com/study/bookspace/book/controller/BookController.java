@@ -300,13 +300,20 @@ public class BookController {
 	
 //	도서 관리) 소장 도서 관리
 	@RequestMapping("/bookManage")
-	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO) {
+	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO, String bookCode, ImgVO imgVO) {
 		
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
 		
-		ImgVO imgVO = new ImgVO();
+		
 		String bookImgCode = imgVO.getBookImgCode();
+		String originFileName = imgVO.getOriginFileName();
+		String bookIntro = imgVO.getBookIntro();
+		String attachedFileName = imgVO.getAttachedFileName();
+		String isMainImg = imgVO.getIsMainImg();
+		
+		System.out.println("@@@@@@@@@@@@@" + bookIntro);
+		System.out.println("@@@@@@@@@@@@@" + attachedFileName);
 		//전체 게시글 수 조회
 		//int totalDataCnt = bookService.getBoardCnt(bookVO.getBookCode());
 		
@@ -334,9 +341,11 @@ public class BookController {
 	@ResponseBody
 	@PostMapping("/imgListAjax")
 	public List<ImgVO> imgListAjax(String bookCode) {
+		
 			
 //		이미지목록 (전체)
 		return bookService.getImgListForBook(bookCode);
+		
 	}
 	
 
@@ -373,8 +382,8 @@ public class BookController {
 	
 //	도서 관리) 도서 이미지, 소개 수정
 	@ResponseBody
-	@PostMapping("/updateBookDetail")
-	public void updateBookDetail(ImgVO imgVO) {
+	@PostMapping("/updateBookDetailAjax")
+	public void updateBookDetailAjax(ImgVO imgVO) {
 		bookService.updateBookDetail(imgVO);
 		
 	}

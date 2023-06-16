@@ -193,14 +193,16 @@ function openImgModal(attachedFileName, originFileName){
 }
 
 
-function getBookDetail(bookCode, bookImgCode) {
+function getBookDetail(bookCode) {
   // ajax start
   $.ajax({
     url: '/book/imgListAjax', // 요청경로
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 'bookCode': bookCode , 'bookImgCode':bookImgCode}, // 도서 코드 전달
+    data: { 
+		'bookCode': bookCode, 
+	}, // 도서 코드 전달
     success: function(result) {
       console.log(result); // 이미지 데이터 확인
 
@@ -221,7 +223,7 @@ function getBookDetail(bookCode, bookImgCode) {
 
 		// 메인 이미지 처리
 		str += `    <div class="row">                                                           `;
-		str += `       <div class="col sub-title">                                              `;
+		str += `       <div class="offset-1 col-5 sub-title">                                              `;
 		str += `          <h5>도서 이미지</h5>                                                   `;
 		str += `       </div>                                                                   `;
 		str += `       <div class="col sub-title">                                              `;
@@ -281,9 +283,10 @@ function getBookDetail(bookCode, bookImgCode) {
 		str += `       </div>   																  `;
 		str += `       </div>   																  `;
 		str += `<div class="offset-5 col-2 d-grid">												  `;
-		str += `				<input type="button" class="btn custom-btn"		  `;
-		str += `					value="수정" onclick="editBookDetail();">					  `;
+		str += `				<input type="button" class="btn custom-btn" value="수정" onclick="editBookDetail();">					  `;
 		str += `			</div>																  `;
+		
+		
 
 
       bookDetailDiv.insertAdjacentHTML('afterbegin', str);
@@ -302,11 +305,17 @@ function editBookDetail(bookIntro, originFileName, attachedFileName, isMainImg, 
   
   // AJAX를 사용하여 /book/bookdelete로 요청 보내기
   $.ajax({
-    url: '/book/updateBookDetail',
+    url: '/book/updateBookDetailAjax',
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 'attachedFileName': attachedFileName , 'bookCode':bookCode, 'bookIntro':bookIntro, 'originFileName':originFileName, 'isMainImg':isMainImg},
+    data: { 
+		'attachedFileName': attachedFileName, 
+		'bookCode':bookCode, 
+		'bookIntro':bookIntro, 
+		'originFileName':originFileName, 
+		'isMainImg':isMainImg
+	},
     success: function(result) {
       console.log(result); // 성공 처리
 
@@ -331,7 +340,10 @@ function deleteMainImg(attachedFileName, bookImgCode) {
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 'attachedFileName': attachedFileName , 'bookImgCode':bookImgCode},
+    data: { 
+		'attachedFileName': attachedFileName, 
+		'bookImgCode':bookImgCode
+	},
     success: function(result) {
       console.log(result); // 성공 처리
 
@@ -355,7 +367,10 @@ function deleteSubImg(attachedFileName, bookImgCode) {
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 'attachedFileName': attachedFileName , 'bookImgCode':bookImgCode},
+    data: { 
+		'attachedFileName': attachedFileName , 
+		'bookImgCode':bookImgCode
+		},
     success: function(result) {
       console.log(result); // 성공 처리
 

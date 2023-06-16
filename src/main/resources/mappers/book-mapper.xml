@@ -579,7 +579,9 @@
 				, ORIGIN_FILE_NAME = #{originFileName}
 				, ATTACHED_FILE_NAME = #{attachedFileName}
 				, IS_MAIN_IMG = #{isMainImg}
-			  WHERE BOOK_CODE = #{bookCode}
+			  WHERE 
+			  BOOK.BOOK_CODE = #{bookCode}
+   		      AND BOOK_IMAGE.BOOK_CODE = #{bookCode}
 		</update>
 		
 		<!-- 도서 반납 -->
