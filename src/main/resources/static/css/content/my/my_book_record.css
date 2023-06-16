@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.record-list-div .book-review-textarea {
+	height: 120px;
+	resize: none;
+}
+
+.record-list-div .card-span {
+	font-size: 0.8rem;
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+}
+
+.record-list-div .card-span .color-custom-r {
+	color: #b94e51;
+}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myBook.service.MyBookService;
+import com.study.bookspace.myBook.vo.BookRecordSearchVO;
 import com.study.bookspace.myBook.vo.BookRecordVO;
 
 import jakarta.annotation.Resource;
@@ -22,14 +23,26 @@ public class MyBookController {
 	@Resource(name = "myBookService")
 	private MyBookService myBookService;
 	
-	// 독서기록 페이지로
+	// 독서 기록 페이지로
 	@GetMapping("/myBookRecord")
-	public String myBookRecord(SubMenuVO subMenuVO, Authentication authentication, Model model) {
-		model.addAttribute("bookMapList", myBookService.getBookTitleListThreeMonths(((User)authentication.getPrincipal()).getUsername()));
+	public String myBookRecord(SubMenuVO subMenuVO, Authentication authentication, Model model, BookRecordSearchVO bookRecordSearchVO) {
+		bookRecordSearchVO.setSearchMemId(((User)authentication.getPrincipal()).getUsername());
+		model.addAttribute("bookMapList", myBookService.getBookTitleListThreeMonths(bookRecordSearchVO.getSearchMemId()));
+		if (bookRecordSearchVO.getSearchOrder() == null) {
+			bookRecordSearchVO.setSearchOrder("DESC");
+		}
+		bookRecordSearchVO.setTotalDataCnt(myBookService.getBookRecordDataCnt(bookRecordSearchVO));
+		bookRecordSearchVO.setPageInfo();
+		
+		
+		
+		
+		System.out.println(bookRecordSearchVO);
+		model.addAttribute("recordList", myBookService.getMyBookRecord(bookRecordSearchVO));
 		return "content/my/my_book_record";
 	}
 	
-	// 독서기록 등록
+	// 독서 기록 등록
 	@PostMapping("/regBookRecord")
 	public String regBookRecord(SubMenuVO subMenuVO, BookRecordVO bookRecordVO, Authentication authentication) {
 		bookRecordVO.setMemId(((User)authentication.getPrincipal()).getUsername());
@@ -37,13 +50,18 @@ public class MyBookController {
 		return "redirect:/mBook/myBookRecord?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
+	// 독서 기록 삭제
+	@ResponseBody
+	@PostMapping("/deleteBookRecordAjax")
+	public boolean deleteBookRecordAjax(String recordCode) {
+		return myBookService.deleteBookRecord(recordCode) == 1;
+	}
 	
+	// 독서 기록 수정
+	@ResponseBody
+	@PostMapping("/updateBookRecordAjax")
+	public boolean updateBookRecordAjax(BookRecordVO bookRecordVO) {
+		return myBookService.updateBookRecord(bookRecordVO) == 1;
+	}
 	
-	
-	
-	
-	
-	
-	
-
 }

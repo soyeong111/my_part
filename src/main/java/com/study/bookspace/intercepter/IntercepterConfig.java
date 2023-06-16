@@ -47,7 +47,8 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/mBook/**"
 							, "/mClub/**"
 							, "/mGoods/**")
-			.excludePathPatterns("/**/*Ajax");
+			.excludePathPatterns("/**/*Ajax"
+								, "/mBook/regBookRecord");
 		
 		registry.addInterceptor(getAdminMenuIntercepter())
 			.addPathPatterns("/aBook/**"

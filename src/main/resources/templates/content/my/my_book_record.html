@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/member_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/content/my/my_book_record.css">
 </th:block>
 <th:block layout:fragment="content">
 	<div class="my-book-record-div mt-5 w-75 m-auto">
@@ -49,6 +49,54 @@
 				</div>
 			</div>
 		</form>
+		<form id="record-search-form">
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
+			<input type="hidden" name="searchColumn" th:value="${bookRecordSearchVO.searchColumn}">
+			<input type="hidden" name="searchValue" th:value="${bookRecordSearchVO.searchValue}">
+			<input type="hidden" name="searchOrder" th:value="${bookRecordSearchVO.searchOrder}">
+			<input type="hidden" name="nowPageNum" th:value="${bookRecordSearchVO.nowPageNum}">
+		</form>
+		<div class="row row-cols-1 row-cols-md-2 g-4 mt-5 record-list-div">
+			<div class="col record-card-div" th:each="record : ${recordList}">
+				<div class="card mb-3">
+					<div class="row g-0">
+						<div class="col-md-4" style="height: 270px;">
+							<img th:src="${'/image/book/' + record.bookVO.imgList[0].attachedFileName}" class="rounded-start h-100 w-100">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body position-relative">
+								<h5 class="card-title" th:text="${record.bookVO.bookTitle}"></h5>
+								<p class="card-text">
+									<small class="text-body-secondary" th:text="${record.bookVO.bookAuthor}"></small>
+								</p>
+								<div class="input-group">
+									<input type="date" class="form-control form-control-sm start-date-input" th:value="${record.startDate}" readonly>
+									<span class="input-group-text">~</span>
+									<input type="date" class="form-control form-control-sm end-date-input" th:value="${record.endDate}" readonly>
+								</div>
+								<textarea class="form-control mt-2 book-review-textarea" th:text="${record.bookReview}" maxlength="10" readonly></textarea>
+								<span class="card-span">
+									<a href="javascript:void(0);" class="text-secondary" th:onclick="change_tag([[${record.recordCode}]], this);">수정</a>
+									<span class="text-secondary"> / </span>
+									<a href="javascript:void(0);" class="color-custom-r" th:onclick="delete_record([[${record.recordCode}]], this);">삭제</a>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-3">
+			<div class="col pagination">
+				<a><</a>
+				<a>1</a>
+				<a>2</a>
+				<a>3</a>
+				<a>4</a>
+				<a>></a>
+			</div>
+		</div>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
