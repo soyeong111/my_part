@@ -28,3 +28,13 @@
 thead{
 	font-weight: bold;
 }
+
+.noClub-div{
+	margin-top: 15rem;
+	font-size: 20px;
+}
+
+.club-list-btn{
+	margin-top: 1.5rem;
+	text-align: center;
+}

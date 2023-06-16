@@ -44,7 +44,7 @@
 						<td>[[${board.regDate}]]</td>
 					</tr>
 					<tr>
-						<td>내용</td>
+						<td class="board-body">내용</td>
 						<td colspan="3">[[${board.boardContent}]]
 						<div th:if="${board.communityImageVO.bcAttachedFileName != null}">
 							<img th:src="${'/image/community/' + board.communityImageVO.bcAttachedFileName}" height="300px;">

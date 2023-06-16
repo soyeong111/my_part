@@ -126,8 +126,8 @@ public interface ClubService {
 	//게시글 이미지 이름
 	String getCommunityImageName(String boardNum);
 	
-	
-	
+	//공지사항 조회
+	List<CommunityVO> getNoticeList(String clubCode);
 	
 	
 	

@@ -17,7 +17,7 @@
 	<div class="community-div">
 		<div class="row">
 			<div class="col">
-				<table class="table">
+				<table class="table table-hover">
 					<colgroup>
 						<col width="10%">
 						<col width="*">
@@ -35,24 +35,38 @@
 						</tr>
 					</thead>
 					<tbody>
-						<th:block th:if="${#lists.size(boardList) == 0}">
-							<tr><td colspan=5>등록된 게시글이 없습니다.</td></tr>
-						</th:block>
-						<th:block th:unless="${#lists.size(boardList) == 0}">
-							<th:block th:each="board, state : ${boardList}">
-								<tr>
-									<td><span th:text="${board.rowNumber}"></span></td>
-									<td>
-										<a th:href="@{/club/boardDetail(boardNum=${board.boardNum}, clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">[[${board.boardTitle}]]</a>
-										<span th:text="${board.replyCnt == 0 ? '' : '[' + board.replyCnt + ']'}"></span>
-									</td>
-									<td>[[${board.clubNotice}]]</td>
-									<td>[[${board.regDate}]]</td>
-									<td>[[${board.readCnt}]]</td>
-								</tr>
-							</th:block>
-						</th:block>
-					</tbody>
+	                   <th:block th:if="${#lists.size(boardList) == 0}">
+				            <tr>
+				                <td colspan=5>등록된 게시글이 없습니다.</td>
+				            </tr>
+		       			 </th:block>
+		        			<th:block th:unless="${#lists.size(boardList) == 0}">
+		         			   <th:block th:each="notice : ${noticeList}">
+									<tr class="notice-row">
+		                   	 			<td><span class="notice-btn">공지</span></td>
+		                    			<td>
+		                        			<a th:href="@{/club/boardDetail(boardNum=${notice.boardNum}, clubCode=${notice.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">[[${notice.boardTitle}]]</a>
+		                        			<span th:text="${notice.replyCnt == 0 ? '' : '[' + notice.replyCnt + ']'}"></span>
+		                    			</td>
+					                    <td>[[${notice.memberVO.memName}]]</td>
+					                    <td>[[${notice.regDate}]]</td>
+					                    <td>[[${notice.readCnt}]]</td>
+		               				</tr>
+								</th:block>
+		           			<th:block th:each="board, state : ${boardList}">
+				                <tr>
+				                    <td><span th:text="${board.rowNumber}"></span></td>
+				                    <td>
+				                        <a th:href="@{/club/boardDetail(boardNum=${board.boardNum}, clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">[[${board.boardTitle}]]</a>
+				                        <span th:text="${board.replyCnt == 0 ? '' : '[' + board.replyCnt + ']'}"></span>
+				                    </td>
+				                    <td>[[${board.memberVO.memName}]]</td>
+				                    <td>[[${board.regDate}]]</td>
+				                    <td>[[${board.readCnt}]]</td>
+				                </tr>
+		            		</th:block>
+		        			</th:block>
+               		</tbody>
 				</table>
 			</div>
 		</div>
@@ -61,10 +75,10 @@
 				<input type="button" class="btn custom-btn" value="글쓰기" th:onclick="|location.href='@{/club/regBoardForm(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 			</div>
 		</div>
-		<div class="row">
+		<div class="row pagination">
 			<div class="col" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 				<th:block th:if="${communityVO.prevPageFlag}">
-					<a th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">이전</a>
+					<a th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}"><</a>
 				</th:block>
 				<th:block
 					th:each="pageNum : ${#numbers.sequence(communityVO.startPageNum, communityVO.endPageNum)}">
@@ -72,11 +86,11 @@
 						th:text="${pageNum}"></span></a>
 				</th:block>
 				<th:block th:if="${communityVO.nextPageFlag}">
-					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">다음</a>
+					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">></a>
 				</th:block>
 			</div>
 		</div>
-		<form class="row" th:action="@{/club/community}" method="post" th:object="${communityVO}">
+		<form class="row" id="searchForm" th:action="@{/club/community}" method="post" th:object="${communityVO}">
 			<input type="hidden" name="clubCode" th:value="${clubCode}">
 			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
 			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
@@ -90,7 +104,7 @@
 				<input type="text" class="form-control" th:field="*{searchText}">
 			</div>
 			<div class="col-2">
-				<input type="submit" class="btn custom-btn" value="검색">
+				<a><img src="/image/search.png" width="28px;" onclick="searchForm();" style="cursor: pointer;"></a>
 			</div>
 		</form>
 	</div>

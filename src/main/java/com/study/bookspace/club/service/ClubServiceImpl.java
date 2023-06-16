@@ -251,6 +251,12 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectOne("clubMapper.getCommunityImageName", boardNum);
 	}
 
+	//공지사항 조회
+	@Override
+	public List<CommunityVO> getNoticeList(String clubCode) {
+		return sqlSession.selectList("clubMapper.getNoticeList", clubCode);
+	}
+
 	
 	
 

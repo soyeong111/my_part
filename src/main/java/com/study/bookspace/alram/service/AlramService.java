@@ -15,6 +15,9 @@ public interface AlramService {
 	//알람 목록 조회
 	List<AlramVO> getAlramList(String memId);
 	
+	//알람 상세 조회
+	AlramVO getAlramDetail(String alramCode);
+	
 	//알람 체크 변경
 	void updateAlramACheck(AlramVO alramVO);
 	

@@ -52,7 +52,7 @@ function getAlramList(){
 		}
 	      for(let i = 0 ; i < result.length ; i++){
 		  str += `			<tr>`;
-		  str += `				<td><a href="javascript:void(0);">${result[i].acontent}</a></td>`;
+		  str += `				<td><a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#openMsg" onclick="oepnMsg('${result[i].alramCode}')";>${result[i].acontent}</a></td>`;
 		  str += `				<td>${result[i].alramDate}</td>`;
 		  if(result[i].acheck == 'N'){
 			  str += `				<td><a href="javascript:void(0);" onclick="updateAlramACheck('${result[i].alramCode}','Y');"><img src="/image/alram/envelope.png" width="28px;"></a></td>`;			
@@ -115,3 +115,5 @@ function deleteAlram(alramCode){
 	});
 	//ajax end
 }
+
+

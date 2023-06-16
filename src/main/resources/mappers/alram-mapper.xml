@@ -43,6 +43,14 @@
 		WHERE MEM_ID = #{memId}
 	</select>
 	
+	<select id="getAlramDetail" resultMap="alram">
+		SELECT ALRAM_CODE
+		    , TO_CHAR(ALRAM_DATE, 'YYYY-MM-DD HH24:MI') AS ALRAM_DATE
+		    , A_CONTENT
+		FROM ALRAM
+		WHERE ALRAM_CODE = #{alramCode}
+	</select>
+	
 	<update id="updateAlramACheck">
 		UPDATE ALRAM
 		SET 

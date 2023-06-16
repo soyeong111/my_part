@@ -32,6 +32,8 @@ public class MyClubController {
 		
 		//내 북클럽 상태 조회
 		model.addAttribute("myClubDetail", clubService.getMyClubDetail(memId));
+		model.addAttribute("hasApprovedClubs", clubService.getMyClubDetail(memId).stream().anyMatch(club -> club.getClubMemStatus() == 2));
+		model.addAttribute("hasApproveWaitClubs", clubService.getMyClubDetail(memId).stream().anyMatch(club -> club.getClubMemStatus() == 1));
 			
 		return "content/my/my_book_club";
 	}
@@ -74,7 +76,7 @@ public class MyClubController {
 	
 	//북클럽 신청 취소
 	@ResponseBody
-	@PostMapping("/cancelApplyAjax")
+	@PostMapping("/deleteBtnAjax")
 	public void cancelApplyAjax(String acceptCode) {
 		clubService.cancelApply(acceptCode);
 	}

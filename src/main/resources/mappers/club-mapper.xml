@@ -11,7 +11,6 @@
 		<result column="CLUB_MEM_CNT" 		property="clubMemCnt"/>
 		<result column="CLUB_STATUS_NO" 	property="clubStatusNo"/>
 		<result column="MEM_ID" 			property="memId"/>
-		<result column="CLUB_NOTICE" 			property="clubNotice"/>
 		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
 		<association property="bookClubMemberVO" resultMap="bookClubMember"></association>
 	</resultMap>
@@ -44,9 +43,11 @@
 		<result column="READ_CNT" 			property="readCnt"/>
 		<result column="REPLY_CNT" 			property="replyCnt"/>
 		<result column="CLUB_CODE" 			property="clubCode"/>
+		<result column="CLUB_NOTICE" 		property="clubNotice"/>
 		<result column="ROW_NUM" 		 	property="rowNum"/>
 		<result column="ROW_NUMBER" 	 	property="rowNumber"/>
 		<association property="communityImageVO" resultMap="communityImage"></association>
+		<association property="memberVO" resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityReplyVO" id="communityReply">
@@ -244,34 +245,41 @@
 			, BOARD_NUM
 			, BOARD_TITLE
 			, BOARD_WRITER
+			, MEM_NAME
 			, REG_DATE
 			, READ_CNT
 			, ROW_NUM
 			, REPLY_CNT
 			, CLUB_CODE
+			, CLUB_NOTICE
 		FROM
 		(
 			SELECT BOARD_NUM
 				, BOARD_TITLE
 				, BOARD_WRITER
+				, MEM_NAME
 				, REG_DATE
 				, READ_CNT
 				, ROWNUM ROW_NUM
 				, REPLY_CNT
 				, CLUB_CODE
+				, CLUB_NOTICE
 		FROM
 		(	
 			SELECT BOARD_NUM
 				, BOARD_TITLE
 				, BOARD_WRITER
+				, MEM_NAME
 				, TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
 				, READ_CNT
 				, (SELECT COUNT(REPLY_NUM)
 					FROM COMMUNITY_REPLY
-					WHERE BOARD_NUM = COMMUNITY_BOARD.BOARD_NUM) AS REPLY_CNT
+					WHERE BOARD_NUM = CB.BOARD_NUM) AS REPLY_CNT
 				, CLUB_CODE
-			FROM COMMUNITY_BOARD
-			WHERE CLUB_CODE = #{clubCode}
+				, CLUB_NOTICE
+			FROM COMMUNITY_BOARD CB, MEMBER M
+			WHERE BOARD_WRITER = MEM_ID
+			AND CLUB_CODE = #{clubCode}
 			<if test="searchOption == 'title'">
 				 AND LOWER(BOARD_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
 			</if>
@@ -283,6 +291,25 @@
 		)
 		WHERE ROW_NUM &gt;= #{startDataNum} AND ROW_NUM &lt;= #{endDataNum}
 	</select>
+	
+	<select id="getNoticeList" resultMap="community">
+		SELECT BOARD_NUM
+			, BOARD_TITLE
+		    , BOARD_WRITER
+		    , MEM_NAME
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+		    , READ_CNT
+		    , (SELECT COUNT(REPLY_NUM)
+							FROM COMMUNITY_REPLY
+							WHERE BOARD_NUM = CB .BOARD_NUM) AS REPLY_CNT
+		    , CLUB_CODE
+		    , CLUB_NOTICE
+		FROM COMMUNITY_BOARD CB, MEMBER M
+		WHERE BOARD_WRITER = MEM_ID
+		AND CLUB_CODE = #{clubCode}
+		AND CLUB_NOTICE = 'Y'
+	</select>
+	
 	
 	<select id="getNextBoardNum" resultType="String">
 		SELECT 'BOARD_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BOARD_NUM, 7))), 0) + 1,3 , '0') 
@@ -411,7 +438,7 @@
 			, CM.CLUB_CODE
 			, CLUB_NAME
 			, TO_CHAR(CLUB_REG_DATE, 'YYYY-MM-DD') AS CLUB_REG_DATE
-			, DECODE(CLUB_MEM_STATUS, 1, '승인대기', 2, '승인', 3, '거절') AS MEM_STATUS
+			, CLUB_MEM_STATUS
 			, CLUB_MEM_CNT
 		FROM BOOK_CLUB_MEMBER CM, BOOK_CLUB CLUB
 		WHERE CM.CLUB_CODE = CLUB.CLUB_CODE
@@ -457,7 +484,6 @@
 		FROM BOOK_CLUB
 		WHERE CLUB_CODE = #{clubCode}
 	</select>
-	
 	
 	
 	

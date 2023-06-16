@@ -45,6 +45,13 @@ public class AlramController {
 		alramService.deleteAlram(alramCode);
 	}
 	
+	//알람 상세 조회 Ajax
+	@ResponseBody
+	@RequestMapping("/openMsgAjax")
+	public AlramVO openMsgAjax(String alramCode) {
+		
+		return alramService.getAlramDetail(alramCode);
+	}
 	
 	
 	

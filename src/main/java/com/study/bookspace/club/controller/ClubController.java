@@ -237,7 +237,6 @@ public class ClubController {
 	@RequestMapping("/community")
 	public String community(SubMenuVO subMenuVO, Model model, CommunityVO communityVO) {
 		System.out.println("@@@@@@@@@@@@@2" + communityVO);
-		
 		//전체 게시글 수 조회
 		int totalDataCnt = clubService.getBoardCnt(communityVO.getClubCode());
 		
@@ -249,6 +248,7 @@ public class ClubController {
 		
 		model.addAttribute("clubCode", communityVO.getClubCode());
 		model.addAttribute("boardList", clubService.getBoardList(communityVO));
+		model.addAttribute("noticeList", clubService.getNoticeList(communityVO.getClubCode()));
 		
 		return "content/club/community";
 	}

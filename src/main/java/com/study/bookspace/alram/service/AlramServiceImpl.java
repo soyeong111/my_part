@@ -43,6 +43,12 @@ public class AlramServiceImpl implements AlramService{
 		sqlSession.delete("alramMapper.deleteAlram", alramCode);
 	}
 
+	//알람 상세 조회
+	@Override
+	public AlramVO getAlramDetail(String alramCode) {
+		return sqlSession.selectOne("alramMapper.getAlramDetail", alramCode);
+	}
+
 	
 	
 }
