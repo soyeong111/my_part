@@ -13,7 +13,6 @@
 				<thead>
 					<tr>
 						<td>클럽명</td>
-						<td>인원수</td>
 						<td>가입날짜</td>
 						<td>바로가기</td>
 					</tr>
@@ -23,7 +22,6 @@
 				<th:block th:each="club : ${myClubDetail}">
 					<tr th:if="${club.memStatus == '승인'}">
 						<td>[[${club.bookClubVO.clubName}]]</td>
-						<td> / [[${club.bookClubVO.clubMemCnt}]]</td>
 						<td>[[${club.clubRegDate}]]</td>
 						<td>
 							<input type="button" class="btn custom-btn" value="이동" th:onclick="|location.href='@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">

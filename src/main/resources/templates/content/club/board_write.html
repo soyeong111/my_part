@@ -26,16 +26,18 @@
 							<col width="20%">
 							<col width="*">
 						</colgroup>
-						<tr>
-							<td>공지사항</td>
-							<td>
-								<input class="form-check" id="noticeChx" type="checkbox" name="clubNotice">
-							</td>
-						</tr>
+						<th:block th:if="${#authentication.name == bossId}">
+							<tr>
+								<td>공지사항</td>
+								<td>
+									<input class="form-check" id="noticeChx" type="checkbox" name="clubNotice" value="Y">
+								</td>
+							</tr>
+						</th:block>
 						<tr>
 							<td>제목</td>
 							<td>
-								<input type="text" class="form-control" name="boardTitle">
+								<input type="text" class="form-control" id="title-tag" name="boardTitle">
 							</td>
 						</tr>
 						<tr>
@@ -47,7 +49,7 @@
 						<tr>
 							<td>내용</td>
 							<td>
-								<textarea rows="20" cols="100" class="form-control" name="boardContent"></textarea>
+								<textarea rows="20" cols="100" id="content-tag" class="form-control" name="boardContent"></textarea>
 							</td>
 						</tr>
 						<tr>

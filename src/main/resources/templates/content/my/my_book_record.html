@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/member_layout}">
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href="/css/.css"> -->
+</th:block>
+<th:block layout:fragment="content">
+	<div class="my-book-record-div mt-5 w-75 m-auto">
+		<div class="row">
+			<div class="col">
+				<h2>독서 기록</h2>
+			</div>
+		</div>
+		<form action="/mBook/regBookRecord" method="post">
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
+			<div class="row mt-5">
+				<div class="col-6">
+					<div class="input-group">
+						<span class="input-group-text">대여도서</span>
+						<select class="form-select" name="bookCode">
+							<option th:each="bookMap : ${bookMapList}" th:value="${bookMap['BOOK_CODE']}" th:text="${bookMap['BOOK_TITLE']}"></option>
+						</select>
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="input-group">
+						<span class="input-group-text">독서시작</span>
+						<input type="date" name="startDate" id="start-date-input" class="form-control"
+							th:max="${#dates.format(#dates.createNow(), 'YYYY-MM-dd')}">
+					</div>
+				</div>
+				<div class="col-3">
+					<div class="input-group">
+						<span class="input-group-text">독서종료</span>
+						<input type="date" name="endDate" class="form-control" onchange="end_date_change(this);"
+							th:max="${#dates.format(#dates.createNow(), 'YYYY-MM-dd')}">
+					</div>
+				</div>
+			</div>
+			<div class="row mt-4">
+				<div class="col">
+					<div class="input-group">
+						<textarea name="bookReview" class="form-control" rows="5" required></textarea>
+						<button type="submit" class="btn btn-primary custom-btn p-4">등 록</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</th:block>
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/my/my_book_record.js"></script>
+</th:block>
+</html>
