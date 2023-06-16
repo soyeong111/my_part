@@ -26,10 +26,10 @@
 		<!--   검색 영역  -->
 		<div class="row" id="titleTable">
 			<div class="col">
-				<h1 style="text-align: center; margin-top: 10px;">도서 관리</h1>
+				<h1 style="text-align: center; margin-top: 25px;">도서 관리</h1>
 				<form th:action="@{/book/bookManage}" method="post">
 					<table class="table table-bordered align-middle text-center"
-						style="margin-top: 10px;">
+						style="margin-top: 30px;">
 						<colgroup>
 							<col width="10%">
 							<col width="33%">
@@ -210,7 +210,8 @@
 									<td th:text="${#lists.size(bookList) - state.index}"></td>
 									<td th:data-bookno=${book.categoryVO.bookCateNo}>[[${book.categoryVO.bookCateStr}]]</td>
 									<td><a href="javascript:void(0);"
-										th:onclick="getBookDetail([[${book.bookCode}]]);">[[${book.bookTitle}]]</a></td>
+										th:onclick="getBookDetail([[${book.bookCode}]]);">
+											[[${book.bookTitle}]]</a></td>
 									<td>[[${book.bookAuthor}]]</td>
 									<td>[[${book.bookPublisher}]]</td>
 									<td>[[${book.bookPublicationDate}]]</td>
@@ -222,7 +223,7 @@
 						</table>
 					</div>
 				</div>
-
+				[[${bookIntro}]]
 				<div class="col" id="bookDetailDiv"></div>
 				<div class="row mb-3">
 					<div class="offset-5 col-1 d-grid">
@@ -236,6 +237,55 @@
 				</div>
 			</form>
 		</div>
+	</div>
+
+<form></form>
+	<div class="row">
+		<div class="offset-1 col-5 sub-title">
+			<h5>도서이미지</h5>
+		</div>
+		<div class="col sub-title">
+			<h5>도서소개</h5>
+		</div>
+	</div>
+	<form id="updateDetail">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-5">
+			
+			
+				<div class="row update-content">
+					<label class="col-3 col-form-label text-end">메인 이미지</label>
+					<div class="col-9">
+						<input type="file" class="form-control">
+					</div>
+					<label class="col-3 col-form-label text-end"> 사진 파일</label>
+				</div>
+				<div class="row update-content">
+					<label class="col-3 col-form-label text-end">서브 이미지</label>
+					<div class="col-9">
+						<input type="file" class="form-control">
+					</div>
+					<label class="col-3 col-form-label text-end"> 사진 파일</label>
+				</div>
+				
+				
+				
+				
+			</div>
+			<div class="col-5">
+				<div class="row update-content">
+					<label class="col-2 col-form-label text-end">소개</label>
+					<div class="col-10">
+						<textarea class="form-control" rows="5" name="bookIntro"
+							style="resize: none;">"ㅇㅇ"</textarea>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="offset-5 col-2 d-grid">
+		<input type="button" class="btn custom-btn" value="수정">
 	</div>
 
 	<!-- img Modal -->
