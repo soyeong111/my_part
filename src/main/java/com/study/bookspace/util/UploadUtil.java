@@ -107,7 +107,7 @@ public class UploadUtil {
 			String attachedFileName = uuid + extension;
 			
 			try {
-				File file = new File(ConstVariable.CLUB_UPLOAD_PATH + attachedFileName);
+				File file = new File(ConstVariable.HCLUB_UPLOAD_PATH + attachedFileName);
 				clubImg.transferTo(file);
 				
 				//첨부가 제대로 되야 필요하므로 try문 안에 작성했다.
@@ -192,7 +192,7 @@ public class UploadUtil {
 			String attachedFileName = uuid + extension;
 			
 			try {
-				File file = new File(ConstVariable.COMMUNITY_UPLOAD_PATH + attachedFileName);
+				File file = new File(ConstVariable.HCOMMUNITY_UPLOAD_PATH + attachedFileName);
 				communityImg.transferTo(file);
 				
 				//첨부가 제대로 되야 필요하므로 try문 안에 작성했다.

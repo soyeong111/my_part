@@ -65,20 +65,34 @@
 	
 	<!-- Modal -->
 	<div class="modal" id="alramModal" tabindex="-1" aria-labelledby="alramModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="alramModalLabel">알림함</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	      </div>
-	    </div>
-	  </div>
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="alramModalLabel">알림함</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<table class="table text-center">
+						<thead style="font-weight:bold;">
+							<tr>
+								<td>내용</td>
+								<td>전송날짜</td>
+								<td>읽음</td>
+								<td>삭제</td>
+							</tr>
+						</thead>
+						<tbody id="alramTableBody">
+							<!-- 알림 목록이 동적으로 추가될 부분 -->
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
 	</div>
+	
 	
 	<!-- Modal -->
 	<div class="modal" id="openMsg" tabindex="-1" aria-labelledby="openMsgLabel" aria-hidden="true">
@@ -89,25 +103,11 @@
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	      	<table class="table">
-	      		<thead>
-	      			<tr>
-	      				<td>보낸사람</td>
-	      				<td>관리자</td>
-	      				<td>전송날짜</td>
-	      				<td>2023</td>
-	      			</tr>
-	      		</thead>
-	      		<tbody>
-		      		<tr>
-		      			<td>내용</td>
-		      			<td colspan="3">ㅎㅎ</td>
-		      		</tr>
-	      		</tbody>
-	      	</table>
+	      	<table class="table" id="alramMessageTable">
+		      <!-- 알림 내용 테이블 내용 -->
+		    </table>
 	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      <div class="modal-footer d-flex justify-content-end" id="alramFooter">
 	      </div>
 	    </div>
 	  </div>

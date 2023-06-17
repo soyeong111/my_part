@@ -41,6 +41,7 @@
 		    , A_CHECK
 		FROM ALRAM
 		WHERE MEM_ID = #{memId}
+		ORDER BY ALRAM_CODE DESC
 	</select>
 	
 	<select id="getAlramDetail" resultMap="alram">
