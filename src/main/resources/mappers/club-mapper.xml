@@ -470,6 +470,16 @@
 		WHERE CLUB_CODE = #{clubCode}
 	</select>
 	
+	<select id="getMemListByClub" resultMap="bookClubMember">
+		SELECT ACCEPT_CODE
+		    , MEM_NAME
+		FROM BOOK_CLUB_MEMBER CM, MEMBER M
+		WHERE CM.MEM_ID = M.MEM_ID
+		AND CLUB_CODE = #{clubCode}
+		AND CLUB_MEM_STATUS = 2
+	</select>
+	
+	
 	<!-- 게시글 조회수  -->
 	<update id="updateReadCnt">
 		UPDATE COMMUNITY_BOARD

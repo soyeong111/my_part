@@ -129,7 +129,8 @@ public interface ClubService {
 	//공지사항 조회
 	List<CommunityVO> getNoticeList(String clubCode);
 	
-	
+	//클럽 회원 리스트
+	List<BookClubMemberVO> getMemListByClub(String clubCode);
 	
 	
 	

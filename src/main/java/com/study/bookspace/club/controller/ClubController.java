@@ -119,6 +119,9 @@ public class ClubController {
 		model.addAttribute("club", clubService.getClubDetail(clubCode));
 		//클럽 활동 중인 회원수
 		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
+		//클럽 멤버 리스트 조회
+		model.addAttribute("memList", clubService.getMemListByClub(clubCode));
+		
 		
 		return "content/club/club_detail";
 	}

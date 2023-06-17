@@ -44,7 +44,6 @@ function getAlramList() {
         } else {
           str += `<td><a><img src="/image/alram/envelope-open.png" width="28px;"></a></td>`;
         }
-        str += `<td><a href="javascript:void(0);" onclick="deleteAlram('${result[i].alramCode}');"><img src="/image/alram/trash.png" width="28px;"></a></td>`;
         str += `</tr>`;
       }
       str += `</tbody>`;
@@ -79,21 +78,29 @@ function updateAlramACheck(alramCode, acheck){
 
 //쓰레기통(알림삭제) 클릭 시 
 function deleteAlram(alramCode){
-	//ajax start
-	$.ajax({
-	   url: '/alram/deleteAlramAjax', //요청경로
-	   type: 'post',
-	   async : true,
-	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-	   data: {'alramCode':alramCode}, //필요한 데이터
-	   success: function(result) {
-	      getAlramList();
-	   },
-	   error: function() {
-	      alert('실패');
-	   }
-	});
-	//ajax end
+	const deleteMsg = confirm('알림을 삭제하시겠습니까?');
+	if(deleteMsg){
+		//ajax start
+		$.ajax({
+		   url: '/alram/deleteAlramAjax', //요청경로
+		   type: 'post',
+		   async : true,
+		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+		   data: {'alramCode':alramCode}, //필요한 데이터
+		   success: function(result) {
+			  alert('삭제가 완료되었습니다.');
+			  $('#openMsg').modal('hide');
+		      getAlramList();
+		   },
+		   error: function() {
+		      alert('실패');
+		   }
+		});
+		//ajax end
+		
+	}
+	
+	
 }
 
 // alramCnt 클릭 시 알림 내용 모달 열기
@@ -116,15 +123,15 @@ function openAlramMessage(alramCode, acheck) {
       let str = '';
       str += `<thead>`;
       str += `<tr>`;
-      str += `<td>보낸 사람</td>`;
+      str += `<td class="msg-bold">보낸 사람</td>`;
       str += `<td>관리자</td>`;
-      str += `<td>전송 날짜</td>`;
+      str += `<td class="msg-bold">전송 날짜</td>`;
       str += `<td>${result.alramDate}</td>`;
       str += `</tr>`;
       str += `</thead>`;
       str += `<tbody>`;
       str += `<tr>`;
-      str += `<td>내용</td>`;
+      str += `<td class="msg-bold">내용</td>`;
       str += `<td colspan="3">${result.acontent}</td>`;
       str += `</tr>`;
 	  str += `</tbody>`;
@@ -133,8 +140,8 @@ function openAlramMessage(alramCode, acheck) {
 	  alramMessageFooter.innerHTML = '';
 		
 		let str2 = '';
-		str += `<button type="button" class="btn btn-secondary ms-auto" >삭제</button>`;
-		str += `<button type="button" class="btn btn-secondary ms-auto" data-bs-dismiss="modal">닫기</button>`;
+		str2 += `<button type="button" onclick="deleteAlram('${alramCode}');" class="btn btn-secondary">삭제</button>`;
+		str2 += `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>`;
 		
 		
 		alramMessageTable.insertAdjacentHTML('afterbegin', str);

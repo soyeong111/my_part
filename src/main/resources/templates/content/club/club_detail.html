@@ -43,6 +43,12 @@
 								<td><span>북클럽 인원</span></td>
 								<td>[[${clubMemCnt}]] / [[${club.clubMemCnt}]]</td>
 							</tr>
+							<tr>
+								<td>회원</td>
+								<th:block th:each="member : ${memList}">
+									<td>[[${member.memberVO.memName}]]</td>
+								</th:block>
+							</tr>
 						</table>
 					</div>
 				</div>	
