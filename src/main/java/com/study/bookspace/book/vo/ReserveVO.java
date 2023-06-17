@@ -13,4 +13,5 @@ public class ReserveVO {
 	private String memId;
 	private String reserveDate;
 	private String reserveDueDate;
+	private String bookAlramDate;
 }

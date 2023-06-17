@@ -49,6 +49,7 @@ function editBook() {
     const stockCountCell = row.querySelector('td:nth-child(10)');
 
     if (editMode) {
+	
       // 완료 버튼을 클릭한 경우
       const bookCateNo = categoryCell.querySelector('select').value;
       const bookTitle = titleCell.querySelector('input').value;
@@ -57,10 +58,9 @@ function editBook() {
       const bookPublicationDate = publicationDateCell.querySelector('input').value;
       const isbn = isbnCell.querySelector('input').value;
       const bookStockCnt = stockCountCell.querySelector('input').value;
-
       // AJAX
       $.ajax({
-        url: '/book/updateBookAjax',
+        url: '/aBook/updateBookAjax',
         type: 'post',
         data: {
           'bookCode': bookCode,
@@ -230,58 +230,61 @@ function getBookDetail(bookCode) {
 		str += `          <h5>도서 소개</h5>                                                   `;
 		str += `       </div>                                                                   `;
 		str += `    </div>                                                                      `;
+		str += `    <form id = "updateDetail" enctype="multipart/form-data">                                                                      `;
+		str += `    <input type="hidden" name="bookCode" value="${bookCode}">                                                           `;
 		str += `    <div class="row">                                                           `;
 		str += `       <div class="col-1"></div>                                                `;
 		str += `       <div class="col-5">                                                     `;
 		str += `          <div class="row update-content">                                      `;
 		str += `             <label class="col-3 col-form-label text-end">메인 이미지</label>   `;
 		str += `             <div class="col-9">                                                `;
-		str += `                <input type="file" class="form-control">                        `;
+		str += `                <input type="file" class="form-control" name="mainImg"                        `;
 		str += `             </div>                                                             `;
-		str += `             <label class="col-3 col-form-label text-end"></label> 				  `;
-		str += `             <div class="col-9">                                                `;
+		str += `             </div>                                                             `;
+		str += `             <label class="col-5 offset-3 col-form-label"> 				  `;
 		// 메인 이미지 데이터 처리
-		for (const img of result) {
+		for (const img of result['imgList']) {
 			if (img.isMainImg === 'Y') {
 				str += `<label class="form-label">
            <a href="javascript:void(0)" 
            onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a>
           	 　<img width="20px;" src="/image/icon-del.png" id="mainImgDel" 
-          	 onclick="deleteMainImg('${img.attachedFileName}', '${img.bookCode}', '${img.bookImgCode}', '${img.originFileName}');">
+          	 onclick="deleteImg('${img.attachedFileName}', '${img.bookImgCode}', this);">
            </label>`;
 
 			}
 		}
-		str += `             </div>                                                             `;
-		str += `             <label class="col-3 col-form-label text-end">상세 이미지</label>   `;
+		str += `</div>`;
+		str += `          <div class="row update-content">                                      `;
+		str += `             <label class="col-3 col-form-label text-end">서브 이미지</label>   `;
 		str += `             <div class="col-9">                                                `;
-		str += `                <input type="file" class="form-control">                        `;
+		str += `                <input type="file" class="form-control" name="subImg">                        `;
+				str += `</div>`;
 
+		str += `             <label class="col-5 offset-3 col-form-label"> 				  `;
 		// 서브 이미지 데이터 처리
-		for (const img of result) {
+		for (const img of result['imgList']) {
 			if (img.isMainImg === 'N') {
 				str += `<label class="form-label">
             <a href="javascript:void(0)" 
             onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a>
             　<img width="20px;" src="/image/icon-del.png" id="subImgDel" 
-            onclick="deleteSubImg('${img.attachedFileName}', '${img.bookCode}', '${img.bookImgCode}', '${img.originFileName}');">
+            onclick="deleteImg('${img.attachedFileName}', '${img.bookImgCode}', this);">
             </label>`;
-
-
+					}
+			}
 				str += `</div>`;
 				str += `          </div>                                                                `;
-				str += `       </div>   																  `;
 				str += `       <div class="col-5">                                                     `;
 				str += `          <div class="row update-content">                                      `;
 				str += `             <label class="col-2 col-form-label text-end">소개</label>   `;
 				str += `             <div class="col-10">                                                `;
-				str += `                <textarea class="form-control" rows="5" name = "bookIntro" style="resize: none;">${img.bookIntro}</textarea>             `;
+				str += `                <textarea class="form-control" rows="5" name = "bookIntro" style="resize: none;">${result.bookIntro}</textarea>             `;
 				str += `             </div>                                                             `;
-			}
-		}
 		str += `       </div>   																  `;
 		str += `       </div>   																  `;
 		str += `       </div>   																  `;
+		str += `       </form>   																  `;
 		str += `<div class="offset-5 col-2 d-grid">												  `;
 		str += `				<input type="button" class="btn custom-btn" value="수정" onclick="editBookDetail();">					  `;
 		str += `			</div>																  `;
@@ -300,43 +303,40 @@ function getBookDetail(bookCode) {
 
 
 // 이미지, 소개 수정
-function editBookDetail(bookIntro, originFileName, attachedFileName, isMainImg, bookCode){
+function editBookDetail(){
+	
+	  // FormData 객체 생성
+  const formData = new FormData($("#updateDetail")[0]);
 
-  
-  // AJAX를 사용하여 /book/bookdelete로 요청 보내기
-  $.ajax({
-    url: '/book/updateBookDetailAjax',
-    type: 'post',
-    async: true,
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 
-		'attachedFileName': attachedFileName, 
-		'bookCode':bookCode, 
-		'bookIntro':bookIntro, 
-		'originFileName':originFileName, 
-		'isMainImg':isMainImg
-	},
-    success: function(result) {
-      console.log(result); // 성공 처리
+//ajax start
+   $.ajax({
+      url: '/book/updateBookDetailAjax', //요청경로
+      type: 'post',
+      async : true,
+    processData: false,
+    contentType: false,
+      data: formData,
+      success: function(result) {
+         alert(result);
+      },
+      error: function() {
+         alert('실패');
+      }
+   });
+   //ajax end
 
-      // 이미지 삭제 성공 후의 추가 로직 구현
-
-    },
-    error: function() {
-      alert('실패'); // 실패 처리
-    }
-  });
 	
 }
 
 
   // 이미지 삭제 
-function deleteMainImg(attachedFileName, bookImgCode) {
+function deleteImg(attachedFileName, bookImgCode, this_img) {
+  
   
   
   // AJAX
   $.ajax({
-    url: '/book/deleteSubImgAjax',
+    url: '/book/deleteImgAjax',
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -347,8 +347,11 @@ function deleteMainImg(attachedFileName, bookImgCode) {
     success: function(result) {
       console.log(result); // 성공 처리
 
-      // 이미지 삭제 성공 후의 추가 로직 구현
+	if(result){
       alert('삭제성공');
+		this_img.parentElement.remove();	
+		
+	}
 
     },
     error: function() {
@@ -358,30 +361,7 @@ function deleteMainImg(attachedFileName, bookImgCode) {
 }
 
 
-function deleteSubImg(attachedFileName, bookImgCode) {
-  // 이미지 삭제 로직 구현
 
-  // AJAX를 사용하여 /book/bookdelete로 요청 보내기
-  $.ajax({
-    url: '/book/deleteSubImgAjax',
-    type: 'post',
-    async: true,
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 
-		'attachedFileName': attachedFileName , 
-		'bookImgCode':bookImgCode
-		},
-    success: function(result) {
-      console.log(result); // 성공 처리
-
-       alert('삭제성공');
-
-    },
-    error: function() {
-      alert('실패'); // 실패 처리
-    }
-  });
-}
 
 
 

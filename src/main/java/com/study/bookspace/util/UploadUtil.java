@@ -20,7 +20,7 @@ public class UploadUtil {
 	public static ImgVO uploadFile(MultipartFile img) {
 		
 		ImgVO imgVO = null;
-		
+		System.out.println(img == null);
 		if(!img.isEmpty()) {
 			
 			imgVO = new ImgVO(); 

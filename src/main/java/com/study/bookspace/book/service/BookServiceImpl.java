@@ -62,9 +62,13 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class) 
-	public void borrowBook(BorrowVO borrowVO) {
+	public void borrowBook(BorrowVO borrowVO, int checkMem) {
 		sqlSession.insert("bookMapper.borrowBook", borrowVO);
 		sqlSession.update("bookMapper.updateBorrowCnt", borrowVO);
+		if(checkMem == 1) {
+			sqlSession.delete("bookMapper.deleteReserve", borrowVO);
+			sqlSession.update("bookMapper.downgradeReserveCnt", borrowVO);
+		}
 	}
 
 	
@@ -138,8 +142,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<ImgVO> getImgListForBook(String bookCode) {
-		return sqlSession.selectList("bookMapper.getImgListForBook", bookCode);
+	public BookVO getImgListForBook(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getImgListForBook", bookCode);
 	}
 
 
@@ -164,14 +168,10 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void deleteMainImg(String bookImgCode) {
-		sqlSession.delete("bookMapper.deleteMainImg", bookImgCode);
+	public int deleteImg(String bookImgCode) {
+		return sqlSession.delete("bookMapper.deleteImg", bookImgCode);
 	}
 
-	@Override
-	public void deleteSubImg(String bookImgCode) {
-		sqlSession.delete("bookMapper.deleteSubImg", bookImgCode);
-	}
 
 	@Override
 	public void delReserve(String bookCode) {
@@ -184,13 +184,41 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public void updateBookDetail(ImgVO imgVO) {
-		sqlSession.update("bookMapper.updateBookDetail", imgVO);
+	@Transactional(rollbackFor = Exception.class)
+	public void updateBookDetail(BookVO bookVO) {
+		sqlSession.update("bookMapper.updateBookDetail", bookVO);
+		sqlSession.insert("bookMapper.insertImges", bookVO);
 	}
 
 	@Override
 	public int getBookCnt() {
 		return sqlSession.selectOne("bookMapper.getBookCnt");
+	}
+
+	@Override
+	public int getNowStockCnt(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getNowStockCnt", bookCode);
+	}
+
+	@Override
+	public int getAbleBookCnt(String bookCode) {
+		return sqlSession.selectOne("bookMapper.getAbleBookCnt", bookCode);
+	}
+
+	@Override
+	@Transactional
+	public int getAbleBorrowMem(Map<String, Object> searchMap) {
+		return sqlSession.selectOne("bookMapper.getAbleBorrowMem", searchMap);
+	}
+
+	@Override
+	public int getCheckBorrow(BorrowVO borrowVO) {
+		return sqlSession.selectOne("bookMapper.getCheckBorrow", borrowVO);
+	}
+
+	@Override
+	public void deleteReserve(BorrowVO borrowVO) {
+		 sqlSession.delete("bookMapper.deleteReserve", borrowVO);
 	}
 
 
