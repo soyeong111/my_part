@@ -39,7 +39,6 @@
 		<result column="ORIGIN_FILE_NAME" 					property="originFileName"/>
 		<result column="ATTACHED_FILE_NAME" 				property="attachedFileName"/>
 		<result column="IS_MAIN_IMG" 						property="isMainImg"/>
-		<result column="BOOK_INTRO" 						property="bookIntro"/>
 	</resultMap>
 	
 
@@ -61,6 +60,7 @@
 		<result column="MEM_ID" 							property="memId"/>
 		<result column="RESERVE_DATE" 						property="reserveDate"/>
 		<result column="RESERVE_DUEDATE" 					property="reserveDueDate"/>
+		<result column="BOOK_ALRAM_DATE" 					property="bookAlramDate"/>
 	</resultMap>
 	
 	<!-- 전체 카테고리 목록 조회 -->
@@ -83,7 +83,7 @@
 	
 	
 		<!-- 특정 도서 이미지, 도서 소개 조회 -->
-	<select id="getImgListForBook" resultMap="img">
+	<select id="getImgListForBook" resultMap="book">
 		SELECT BOOK_IMG_CODE
 			, B.BOOK_CODE
 			, ORIGIN_FILE_NAME 
@@ -95,18 +95,10 @@
 		AND IMG.BOOK_CODE = #{bookCode}
 	</select>
 	
-	<!-- 메인 이미지 삭제 -->
-	<delete id="deleteMainImg">
+	<!-- 이미지 삭제 -->
+	<delete id="deleteImg">
 	 DELETE BOOK_IMAGE
- 	 WHERE IS_MAIN_IMG = 'Y'
- 	 AND BOOK_IMG_CODE = #{bookImgCode}
-	</delete>
-	
-	<!-- 서브 이미지 삭제 -->
-	<delete id="deleteSubImg">
-	 DELETE BOOK_IMAGE
- 	 WHERE IS_MAIN_IMG = 'N'
- 	 AND BOOK_IMG_CODE = #{bookImgCode}
+ 	 WHERE BOOK_IMG_CODE = #{bookImgCode}
 	</delete>
 	
 	
@@ -207,7 +199,65 @@
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
+	<!--  BOOK에 있는 예약개수 다운그레이드 쿼리-->
+	<update id="downgradeReserveCnt">
+		UPDATE BOOK
+		SET RESERVE_CNT = RESERVE_CNT - 1
+		WHERE BOOK_CODE = #{bookCode}
+	</update>
+	
+	
+	<!-- 도서 상태 변경  -->
+	<update id="">
+	</update>
+	
+	
+	<!-- 현재 보유 중인 책의 개수 -->
+	<select id="getNowStockCnt" resultType="int">
+	SELECT BOOK_STOCK_CNT - BORROW_CNT
+	FROM BOOK
+	WHERE BOOK_CODE = #{bookCode}
+	</select>
 
+	<!-- 예약 없이 대여 가능한 책의 개수 (모든사람) -->
+	<select id="getAbleBookCnt" resultType="int">
+	SELECT BOOK_STOCK_CNT - BORROW_CNT - RESERVE_CNT
+	FROM BOOK
+	WHERE BOOK_CODE = #{bookCode}
+	</select>
+	
+	
+	<!-- 대여 가능한 회원인지의 여부 -->
+	<select id="getAbleBorrowMem" resultType="int">
+	SELECT COUNT (MEM_ID)
+	FROM (
+	    SELECT ROWNUM RN
+	        , MEM_ID
+	    FROM BOOK_RESERVE
+	    WHERE BOOK_CODE = #{bookCode}
+	    ORDER BY RESERVE_DATE
+	)
+	WHERE RN &lt;= #{nowStockCnt}
+	    AND MEM_ID = #{memId}
+	</select>
+	
+	
+	<!-- 예약 테이블삭제  -->
+	<delete id="deleteReserve">
+	DELETE BOOK_RESERVE
+	WHERE MEM_ID = #{memId}
+	AND BOOK_CODE = #{bookCode}
+	</delete>
+	
+	
+	<!-- 예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부  -->
+	<select id="getCheckBorrow" resultType="int">
+	SELECT COUNT(*)
+	FROM BOOK_BORROW
+	WHERE BOOK_CODE = #{bookCode}
+  	AND MEM_ID = #{memId}
+	</select>
+	
 	
 	<!-- 도서 예약  -->
 	<insert id="reserveBook">
@@ -215,14 +265,12 @@
 	    	RESERVE_CODE
 	    	, BOOK_CODE
 	    	, MEM_ID
-	    	, RESERVE_DUEDATE
 	    ) VALUES (
 	    	(SELECT 'BK_RES_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(RESERVE_CODE, 8))), 0) + 1, 3, '0')
 			FROM BOOK_RESERVE
 			WHERE RESERVE_CODE LIKE 'BK_RES_%')
 	    	, #{bookCode}
 	    	, #{memId}
-	    	, SYSDATE + 3
 	    )
 	</insert>
 	
@@ -573,29 +621,28 @@
 		
 		<!-- 도서 이미지, 소개 수정 -->
 		<update id="updateBookDetail">
-			UPDATE BOOK, BOOK_IMAGE
+			UPDATE BOOK
 			SET
 				BOOK_INTRO = #{bookIntro}
-				, ORIGIN_FILE_NAME = #{originFileName}
-				, ATTACHED_FILE_NAME = #{attachedFileName}
-				, IS_MAIN_IMG = #{isMainImg}
 			  WHERE 
-			  BOOK.BOOK_CODE = #{bookCode}
-   		      AND BOOK_IMAGE.BOOK_CODE = #{bookCode}
+			 BOOK_CODE = #{bookCode}
 		</update>
+		
+		
+		
 		
 		<!-- 도서 반납 -->
 	<update id="returnBook">
 	    UPDATE BOOK_BORROW
 	    SET RETURN_DATE = SYSDATE
-	    WHERE BORROW_CODE = #{borrowCode, jdbcType=VARCHAR}
+	    WHERE BORROW_CODE = #{borrowCode}
 	</update>
 
 		<!-- 반납 업데이트 쿼리 -->
 	<update id="updateReturnCnt">
 	    UPDATE BOOK
 	    SET BORROW_CNT = BORROW_CNT - 1
-	    WHERE BOOK_CODE = #{bookCode, jdbcType=VARCHAR}
+	    WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
 		
@@ -620,7 +667,7 @@
 		SELECT MEM_ID
 		FROM BOOK_RESERVE
 		WHERE BOOK_CODE = #{bookCode}
-		ORDER BY RESERVE_DATE ASC
+		ORDER BY RESERVE_DATE 
 	</select>
 	
 	

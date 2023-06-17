@@ -35,7 +35,23 @@ public interface BookService {
 	BookVO getBookDetail(String bookCode);
 	
 //	도서 대여
-	void borrowBook(BorrowVO borrowVO);
+	void borrowBook(BorrowVO borrowVO, int checkMem);
+	
+//	예약 삭제
+	void deleteReserve(BorrowVO borrowVO);
+	
+//	현재 보유중인 책의 개수
+	int getNowStockCnt(String bookCode);
+
+//	예약 없이 대여 가능한 책의 개수 (모든사람)
+	int getAbleBookCnt(String bookCode);
+	
+//	대여 가능한 회원인지의 여부
+	int getAbleBorrowMem(Map<String, Object> searchMap);
+	
+	
+//	예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부
+	int getCheckBorrow(BorrowVO borrowVO);
 	
 //	도서 반납
 	void returnBook(BorrowVO borrowVO);
@@ -56,13 +72,11 @@ public interface BookService {
 	List<ImgVO> getImgListForAdmin();
 	
 //	도서관리) 특정 도서 이미지, 도서 소개 조회
-	List<ImgVO> getImgListForBook(String BookCode);
+	BookVO getImgListForBook(String BookCode);
 	
-//	도서관리) 도서 메인 이미지 삭제
-	void deleteMainImg(String bookImgCode);
+//	도서관리) 이미지 삭제
+	int deleteImg(String bookImgCode);
 	
-//	도서관리) 도서 서브 이미지 삭제
-	void deleteSubImg(String bookImgCode);
 
 //	도서관리) 도서 목록 조회
 	List<BookVO> getBookListForAdminManage(BookVO bookVO);
@@ -77,7 +91,7 @@ public interface BookService {
 	void updateBook(BookVO bookVO);
 	
 //	도서관리) 도서 이미지, 소개 수정
-	void updateBookDetail(ImgVO imgVO);
+	void updateBookDetail(BookVO bookVO);
 	
 ////	도서 대여 개수
 //	Map<String, Object> getBorrowAndStockCnt(String bookCode);

@@ -2,7 +2,9 @@ package com.study.bookspace.adminBook.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
@@ -20,20 +22,13 @@ public class AdminBookController {
 	
 //	도서 관리) 소장 도서 관리
 	@RequestMapping("/bookManage")
-	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO, String bookCode, ImgVO imgVO) {
+	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO, String bookCode) {
 		
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
 		
 		
-		String bookImgCode = imgVO.getBookImgCode();
-		String originFileName = imgVO.getOriginFileName();
-		String bookIntro = imgVO.getBookIntro();
-		String attachedFileName = imgVO.getAttachedFileName();
-		String isMainImg = imgVO.getIsMainImg();
-		
-		System.out.println("@@@@@@@@@@@@@" + bookIntro);
-		System.out.println("@@@@@@@@@@@@@" + attachedFileName);
+	
 		//전체 게시글 수 조회
 		//int totalDataCnt = bookService.getBoardCnt(bookVO.getBookCode());
 		
@@ -49,5 +44,21 @@ public class AdminBookController {
 		return "content/admin/book_manage";
 	}
 
+	
+	
+	
+	
+//	도서관리) 도서 표 수정
+	@ResponseBody
+	@PostMapping("/updateBookAjax")
+	public void updateBook(BookVO bookVO) {
+		System.out.println("zzzzzzzzzz" + bookVO);
+		bookService.updateBook(bookVO);
+	}
+	
+	
+	
+	
+	
 	
 }
