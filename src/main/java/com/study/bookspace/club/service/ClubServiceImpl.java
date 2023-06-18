@@ -263,6 +263,22 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectList("clubMapper.getMemListByClub", clubCode);
 	}
 
+	@Override
+	public void deleteClubImg(String clubImgCode) {
+		sqlSession.delete("clubMapper.deleteClubImg", clubImgCode);
+	}
+
+	@Override
+	public void deleteComImg(String comImgCode) {
+		sqlSession.delete("clubMapper.deleteComImg", comImgCode);
+	}
+
+	@Override
+	public void insertImg(BookClubImageVO bookClubImageVO) {
+		sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
+	}
+
+
 	
 	
 

@@ -29,7 +29,6 @@ public class MyClubController {
 		String memId = user.getUsername();
 		bookClubMemberVO.setMemId(memId);
 		
-		
 		//내 북클럽 상태 조회
 		model.addAttribute("myClubDetail", clubService.getMyClubDetail(memId));
 		model.addAttribute("hasApprovedClubs", clubService.getMyClubDetail(memId).stream().anyMatch(club -> club.getClubMemStatus() == 2));

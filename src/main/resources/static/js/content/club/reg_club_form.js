@@ -1,37 +1,34 @@
 
 //클럽명 중복확인 클릭 시 실행
-function isDuplicateClubName(){
-	const club_name_tag = document.querySelector('#clubName');
-	const club_name = club_name_tag.value.trim();
-	
-	if(club_name == ''){
-		alert('클럽명을 입력하세요.');
-		return ;
-	}
-	
-	//ajax start
-	$.ajax({
-	   url: '/club/isDuplicateClubNameAjax', //요청경로
-	   type: 'post',
-	   async : false, // 동기 방식
-	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-	   data: {'clubName':club_name}, //필요한 데이터
-	   success: function(result) {
-	      if(result){
-		 	alert('클럽명이 중복입니다.');
-		  }
-		  else{
-			alert('사용가능한 클럽명입니다.');
-			
-			document.querySelector('#regClubBtn').disabled = false;
-		  }
-	      
-	   },
-	   error: function() {
-	      alert('실패');
-	   }
-	});
-	//ajax end
+function isDuplicateClubName() {
+    const club_name_tag = document.querySelector('#clubName');
+    const club_name = club_name_tag.value.trim();
+
+    if (club_name == '') {
+        Swal.fire('클럽명을 입력하세요.');
+        return;
+    }
+
+    // AJAX 요청
+    $.ajax({
+        url: '/club/isDuplicateClubNameAjax',
+        type: 'post',
+        async: false,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: { 'clubName': club_name },
+        success: function (result) {
+            if (result) {
+                Swal.fire('클럽명이 중복입니다.');
+            }
+            else {
+                Swal.fire('사용가능한 클럽명입니다.');
+                document.querySelector('#regClubBtn').disabled = false;
+            }
+        },
+        error: function () {
+            Swal.fire('실패');
+        }
+    });
 }
 
 
@@ -65,6 +62,7 @@ function deleteErrorDiv(){
 
 //클럽 만들때 유효성 검사 진행
 //잘됐으면 true, 아니면 false
+
 function regClubValidate(){
 	
 	deleteErrorDiv();
@@ -72,12 +70,14 @@ function regClubValidate(){
 	//함수의 리턴결과를 저장하는 변수
 	let result_clubName = true;
 	let result_clubIntro = true;
+	let result_clubCnt = true;
 	let result_clubImg = true;
 	let result_clubShortInfo = true;
 	
 	//오류메세지
 	let str_clubName = '';
 	let str_clubIntro = '';
+	let str_clubCnt = '';
 	let str_clubImg = '';
 	let str_clubShortInfo = '';
 	
@@ -107,6 +107,18 @@ function regClubValidate(){
 		result_clubIntro = false;
 	}
 	
+	//클럽 인원수
+	const club_memCnt = document.querySelector('#clubMemCnt').value;
+	if(club_memCnt == ''){
+		str_clubCnt = '클럽인원수 설정은 필수입니다.';
+		result_clubCnt = false;
+	}
+	else if(club_memCnt < 4 || club_memCnt > 10){
+		str_clubCnt = '클럽인원은 최소 4명 최대 10명 입니다.';
+		result_clubCnt = false;
+	}
+
+	
 	//클럽 한줄소개
 	const club_short_info = document.querySelector('#clubShortInfo').value;
 	if(club_short_info == ''){
@@ -135,12 +147,12 @@ function regClubValidate(){
 	
 	if(!result_clubIntro){
 		const errorHTML = `<div class="message-is-invalid">${str_clubIntro}</div>`;
-		divs[4].insertAdjacentHTML('afterend', errorHTML);
+		divs[5].insertAdjacentHTML('afterend', errorHTML);
 	}
 	
 	if(!result_clubImg){
 		const errorHTML = `<div class="message-is-invalid">${str_clubImg}</div>`;
-		divs[3].insertAdjacentHTML('afterend', errorHTML);
+		divs[4].insertAdjacentHTML('afterend', errorHTML);
 	}
 	
 	if(!result_clubShortInfo){
@@ -148,16 +160,11 @@ function regClubValidate(){
 		divs[2].insertAdjacentHTML('afterend', errorHTML);
 	}
 	
+	if(!result_clubCnt){
+		const errorHTML = `<div class="message-is-invalid">${str_clubCnt}</div>`;
+		divs[3].insertAdjacentHTML('afterend', errorHTML);
+	}
+	
 	//
-	return result_clubName && result_clubIntro && result_clubImg && result_clubShortInfo;
-	
-	
-	
-	
+	return result_clubName && result_clubIntro && result_clubImg && result_clubShortInfo && result_clubCnt;
 }
-
-
-
-
-
-
