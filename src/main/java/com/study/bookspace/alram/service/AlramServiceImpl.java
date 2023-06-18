@@ -13,7 +13,7 @@ public class AlramServiceImpl implements AlramService{
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
-	//클럽 신청 알림 insert
+	//알람 insert
 	@Override
 	public void insertAlram(AlramVO alramVO) {
 		sqlSession.insert("alramMapper.insertAlram", alramVO);

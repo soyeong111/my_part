@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+
+
+.scrollBar { 
+  max-height: 25rem;/* 표의 크기에 따라 높이가 나옴 */
+  overflow-y: auto; /* 세로 스크롤 , 범위가 벗어나면 스크롤이 생기고 아니면 없음*/
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+.scrollBar::-webkit-scrollbar {
+    width: 10px;  /* 스크롤바의 너비 */
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 50%; /* 스크롤바의 길이 */
+    background: #6c96d8; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+
+
+.scrollBar::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+}

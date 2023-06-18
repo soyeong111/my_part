@@ -35,11 +35,11 @@
 			<th:block th:each="book, iterStat : ${bookList}">
 				<div class="col">
 					<div class="bookList" style="text-align: center;">
-						<a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}"> <img
-							th:src="${'/image/book/' + book.imgList[0].attachedFileName}"
+						<a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}">
+							<img th:src="${'/image/book/' + book.imgList[0].attachedFileName}"
 							style="width: 168px; height: 255px;">
 						</a>
-						<div class="bookList-title"><[[${book.bookTitle}]]></div>
+						<div class="bookList-title">[[${book.bookTitle}]]</div>
 					</div>
 				</div>
 			</th:block>

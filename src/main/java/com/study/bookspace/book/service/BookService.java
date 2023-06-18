@@ -31,14 +31,26 @@ public interface BookService {
 //	도서 등록
 	void regBook(BookVO bookVO);
 	
+//	예약 취소
+	void cancelReserve(ReserveVO reserveVO);
+	
 //	도서 상세 조회
 	BookVO getBookDetail(String bookCode);
 	
 //	도서 대여
 	void borrowBook(BorrowVO borrowVO, int checkMem);
 	
-//	예약 삭제
-	void deleteReserve(BorrowVO borrowVO);
+//	도서 관리) 대여 리스트
+	List<BorrowVO> borrowManage();
+	
+//	도서 관리) 대여 리스트 - 연체 상태 변경
+	void overDue(BorrowVO borrowVO);
+	
+//	도서 관리) 예약 리스트
+	List<ReserveVO> reserveManage();
+	
+//	도서 관리) 카테고리별 대여 그래프
+	List<Map<String, Object>> cateBorrow();
 	
 //	현재 보유중인 책의 개수
 	int getNowStockCnt(String bookCode);
@@ -54,7 +66,7 @@ public interface BookService {
 	int getCheckBorrow(BorrowVO borrowVO);
 	
 //	도서 반납
-	void returnBook(BorrowVO borrowVO);
+	String returnBook(BorrowVO borrowVO);
 	
 //	도서 예약
 	void reserveBook(ReserveVO reserveVO);
@@ -81,9 +93,12 @@ public interface BookService {
 //	도서관리) 도서 목록 조회
 	List<BookVO> getBookListForAdminManage(BookVO bookVO);
 	
-//	도서관리) 나의 대여 관리
+//	내정보) 나의 대여 관리
 	List<BorrowVO> myBorrow(BorrowVO borrowVO);
 	
+//	내정보) 나의 예약 관리
+	List<ReserveVO> myReserve(ReserveVO reserveVO);
+
 //	도서관리) 도서 삭제
 	void deleteBook(BookVO bookVO);
 	

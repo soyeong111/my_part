@@ -46,14 +46,18 @@
 								<div class="form-check form-check-inline">
 									<input class="form-check-input" value="10" type="checkbox"
 										id="checkAll1" name="searchBookVO.searchBookCateNo"
-										onclick="setCheckStatus1();" checked> <label
+										onclick="setCheckStatus1();" 
+										th:checked="${bookVO.searchBookVO == null  or (bookVO.searchBookVO != null 
+										and #lists.contains(bookVO.searchBookVO.searchBookCateNo, 10))}"> <label
 										class="form-check-label" for=""> 전체</label>
 								</div> <th:block th:each="category : ${categoryList}">
 									<div class="form-check form-check-inline">
 										<input class="form-check-input chk1"
 											th:value="${category.bookCateNo}" type="checkbox" id=""
 											name="searchBookVO.searchBookCateNo"
-											onclick="setCheckAllStatus1();" checked> <label
+											onclick="setCheckAllStatus1();" 
+											th:checked="${bookVO.searchBookVO == null  or (bookVO.searchBookVO != null 
+												and #lists.contains(bookVO.searchBookVO.searchBookCateNo, category.bookCateNo))}"> <label
 											class="form-check-label" for="">
 											[[${category.bookCateStr}]] <span
 											th:if="${category != null and category.bookCateIsUse == 'N'}">(미사용)</span>
