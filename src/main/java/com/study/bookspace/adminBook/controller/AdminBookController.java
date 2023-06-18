@@ -1,14 +1,20 @@
 package com.study.bookspace.adminBook.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
+import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.ImgVO;
+import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 
 import jakarta.annotation.Resource;
@@ -27,7 +33,7 @@ public class AdminBookController {
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
 		
-		
+		System.out.println(bookVO + "!!!!!!!!!!!!!!!!!!!!");
 	
 		//전체 게시글 수 조회
 		//int totalDataCnt = bookService.getBoardCnt(bookVO.getBookCode());
@@ -54,11 +60,57 @@ public class AdminBookController {
 	public void updateBook(BookVO bookVO) {
 		System.out.println("zzzzzzzzzz" + bookVO);
 		bookService.updateBook(bookVO);
+		
+		
+	}
+	
+	
+	
+//	대여관리) 대여 관리
+	@GetMapping("/borrowManage")
+	public String borrowManage(Model model, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("borrowList", bookService.borrowManage());
+		
+		
+		return "content/admin/borrow_manage";
+	}
+	
+//	대여관리) 카테고리별 대여 그래프
+	@ResponseBody
+	@PostMapping("/cateBorrowAjax")
+	public List<Map<String, Object>> cateBorrow() {
+		
+		
+		return bookService.cateBorrow();
 	}
 	
 	
 	
 	
+//	도서관리) 대여 관리 연체로 변경
+	@ResponseBody
+	@PostMapping("/overDueAjax")
+	public void overDue(BorrowVO borrowVO) {
+		bookService.overDue(borrowVO);
+	}
 	
+	
+//	도서관리) 예약 관리
+	@GetMapping("/reserveManage")
+	public String reserveManage(Model model, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("reserveList", bookService.reserveManage());
+		
+		return "content/admin/reserve_manage";
+	}
+	
+	
+//	도서관리) 예약 단일 삭제 
+	@ResponseBody
+	@PostMapping("/delReserveAjax")
+	public void delReserveAjax(ReserveVO reserveVO) {
+		bookService.cancelReserve(reserveVO);
+	}
 	
 }

@@ -18,5 +18,7 @@ public class BorrowVO {
 	private String returnDate;
 	private String bookTitle;
 	private String extended;
+	private String overDue;
+	
 }
 

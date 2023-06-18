@@ -60,6 +60,7 @@ public class BookServiceImpl implements BookService {
 		return sqlSession.selectOne("bookMapper.getBookDetail", bookCode);
 	}
 
+	// 도서 대여
 	@Override
 	@Transactional(rollbackFor = Exception.class) 
 	public void borrowBook(BorrowVO borrowVO, int checkMem) {
@@ -69,14 +70,17 @@ public class BookServiceImpl implements BookService {
 			sqlSession.delete("bookMapper.deleteReserve", borrowVO);
 			sqlSession.update("bookMapper.downgradeReserveCnt", borrowVO);
 		}
+		sqlSession.update("bookMapper.borrowStatus", borrowVO);
 	}
 
-	
+//	도서 반납
 	@Override
 	@Transactional(rollbackFor = Exception.class) 
-	public void returnBook(BorrowVO borrowVO) {
+	public String returnBook(BorrowVO borrowVO) {
 		sqlSession.update("bookMapper.returnBook", borrowVO);
 		sqlSession.update("bookMapper.updateReturnCnt", borrowVO);
+		sqlSession.update("bookMapper.borrowStatus", borrowVO);
+		return sqlSession.selectOne("bookMapper.alramId", borrowVO);
 	}
 
 	
@@ -91,12 +95,13 @@ public class BookServiceImpl implements BookService {
 	    return sqlSession.selectOne("bookMapper.checkBorrowStatus", borrowVO);
 	}
 
-	
+//	도서 예약
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void reserveBook(ReserveVO reserveVO) {
 		sqlSession.insert("bookMapper.reserveBook", reserveVO);
 		sqlSession.update("bookMapper.updateReserveCnt", reserveVO);
+		sqlSession.update("bookMapper.borrowStatus", reserveVO);
 	}
 	
 //	@Override
@@ -152,6 +157,11 @@ public class BookServiceImpl implements BookService {
 		return sqlSession.selectList("bookMapper.myBorrow", borrowVO);
 	}
 
+	@Override
+	public List<ReserveVO> myReserve(ReserveVO reserveVO) {
+		return sqlSession.selectList("bookMapper.myReserve", reserveVO);
+	}
+	
 	@Override
 	public void deleteBook(BookVO bookVO) {
 		sqlSession.delete("bookMapper.deleteBook", bookVO);
@@ -216,10 +226,39 @@ public class BookServiceImpl implements BookService {
 		return sqlSession.selectOne("bookMapper.getCheckBorrow", borrowVO);
 	}
 
+
+//	예약 취소
 	@Override
-	public void deleteReserve(BorrowVO borrowVO) {
-		 sqlSession.delete("bookMapper.deleteReserve", borrowVO);
+	@Transactional(rollbackFor = Exception.class)
+	public void cancelReserve(ReserveVO reserveVO) {
+		sqlSession.delete("bookMapper.deleteReserve", reserveVO);
+		sqlSession.update("bookMapper.downgradeReserveCnt", reserveVO);
+		sqlSession.update("bookMapper.borrowStatus", reserveVO);
 	}
+
+	@Override
+	public List<BorrowVO> borrowManage() {
+		return sqlSession.selectList("bookMapper.borrowManage");
+	}
+
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public void overDue(BorrowVO borrowVO) {
+		sqlSession.update("bookMapper.overDue", borrowVO);
+		sqlSession.update("bookMapper.overDueMem", borrowVO);
+	}
+
+	@Override
+	public List<ReserveVO> reserveManage() {
+		return sqlSession.selectList("bookMapper.reserveManage");
+	}
+
+	@Override
+	public List<Map<String, Object>> cateBorrow() {
+		return sqlSession.selectList("bookMapper.cateBorrow");
+	}
+
+
 
 
 
