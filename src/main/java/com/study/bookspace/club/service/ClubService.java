@@ -82,14 +82,17 @@ public interface ClubService {
 	void deleteReply(String replyNum);
 	
 	//클럽 멤버 승인
-	void acceptMember(String acceptCode);
+	String acceptMember(String acceptCode);
 	
 	//클럽 회원 거절
-	void refuseMember(String acceptCode);
+	String refuseApply(String acceptCode);
 	
 	//클럽 신청 취소
 	void cancelApply(String acceptCode);
 
+	//북클럽 강퇴
+	String kickOutMember(String acceptCode);
+	
 	//클럽 멤버인지 확인
 	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
 	

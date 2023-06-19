@@ -97,6 +97,24 @@ function deleteClub(clubCode, mainMenuCode, subMenuCode) {
 
 //커뮤니티 버튼 클릭 시 - 클럽 회원만 조회 가능
 function memberOnly(memId, clubCode, mainMenuCode, subMenuCode) {
+	
+	if (memId == 'anonymousUser') {
+    Swal.fire({
+      text: '로그인 후 클럽회원만 입장 가능합니다.\n로그인 하시겠습니까?',
+      icon: 'question',
+      showCancelButton: true,
+	  confirmButtonText: "확인",
+	  cancelButtonText: "취소"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.href = `/member/loginForm`;
+      }
+    });
+    return;
+  }
+	
+	
+	
   // Ajax start
   $.ajax({
     url: '/club/isClubMemberAjax',
@@ -151,4 +169,6 @@ function getWeather(){
 }
 
 
-
+function bookOfThisMonth(){
+	alert(1);
+}

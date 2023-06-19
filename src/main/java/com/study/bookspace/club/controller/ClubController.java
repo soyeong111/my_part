@@ -192,7 +192,7 @@ public class ClubController {
 	
 	//북클럽 삭제
 	@GetMapping("/deleteClub")
-	public String deleteClub(String clubCode, SubMenuVO subMenuVO) {
+	public String deleteClub(String clubCode, SubMenuVO subMenuVO, AlramVO alramVO) {
 		String clubImgName = clubService.getClubImageName(clubCode);
 		
 		File file = new File(ConstVariable.CLUB_UPLOAD_PATH + clubImgName);
@@ -229,36 +229,6 @@ public class ClubController {
 		return "content/club/club_manage";
 	}
 	
-	//북클럽 회원 승인
-	@ResponseBody
-	@PostMapping("/acceptMemberAjax")
-	public void acceptMemberAjax(String acceptCode, AlramVO alramVO, Authentication authentication, BookClubMemberVO bookClubMemberVO) {
-		
-		User user = (User)authentication.getPrincipal();
-		String memId = user.getUsername();
-		
-		clubService.acceptMember(acceptCode);
-		
-		
-		alramVO.setMemId(memId);
-		alramVO.setAContent("북클럽 가입 승인이 완료되었습니다.");
-		alramVO.setSection(2);
-		System.out.println("@@@@@@@@@@@@@@" + alramVO);
-		alramService.insertAlram(alramVO);
-		
-		
-		
-		
-		
-		
-	}
-	
-	//북클럽 회원 거절/강퇴
-	@ResponseBody
-	@PostMapping("/refuseMemberAjax")
-	public void refuseMemberAjax(String acceptCode) {
-		clubService.refuseMember(acceptCode);
-	}
 	
 	//커뮤니티 이동 (클럽 멤버만)
 	@ResponseBody

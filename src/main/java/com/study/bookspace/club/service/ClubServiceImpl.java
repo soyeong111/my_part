@@ -144,8 +144,10 @@ public class ClubServiceImpl implements ClubService{
 	
 	//클럽 회원 승인
 	@Override
-	public void acceptMember(String acceptCode) {
+	@Transactional(rollbackFor = Exception.class)
+	public String acceptMember(String acceptCode) {
 		sqlSession.update("clubMapper.acceptMember", acceptCode);
+		return sqlSession.selectOne("clubMapper.getAlramId", acceptCode);
 	}
 
 	//게시글 수 조회
@@ -184,11 +186,8 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectList("clubMapper.getApplyMemberList", clubCode);
 	}
 
-	//회원 거절/강퇴
-	@Override
-	public void refuseMember(String acceptCode) {
-		sqlSession.update("clubMapper.refuseMember", acceptCode);
-	}
+	
+	
 
 	//클럽 멤버인지 확인(커뮤니티)
 	@Override
@@ -277,6 +276,23 @@ public class ClubServiceImpl implements ClubService{
 	public void insertImg(BookClubImageVO bookClubImageVO) {
 		sqlSession.insert("clubMapper.insertImg", bookClubImageVO);
 	}
+
+	//북클럽 신청 거절
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public String refuseApply(String acceptCode) {
+		sqlSession.delete("clubMapper.refuseApply", acceptCode);
+		return sqlSession.selectOne("clubMapper.getAlramId", acceptCode);
+	}
+
+	//북클럽 강퇴
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public String kickOutMember(String acceptCode) {
+		sqlSession.update("clubMapper.kickOutMember", acceptCode);
+		return sqlSession.selectOne("clubMapper.getAlramId", acceptCode);
+	}
+
 
 
 	
