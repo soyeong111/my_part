@@ -6,25 +6,25 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/info/q_n_a.css">
 </th:block>
 
 <th:block layout:fragment="content">
-  <div>
+  <div class="qForm">
 	  <form th:action="@{/info/sendQuestion}" method="post" >
-	  		<div>문의합니다</div>
-	 		id:
-	  		<span sec:authorize="isAuthenticated()" sec:authentication="name">
-	  		</span>
 	  		
 	  		<input type="hidden" th:value="${#authentication.name}" name="memId">
 
 	  		
-	  		<div>제목<input type="text" name="qnaTitle"></div>
+	  		<div>
+	  			<input type="text" required placeholder="제목을 입력하세요." name="qnaTitle" class="form-control" style="margin-bottom: 1rem;">
+	  		</div>
 		  	<div>
-		  		<textarea rows="10" cols="50" name="qnaContent"></textarea>
+		  		<textarea rows="10" cols="70" name="qnaContent" class="form-control" required placeholder="내용을 입력하세요." style="resize: none;"></textarea>
 		  	</div>
-		  	<input type="submit" value="작성">
+		  	<div>
+		  		<button type="submit" class="qBtn"  style="margin-top: 2rem;"><font color="white">작성</font></button>
+		  	</div>
 	  	</form>
   </div>
 </th:block>

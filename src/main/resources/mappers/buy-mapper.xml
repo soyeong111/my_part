@@ -7,6 +7,7 @@
 		<result	 column="MEM_ID"	property="memId" />
 		<result	 column="BUY_PRICE"	property="buyPrice" />
 		<result	 column="BUY_DATE"	property="buyDate" />
+		<result	 column="ORDER_NO"	property="orderNo" />
 		<result	 column="ETC"	property="etc" />
 		<collection property="buyDetailList" resultMap="buyDetail"></collection>
 	</resultMap>
@@ -29,6 +30,7 @@
 		    , GOODS_PRICE
 		    , BUY_DETAIL_CNT
 		    , BUY_DETAIL_PRICE
+		    , ORDER_NO
 		    
 		    , (SELECT COUNT(BUY_DETAIL_CODE)
 		        FROM GOODS_BUY_DETAIL
@@ -47,18 +49,22 @@
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD')	&gt;= #{fromDate}
 		AND TO_CHAR(BUY_DATE, 'YYYY-MM-DD') &lt;= #{toDate}	
 		</if>
+		ORDER BY BUY_DATE DESC
 	</select>		
 	
 		
-	<insert id="buy">
+	<insert id="buyFromCart">
 		INSERT INTO GOODS_BUY (
 			BUY_CODE
 			, MEM_ID
 			, BUY_PRICE
+			, ORDER_NO
 		) VALUES (
-			#{buyCode}
+			(SELECT 'BUY_'||LPAD(NVL(MAX(TO_NUMBER(SUBSTR(BUY_CODE, 5))), 0) + 1, 3, '0') 
+				FROM GOODS_BUY)
 			, #{memId}
 			, #{buyPrice}
+			,1
 		)
 	</insert>
 	
@@ -87,19 +93,6 @@
 		FROM GOODS_BUY
 	</select>
 	
-		<insert id="insertOrderStatus">
-		INSERT INTO ORDER_STATUS (
-			ORDER_NO
-			, STATUS_CODE
-			, BUY_CODE
-			, MEM_ID
-		) VALUES (
-			(SELECT NVL(MAX(ORDER_NO), 0) + 1 FROM ORDER_STATUS)
-			, 1
-			, #{buyCode}
-			, #{memId}
-		)
-	</insert>
 	
 		<select id="getSaleStatueByCategory" resultType="Map">
 	WITH IMSI_TABLE AS

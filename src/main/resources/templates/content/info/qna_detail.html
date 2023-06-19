@@ -6,34 +6,41 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/info/q_n_a.css">
 </th:block>
 
 <th:block layout:fragment="content">
-  qna detail
-  <div>제목 : [[${qna.qnaTitle}]]</div>
-	<div style="border-bottom: 1px solid black;">
-	<div>작성자 : [[${qna.memId}]]</div>
-	<div>조회수 : [[${qna.qnaViewCnt}]]</div>
-	<div>작성일 : [[${qna.qnaCreateDate}]]</div>
-	<div id="qnaContent">내용 : [[${qna.qnaContent}]]</div>
-		
-		<div  th:if="${#authentication.name == qna.memId}">
-			
-			<!--관리자가 답글을 달았을 경우 수정 못하게  -->
-			
-			<div th:if="${qna.isAdminAnswer == 'N' }">
-				<input type="button" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]] );">
-			</div>
-			
-			<input type="button" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
-		</div>
 
+<div class="qnaDetail">
+
+  <div class="aTitle">
+    [[${qna.qnaTitle}]]
+  </div>
+  <div class="aTitle2">
+  <span style="margin-right: 30rem;">	작성자 : [[${qna.memId}]]</span>
+  <span>작성일 : [[${qna.qnaCreateDate}]]</span>
+  <span>조회수 : [[${qna.qnaViewCnt}]]</span>
+
+	
+	
+  
+  </div>
+	
+	<div id="qnaContent" class="aContent">
+		[[${qna.qnaContent}]]
+	</div>
+	
+		<div  th:if="${#authentication.name == qna.memId}">
+			<div th:if="${qna.isAdminAnswer == 'N' }" style=" text-align: center;">
+				<input type="button" class="aBtn" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]] );">
+				<input type="button" class="aBtn" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
+			</div>
+		</div>
 		<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
 			<input type="button" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
 		</div>
-		
-	</div>
+	
+	
 	<div>
 
 		<!-- 관리자 권한을 가진 사용자만 보이는 버튼 -->
@@ -62,6 +69,7 @@
 
 
 
+</div>
 </th:block>
 
 <!--연결해야 할 외부 js 파일  -->

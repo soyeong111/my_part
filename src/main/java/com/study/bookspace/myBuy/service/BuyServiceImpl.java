@@ -17,9 +17,9 @@ public class BuyServiceImpl implements BuyService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void buyFromCart(GoodsBuyVO goodsBuyVO) {
-		sqlSession.insert("buyMapper.buy", goodsBuyVO);
+		sqlSession.insert("buyMapper.buyFromCart", goodsBuyVO);
+		sqlSession.insert("buyMapper.getNextBuyCode");
 		sqlSession.insert("buyMapper.buyDetails", goodsBuyVO);
-		sqlSession.insert("buyMapper.insertOrderStatus", goodsBuyVO);
 	}
 
 	@Override
@@ -31,5 +31,7 @@ public class BuyServiceImpl implements BuyService {
 	public List<GoodsBuyVO> getBuyList(GoodsBuyVO goodsBuyVO) {
 		return sqlSession.selectList("buyMapper.getBuyList", goodsBuyVO);
 	}
+	
+	
 	
 }

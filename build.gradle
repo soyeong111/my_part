@@ -19,6 +19,7 @@ repositories {
 }
 
 dependencies {
+	
 	implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: '5.2.1'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
@@ -38,4 +39,9 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+	
+	
+	
 }
+
+

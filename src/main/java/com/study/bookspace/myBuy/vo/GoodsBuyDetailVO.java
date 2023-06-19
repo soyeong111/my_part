@@ -14,14 +14,15 @@ public class GoodsBuyDetailVO {
 	
 	private String buyDetailCode;
 	
-	@JsonProperty("goods_code")
+	@JsonProperty("goods_code") 
 	private String goodsCode;
 	
-	@JsonProperty("buy_detail_cnt")
+	@JsonProperty("buy_detail_cnt") 
 	private int buyDetailCnt;
 	
-	@JsonProperty("buy_detail_price")
+	 @JsonProperty("buy_detail_price") 
 	private int buyDetailPrice;
+
 	
 	private String buyCode;
 	

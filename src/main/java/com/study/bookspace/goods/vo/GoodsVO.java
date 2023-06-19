@@ -22,6 +22,7 @@ public class GoodsVO {
 	private int rowNum;
 	private int rowNumber;
 	
+	
 	//이미지
 	private List<GoodsImgVO> goodsImgList;
 	

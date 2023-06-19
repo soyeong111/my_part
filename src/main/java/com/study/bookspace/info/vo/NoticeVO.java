@@ -1,4 +1,4 @@
-package com.study.bookspace.goods.vo;
+package com.study.bookspace.info.vo;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -30,7 +30,7 @@
 		
 		) VALUES (
 			(SELECT NVL(MAX(ROW_NUM), 0) + 1 FROM QNA)
-			,(SELECT 'QNA_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(QNA_CODE, 5))), 0) + 1, 3, '0') AS QNA_CODE
+			, (SELECT 'QNA_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(QNA_CODE, 5))), 0) + 1, 3, '0') AS QNA_CODE
 			FROM QNA)
 			, #{qnaTitle}
 			, #{qnaContent}

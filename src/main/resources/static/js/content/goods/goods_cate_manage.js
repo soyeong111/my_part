@@ -88,14 +88,14 @@ function selectGoodsCateListAjax(){
 				str += '<td>';
 				str += '	<div class="row">';
 				str += `		<div class="form-check col-6">                                                                                                                                                        `;
-				if(result[i].isUse == 'Y'){
+				if(result[i].goodsCateIsUse == 'Y'){
 					str += `			<input name="isUse_${i+1}" type="radio" class="form-check-input" onchange="changeIsUse('${result[i].goodsCateCode}');" checked>사용중`; 
 				}else{
 					str += `			<input name="isUse_${i+1}" type="radio" class="form-check-input" onchange="changeIsUse('${result[i].goodsCateCode}');">사용중`; 
 				}
 				str += `		</div>                                                                                                                                                                                `;
 				str += `		<div class="form-check col-6">                                                                                                                                                        `;
-				if(result[i].isUse == 'N'){
+				if(result[i].goodsCateIsUse == 'N'){
 					str += `			<input name="isUse_${i+1}" type="radio" class="form-check-input" onchange="changeIsUse('${result[i].goodsCateCode}');" checked>미사용`; 
 				}else{
 					str += `			<input name="isUse_${i+1}" type="radio" class="form-check-input" onchange="changeIsUse('${result[i].goodsCateCode}');">미사용`; 
@@ -103,7 +103,7 @@ function selectGoodsCateListAjax(){
 				str += `		</div>                                                                                                                                                                                `;
 				str += `	</div>`;
 				str += `</td>`;
-				str += `<td>${result[i].orderNum}</td>`;
+				str += `<td>${result[i].goodsCateOrderNo}</td>`;
 				str += `<td><input type="button" value="삭제" class="btn btn-secondary" onclick="location.href='/goods/deleteGoodsCategory?goodsCateCode=${result[i].goodsCateCode}';"></td>`;
 				str += '</tr>';
 			}
