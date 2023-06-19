@@ -11,6 +11,7 @@
 		<result	column="END_DATE"		property="endDate"/>
 		<result	column="REG_DATE"		property="regDate"/>
 		<result	column="BOOK_REVIEW"	property="bookReview"/>
+		<result	column="RECORD_NUM"	property="recordNum"/>
 		<association property="bookVO" resultMap="bookMapper.book"></association>
 	</resultMap>
 	
@@ -49,25 +50,49 @@
 	
 	<!-- 독서 기록 목록 -->
 	<select id="getMyBookRecord" resultMap="record">
-		SELECT RECORD_CODE
-			, BR.BOOK_CODE
+		SELECT RECORD_NUM
+			, RECORD_CODE
+			, BOOK_CODE
 			, TO_CHAR(START_DATE, 'YYYY-MM-DD') START_DATE
 			, TO_CHAR(END_DATE, 'YYYY-MM-DD') END_DATE
 			, BOOK_REVIEW
 			, BOOK_TITLE
 			, BOOK_AUTHOR
 			, ATTACHED_FILE_NAME
-		FROM BOOK_RECORD BR
-			, BOOK BK
-			, BOOK_IMAGE BI
-		WHERE BR.BOOK_CODE = BK.BOOK_CODE
-			AND BK.BOOK_CODE = BI.BOOK_CODE
-			AND IS_MAIN_IMG = 'Y'
-			AND MEM_ID = #{searchMemId}
-			<if test="searchValue != null and searchValue.equals('')">
-			AND ${searchColumn} LIKE '%'||#{searchValue}||'%'
-			</if>
-		ORDER BY REG_DATE ${searchOrder}
+		FROM (
+			SELECT ROWNUM RECORD_NUM
+				, RECORD_CODE
+				, BOOK_CODE
+				, START_DATE
+				, END_DATE
+				, BOOK_REVIEW
+				, BOOK_TITLE
+				, BOOK_AUTHOR
+				, ATTACHED_FILE_NAME
+			FROM (
+			SELECT RECORD_CODE
+				, BR.BOOK_CODE
+				, START_DATE
+				, END_DATE
+				, BOOK_REVIEW
+				, BOOK_TITLE
+				, BOOK_AUTHOR
+				, ATTACHED_FILE_NAME
+			FROM BOOK_RECORD BR
+				, BOOK BK
+				, BOOK_IMAGE BI
+			WHERE BR.BOOK_CODE = BK.BOOK_CODE
+				AND BK.BOOK_CODE = BI.BOOK_CODE
+				AND IS_MAIN_IMG = 'Y'
+				AND MEM_ID = #{searchMemId}
+				<if test="searchValue != null and !searchValue.equals('')">
+				AND ${searchColumn} LIKE '%' || #{searchValue} || '%'
+				</if>
+			ORDER BY REG_DATE ${searchOrder}
+			)
+		)
+		WHERE RECORD_NUM &gt;= #{startDataNum}
+			AND RECORD_NUM &lt;= #{endDataNum}
 	</select>
 	
 	<!-- 독서 기록 삭제 -->
@@ -92,7 +117,7 @@
 			, BOOK BK
 		WHERE BR.BOOK_CODE = BK.BOOK_CODE
 			AND MEM_ID = #{searchMemId}
-			<if test="searchValue != null and searchValue.equals('')">
+			<if test="searchValue != null and !searchValue.equals('')">
 			AND ${searchColumn} LIKE '%'||#{searchValue}||'%'
 			</if>
 	</select>
