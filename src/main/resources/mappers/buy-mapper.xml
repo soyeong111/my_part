@@ -8,6 +8,7 @@
 		<result	 column="BUY_PRICE"	property="buyPrice" />
 		<result	 column="BUY_DATE"	property="buyDate" />
 		<result	 column="ORDER_NO"	property="orderNo" />
+		<result	 column="ORDER_STR"	property="orderStr" />
 		<result	 column="ETC"	property="etc" />
 		<collection property="buyDetailList" resultMap="buyDetail"></collection>
 	</resultMap>
@@ -30,7 +31,13 @@
 		    , GOODS_PRICE
 		    , BUY_DETAIL_CNT
 		    , BUY_DETAIL_PRICE
-		    , ORDER_NO
+			    , CASE
+		        WHEN ORDER_NO = 1 THEN '주문접수'
+		        WHEN ORDER_NO = 2 THEN '배송준비'
+		        WHEN ORDER_NO = 3 THEN '배송중'
+		        WHEN ORDER_NO = 4 THEN '배송완료'
+		        ELSE '배송완료'
+		    END AS ORDER_STR
 		    
 		    , (SELECT COUNT(BUY_DETAIL_CODE)
 		        FROM GOODS_BUY_DETAIL

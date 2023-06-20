@@ -24,6 +24,13 @@ public class OrderController {
 		return"content/admin/goods_order_manage";
 	}
 	
+	@GetMapping("/updateOrder")
+	public String  updateOrder(String orderCode) {
+		orderService.updateOrder(orderCode);
+		
+		return "redirect:/aOrder/goodsOrderManage";
+	}
+	
 	
 
 }

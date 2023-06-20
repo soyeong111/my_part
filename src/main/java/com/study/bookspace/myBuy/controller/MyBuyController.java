@@ -92,6 +92,10 @@ public class MyBuyController {
 	  System.out.println(goodsBuyVO);
 	 
 	  buyService.buyFromCart(goodsBuyVO); 
+	  
+	  goodsOrderVO.setMemId(memId);
+	  goodsOrderVO.setBuyPrice(buyPrice);
+	  
 	  orderService.insertOrder(goodsOrderVO);
 	}
 	

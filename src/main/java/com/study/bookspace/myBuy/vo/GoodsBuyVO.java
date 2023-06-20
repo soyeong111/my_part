@@ -18,5 +18,6 @@ public class GoodsBuyVO extends SearchVO {
 	private String buyDate;
 	List<GoodsBuyDetailVO> buyDetailList;
 	private int etc;
-	private String orderNo;
+	private int orderNo;
+	private String orderStr;
 }

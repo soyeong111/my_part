@@ -18,7 +18,6 @@
  					<table class="table table-hover">
  						<thead>
  							<tr>
- 								<td></td>
  								<td>구매 코드</td>
  								<td>ID</td>
  								<td>결제금액</td>
@@ -33,14 +32,13 @@
  							</tr>
  						</th:block>
  						<th:block th:unless="${#lists.size(orderList) == 0 }">
- 							<tr th:each="${ order, state : orderList }">
- 								<td>[[${state.count}]]</td>
- 								<td>[[${order.orderCode}]]</td>
- 								<td>[[${order.memId}]]</td>
- 								<td>[[${order.buyPrice}]]</td>
- 								<td>[[${order.buyDate}]]</td>
- 								<td>[[${order.orderNo}]]</td>
- 							</tr>
+ 							<tr th:each="order  : ${orderList}">
+							    <td th:text="${order.orderCode}"></td>
+							    <td th:text="${order.memId}"></td>
+							    <td th:text="${order.buyPrice}"></td>
+							    <td th:text="${order.buyDate}"></td>
+							   	<td><a th:href="@{/aOrder/updateOrder(orderCode=${order.orderCode})}">[[${order.orderStr}]]</a></td>
+							</tr>
  						</th:block>
  						</tbody>
  					</table>
@@ -52,7 +50,7 @@
 
 <!--연결해야 할 외부 js 파일  -->
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/order/order.js"></script>
 </th:block>
 
 </html>

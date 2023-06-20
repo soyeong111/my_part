@@ -11,7 +11,8 @@ public class GoodsOrderVO {
 	private String orderCode;
 	private String buyDate;
 	private String memId;
-	private String orderNo;
+	private int orderNo;
+	private String orderStr;
 	private int buyPrice;
 	
 
