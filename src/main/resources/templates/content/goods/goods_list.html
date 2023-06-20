@@ -5,47 +5,71 @@
 	layout:decorate="~{fragment/public_layout}">
 <th:block layout:fragment="content_css">
 	<link rel="stylesheet" href="/css/content/goods/goods.css">
+	<meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>슬라이드</title>
+ <head>
+    <meta charset="UTF-8" />
+   
+    <!-- Styles -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 </th:block>
 <th:block layout:fragment="content">
-	<div>
-	
-	<table class="table table-hover text-center goodsListTable">
-		<colgroup>
-			<col width="10%">
-			<col width="*">
-			<col width="20%">
-			<col width="10%">
-		</colgroup>
-		<thead class="table-primary">
-			<tr>
-				<td>no</td>
-				<td>
-					상 품 명
-				</td>
-				<td>가격</td>
-				<td>재고</td>
-			</tr>
-		</thead>
-		<tbody>
-		<th:block th:if="${#lists.size(goodsList) == 0}">
-			 <tr>
-   				<td colspan="5"> 판매 중인 굿즈가 없습니다</td>
-   			</tr>
+
+    <div id="index_03">
+    <div id="header3" class="goodsHead">이 달의 굿즈</div>
+        <div id="slide3">
+    <div style=" font-size: 2rem; text-align:center; margin-bottom: 3rem; letter-spacing: 5px;" >"문학작품을 향수로 만나다."</div>
+            <ul>
+                <li><a href="#"><img src="https://goodsshop.gift/web/upload/market101/main_img_02.jpg" alt="슬라이드7" class="zzz"></a></li>
+                <li><a href="#"><img src="https://goodsshop.gift/web/upload/market101/main_img_02.jpg" alt="슬라이드8" class="zzz"></a></li>
+                <li><a href="#"><img src="https://goodsshop.gift/web/upload/market101/main_img_03.jpg" alt="슬라이드9" class="zzz"></a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <div style="text-align: right; padding-right: 8rem; margin-top: 12rem; color: #6c96d8; font-size: large;">
+    	-> 이 달의 굿즈 책으로 만나기!
+    </div>
+    
+    <div  class="row mt-5  goodsHead">
+    	<div class="col">
+    		새로 들어온 굿즈
+    	</div>
+    </div>
+   <div class="row row-cols-4 g-4 " style="margin-top: 1rem;">
+		<th:block th:each="goods : ${goodsList}">
+			<div class="col">
+				<div class="newGoods">
+				  <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode})}"><img th:src="${'/image/goods/' + goods.goodsImgList[0].attachedFileName}" class="newGoods"></a>
+				  <div class="">
+				    <h5 class="goodsN" style="margin-top: 2rem;">[[${goods.goodsName}]]</h5>
+				    <h5 class="goodsN">[[${#numbers.formatCurrency(goods.goodsPrice)}]]</h5>
+				  </div>
+				</div>
+			</div>
 		</th:block>
-		<th:block  th:if="${#lists.size(goodsList) != 0}">
-			<tr th:each=" goods , state : ${goodsList}">
-				<td th:text="${state.count}"></td> 
-			   	<td> <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode})}"><span th:text="${goods.goodsName}"></span></a> </td>
-				<td>[[${goods.goodsPrice}]]원</td>
-				<td>[[${goods.goodsStockCnt}]]</td>
-			</tr>
-		</th:block>
-			
-		</tbody>
-	</table>
 	</div>
+
+<div class="goodsHead" style="margin-top: 16rem; ">추천 굿즈</div>
+<div class="onDiv ddd">
+    	-> 베스트 굿즈 보러가기!
+</div>
+<div class="slide slide_wrap" style="margin-left: 5rem; margin-bottom: 6rem;">
+      <div class="slide_item item1"><img src="https://blog.kakaocdn.net/dn/cDZZNW/btrvygY78ly/tG8MaWwdHCMBg8HJbRobxK/img.png" class="recGoods"></div>
+      <div class="slide_item item2"><img src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/uRQ/image/t9j8_NfNjNGeDDQghiL9UvbMyM0.jpg" class="recGoods"></div>
+      <div class="slide_item item3"><img src="https://goodsshop.gift/web/product/big/202201/c92ae3d58fc56fb26809db1b24380fb2.jpg" class="recGoods"></div>
+      <div class="slide_item item4"><img src="https://goodsshop.gift/web/product/big/202201/d2c15d928c35b1b15b122a2f97b9bf06.jpg" class="recGoods"></div>
+      <div class="slide_prev_button slide_button">◀</div>
+      <div class="slide_next_button slide_button">▶</div>
+      <ul class="slide_pagination"></ul>
+
+    </div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	 <script type="text/javascript" src="/js/content/goods/goods_list.js"></script>
 </th:block>
 </html>

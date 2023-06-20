@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.study.bookspace.goods.service.GoodsService;
-import com.study.bookspace.goods.vo.NoticeVO;
 import com.study.bookspace.info.service.AnswerService;
 import com.study.bookspace.info.service.QnaService;
 import com.study.bookspace.info.vo.AnswerVO;
+import com.study.bookspace.info.vo.NoticeVO;
 import com.study.bookspace.info.vo.QnaVO;
 import com.study.bookspace.info.vo.SearchQnaVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
@@ -26,9 +26,6 @@ public class InfoController {
 	private QnaService qnaService;
 	@Resource(name = "answerService")
 	private AnswerService answerService;
-	@Resource(name = "goodsService")
-	private GoodsService goodsService;
-	
 	//도서관 소개글
 	@GetMapping("/libraryIntro")
 	public String libraryIntro(SubMenuVO subMenuVO) {
@@ -149,16 +146,6 @@ public class InfoController {
 	}
 	
 
-	@GetMapping("/notice")
-	public String notice(SubMenuVO subMenuVO, NoticeVO noticeVO, Model model) {
-		model.addAttribute(goodsService.noticeForPublic(noticeVO));
-		return "content/info/notice";
-	}
-	@GetMapping("/noticeDetail")
-	public String noticeDetail(SubMenuVO subMenuVO, String noticeNo, Model model) {
-		model.addAttribute(goodsService.noticeDetailForPublic(noticeNo));
-		return "content/info/notice_detail";
-	}
 	
 	
 	@PostMapping("/qnaAnswer")
@@ -181,8 +168,40 @@ public class InfoController {
 	}
 	
 	
-	
 
+	@GetMapping("/notice")
+	public String notice(SubMenuVO subMenuVO, NoticeVO noticeVO, Model model) {
+		model.addAttribute("noticeList",answerService.noticeForPublic(noticeVO));
+		return "content/info/notice";
+	}
+	@GetMapping("/noticeDetail")
+	public String noticeDetail(SubMenuVO subMenuVO, String noticeNo, Model model) {
+		model.addAttribute("noticeVO",answerService.noticeDetailForPublic(noticeNo));
+		return "content/info/notice_detail";
+	}
+	
+	@GetMapping("/noticeForm")
+	public String noticeForm() {
+		return "content/info/notice_form";
+	}
+	
+	@PostMapping("/insertNotice")
+	public String insertNotice(NoticeVO noticeVO, Authentication authentication) {
+		User user =(User)authentication.getPrincipal();
+		noticeVO.setMemId(user.getUsername());
+		
+		answerService.insertNotice(noticeVO);
+		return "redirect:/info/notice";
+	}
+	
+	@PostMapping("/deleteNotice")
+	public String deleteNotice(String noticeNo) {
+		answerService.deleteNotice(noticeNo);
+		return "redirect:/info/notice";
+	}
+
+	
+	
 	
 }
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/member_layout}">
+
+<!--연결해야 할 외부 css파일  -->
+<th:block layout:fragment="content_css">
+	<!--<link rel="stylesheet" href=""> -->
+</th:block>
+
+<th:block layout:fragment="content">
+<div>
+[[${buyList}]]
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<td>이미지</td>
+				<td>상품명</td>
+				<td>가격</td>
+				<td>수량</td>
+				<td>총 가격</td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each=" cart : ${cartList} ">
+				<td>
+					<img width="70px;" th:src="${'/image/goods/' + cart.goodsVO.goodsImgList[0].attachedFileName}">
+				</td>
+				<td th:text="${cart.goodsVO.goodsName}"></td>
+				<td th:text="${cart.goodsVO.goodsPrice}"></td>
+				<td>[[${cart.cartRegCnt}]]</td>
+				<td>	<span th:value="${cart.totalPrice}"> </span></td>
+			</tr>
+		</tbody>
+	</table>
+				<div class="row w-75 m-auto">
+				<div class="col">
+				<form id="joinForm" class="row g-3" th:action="@{/member/join}" method="post">
+				<div class="col-12">
+					<label for="memName" class="form-label">NAME</label> 
+					<input type="text" class="form-control" id="memName" name="memName">
+				</div>
+				<div class="col-4">
+					<label for="tell_1" class="form-label">TELL</label> 
+					<select id="tell_1" name="memTells" class="form-select" required>
+						<option value="010">010</option>
+						<option value="011">011</option>
+					</select>
+				</div>
+				<div class="col-4">
+					<label for="tell_2" class="form-label">&nbsp;</label>
+					<input type="text" class="form-control" id="tell_2" name="memTells" required>
+				</div>
+				<div class="col-4">
+					<label for="tell_3" class="form-label">&nbsp;</label>
+					<input type="text" class="form-control" id="tell_3" name="memTells" required>
+				</div>
+				<div class="col-9">
+					<label for="memAddr" class="form-label">ADDRESS</label> 
+					<input type="text" class="form-control" id="memAddr" name="memAddr" onclick="searchAddr();" readonly required>
+				</div>
+				<div class="col-3 d-grid"> 
+					<label for="search_btn" class="form-label">&nbsp;</label>
+					<input type="button" class="btn btn-secondary" id="search_btn" value="Search" onclick="searchAddr();">
+				</div>
+				<div class="col-12">
+					<input type="text" class="form-control" name="addrDetail" required>
+				</div>
+			</form>
+				</div>
+			</div>
+</div>
+<button id="pay_btn" onclick="requestPay();">결제하기</button>				
+</th:block>
+
+<!--연결해야 할 외부 js 파일  -->
+<th:block layout:fragment="content_js">
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+-<script type="text/javascript" src="/js/content/buy/buy_detail.js"></script> 
+</th:block>
+
+</html>

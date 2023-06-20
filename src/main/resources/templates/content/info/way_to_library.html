@@ -6,30 +6,32 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/info/way_to_library.css">
 </th:block>
 
 <th:block layout:fragment="content">
-  도서관 오는 길
-  
 
+<div class="wayDiv">
+
+
+<div class="wayTitle">찾아오시는 길</div>
   
-  <div id="map" style="width:100%;height:350px;">
-  	#map {width:500px; height:400px;}
+  <div id="map" style="width:80%;height:350px;" class="mapDiv">
+  	
   </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2e0e36f636e4e6ffdbd2f280fd381a04"></script>
 <script>
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(35.5350070783584, 129.310830713355), // 지도의 중심좌표
         level: 3 // 지도의 확대 레벨
     };
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 // 마커가 표시될 위치입니다 
-var markerPosition  = new kakao.maps.LatLng(33.450701, 126.570667); 
+var markerPosition  = new kakao.maps.LatLng(35.5350070783584, 129.310830713355); 
 
 // 마커를 생성합니다
 var marker = new kakao.maps.Marker({
@@ -42,6 +44,7 @@ marker.setMap(map);
 // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
 // marker.setMap(null);    
 </script>
+</div>
 </th:block>
 
 <!--연결해야 할 외부 js 파일  -->

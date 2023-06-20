@@ -18,6 +18,7 @@ public class BookRecordVO {
 	private String endDate;
 	private String regDate;
 	private String bookReview;
+	private int recordNum;
 	private BookVO bookVO;
 
 }

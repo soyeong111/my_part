@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+
+
+.noticeForm{
+	width: 80%;
+	padding-top: 7rem;
+}
+
+
+.noticeContent{
+	height: 25rem;
+	margin-top: 1rem;
+	resize: none;
+}
+
+.nBtn{
+	border: none;
+	background-color: #6c96d8;
+	border-radius: 3%; 
+	width: 12rem;
+	height: 3rem;
+	font-weight: bold;
+	color: white;
+}
+
+.btnDiv{
+	margin-top: 2rem;
+	text-align: center;
+	
+}

@@ -10,6 +10,7 @@
 </th:block>
 
 <th:block layout:fragment="content">
+
   	<table>
 		<thead>
 			<tr>
@@ -24,7 +25,12 @@
 				<td></td>
 			</tr>
 		</thead>
+		
+		
+	
+		
 		<tbody>
+		
 			<th:block th:if="${#lists.size(cartList) == 0}">
 				<tr>
 					<td colspan="7">장바구니가 비어있습니다</td>
@@ -40,7 +46,7 @@
 				
 			
 				<td>
-					<img width="70px;" th:src="${'/image/goods' + cart.goodsVO.goodsImgList[0].attachedFileName}">
+					<img width="70px;" th:src="${'/image/goods/' + cart.goodsVO.goodsImgList[0].attachedFileName}">
 				</td>
 						<td class="text-start">[[${cart.goodsVO.goodsName}]]</td>
 						<td class="goodsPriceTd">[[${#numbers.formatCurrency(cart.goodsVO.goodsPrice)}]]</td>
@@ -62,7 +68,8 @@
 							<!--총 가격  -->	
 							<!-- </form> -->
 						<td> <!-- th:data-total-price="${cart.totalPrice}" -->
-							<span class="totalPriceSpan"  th:value="${cart.totalPrice}">[[${#numbers.formatCurrency(cart.totalPrice)}]]</span>
+							<span class="totalPriceSpan"  th:value="${cart.totalPrice}" th:data-total-price="${cart.totalPrice}">
+							</span>
 						</td>
 						<td>
 							<div class="row">
@@ -85,9 +92,12 @@
 					</table>
 				</div>
 			</div>
-			<div class="row mb-3">
+			
+
+			
+			<div class="row mb-3 mt-5">
 				<div class="offset-4 col-2 d-grid">
-					<input type="button" class="btn btn-primary" style="font-size: 1.1rem;" value="구	매" onclick="buys();">
+			<button id="check_module">결제하기</button>
 				</div>
 				<div class="col-2 d-grid">
 					<input type="button" class="btn btn-primary" style="font-size: 1.1rem;" value="선택삭제" onclick="deleteCarts();">
@@ -96,11 +106,18 @@
 					<a th:href="@{/mBuy/buyList}">구매내역</a>
 				</div>
 			</div>
+			
+
+
 </th:block>
 
 <!--연결해야 할 외부 js 파일  -->
 <th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/cart/cart.js"></script>
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+<!-- iamport.payment.js -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+-<script type="text/javascript" src="/js/content/cart/cart.js"></script> 
 </th:block>
 
 </html>

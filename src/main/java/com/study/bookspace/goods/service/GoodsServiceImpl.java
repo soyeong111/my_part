@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.study.bookspace.goods.vo.GoodsCategoryVO;
 import com.study.bookspace.goods.vo.GoodsVO;
-import com.study.bookspace.goods.vo.NoticeVO;
 
 @Service("goodsService")
 public class GoodsServiceImpl implements GoodsService {
@@ -96,15 +95,7 @@ public class GoodsServiceImpl implements GoodsService {
 		return sqlSession.selectList("goodsMapper.goodsListForBest", goodsVO);
 	}
 
-	@Override
-	public List<NoticeVO> noticeForPublic(NoticeVO noticeVO) {
-		return sqlSession.selectList("goodsMapper.noticeForPublic", noticeVO);
-	}
-
-	@Override
-	public NoticeVO noticeDetailForPublic(String noticeCode) {
-		return sqlSession.selectOne("goodsMapper.noticeDetailForPublic",noticeCode);
-	}
+	
 
 
 

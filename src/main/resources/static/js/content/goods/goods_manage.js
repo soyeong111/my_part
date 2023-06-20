@@ -2,7 +2,7 @@ const imgModal = new bootstrap.Modal('#imgModal');
 
 function openImgModal(atachedFileName, originFileName){
 	const modalTag = document.querySelector('#imgModal');
-	modalTag.querySelector('img').src = `/upload/${atachedFileName}`;
+	modalTag.querySelector('img').src = `/image/goods/${atachedFileName}`;
 	
 	//제목 세팅
 	modalTag.querySelector('h1').textContent = originFileName;

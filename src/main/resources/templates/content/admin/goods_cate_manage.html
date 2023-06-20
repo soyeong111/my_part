@@ -10,21 +10,17 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<div class="row">
+<div class="row" style="margin-top: 9rem;">
 	<div class="col">
 		<div class="row">
-			<div class="col sub-title">
-				
-				카테고리 등록
-			</div>
 		</div>
-		<div class="row mb-3">
-			<div class="col">
+		<div class="row mb-3" style="margin-left: 7rem;">
+			<div class="col" >
 				<form class="row">
-					<div class="col-9">
-						<input id="goodsCateName" type="text" class="form-control" placeholder="추가할 카테고리명 입력">
+					<div class="col-8">
+						<input id="goodsCateName" name="goodsCateName" type="text" class="form-control" placeholder="추가할 카테고리명 입력">
 					</div>
-					<div class="col-3 d-grid">
+					<div class="col-2 d-grid">
 						<button onclick="regCategory();" type="button" class="btn btn-primary mb-3">
 							
 							등 록
@@ -33,11 +29,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col sub-title">
-			
-				카테고리 목록
-			</div>
+		<div class="row" style="margin-top: 6rem;">
 		</div>
 		<div class="row">
 			<div class="col" style="font-size: 16px; color: red; font-style: italic;">

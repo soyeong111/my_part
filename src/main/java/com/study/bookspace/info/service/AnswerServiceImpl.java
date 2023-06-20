@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.study.bookspace.info.vo.AnswerVO;
+import com.study.bookspace.info.vo.NoticeVO;
 
 @Service("answerService")
 public class AnswerServiceImpl implements AnswerService{
@@ -34,7 +35,25 @@ public class AnswerServiceImpl implements AnswerService{
 	}
 
 
-	
+	@Override
+	public List<NoticeVO> noticeForPublic(NoticeVO noticeVO) {
+		return sqlSession.selectList("noticeMapper.noticeForPublic", noticeVO);
+	}
+
+	@Override
+	public NoticeVO noticeDetailForPublic(String noticeCode) {
+		return sqlSession.selectOne("noticeMapper.noticeDetailForPublic",noticeCode);
+	}
+
+	@Override
+	public void insertNotice(NoticeVO noticeVO) {
+		sqlSession.insert("noticeMapper.insertNotice",noticeVO);
+	}
+
+	@Override
+	public int deleteNotice(String noticeNo) {
+		return sqlSession.delete("noticeMapper.deleteNotice",noticeNo);
+	}
 
 
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.study.bookspace.goods.vo.GoodsCategoryVO;
 import com.study.bookspace.goods.vo.GoodsVO;
-import com.study.bookspace.goods.vo.NoticeVO;
 
 public interface GoodsService {
 	
@@ -53,10 +52,6 @@ public interface GoodsService {
 	//베스트 굿즈
 	List<GoodsVO> goodsListForBest(GoodsVO goodsVO);
 	
-	//공지 리스트
-	List<NoticeVO> noticeForPublic(NoticeVO noticeVO);
 	
-	//공지 상세
-	NoticeVO noticeDetailForPublic(String noticeCode);
 
 }

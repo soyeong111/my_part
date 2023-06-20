@@ -54,6 +54,7 @@
 										<col width="">
 										<col width="">
 										<col width="">
+										<col width="">
 									</colgroup>
 									<thead>
 										<tr>
@@ -62,18 +63,21 @@
 											<td>가 격</td>
 											<td>수 량</td>
 											<td>구매가격</td>
+											<td>배송 상태</td>
 										</tr>
 									</thead>
 									<tbody>
 										<tr th:each="buyDetail, detailState : ${buy.buyDetailList}">
 											<td>[[${#lists.size(buy.buyDetailList) - detailState.index}]]</td>
 											<td class="text-start">
-												<img width="70px" th:src="${'/image/goods' + buyDetail.goodsVO.goodsImgList[0].attachedFileName}">
+												<img width="70px" th:src="${'/image/goods/' + buyDetail.goodsVO.goodsImgList[0].attachedFileName}">
 												[[${buyDetail.goodsVO.goodsName}]]
 											</td>
 											<td>[[${#numbers.formatCurrency(buyDetail.goodsVO.goodsPrice)}]]</td>
 											<td>[[${buyDetail.buyDetailCnt}]]</td>
 											<td>[[${#numbers.formatCurrency(buyDetail.buyDetailPrice)}]]</td>
+											<td th:text="${buy.orderStr}">
+											</td>
 										</tr>
 									</tbody>
 								</table>

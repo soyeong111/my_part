@@ -6,7 +6,7 @@ import com.study.bookspace.myBuy.vo.GoodsBuyVO;
 
 public interface BuyService {
 	
-	//상품 구매
+	//굿즈 구매
 	void buyFromCart(GoodsBuyVO goodsBuyVO);
 	
 	//다음 buyCode 조회

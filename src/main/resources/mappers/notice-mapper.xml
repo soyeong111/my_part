@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="noticeMapper">
+
+	
+	<!-- 공지 -->
+	<resultMap type="com.study.bookspace.info.vo.NoticeVO" id="notice">
+		<id		column="NOTICE_NO"								property="noticeNo"/>
+		<result		column="NOTICE_TITLE"						property="noticeTitle"/>
+		<result		column="NOTICE_CONTENT"				property="noticeContent"/>
+		<result		column="NOTICE_CREATE_DATE"		property="noticeCreateDate"/>
+		<result		column="MEM_ID"								property="memId"/>
+	</resultMap>
+		
+		
+			<!--공지 리스트 (퍼블릭)  -->
+	<select id="noticeForPublic" resultMap="notice">
+		SELECT NOTICE_NO
+			, NOTICE_TITLE
+			, NOTICE_CREATE_DATE
+			, MEM_ID
+		FROM NOTICE
+		ORDER BY NOTICE_CREATE_DATE
+	</select>
+	
+	<!-- 공지 상세 조회(퍼블릭) -->
+	<select id="noticeDetailForPublic" resultMap="notice">
+		SELECT NOTICE_NO
+			, NOTICE_TITLE
+			, NOTICE_CONTENT
+			, NOTICE_CREATE_DATE
+			, MEM_ID
+		FROM NOTICE
+		</select>
+		
+		<!--공지 생성  -->
+		<insert id="insertNotice">
+			INSERT INTO NOTICE (
+				NOTICE_NO
+				, NOTICE_TITLE
+				, NOTICE_CONTENT
+				, MEM_ID
+			) VALUES (
+				 (SELECT 'NOTICE_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(NOTICE_NO, 8))), 0) + 1, 3, '0') AS NOTICE_NO
+			FROM NOTICE)
+				, #{noticeTitle}
+				, #{noticeContent}
+				, #{memId}
+			)
+		</insert>
+		
+		<!-- 공지 삭제 -->
+		<delete id="deleteNotice">
+			DELETE NOTICE
+			WHERE NOTICE_NO = #{noticeNo}
+		</delete>
+	
+	
+	
+</mapper>

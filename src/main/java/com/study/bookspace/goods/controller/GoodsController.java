@@ -19,6 +19,8 @@ import com.study.bookspace.goods.vo.GoodsCategoryVO;
 import com.study.bookspace.goods.vo.GoodsImgVO;
 import com.study.bookspace.goods.vo.GoodsVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
+import com.study.bookspace.myBuy.service.BuyService;
+import com.study.bookspace.myBuy.vo.GoodsBuyVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -28,6 +30,9 @@ import jakarta.annotation.Resource;
 public class GoodsController {
 	@Resource(name = "goodsService")
 	private GoodsService goodsService;
+	
+	@Resource(name = "buyService")
+	private BuyService buyService;
 	
 	//굿즈 카테고리 관리 페이지
 	@GetMapping("/goodsCateManage")
@@ -102,6 +107,7 @@ public class GoodsController {
 	//굿즈 등록 페이지
 	@GetMapping("/regGoods")
 	public String regGoods(Model model) {
+		model.addAttribute("cateList", goodsService.selectGoodsCateList());
 		model.addAttribute("goodsCategoryList", goodsService.selectGoodsCateList());
 		return "content/admin/reg_goods";
 	}
@@ -167,11 +173,14 @@ public class GoodsController {
 	}
 	
 	
+	
 //---------------------------------------------퍼블릭------------------------------------------------------
 	
 	@GetMapping("/goodsList")
 	public String goodsListForPublic(GoodsVO goodsVO, Model model) {
 		model.addAttribute("goodsList", goodsService.goodsListForPublic(goodsVO));
+		System.out.println(goodsService.goodsListForPublic(goodsVO));
+		
 		return "content/goods/goods_list";
 	}
 	
