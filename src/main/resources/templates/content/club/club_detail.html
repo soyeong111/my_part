@@ -38,11 +38,16 @@
 								이달의 책
 							</div>
 							<div class="col-2">
-								<input type="button" class="btn custom-btn" value="등록" onclick="bookOfThisMonth();">
+								<input type="button" class="btn custom-btn" value="등록" data-bs-toggle="modal" data-bs-target="#bookModal" onclick="bookOfThisMonth();">
 							</div>
 						</div>
-						<div class="row">
-							dd
+						<div class="row" style="background-color: gray; height: 300px; width: 200px;">
+							<div class="col" style="background-color: white;">
+								<img alt="" src="/image/weather/sunny.png" width="180px;" height="200px;">
+							</div>
+							<div class="col">
+								zz
+							</div>
 						</div>
 						
 					</div>
@@ -82,6 +87,56 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
+	<!-- Modal -->
+	<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookdModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="bookdModalLabel">이달의 책</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body" id="m-body">
+	        <div>
+	        	<form class="row" id="searchForm" th:action="@{/club/clubDetail}" method="post" th:object="${bookVO}">
+					<div class="offset-2 col-2">
+						<select class="form-select" th:field="*{searchOption}">
+							<option value="title">제목</option>
+							<option value="writer">작성자</option>
+						</select>
+					</div>
+					<div class="col-6">	
+						<input type="text" class="form-control" th:field="*{searchText}">
+					</div>
+					<div class="col-2">
+						<a><img src="/image/search.png" width="28px;" onclick="searchForm();" style="cursor: pointer;"></a>
+					</div>
+				</form>
+				<table>
+					<tr th:each="book : ${bookList}">
+						<td>[[${book.bookTitle}]]</td>
+					</tr>
+				</table>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-primary">선택</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
 	<div class="weather-div">
 		<div class="weather">
 			<div class="weather-img"></div>
