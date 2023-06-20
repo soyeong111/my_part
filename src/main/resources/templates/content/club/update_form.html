@@ -6,20 +6,23 @@
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/club/update_form.css">
 </th:block>
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="update-form-div">
-		<form th:action="@{/club/updateBoard}" method="post">
-			<input type="hidden" th:value="${board.boardNum}" name="boardNum">
-			<input type="hidden" th:value="${board.clubCode}" name="clubCode">
-			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
-			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
-			<div class="col">
-				<div class="row">
-					<div class="col">
+		<div class="head-div">
+			게시글 수정
+		</div>
+		<div class="body-div">
+			<form th:action="@{/club/updateBoard}" id="updateForm" method="post" enctype="multipart/form-data">
+				<input type="hidden" th:value="${board.boardNum}" name="boardNum">
+				<input type="hidden" th:value="${board.clubCode}" name="clubCode">
+				<input type="hidden" th:value="${board.communityImageVO.comImgCode}" name="comImgCode">
+				<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+				<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
+					<div class="col-12">
 						<table class="table">
 							<colgroup>
 								<col width="">
@@ -28,7 +31,7 @@
 							<tr>
 								<td>제목</td>
 								<td>
-									<input type="text" class="form-control" name="boardTitle" th:value="${board.boardTitle}">
+									<input type="text" class="form-control" id="title-tag" name="boardTitle" th:value="${board.boardTitle}">
 								</td>
 							</tr>
 							<tr>
@@ -44,27 +47,31 @@
 								</td>
 							</tr>
 							<tr>
+								<td>첨부파일</td>
+								<td>
+									<input type="file" class="form-control" name="communityImg" id="communityImg"><br>
+								</td>
+							</tr>
+							<tr>
 								<td>내용</td>
 								<td>
-									<textarea rows="20" cols="100" class="form-control" name="boardContent">[[${board.boardContent}]]</textarea>
+									<textarea rows="20" cols="100" class="form-control" id="content-tag" name="boardContent">[[${board.boardContent}]]</textarea>
 								</td>
 							</tr>
 						</table>
 					</div>
-				</div>
-				<div class="row">
 					<div class="offset-4 col-4">
-						<input type="submit" class="btn custom-btn" value="수정">
+						<input type="button" class="btn custom-btn" value="수정" onclick="updateBoard();">
 					</div>
-				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
 </th:block>
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/content/club/update_form.js"></script> -->
+	<script type="text/javascript" src="/js/content/club/update_form.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </th:block>
 
 </html>

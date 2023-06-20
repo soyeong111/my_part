@@ -78,7 +78,7 @@ function returnBook(btn, name, borrowCode, bookCode) {
           type: 'post',
           async: true,
           contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-          data: { 'borrowCode': borrowCode, 'memId': name },
+          data: { 'borrowCode': borrowCode, 'memId': name , 'bookCode':bookCode},
           success: function(result) {
 			   Swal.fire('도서가 성공적으로 \n반납되었습니다.', '', 'success')
               .then(() => {
@@ -86,7 +86,7 @@ function returnBook(btn, name, borrowCode, bookCode) {
               });
           },
           error: function() {
-            Swal.fire('연장에 실패했습니다.', '', 'error');
+            Swal.fire('반납에 실패했습니다.', '', 'error');
           }
         });
       }

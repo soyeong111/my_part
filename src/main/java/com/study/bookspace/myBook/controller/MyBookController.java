@@ -24,21 +24,20 @@ public class MyBookController {
 	private MyBookService myBookService;
 	
 	// 독서 기록 페이지로
-	@GetMapping("/myBookRecord")
+	@RequestMapping("/myBookRecord")
 	public String myBookRecord(SubMenuVO subMenuVO, Authentication authentication, Model model, BookRecordSearchVO bookRecordSearchVO) {
+		System.out.println(bookRecordSearchVO);
 		bookRecordSearchVO.setSearchMemId(((User)authentication.getPrincipal()).getUsername());
 		model.addAttribute("bookMapList", myBookService.getBookTitleListThreeMonths(bookRecordSearchVO.getSearchMemId()));
 		if (bookRecordSearchVO.getSearchOrder() == null) {
 			bookRecordSearchVO.setSearchOrder("DESC");
 		}
+		bookRecordSearchVO.setDisplayPageCnt(5);
+		bookRecordSearchVO.setDisplayDataCnt(6);
 		bookRecordSearchVO.setTotalDataCnt(myBookService.getBookRecordDataCnt(bookRecordSearchVO));
 		bookRecordSearchVO.setPageInfo();
-		
-		
-		
-		
-		System.out.println(bookRecordSearchVO);
 		model.addAttribute("recordList", myBookService.getMyBookRecord(bookRecordSearchVO));
+		System.out.println(bookRecordSearchVO);
 		return "content/my/my_book_record";
 	}
 	

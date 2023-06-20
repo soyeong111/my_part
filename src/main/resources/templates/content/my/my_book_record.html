@@ -49,15 +49,36 @@
 				</div>
 			</div>
 		</form>
-		<form id="record-search-form">
+		<form id="record-search-form" action="/mBook/myBookRecord" method="post">
 			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
 			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
-			<input type="hidden" name="searchColumn" th:value="${bookRecordSearchVO.searchColumn}">
-			<input type="hidden" name="searchValue" th:value="${bookRecordSearchVO.searchValue}">
-			<input type="hidden" name="searchOrder" th:value="${bookRecordSearchVO.searchOrder}">
-			<input type="hidden" name="nowPageNum" th:value="${bookRecordSearchVO.nowPageNum}">
+			<input type="hidden" name="searchValue" id="search-value-h" th:value="${bookRecordSearchVO.searchValue}">
+			<input type="hidden" name="searchColumn" id="search-column-h" th:value="${bookRecordSearchVO.searchColumn}">
+			<input type="hidden" name="searchOrder" id="search-order-h" th:value="${bookRecordSearchVO.searchOrder}">
+			<input type="hidden" name="nowPageNum" id="now-page-num" th:value="${bookRecordSearchVO.nowPageNum}">
 		</form>
-		<div class="row row-cols-1 row-cols-md-2 g-4 mt-5 record-list-div">
+		<div class="row mt-5">
+			<div class="offset-2 col-2">
+				<select id="search-order-s" class="form-select">
+					<option value="DESC" th:selected="${bookRecordSearchVO.searchOrder == 'DESC'}">최신순</option>
+					<option value="ASC" th:selected="${bookRecordSearchVO.searchOrder == 'ASC'}">등록순</option>
+				</select>
+			</div>
+			<div class="col-2">
+				<select id="search-column-s" class="form-select">
+					<option value="BOOK_TITLE" th:selected="${bookRecordSearchVO.searchColumn == 'BOOK_TITLE'}">도서제목</option>
+					<option value="BOOK_AUTHOR" th:selected="${bookRecordSearchVO.searchColumn == 'BOOK_AUTHOR'}">도서작가</option>
+					<option value="BOOK_REVIEW" th:selected="${bookRecordSearchVO.searchColumn == 'BOOK_REVIEW'}">기록내용</option>
+				</select>
+			</div>
+			<div class="col-4">
+				<input type="text" id="search-value-s" class="form-control" th:value="${bookRecordSearchVO.searchValue}">
+			</div>
+			<div class="col-2 d-grid">
+				<button type="button" class="btn custom-btn" onclick="searchClick();">검 색</button>
+			</div>
+		</div>
+		<div class="row row-cols-1 row-cols-md-2 g-4 mt-4 record-list-div">
 			<div class="col record-card-div" th:each="record : ${recordList}">
 				<div class="card mb-3">
 					<div class="row g-0">
@@ -79,7 +100,7 @@
 								<span class="card-span">
 									<a href="javascript:void(0);" class="text-secondary" th:onclick="change_tag([[${record.recordCode}]], this);">수정</a>
 									<span class="text-secondary"> / </span>
-									<a href="javascript:void(0);" class="color-custom-r" th:onclick="delete_record([[${record.recordCode}]], this);">삭제</a>
+									<a href="javascript:void(0);" class="color-custom-r" th:onclick="delete_record([[${record.recordCode}]]);">삭제</a>
 								</span>
 							</div>
 						</div>
@@ -88,13 +109,14 @@
 			</div>
 		</div>
 		<div class="row mt-3">
-			<div class="col pagination">
-				<a><</a>
-				<a>1</a>
-				<a>2</a>
-				<a>3</a>
-				<a>4</a>
-				<a>></a>
+			<div class="col text-center" th:if="${#lists.size(recordList) == 0}">
+				독서 기록이 없습니다.
+			</div>
+			<div class="col pagination" th:if="${#lists.size(recordList) != 0}">
+				<a th:if="${bookRecordSearchVO.prevPageFlag}" th:onclick="pageClick([[${bookRecordSearchVO.startPageNum - 1}]]);">&lt;</a>
+				<a th:each="no : ${#numbers.sequence(bookRecordSearchVO.startPageNum, bookRecordSearchVO.endPageNum)}" th:text="${no}"
+					th:onclick="pageClick([[${no}]]);" th:classappend="${bookRecordSearchVO.nowPageNum == no} ? pagination-select"></a>
+				<a th:if="${bookRecordSearchVO.nextPageFlag}" th:onclick="pageClick([[${bookRecordSearchVO.endPageNum + 1}]]);">&gt;</a>
 			</div>
 		</div>
 	</div>

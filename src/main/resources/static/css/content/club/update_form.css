@@ -1,0 +1,14 @@
+@charset "EUC-KR";
+
+.head-div{
+	margin-bottom: 5rem; 
+	margin-top: 3rem; 
+	margin-left: 2rem;  
+	font-size: 20px; 
+	font-weight: bold;
+}
+
+.body-div{
+	margin-left: 2rem;  
+	margin-right: 2rem;
+}

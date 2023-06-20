@@ -21,6 +21,7 @@
 			<div class="col">
 				<form class="row g-2" id="updateClubForm" th:action="@{/club/updateClub}" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="clubCode" th:value="${club.clubCode}">
+					<input type="hidden" name="clubImgCode" th:value="${club.bookClubImageVO.clubImgCode}">
 					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
 					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<div class="col-12">
@@ -51,6 +52,7 @@
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/club/update_club_form.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </th:block>
 
 </html>

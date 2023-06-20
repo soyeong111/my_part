@@ -164,7 +164,24 @@ public class ClubController {
 	
 	//북클럽 수정
 	@PostMapping("/updateClub")
-	public String updateClub(BookClubVO bookClubVO, SubMenuVO subMenuVO) {
+	public String updateClub(BookClubVO bookClubVO, SubMenuVO subMenuVO, BookClubImageVO bookClubImageVO, MultipartFile clubImg) {
+		
+		// -- 파일 첨부 -- //
+		BookClubImageVO attachedClubImageVO = UploadUtil.uploadFileClub(clubImg);
+		String oldFile = bookClubImageVO.getClubImgCode();
+		String clubImgName = clubService.getClubImageName(bookClubImageVO.getClubCode());
+		
+		if(attachedClubImageVO != null) {
+			clubService.deleteClubImg(oldFile);
+			
+			bookClubImageVO.setClubCode(bookClubImageVO.getClubCode());
+			bookClubImageVO.setBcOriginFileName(attachedClubImageVO.getBcOriginFileName());
+			bookClubImageVO.setBcAttachedFileName(attachedClubImageVO.getBcAttachedFileName());
+			clubService.insertImg(bookClubImageVO);
+			
+			File file = new File(ConstVariable.CLUB_UPLOAD_PATH + clubImgName);
+			file.delete();
+		}
 		
 		clubService.updateClub(bookClubVO);
 		
@@ -175,7 +192,7 @@ public class ClubController {
 	
 	//북클럽 삭제
 	@GetMapping("/deleteClub")
-	public String deleteClub(String clubCode, SubMenuVO subMenuVO) {
+	public String deleteClub(String clubCode, SubMenuVO subMenuVO, AlramVO alramVO) {
 		String clubImgName = clubService.getClubImageName(clubCode);
 		
 		File file = new File(ConstVariable.CLUB_UPLOAD_PATH + clubImgName);
@@ -212,19 +229,6 @@ public class ClubController {
 		return "content/club/club_manage";
 	}
 	
-	//북클럽 회원 승인
-	@ResponseBody
-	@PostMapping("/acceptMemberAjax")
-	public void acceptMemberAjax(String acceptCode) {
-		clubService.acceptMember(acceptCode);
-	}
-	
-	//북클럽 회원 거절/강퇴
-	@ResponseBody
-	@PostMapping("/refuseMemberAjax")
-	public void refuseMemberAjax(String acceptCode) {
-		clubService.refuseMember(acceptCode);
-	}
 	
 	//커뮤니티 이동 (클럽 멤버만)
 	@ResponseBody
@@ -318,9 +322,24 @@ public class ClubController {
 	
 	//게시글 수정
 	@PostMapping("/updateBoard")
-	public String updateBoard(CommunityVO communityVO, SubMenuVO subMenuVO) {
+	public String updateBoard(CommunityVO communityVO, SubMenuVO subMenuVO, MultipartFile communityImg, CommunityImageVO communityImageVO) {
 
-		System.out.println(communityVO);
+		
+		String oldFile = communityImageVO.getComImgCode();
+		CommunityImageVO attachedCommunityImageVO = UploadUtil.communityUploadFile(communityImg);
+		String communityImgName = clubService.getCommunityImageName(communityImageVO.getBoardNum());
+		if(attachedCommunityImageVO != null) {
+			clubService.deleteComImg(oldFile);
+			
+			communityImageVO.setBoardNum(communityImageVO.getBoardNum());
+			communityImageVO.setBcOriginFileName(attachedCommunityImageVO.getBcOriginFileName());
+			communityImageVO.setBcAttachedFileName(attachedCommunityImageVO.getBcAttachedFileName());
+			clubService.insertCommunityImg(communityImageVO);
+			
+			File file = new File(ConstVariable.COMMUNITY_UPLOAD_PATH + communityImgName);
+			file.delete();
+		}
+		
 		clubService.updateBoard(communityVO);
 		
 		return "redirect:/club/boardDetail?clubCode=" 

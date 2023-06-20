@@ -6,7 +6,7 @@ function end_date_change(end_date_input) {
 }
 
 // 기록 삭제
-function delete_record(record_code, delete_a) {
+function delete_record(record_code) {
 	if (confirm('삭제 하시겠습니까?')) {
 		$.ajax({
 			url: '/mBook/deleteBookRecordAjax',
@@ -15,7 +15,7 @@ function delete_record(record_code, delete_a) {
 			data: {'recordCode':record_code},
 			success: function(result) {
 				if (result) {
-					delete_a.closest('.record-card-div').remove();
+					location.reload();
 				} else {
 					alert('삭제 실패');
 				}
@@ -72,4 +72,25 @@ function update_record(record_code, update_a) {
 			}
 		});
 	}
+}
+
+// 검색 클릭 시
+function searchClick() {
+	const search_value_s_tag = document.querySelector('#search-value-s');
+	search_value_s_tag.value = search_value_s_tag.value.trim();
+	if (search_value_s_tag.value == '') {
+		alert('검색어를 입력하세요.');
+		return;
+	}
+	document.querySelector('#search-value-h').value = search_value_s_tag.value;
+	document.querySelector('#search-column-h').value = document.querySelector('#search-column-s').value;
+	document.querySelector('#search-order-h').value = document.querySelector('#search-order-s')
+	document.querySelector('#now-page-num').value = 1;
+	document.querySelector('#record-search-form').submit();
+}
+
+// 페이지 클릭 시
+function pageClick(pageNo) {
+	document.querySelector('#now-page-num').value = pageNo;
+	document.querySelector('#record-search-form').submit();
 }

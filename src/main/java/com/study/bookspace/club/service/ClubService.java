@@ -46,7 +46,7 @@ public interface ClubService {
 	List<BookClubMemberVO> getMyClubDetail(String memId);
 	
 	//이미지 삽입
-	//void insertImg(BookClubImageVO bookClubImageVO);
+	void insertImg(BookClubImageVO bookClubImageVO);
 	
 	//다음 등록 클럽 코드 조회
 	String getNextClubCode();
@@ -82,14 +82,17 @@ public interface ClubService {
 	void deleteReply(String replyNum);
 	
 	//클럽 멤버 승인
-	void acceptMember(String acceptCode);
+	String acceptMember(String acceptCode);
 	
 	//클럽 회원 거절
-	void refuseMember(String acceptCode);
+	String refuseApply(String acceptCode);
 	
 	//클럽 신청 취소
 	void cancelApply(String acceptCode);
 
+	//북클럽 강퇴
+	String kickOutMember(String acceptCode);
+	
 	//클럽 멤버인지 확인
 	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
 	
@@ -132,7 +135,11 @@ public interface ClubService {
 	//클럽 회원 리스트
 	List<BookClubMemberVO> getMemListByClub(String clubCode);
 	
+	//북클럽 이미지 삭제
+	void deleteClubImg(String clubImgCode);
 	
-	
+	//커뮤니티 이미지 삭제
+	void deleteComImg(String comImgCode);
+
 	
 }

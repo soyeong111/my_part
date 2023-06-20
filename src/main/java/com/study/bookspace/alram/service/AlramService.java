@@ -6,7 +6,7 @@ import com.study.bookspace.alram.vo.AlramVO;
 
 public interface AlramService {
 	
-	//클럽 신청 알림
+	//알람
 	void insertAlram(AlramVO alramVO);
 	
 	//알람 갯수 조회

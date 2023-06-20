@@ -4,14 +4,55 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/member_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/content/admin/reserve_manage.css"> 
 </th:block>
 <th:block layout:fragment="content">
 	<div class="reserve-manage-div">
-		reserve_manage
+		<div class="row" style="margin-top: 20px;">
+  <div class="col-12">
+    <h1 style="text-align: center; margin-top: 10px;">도서 예약 관리</h1><br>
+  
+    <table class="table table-striped table-hover text-center mb-0">
+      <thead class="table-head" style="background-color: gray; color: white;">
+        <tr>
+          <td>No</td>
+          <td>회원ID</td>
+          <td>제목</td>
+          <td>예약날짜</td>
+          <td>알람보낸날</td>
+          <td>예약 종료일</td>
+          <td>삭제</td>
+        </tr>
+      </thead>
+     </table>
+    </div>
+    <div class="col-12 scrollBar">
+    <table class="table table-striped table-hover text-center">
+      <tbody>	
+       <tr th:if="${#lists.size(reserveList) == 0 }">
+       	<td colspan="7"> 예약한 회원이 없습니다.</td>
+       </tr>
+        <tr th:each="reserve, state : ${reserveList}">
+          <td th:text="${#lists.size(reserveList) - state.index}"></td>
+          <td>[[${reserve.memId}]]</td>
+          <td><a href="javascript:void(0);">[[${reserve.bookTitle}]]</a></td>
+          <td>[[${reserve.reserveDate}]]</td>
+          <td>[[${reserve.bookAlramDate}]]</td>
+          <td>[[${reserve.reserveDueDate}]]</td>
+          <td>
+	          <input type="button" class="btn custom-btn-del"  
+				   value="삭제"
+				  th:onclick="delReserve([[${reserve.memId}]], [[${reserve.bookCode}]]);">
+		 </td>
+        </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+			<script type="text/javascript" src="/js/content/book/reserve_manage.js"></script> 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </th:block>
 </html>

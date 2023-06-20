@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.study.bookspace.alram.service.AlramService;
 import com.study.bookspace.alram.vo.AlramVO;
 import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
@@ -42,6 +43,9 @@ import jakarta.servlet.http.HttpSession;
 public class BookController {
 	@Resource(name = "bookService")
 	private BookService bookService;
+	
+	@Resource(name = "alramService")
+	private AlramService alramService;
 	
 //	도서 목록 조회
 	@RequestMapping("/bookList")
@@ -148,10 +152,7 @@ public class BookController {
 
 //	도서 상세 페이지
 	@GetMapping("/bookDetail")
-	public String bookDetail(Model model, String bookCode, HttpServletRequest request, SubMenuVO subMenuVO) {
-		
-		 String data = request.getHeader("Referer");
-		 System.out.println("@@@@@@@@" + data);
+	public String bookDetail(Model model, String bookCode, SubMenuVO subMenuVO) {
 		 
 //		 도서 상세 정보
 		 model.addAttribute("book", bookService.getBookDetail(bookCode));
@@ -201,8 +202,9 @@ public class BookController {
 		
 		if(ableBookCnt < 1) {
 			
-	//		현재 보유 개수 (모든 사람)
+	//		현재 보유 개수 (예약한 사람이 대여할 수 있는 개수)
 				int nowStockCnt = bookService.getNowStockCnt(borrowVO.getBookCode());
+				System.out.println(nowStockCnt);
 				if (nowStockCnt < 1) {
 					return 300;
 				}
@@ -219,9 +221,7 @@ public class BookController {
 				if(ableBorrowMem == 0) {
 					return 100;
 				}
-				
 				checkMem = 1 ;
-				
 		} 
 			
 		
@@ -242,24 +242,24 @@ public class BookController {
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
 		
+//		예약 없이 대여 가능한 책의 개수 (모든사람)
+		int ableBookCnt = bookService.getAbleBookCnt(borrowVO.getBookCode());
+		if(ableBookCnt > 0) {
+			return 100;
+			
+		}
+		
+		
+//		예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부
+		int checkBorrowCnt = bookService.getCheckBorrow(borrowVO);
+		if(checkBorrowCnt != 0) {
+			return 200;
+		}
 		
 	
 		System.out.println(borrowVO + "DDDDDDDDDDDDDDDDDDDDD");
 		
-//		예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부
-		int checkBorrowCnt = bookService.getCheckBorrow(borrowVO);
-		if(checkBorrowCnt == 0) {
-			return 100;
-		}
-		
-		
-		
-//		중복 대여
-		int checkBorrowStatus = bookService.checkBorrowStatus(borrowVO);
-//			중복 대여 시
-		if(checkBorrowStatus != 0) {
-				return 1;
-			}
+
 		
 //		 중복 예약
 		 int checkReserveStatus = bookService.checkReserveStatus(reserveVO);
@@ -294,22 +294,54 @@ public class BookController {
 		return "content/my/my_borrow";
 	}
 	
+	
+// 	내 정보)) 도서 예약 관리
+	@GetMapping("/myReserve")
+	public String reservewManage(Model model, SubMenuVO subMenuVO, HttpSession session, ReserveVO reserveVO) {
+		
+		String memId = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+	    reserveVO.setMemId(memId);
+	    
+	    model.addAttribute("myReserveList", bookService.myReserve(reserveVO));
+
+	    
+		return "content/my/my_reserve";
+	}
+	
+	
+//	내 정보) 도서 예약 취소
+	@ResponseBody
+	@PostMapping("/cancelReserveAjax")
+		public void cancelReserveAjax(HttpSession session, ReserveVO reserveVO) {
+		
+		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
+			
+//			예약취소
+			bookService.cancelReserve(reserveVO);
+			
+		}
+	
 
 	
 //	도서 반납
 	@ResponseBody
 	@PostMapping("/returnBookAjax")
-	public void returnBookAjax(BorrowVO borrowVO, HttpSession session, AlramVO alramVO, String bookCode) {
+	public void returnBookAjax(BorrowVO borrowVO, HttpSession session, AlramVO alramVO) {
 		borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-		
+	
 //		도서 반납
-		bookService.returnBook(borrowVO);
+		String alramId = bookService.returnBook(borrowVO);
 		
-//		String reserveId = bookService.getReserveId(bookCode);
-//		
-//		alramVO.setMemId(reserveId);
-//		alramVO.setAContent("예약하신 도서를 대여할 수 있습니다.");
-//		alramVO.setSection(1);
+		if(alramId != null) {
+//		알람보내기
+			alramVO.setMemId(alramId);
+			alramVO.setAContent("예약하신 도서를 대여할 수 있습니다.");
+			alramVO.setSection(1);
+			
+			alramService.insertAlram(alramVO);
+		}
+		
 		
 	}
 	
@@ -351,6 +383,7 @@ public class BookController {
 //	도서 관리) 소장 도서 관리
 	@RequestMapping("/bookManage")
 	public String bookManage(Model model, BookVO bookVO, SubMenuVO subMenuVO, String bookCode) {
+		System.out.println(bookVO + "!!!!!!!!!!!!!!!!!!!!");
 		
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
