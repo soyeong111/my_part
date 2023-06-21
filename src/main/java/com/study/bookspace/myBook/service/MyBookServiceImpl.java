@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.myBook.vo.BookRecordSearchVO;
 import com.study.bookspace.myBook.vo.BookRecordVO;
 
@@ -15,12 +16,6 @@ public class MyBookServiceImpl implements MyBookService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-
-	// 최근 3개월 대여 도서 제목 목록
-	@Override
-	public List<Map<String, String>> getBookTitleListThreeMonths(String memId) {
-		return sqlSession.selectList("recordMapper.getBookTitleListThreeMonths", memId);
-	}
 
 	// 독서 기록 등록
 	@Override
@@ -50,6 +45,12 @@ public class MyBookServiceImpl implements MyBookService {
 	@Override
 	public int getBookRecordDataCnt(BookRecordSearchVO bookRecordSearchVO) {
 		return sqlSession.selectOne("recordMapper.getBookRecordDataCnt", bookRecordSearchVO);
+	}
+
+	// 도서 검색 모달
+	@Override
+	public List<BookVO> bookSearchForModal(Map<String, Object> mapData) {
+		return sqlSession.selectList("recordMapper.bookSearchForModal", mapData);
 	}
 
 }
