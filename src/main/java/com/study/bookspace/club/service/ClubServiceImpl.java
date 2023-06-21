@@ -1,6 +1,7 @@
 package com.study.bookspace.club.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -291,6 +292,11 @@ public class ClubServiceImpl implements ClubService{
 	public String kickOutMember(String acceptCode) {
 		sqlSession.update("clubMapper.kickOutMember", acceptCode);
 		return sqlSession.selectOne("clubMapper.getAlramId", acceptCode);
+	}
+
+	@Override
+	public List<Map<String, Object>> getRankingByClub(String clubCode) {
+		return sqlSession.selectList("clubMapper.getRankingByClub", clubCode);
 	}
 
 

@@ -20,4 +20,10 @@ public class DateUtil {
 		//2023-06-12 -> 2023-06-01
 		return getNowDateToString().substring(0, 8) + "01";
 	}
+	
+	//이번달
+	public static int getMonth() {
+		Calendar cal = Calendar.getInstance();
+		return cal.get(Calendar.MONTH); 
+	}
 }

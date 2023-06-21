@@ -70,5 +70,11 @@ span{
 
 .book-div{
 	font-weight: bold;
+	margin-bottom: 1rem;
 }
 
+.rank-div{
+	background-color: light-gray;
+	border: solid 1px gray;
+	width: 170px;
+}
