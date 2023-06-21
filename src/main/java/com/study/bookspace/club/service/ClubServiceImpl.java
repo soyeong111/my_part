@@ -299,6 +299,12 @@ public class ClubServiceImpl implements ClubService{
 		return sqlSession.selectList("clubMapper.getRankingByClub", clubCode);
 	}
 
+	//관리자 북클럽 목록 조회
+	@Override
+	public List<BookClubVO> getBookClubListForAdmin() {
+		return sqlSession.selectList("clubMapper.getBookClubListForAdmin");
+	}
+
 
 
 	

@@ -13,11 +13,15 @@ table {
 	margin-top: 2rem;
 }
 
+span{
+	font-weight: bold;
+	font-size: 25px;
+}
 
 .detail-body{
 	margin-left: 2rem;  
 	margin-right: 2rem;
-	width: 80%;
+	width: 100%;
 }
 
 .board-body{
@@ -43,6 +47,3 @@ table {
 	color: #b94e51;
 }
 
-.no-border{
-    border: white;
-}
