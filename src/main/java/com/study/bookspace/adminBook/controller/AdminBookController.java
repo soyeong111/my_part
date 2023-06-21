@@ -72,6 +72,7 @@ public class AdminBookController {
 		
 		model.addAttribute("borrowList", bookService.borrowManage());
 		
+		model.addAttribute("top5List", bookService.getBorrowTop5());
 		
 		return "content/admin/borrow_manage";
 	}

@@ -52,6 +52,9 @@ public interface BookService {
 //	도서 관리) 카테고리별 대여 그래프
 	List<Map<String, Object>> cateBorrow();
 	
+//	도서 관리) 3개월동안의 대여수 TOP5
+	List<BookVO> getBorrowTop5();
+	
 //	현재 보유중인 책의 개수
 	int getNowStockCnt(String bookCode);
 

@@ -258,6 +258,11 @@ public class BookServiceImpl implements BookService {
 		return sqlSession.selectList("bookMapper.cateBorrow");
 	}
 
+	@Override
+	public List<BookVO> getBorrowTop5() {
+		return sqlSession.selectList("bookMapper.borrowTop5");
+	}
+
 
 
 

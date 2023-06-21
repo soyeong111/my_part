@@ -24,6 +24,7 @@ public class BookVO extends SearchBookVO {
 	private String returnDate;
 	private BorrowVO borrowVO;
 	private int borrowCnt;
+	private int borrowCount;
 	private int reserveCnt;
 	private int availableStockCnt;
 	private List<ImgVO> imgList; // 상품 1개는 이미지 정보(ImgVO) 여러개를 갖고 있다

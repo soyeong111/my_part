@@ -95,8 +95,16 @@ function drawChart(chartData) {
         legend: {
           position: 'right',
         },
+         title: {
+        display: true,
+        text: '도서 카테고리별 대여 비율',
+         font: {
+        size: 23 // 원하는 크기로 설정
       }
-    },
+        
+			  }
+		  }
+	  },
   });
 }
 
