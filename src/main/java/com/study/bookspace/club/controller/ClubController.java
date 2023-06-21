@@ -27,6 +27,7 @@ import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.ConstVariable;
+import com.study.bookspace.util.DateUtil;
 import com.study.bookspace.util.PageVO;
 import com.study.bookspace.util.UploadUtil;
 
@@ -128,8 +129,10 @@ public class ClubController {
 		//클럽 멤버 리스트 조회
 		model.addAttribute("memList", clubService.getMemListByClub(clubCode));
 		
-		
-		
+		//이번달
+		model.addAttribute("thisMonth", DateUtil.getMonth());
+		//랭킹
+		model.addAttribute("rankingList", clubService.getRankingByClub(clubCode));
 		
 		return "content/club/club_detail";
 	}

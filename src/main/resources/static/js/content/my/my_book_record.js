@@ -84,7 +84,7 @@ function searchClick() {
 	}
 	document.querySelector('#search-value-h').value = search_value_s_tag.value;
 	document.querySelector('#search-column-h').value = document.querySelector('#search-column-s').value;
-	document.querySelector('#search-order-h').value = document.querySelector('#search-order-s')
+	document.querySelector('#search-order-h').value = document.querySelector('#search-order-s').value;
 	document.querySelector('#now-page-num').value = 1;
 	document.querySelector('#record-search-form').submit();
 }

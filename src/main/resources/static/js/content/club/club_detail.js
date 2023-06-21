@@ -172,21 +172,15 @@ function getWeather(){
 function bookOfThisMonth(){
 	//ajax start
 	$.ajax({
-	   url: '', //요청경로
+	   url: '/club/bookChoiceAjax', //요청경로
 	   type: 'post',
 	   async : true,
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 	   data: {}, //필요한 데이터
 	   success: function(result) {
-	      alert('ajax 통신 성공');
 	      
-	      const book_choice = document.getElementById('m-body');
-      	  book_choice.innerHTML = '';
-      	  
-      	  let str = '';
-      	  
-      	  
-      	  
+	      
+	      
       	  
 	   },
 	   error: function() {
