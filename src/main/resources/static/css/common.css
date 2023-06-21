@@ -96,18 +96,11 @@ h1 {
 
 .pagination a:hover {
 	background-color: #ccc;
-	color: #fff;
+	color: #fff !important;
+	cursor: pointer;
 }
 
 .pagination-select {
-	background-color: #ccc;
-	color: #fff;
-	
-	
-	
-	
-	
-	
-	
-	
+	background-color: #ccc !important;
+	color: #fff !important;
 }
