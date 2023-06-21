@@ -29,7 +29,7 @@
 		<result column="CLUB_REG_DATE" 		property="clubRegDate"/>
 		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
 		<result column="CLUB_ROLE" 			property="clubRole"/>
-		<result column="MEM_STATUS" 			property="memStatus"/>
+		<result column="MEM_STATUS" 		property="memStatus"/>
 		<association property="bookClubVO" resultMap="bookClub"></association>
 		<association property="memberVO" resultMap="memberMapper.member"></association>
 	</resultMap>
@@ -519,6 +519,16 @@
 		SELECT MEM_ID 
 		FROM BOOK_CLUB_MEMBER
 		WHERE ACCEPT_CODE = #{acceptCode}
+	</select>
+	
+	<select id="getRankingByClub" resultType="Map">
+		SELECT COUNT(BB.BORROW_CODE) AS BORROW_CNT, CM.MEM_ID, M.MEM_NAME
+		FROM BOOK_BORROW BB
+		INNER JOIN BOOK_CLUB_MEMBER CM ON BB.MEM_ID = CM.MEM_ID
+		INNER JOIN MEMBER M ON CM.MEM_ID = M.MEM_ID
+		WHERE CM.CLUB_CODE = #{clubCode}
+		GROUP BY CM.MEM_ID, M.MEM_NAME
+		ORDER BY COUNT(BB.BORROW_CODE) DESC
 	</select>
 	
 	
