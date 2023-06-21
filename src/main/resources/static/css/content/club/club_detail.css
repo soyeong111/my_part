@@ -74,7 +74,43 @@ span{
 }
 
 .rank-div{
-	background-color: light-gray;
-	border: solid 1px gray;
+    border: 1px solid lightgray; /* 테두리 설정 */
 	width: 170px;
+	margin-bottom: 0.7rem;
+	border-collapse: separate; /* 테이블 테두리를 개별적으로 설정 */
+    border-radius: 5px; /* 테두리의 둥글기를 조정할 값 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 설정 */
+}
+
+.rank-div td {
+	padding: 5px; /* 글자와 border 사이의 공간을 조정할 패딩 값 */
+    border-radius: 10px; /* 테두리의 둥글기를 조정할 값 */
+}
+
+.this-book{
+	margin-bottom: 0.5rem;
+	font-weight: bold;
+}
+
+.rounded-image{
+	 border-radius: 50%;
+	 margin-bottom: 3rem;
+}
+
+.outer-row {
+	border: 1px solid lightgray;
+	border-radius: 8px;
+	padding: 10px;
+	height: 330px; 
+	width: 230px;
+	margin-bottom: 2rem;
+	border-radius: 10px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 그림자 효과 설정 */
+}
+
+.book-title{
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+	margin-top: 1rem;
 }

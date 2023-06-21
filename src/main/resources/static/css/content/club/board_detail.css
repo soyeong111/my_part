@@ -13,14 +13,21 @@ table {
 	margin-top: 2rem;
 }
 
+
 .detail-body{
 	margin-left: 2rem;  
 	margin-right: 2rem;
+	width: 80%;
 }
 
 .board-body{
 	width: 100%;
 	height: 300px;
+	display: flex;
+}
+
+.board-body {
+    height: 400px;
 }
 
 .reply-div{
@@ -36,6 +43,6 @@ table {
 	color: #b94e51;
 }
 
-tr:first-child > td {
-	font-weight: bold;
+.no-border{
+    border: white;
 }

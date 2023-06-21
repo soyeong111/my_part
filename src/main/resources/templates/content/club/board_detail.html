@@ -16,50 +16,38 @@
 			<div>커뮤니티</div>
 		</div>
 		<div class="detail-body">
-		<div class="row">
-			<div class="col">
-				<table>
-					<tr>
-						<td>[[${board.boardTitle}]]</td>
-					</tr>
-					<tr>
-						<td rowspan="2">이미지</td>
-						<td>[[${board.boardWriter}]]</td>
-					</tr>
-					<tr>
-						<td>[[${board.regDate}]]  조회 [[${board.readCnt}]]</td>
-					</tr>
-				</table>
-				<table class="table">
-					<tr>
-						<td>제목</td>
-						<td>[[${board.boardTitle}]]</td>
-						<td>조회수</td>
-						<td>[[${board.readCnt}]]</td>
-					</tr>
-					<tr>
-						<td>작성자</td>
-						<td>[[${board.boardWriter}]]</td>
-						<td>작성일</td>
-						<td>[[${board.regDate}]]</td>
-					</tr>
-					<tr>
-						<td class="board-body">내용</td>
-						<td colspan="3">[[${board.boardContent}]]
-						<div th:if="${board.communityImageVO.bcAttachedFileName != null}">
-							<img th:src="${'/image/community/' + board.communityImageVO.bcAttachedFileName}" height="300px;">
-						</div>
-						</td>
-					</tr>
-				</table>
-				<div class="board-body">
-					<div>[[${board.boardContent}]]</div>
-					<div th:if="${board.communityImageVO.bcAttachedFileName != null}">
-							<img th:src="${'/image/community/' + board.communityImageVO.bcAttachedFileName}" height="300px;">
-						</div>
+			<div class="row">
+				<div class="col">
+					<table class="table">
+						<tr>
+							<td>
+								<table>
+									<tr><td><h3>[[${board.boardTitle}]]</h3></td></tr>
+									<tr>
+										<td rowspan="2">
+											이미지
+										</td>
+										<td>[[${board.boardWriter}]]</td>
+									</tr>
+									<tr>
+										<td>[[${board.regDate}]]  조회 [[${board.readCnt}]]</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+						    <td class="board-body">
+						        <div th:if="${board.communityImageVO.bcAttachedFileName != null}">
+						            <img th:src="${'/image/community/' + board.communityImageVO.bcAttachedFileName}" height="300px;">
+						        </div>
+						        <div class="content">
+						            <div>[[${board.boardContent}]]</div>
+						        </div>
+						    </td>
+						</tr>
+					</table>
 				</div>
 			</div>
-		</div>
 		<div class="row">
 			<div class="offset-10 col">
 				<input type="button" class="btn update-btn" value="목록" th:onclick="|location.href='@{/club/community(clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
