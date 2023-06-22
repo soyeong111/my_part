@@ -22,6 +22,8 @@
 		<result column="GOODS_STATUS_STR"		property="goodsStatusStr"/>
 		<result column="ROW_NUM"  					 property="rowNum"/>
 		<result column="ROW_NUMBER"  			 property="rowNumber"/>
+		<result column="BEST_BUY_CNT"  			 property="bestBuyCnt"/>
+		<result column="GOODS_REG_DATE"  			 property="goodsRegDate"/>
 		<association property="goodsCategoryVO" 	resultMap="goodsCategory"></association>
 		<collection property="goodsImgList"   			resultMap="goodsImg" ></collection>
 	</resultMap>
@@ -226,24 +228,40 @@
 	
 		<!-- 베스트 굿즈 리스트 (퍼블릭) : 구매수가 많은 상위 10개 상품 순서대로 조회  -->
 	<select id="goodsListForBest" resultMap="goods">
-		SELECT GOODS_CODE
+		SELECT G.GOODS_CODE
 		    , GOODS_NAME
 		    , GOODS_PRICE
-		    , GOODS_STATUS
-		    , GOODS_STOCK_CNT
-		FROM GOODS
-		WHERE GOODS_CODE IN (
-							                        SELECT GOODS_CODE
-							                        FROM 
-							                        (
-							                            SELECT GOODS_CODE, COUNT(GOODS_CODE) AS BUY_CNT
-							                            FROM GOODS_BUY_DETAIL
-							                            GROUP BY GOODS_CODE
-							                            ORDER BY BUY_CNT DESC
-							                        )
-							                        WHERE ROWNUM &lt;= 10
-							                    )
+		    , ATTACHED_FILE_NAME
+		FROM GOODS G, GOODS_IMAGE I
+		WHERE G.GOODS_CODE = I.GOODS_CODE
+		AND IS_MAIN = 'Y'
+		AND G.GOODS_CODE IN (
+		    SELECT GOODS_CODE
+		    FROM 
+		    (
+		        SELECT GOODS_CODE, COUNT(GOODS_CODE) AS BEST_BUY_CNT
+		        FROM GOODS_BUY_DETAIL
+		        GROUP BY GOODS_CODE
+		        ORDER BY BEST_BUY_CNT DESC
+		    )
+		    WHERE ROWNUM &lt; 10
+		)						                        
 	</select>
+	
+	<select id="selectNewGoods" resultMap="goods">
+		SELECT G.GOODS_CODE
+			, GOODS_NAME
+			, GOODS_PRICE
+			, GOODS_REG_DATE
+			, ATTACHED_FILE_NAME
+		FROM GOODS G, GOODS_IMAGE I
+		WHERE G.GOODS_CODE = I.GOODS_CODE
+		AND IS_MAIN = 'Y'
+		ORDER BY GOODS_REG_DATE
+	</select>
+	
+
+	
 	
 	<!-- 굿즈 상세 조회(퍼블릭) -->
 	<select id="goodsDetailForPublic" resultMap="goods">

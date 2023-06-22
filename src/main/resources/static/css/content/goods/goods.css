@@ -2,6 +2,111 @@
 
 
 
+a-a{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 160px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  text-align: center;
+  font-family: sans-serif;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: #ccc;
+}
+a-a:before{
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: #ff005e;
+  color: #fff;
+  transition: 0.5s;
+  transform-origin: bottom;
+  transform: translatey(-100%) rotatex(90deg);
+}
+a-a:hover:before
+{
+  transform: translatey(0) rotatex(0deg);
+}
+
+
+a.button {
+  display: block;
+  position: relative;
+  float: left;
+  width: 16rem;
+  padding: 0;
+margin-left: 1rem;
+margin-top: 1rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 50px;
+  color: #FFF;
+  border-radius: 5px;
+  transition: all 0.2s ;
+}
+
+/*  */
+
+
+@import url(https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700);
+
+
+
+.articleTitle {
+  font-size: 1.15em;
+  font-weight: 700;
+  line-height: 1em;
+  color: #222;
+}
+
+
+
+.btnLightBlue {
+  background: #6c96d8;
+}
+
+
+
+/* BORDER */
+
+.btnLightBlue.btnBorder {
+  box-shadow: 0px 0px 0px 0px #6c96d8;
+}
+
+.btnLightBlue.btnBorder:hover {
+  box-shadow: 0px 0px 0px 5px #4e68b9;
+}
+
+/*  */
+ 
+a-a:after{
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background: #ea004f;
+  color: #fff;
+  transition: 0.5s;
+  transform-origin: top;
+  transform: translatey(0) rotatex(0deg);
+}
+a-a:hover:after
+{
+  transform: translatey(100%) rotatex(90deg);
+}
+
 
 
 .numDiv{
@@ -144,23 +249,13 @@ li {
 .goodsHead{
 	
 	 height: 100px;
-    box-sizing: border-box;
- 	margin-top: 2rem;
+ 	margin-top: 8rem;
    color: #4F709C;
     line-height: 100px;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: bold;
 }
 
-
-#header3{
-    height: 100px;
-    box-sizing: border-box;
-   color: #4F709C;
-    line-height: 100px;
-    font-size: 2.5rem;
-    font-weight: bold;
-}
 
 #slide3{
      margin-top: 5rem;
@@ -187,8 +282,30 @@ li {
 
 .newGoods{
 	width: 14rem;
-	height: 16rem;
-	margin-top: 2rem;
+	height: 15rem;
+	margin-top: 4rem;
+}
+
+.newGoodsImg{
+	width: 13rem;
+	height: 14rem;
+	margin-top: 4rem;
+}
+
+.bestGoodsDiv{
+	margin: auto;
+	margin-top: 11rem;
+	margin-bottom: 12rem;
+	width: 80%;
+	border-right: thin;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
 }
 
 
@@ -202,5 +319,31 @@ li {
 .goodsN{
 	text-align: center;
 }
+
+
+.newGoodsDiv{
+	margin-top: 6rem;
+	margin-bottom: 14rem;
+}
+
+.goodsDetailDiv{
+	margin-top: 12rem;
+	margin-bottom: 12rem;
+	margin-left: 13rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

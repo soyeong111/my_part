@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+.cartDiv{
+	width: 80%;
+	margin: 0 auto;
+}
+
+.cartHead{
+	height: 90px;
+ 	margin-top: 3rem;
+ 	margin-bottom: 4rem;
+   color: #4F709C;
+    font-size: 2rem;
+    font-weight: bold;
+}

@@ -55,6 +55,11 @@ public class AnswerServiceImpl implements AnswerService{
 		return sqlSession.delete("noticeMapper.deleteNotice",noticeNo);
 	}
 
+	@Override
+	public int updateNotice(NoticeVO noticeVO) {
+		return sqlSession.update("noticeMapper.updateNotice", noticeVO);
+	}
+
 
 
 	

@@ -32,6 +32,7 @@
 			, NOTICE_CREATE_DATE
 			, MEM_ID
 		FROM NOTICE
+		WHERE NOTICE_NO = #{noticeNo}
 		</select>
 		
 		<!--공지 생성  -->
@@ -55,7 +56,13 @@
 			DELETE NOTICE
 			WHERE NOTICE_NO = #{noticeNo}
 		</delete>
-	
+		
+		<!--공지 수정  -->
+		<update id="updateNotice">
+			UPDATE NOTICE
+			SET NOTICE_CONTENT = #{noticeContent}
+			WHERE NOTICE_NO = #{noticeNo}
+		</update>
 	
 	
 </mapper>

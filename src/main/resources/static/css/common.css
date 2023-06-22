@@ -101,6 +101,17 @@ h1 {
 }
 
 .pagination-select {
-	background-color: #ccc !important;
-	color: #fff !important;
+	background-color: #ccc;
+	color: #fff;
 }
+
+.mainHead{
+   height: 90px;
+    margin-top: 3rem;
+    margin-bottom: 4rem;
+   color: #4F709C;
+    font-size: 2rem;
+    font-weight: bold;
+} 
+
+

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/public_layout}">
+
+<!--연결해야 할 외부 css파일  -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/goods/goods.css">
+</th:block>
+
+<th:block layout:fragment="content">
+<div class="newGoodsDiv">
+    <div  class="row mt-5 mb-5  goodsHead" >
+    	<div class="col" style="margin-top: 5rem;">
+    		새로 들어온 상품
+    	</div><hr>
+    </div>
+	<div class="row row-cols-5 g-4 ">
+	  	<th:block th:each="goods : ${newGoodsList}">
+				<div class="col mb-5">
+					<div class="newGoods">
+					  <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode})}">
+					  		<img th:src="${'/image/goods/'+goods.goodsImgList[0].attachedFileName}" class="newGoodsImg"  style="margin-top: 7rem;">
+					  	</a>
+					  <div class="col mt-4">
+					    <h5 class="goodsN">[[${goods.goodsName}]]</h5>
+					    <h5 class="goodsN">[[${#numbers.formatCurrency(goods.goodsPrice)}]]</h5>
+					  </div>
+					</div>
+				</div>
+			</th:block>
+	  </div>
+ </div>
+</th:block>
+
+<!--연결해야 할 외부 js 파일  -->
+<th:block layout:fragment="content_js">
+	<!--<script type="text/javascript" src=""></script> -->
+</th:block>
+
+</html>

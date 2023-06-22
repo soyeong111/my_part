@@ -18,7 +18,7 @@ public class OrderController {
 	private OrderService orderService;
 
 	//배송 정보 관리 
-	@GetMapping("/goodsOrderManage")
+	@GetMapping("/buyManage")
 	public String goodsOrderManage( Model model) {
 		model.addAttribute("orderList", orderService.selectOrder());
 		return"content/admin/goods_order_manage";
