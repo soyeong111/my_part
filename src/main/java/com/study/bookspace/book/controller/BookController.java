@@ -425,8 +425,9 @@ public class BookController {
 	
 
 //	도서 관리) 도서 삭제
-	@GetMapping("/deleteBook")
-	public String deleteBook(String[] bookCodes ,BookVO bookVO) {
+	@ResponseBody
+	@PostMapping("/deleteBookAjax")
+	public String deleteBookAjax(String[] bookCodes ,BookVO bookVO) {
 		
 //		배열을 리스트로
 		List<String> bookCodeList = Arrays.asList(bookCodes);

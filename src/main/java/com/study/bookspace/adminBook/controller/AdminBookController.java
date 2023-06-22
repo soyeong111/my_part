@@ -124,4 +124,18 @@ public class AdminBookController {
 		bookService.cancelReserve(reserveVO);
 	}
 	
+
+//	도서 상세 페이지
+	@GetMapping("/bookDetail")
+	public String bookDetail(Model model, String bookCode, SubMenuVO subMenuVO) {
+		 
+//		 도서 상세 정보
+		 model.addAttribute("book", bookService.getBookDetail(bookCode));
+		 
+		return "content/book/book_detail";
+		
+	}
+	
+	
+	
 }

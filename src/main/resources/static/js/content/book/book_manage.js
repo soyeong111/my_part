@@ -3,15 +3,15 @@ function editBook() {
   const editButton = document.getElementById('editBtn');
   const editMode = editButton.value === '완료';
 	
-	if (checkedCheckboxes.length === 0) {
-	  swal({
-	    title: "선택된 도서가 없습니다.",
-	    text: "도서를 선택해주세요.",
-	    icon: "warning" //"info,success,warning,error" 중 택1
-	  });
-	  return;
-	}
-	
+	  if (checkedCheckboxes.length === 0) {
+    Swal.fire({
+      title: "선택된 도서가 없습니다.",
+      text: "도서를 선택해주세요.",
+      icon: "warning" //"info,success,warning,error" 중 택1
+    });
+    return;
+  }
+
 	
 	
   let categoryList;
@@ -73,7 +73,7 @@ function editBook() {
           'bookStockCnt': bookStockCnt
         },
         success: function(result) {
-		location.href = "/book/bookManage";
+		location.href = "/aBook/bookManage";
 		
         },
         error: function(error) {
@@ -134,41 +134,63 @@ function editBook() {
 
 
 
-//삭제 버튼 클릭 시 실행
-function deleteBook(){
-	//체크한 체크박스
-	const chks = document.querySelectorAll('.chk:checked');
-	
-	
-	if (chks.length == 0) {
-	  swal({
-	    title: "선택된 도서가 없습니다.",
-	    text: "도서를 선택해주세요.",
-	    icon: "warning" //"info,success,warning,error" 중 택1
-	  });
-	  return;
-	}
-	
-		swal({
-		title: "도서 삭제",
-		text: "해당 도서를 삭제하시겠습니까?",
-		icon: "error",
-		buttons: ["취소", "삭제"],
-		dangerMode: true,
-	})
-	.then((confirmed) => {
-		if (confirmed) {
-			//bookCode를 여러개 담을 수 있는 배열 생성
-			const bookCodeArr = [];
-			
-			chks.forEach(function(chk, index){
-				bookCodeArr[index] = chk.value;
-			});
-				
-			location.href = `/book/deleteBook?bookCodes=${bookCodeArr}`;
-		}
-	});
+// 삭제 버튼 클릭 시 실행
+function deleteBook() {
+  // 체크한 체크박스
+  const chks = document.querySelectorAll('.chk:checked');
+
+  if (chks.length == 0) {
+    Swal.fire({
+      title: '선택된 도서가 없습니다.',
+      text: '도서를 선택해주세요.',
+      icon: 'warning',
+    });
+    return;
+  }
+
+  Swal.fire({
+    title: '도서 삭제',
+    text: '해당 도서를 삭제하시겠습니까?',
+    icon: 'error',
+    showCancelButton: true,
+    confirmButtonText: '삭제',
+    cancelButtonText: '취소',
+    dangerMode: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // bookCode를 여러개 담을 수 있는 배열 생성
+      const bookCodeArr = [];
+
+      chks.forEach(function (chk, index) {
+        bookCodeArr[index] = chk.value;
+      });
+
+      // AJAX 실행
+      $.ajax({
+        url: '/book/deleteBookAjax',
+        type: 'post',
+        async: true,
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({ 'bookCode': boio }), // 필요한 데이터
+        success: function (result) {
+          Swal.fire({
+            title: '성공',
+            text: '도서 삭제를 완료했습니다.',
+            icon: 'success',
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: '실패',
+            text: '도서 삭제에 실패했습니다.',
+            icon: 'error',
+          });
+        },
+      });
+    }
+  });
 }
+
 
 //-----이미지 모달창-----
 
