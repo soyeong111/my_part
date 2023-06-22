@@ -42,6 +42,26 @@ h1 {
 	background-color: #4e68b9 !important;
 }
 
+.custom-btn2 {
+	color: white;
+	background-color: #6c96d8;
+}
+
+.custom-btn2:hover {
+	color: white;
+	background-color: #4e68b9;
+}
+
+.custom-btn2:disabled {
+	color: white;
+	background-color: #6c96d8;
+}
+
+.custom-btn2:active {
+	color: white !important;
+	background-color: #6c96d8 !important;
+}
+
 .custom-btn-del {
 	color: white;
 	background-color: #b94e51;
@@ -101,6 +121,21 @@ h1 {
 }
 
 .pagination-select {
-	background-color: #ccc !important;
-	color: #fff !important;
+	background-color: #ccc;
+	color: #fff;
 }
+
+.mainHead{
+   height: 90px;
+    margin-top: 30px;
+    text-align: center;
+   color: #4F709C;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.ts{
+	background-color: #BAD0E8;
+	
+}
+

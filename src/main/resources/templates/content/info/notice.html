@@ -17,7 +17,6 @@
    				<col width="*">
    				<col width="15%">
    				<col width="20%">
-   				<col width="10%">
    			</colgroup>
    		<thead style="font-size: large; background-color: #e7f0ff;">
    			<tr>
@@ -44,6 +43,12 @@
    		</th:block>
    		</tbody>
    	</table>
+   	
+   			<!-- 관리자 권한을 가진 사용자만 보이는 버튼 -->
+	<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+			<input type="button" value="공지 작성" th:onclick="|location.href='@{/info/noticeForm}'|">
+		</div>
+   	
    </div>
 </th:block>
 

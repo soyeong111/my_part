@@ -3,15 +3,15 @@ function editBook() {
   const editButton = document.getElementById('editBtn');
   const editMode = editButton.value === '완료';
 	
-	if (checkedCheckboxes.length === 0) {
-	  swal({
-	    title: "선택된 도서가 없습니다.",
-	    text: "도서를 선택해주세요.",
-	    icon: "warning" //"info,success,warning,error" 중 택1
-	  });
-	  return;
-	}
-	
+	  if (checkedCheckboxes.length === 0) {
+    Swal.fire({
+      title: "선택된 도서가 없습니다.",
+      text: "도서를 선택해주세요.",
+      icon: "warning" //"info,success,warning,error" 중 택1
+    });
+    return;
+  }
+
 	
 	
   let categoryList;
@@ -73,7 +73,7 @@ function editBook() {
           'bookStockCnt': bookStockCnt
         },
         success: function(result) {
-		location.href = "/book/bookManage";
+		location.href = "/aBook/bookManage";
 		
         },
         error: function(error) {
@@ -134,41 +134,63 @@ function editBook() {
 
 
 
-//삭제 버튼 클릭 시 실행
-function deleteBook(){
-	//체크한 체크박스
-	const chks = document.querySelectorAll('.chk:checked');
-	
-	
-	if (chks.length == 0) {
-	  swal({
-	    title: "선택된 도서가 없습니다.",
-	    text: "도서를 선택해주세요.",
-	    icon: "warning" //"info,success,warning,error" 중 택1
-	  });
-	  return;
-	}
-	
-		swal({
-		title: "도서 삭제",
-		text: "해당 도서를 삭제하시겠습니까?",
-		icon: "error",
-		buttons: ["취소", "삭제"],
-		dangerMode: true,
-	})
-	.then((confirmed) => {
-		if (confirmed) {
-			//bookCode를 여러개 담을 수 있는 배열 생성
-			const bookCodeArr = [];
-			
-			chks.forEach(function(chk, index){
-				bookCodeArr[index] = chk.value;
-			});
-				
-			location.href = `/book/deleteBook?bookCodes=${bookCodeArr}`;
-		}
-	});
+// 삭제 버튼 클릭 시 실행
+function deleteBook() {
+  // 체크한 체크박스
+  const chks = document.querySelectorAll('.chk:checked');
+
+  if (chks.length == 0) {
+    Swal.fire({
+      title: '선택된 도서가 없습니다.',
+      text: '도서를 선택해주세요.',
+      icon: 'warning',
+    });
+    return;
+  }
+
+  Swal.fire({
+    title: '도서 삭제',
+    text: '해당 도서를 삭제하시겠습니까?',
+    icon: 'error',
+    showCancelButton: true,
+    confirmButtonText: '삭제',
+    cancelButtonText: '취소',
+    dangerMode: true,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // bookCode를 여러개 담을 수 있는 배열 생성
+      const bookCodeArr = [];
+
+      chks.forEach(function (chk, index) {
+        bookCodeArr[index] = chk.value;
+      });
+
+      // AJAX 실행
+      $.ajax({
+        url: '/book/deleteBookAjax',
+        type: 'post',
+        async: true,
+        contentType: 'application/json; charset=UTF-8',
+        data: JSON.stringify({ 'bookCode': boio }), // 필요한 데이터
+        success: function (result) {
+          Swal.fire({
+            title: '성공',
+            text: '도서 삭제를 완료했습니다.',
+            icon: 'success',
+          });
+        },
+        error: function () {
+          Swal.fire({
+            title: '실패',
+            text: '도서 삭제에 실패했습니다.',
+            icon: 'error',
+          });
+        },
+      });
+    }
+  });
 }
+
 
 //-----이미지 모달창-----
 
@@ -303,64 +325,89 @@ function getBookDetail(bookCode) {
 
 
 // 이미지, 소개 수정
-function editBookDetail(){
-	
-	  // FormData 객체 생성
-  const formData = new FormData($("#updateDetail")[0]);
+function editBookDetail() {
+  // Confirmation dialog
+  Swal.fire({
+    title: '해당 정보를 수정하시겠습니까?',
+    showCancelButton: true,
+    confirmButtonText: '예',
+    cancelButtonText: '아니오',
+    icon: 'question'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // FormData 객체 생성
+      const formData = new FormData($("#updateDetail")[0]);
 
-//ajax start
-   $.ajax({
-      url: '/book/updateBookDetailAjax', //요청경로
-      type: 'post',
-      async : true,
-    processData: false,
-    contentType: false,
-      data: formData,
-      success: function(result) {
-         alert(result);
-      },
-      error: function() {
-         alert('실패');
-      }
-   });
-   //ajax end
-
-	
-}
-
-
-  // 이미지 삭제 
-function deleteImg(attachedFileName, bookImgCode, this_img) {
-  
-  
-  
-  // AJAX
-  $.ajax({
-    url: '/book/deleteImgAjax',
-    type: 'post',
-    async: true,
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 
-		'attachedFileName': attachedFileName, 
-		'bookImgCode':bookImgCode
-	},
-    success: function(result) {
-      console.log(result); // 성공 처리
-
-	if(result){
-      alert('삭제성공');
-		this_img.parentElement.remove();	
-		
-	}
-
-    },
-    error: function() {
-      alert('실패'); // 실패 처리
+      // AJAX
+      $.ajax({
+        url: '/book/updateBookDetailAjax', // 요청경로
+        type: 'post',
+        async: true,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(result) {
+          Swal.fire({
+            icon: 'success',
+            title: '성공적으로 수정되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            // Additional actions after successful editing, if needed
+          });
+        },
+        error: function() {
+          alert('실패');
+        }
+      });
     }
   });
 }
 
 
+
+// 이미지 삭제
+function deleteImg(attachedFileName, bookImgCode, this_img) {
+	// Confirmation dialog
+	Swal.fire({
+		title: '해당 이미지를 삭제하시겠습니까?',
+		showCancelButton: true,
+		confirmButtonText: '예',
+		cancelButtonText: '아니오',
+		icon: 'warning'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			// AJAX
+			$.ajax({
+				url: '/book/deleteImgAjax',
+				type: 'post',
+				async: true,
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				data: {
+					'attachedFileName': attachedFileName,
+					'bookImgCode': bookImgCode
+				},
+				success: function(result) {
+					console.log(result); // 성공 처리
+
+					if (result) {
+						Swal.fire({
+							icon: 'success',
+							title: '삭제 성공',
+							showConfirmButton: false,
+							timer: 1500
+						}).then(() => {
+							this_img.parentElement.remove();
+						});
+					}
+				},
+				error: function() {
+					alert('실패'); // 실패 처리
+				}
+			});
+		}
+	});
+}
 
 
 

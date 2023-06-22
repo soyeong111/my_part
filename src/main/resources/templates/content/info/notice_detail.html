@@ -6,19 +6,41 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/info/q_n_a.css">
 </th:block>
 
 <th:block layout:fragment="content">
-   [[${noticeVO.noticeTitle}]]
-   [[${noticeVO.memId}]]
-   [[${noticeVO.noticeCreateDate}]]
-   [[${noticeVO.noticeContent}]]
+
+<div class="qnaDetail">
+
+  <div class="aTitle">
+     [[${noticeVO.noticeTitle}]]
+  </div>
+  <div class="aTitle2">
+  <span style="margin-right: 30rem;">	작성자 : [[${noticeVO.memId}]]</span>
+  <span>작성일 :  [[${noticeVO.noticeCreateDate}]]</span>
+  </div>
+	
+	<div id="noticeContent" class="aContent">
+			[[${noticeVO.noticeContent}]]
+	</div>
+	
+		<div  th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+				<input type="button" class="aBtn" value="수정" th:onclick="updateNotice(this, [[${noticeVO.noticeNo}]]);">
+				<input type="button" class="aBtn" value="삭제" th:onclick="|location.href='@{/info/deleteNotice(noticeNo=${noticeVO.noticeNo})}'|">
+		</div>
+
+	
+	<div>
+	</div>
+</div>
+
+
 </th:block>
 
 <!--연결해야 할 외부 js 파일  -->
 <th:block layout:fragment="content_js">
-	<!--<script type="text/javascript" src=""></script> -->
+	<script type="text/javascript" src="/js/content/notice/notice.js"></script> 
 </th:block>
 
 </html>

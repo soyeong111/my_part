@@ -16,7 +16,7 @@ function openImgModal(atachedFileName, originFileName){
 function goodsDetail(goodsCode){
 	//ajax start
 	$.ajax({
-	   url: '/goods/goodsDetailAjax', //요청경로
+	   url: '/aGoods/goodsDetailAjax', //요청경로
 	   type: 'post',
 	   data: {'goodsCode':goodsCode}, //필요한 데이터
 	   success: function(result) {

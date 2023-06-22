@@ -21,6 +21,8 @@ public class GoodsVO {
 	private String goodsStatusStr;
 	private int rowNum;
 	private int rowNumber;
+	private int bestBuycnt;
+	private String goodsRegDate;
 	
 	
 	//이미지

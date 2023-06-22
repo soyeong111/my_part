@@ -52,6 +52,9 @@ public interface GoodsService {
 	//베스트 굿즈
 	List<GoodsVO> goodsListForBest(GoodsVO goodsVO);
 	
+	//new goods
+	List<GoodsVO> selectNewGoods(GoodsVO goodsVO);
+	
 	
 
 }

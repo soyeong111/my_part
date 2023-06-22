@@ -6,55 +6,57 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-
+	<link rel="stylesheet" href="/css/content/cart/cart.css">
 </th:block>
 
 <th:block layout:fragment="content">
-
-  	<table>
-		<thead>
-			<tr>
-				<td>
-					<input onclick="setCheckState();" id="checkAll" type="checkbox">
-				</td>
-				<td>이미지</td>
-				<td>상품명</td>
-				<td>가격</td>
-				<td>수량</td>
-				<td>총 가격</td>
-				<td></td>
-			</tr>
-		</thead>
-		
-		
 	
-		
-		<tbody>
-		
+	<div class="cartHead">
+		장바구니 <hr>
+	</div>
+<div class="cartDiv">
+
+  	<table class="table">
+  		<colgroup>
+  			<col width="5%">
+  			<col width="20%">
+  			<col width="20%">
+  			<col width="15%">
+  			<col width="10%">
+  			<col width="*">
+  			<col width="5%">
+  		</colgroup>
+		<thead>
+				 <tr>
+			      <th scope="col"><input onclick="setCheckState();" id="checkAll" type="checkbox"></th>
+			      <th scope="col">이미지</th>
+			      <th scope="col">상품명</th>
+			      <th scope="col">가격</th>
+			      <th scope="col">수량</th>
+			      <th scope="col">총 가격</th>
+			      <th scope="col"></th>
+			    </tr>
+		</thead>
+		<tbody class="table">
 			<th:block th:if="${#lists.size(cartList) == 0}">
 				<tr>
 					<td colspan="7">장바구니가 비어있습니다</td>
 				</tr>
 			</th:block>
-			
 			<th:block th:if="${#lists.size(cartList) != 0}">
 				<tr th:each=" cart : ${cartList} ">
 				<td>
 					<input th:value="${cart.cartCode}" onclick="check();" type="checkbox" class="form-check-input chk"
 					th:data-goods-code="${cart.goodsCode}" th:data-buy-detail-cnt="${cart.cartRegCnt}" th:data-buy-detail-price="${cart.totalPrice}">
 				</td>
-				
-			
 				<td>
-					<img width="70px;" th:src="${'/image/goods/' + cart.goodsVO.goodsImgList[0].attachedFileName}">
+					<img style="width: 50%;" th:src="${'/image/goods/' + cart.goodsVO.goodsImgList[0].attachedFileName}">
 				</td>
 						<td class="text-start">[[${cart.goodsVO.goodsName}]]</td>
 						<td class="goodsPriceTd">[[${#numbers.formatCurrency(cart.goodsVO.goodsPrice)}]]</td>
 						<td>
 						<!-- 	<form th:action="@{/myCart/updateCartRegCnt}" method="post"> -->
 								<input type="hidden" name="cartCode" th:value="${cart.cartCode}">
-								
-								
 								<!-- 수량 -->
 								<div class="row">
 									<div class="col-7">
@@ -63,12 +65,11 @@
 									</div>
 								</div>
 						</td>
-								
-								
 							<!--총 가격  -->	
 							<!-- </form> -->
 						<td> <!-- th:data-total-price="${cart.totalPrice}" -->
 							<span class="totalPriceSpan"  th:value="${cart.totalPrice}" th:data-total-price="${cart.totalPrice}">
+							 	￦[[${cart.totalPrice}]]
 							</span>
 						</td>
 						<td>
@@ -92,12 +93,9 @@
 					</table>
 				</div>
 			</div>
-			
-
-			
 			<div class="row mb-3 mt-5">
 				<div class="offset-4 col-2 d-grid">
-			<button id="check_module">결제하기</button>
+			<button  onclick="buyKakao();">결제하기</button>
 				</div>
 				<div class="col-2 d-grid">
 					<input type="button" class="btn btn-primary" style="font-size: 1.1rem;" value="선택삭제" onclick="deleteCarts();">
@@ -106,8 +104,7 @@
 					<a th:href="@{/mBuy/buyList}">구매내역</a>
 				</div>
 			</div>
-			
-
+</div>
 
 </th:block>
 

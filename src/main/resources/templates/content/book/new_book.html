@@ -21,11 +21,12 @@
     <th:block th:each="book, iterStat : ${bookList}">
       <div class="col">
         <div class="bookList" style="text-align: center;">
-        <a th:href="@{/book/bookDetail(bookCode=${book.bookCode})}">
-          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width:158px; height: 250px;">
+        <a th:href="@{/book/bookDetail(bookCode=${book.bookCode}, 
+        mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
+          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width: 200px; height: 310px;">
           </a>
             <div class="bookList-title">
-              <[[${book.bookTitle}]]>
+              [[${book.bookTitle}]]
             </div>
         </div>
       </div>
