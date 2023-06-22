@@ -51,6 +51,16 @@ public class AdminBookController {
 	}
 
 	
+//	도서 등록 페이지
+	@GetMapping("/regBook")
+	public String regBook(Model model, BookVO bookVO, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("categoryList", bookService.getCateListInUse());
+		
+		return "content/book/book_reg";
+		
+	}
+	
 	
 	
 	

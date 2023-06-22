@@ -303,64 +303,89 @@ function getBookDetail(bookCode) {
 
 
 // 이미지, 소개 수정
-function editBookDetail(){
-	
-	  // FormData 객체 생성
-  const formData = new FormData($("#updateDetail")[0]);
+function editBookDetail() {
+  // Confirmation dialog
+  Swal.fire({
+    title: '해당 정보를 수정하시겠습니까?',
+    showCancelButton: true,
+    confirmButtonText: '예',
+    cancelButtonText: '아니오',
+    icon: 'question'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // FormData 객체 생성
+      const formData = new FormData($("#updateDetail")[0]);
 
-//ajax start
-   $.ajax({
-      url: '/book/updateBookDetailAjax', //요청경로
-      type: 'post',
-      async : true,
-    processData: false,
-    contentType: false,
-      data: formData,
-      success: function(result) {
-         alert(result);
-      },
-      error: function() {
-         alert('실패');
-      }
-   });
-   //ajax end
-
-	
-}
-
-
-  // 이미지 삭제 
-function deleteImg(attachedFileName, bookImgCode, this_img) {
-  
-  
-  
-  // AJAX
-  $.ajax({
-    url: '/book/deleteImgAjax',
-    type: 'post',
-    async: true,
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-    data: { 
-		'attachedFileName': attachedFileName, 
-		'bookImgCode':bookImgCode
-	},
-    success: function(result) {
-      console.log(result); // 성공 처리
-
-	if(result){
-      alert('삭제성공');
-		this_img.parentElement.remove();	
-		
-	}
-
-    },
-    error: function() {
-      alert('실패'); // 실패 처리
+      // AJAX
+      $.ajax({
+        url: '/book/updateBookDetailAjax', // 요청경로
+        type: 'post',
+        async: true,
+        processData: false,
+        contentType: false,
+        data: formData,
+        success: function(result) {
+          Swal.fire({
+            icon: 'success',
+            title: '성공적으로 수정되었습니다',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            // Additional actions after successful editing, if needed
+          });
+        },
+        error: function() {
+          alert('실패');
+        }
+      });
     }
   });
 }
 
 
+
+// 이미지 삭제
+function deleteImg(attachedFileName, bookImgCode, this_img) {
+	// Confirmation dialog
+	Swal.fire({
+		title: '해당 이미지를 삭제하시겠습니까?',
+		showCancelButton: true,
+		confirmButtonText: '예',
+		cancelButtonText: '아니오',
+		icon: 'warning'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			// AJAX
+			$.ajax({
+				url: '/book/deleteImgAjax',
+				type: 'post',
+				async: true,
+				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+				data: {
+					'attachedFileName': attachedFileName,
+					'bookImgCode': bookImgCode
+				},
+				success: function(result) {
+					console.log(result); // 성공 처리
+
+					if (result) {
+						Swal.fire({
+							icon: 'success',
+							title: '삭제 성공',
+							showConfirmButton: false,
+							timer: 1500
+						}).then(() => {
+							this_img.parentElement.remove();
+						});
+					}
+				},
+				error: function() {
+					alert('실패'); // 실패 처리
+				}
+			});
+		}
+	});
+}
 
 
 
