@@ -26,32 +26,11 @@
 				<input type="button" class="btn custom-btn" th:value="${club.clubName} + ' 커뮤니티'" th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 			</div>
 		</div>
-		<div class="row">
-			<div class="col">
-				<div class="row">
-					<div class="col" style="background-color: gray">d</div>
-					<div class="col">
-						<div class="row" style="background-color: pink">d</div>
-						<div class="row" style="background-color: blue">d</div>
-					</div>
-				</div>
-				<div class="row"></div>
-			</div>
-		</div>		
-		
-		
-		
-		
-		
-		
-		
-		
-					
 		<div class="row detail-body">
 			<div class="col">
-				<div class="row mb-4">
-					<div class="col-4" style="background-color: gray">
-						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="400px;"></div>
+				<div class="row">
+					<div class="col-9">
+						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="300px;" class="rounded-image"></div>
 						<table>
 							<colgroup>
 								<col width="27%">
@@ -73,35 +52,34 @@
 							</tr>
 						</table>
 					</div>
-					<div class="col-4">
-						<div class="row">
+					<div class="col-2">
+						<div class="row outer-row">
 							<div class="col">
-								<div class="row book-div">
-									<div class="offset-4 col-3">
+								<div class="row">
+									<div class="offset-1 col this-book">
 										이달의 책
-									</div>
-									<div class="col-2">
 										<th:block th:if="${club.memId == #authentication.name}">
-											<input type="button" class="btn custom-btn" value="등록" data-bs-toggle="modal" data-bs-target="#bookModal" onclick="bookOfThisMonth();">
+											<input type="button" class="btn custom-btn ms-1" value="등록" data-bs-toggle="modal" data-bs-target="#bookModal" onclick="bookOfThisMonth();">
 										</th:block>
 									</div>
 								</div>
-								<div class="row" style="height: 300px; width: 200px;">
-									<div class="col">
-										<img alt="" src="/image/weather/sample.jpg" width="180px;" height="250px;">
+								<div class="row">
+									<div class="col d-flex justify-content-center align-items-center">
+										<img alt="" src="/image/weather/sample.jpg" width="170px;" height="215px;">
 									</div>
-									<div class="col">
+									<div class="col book-title">
 										zz
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">
+						<div class="row">
 							<div class="col">
 								<div class="row book-div">
-									[[${thisMonth}]]월 독서 순위
-									<img alt="" src="/image/club/book.png" style="width:52px;">
+									<div class="col d-flex align-items-end">
+										[[${thisMonth}]]월 독서 순위
+										<img class="ms-2" src="/image/club/book.png" style="width:30px;">
+									</div>
 								</div>
 								<div class="row">
 									<div class="col">
@@ -125,16 +103,8 @@
 								</div>
 							</div>
 						</div>
-					
-					
-					
-					
-					
-					
-					
-					
-					
-				</div>	
+					</div>
+				</div>
 				<th:block th:if="${club.memId == #authentication.name}">
 					<div class="row manage-div">
 						<div class="offset-10 col-2">
@@ -144,8 +114,23 @@
 					</div>
 				</th:block>
 			</div>
-		</div>
+		</div>		
 	</div>
+		
+		
+		
+		
+		
+		
+					
+					
+					
+					
+					
+					
+					
+					
+					
 	
 	
 	

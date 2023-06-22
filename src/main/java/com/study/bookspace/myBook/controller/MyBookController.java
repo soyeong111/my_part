@@ -1,14 +1,18 @@
 package com.study.bookspace.myBook.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myBook.service.MyBookService;
 import com.study.bookspace.myBook.vo.BookRecordSearchVO;
@@ -26,9 +30,7 @@ public class MyBookController {
 	// 독서 기록 페이지로
 	@RequestMapping("/myBookRecord")
 	public String myBookRecord(SubMenuVO subMenuVO, Authentication authentication, Model model, BookRecordSearchVO bookRecordSearchVO) {
-		System.out.println(bookRecordSearchVO);
 		bookRecordSearchVO.setSearchMemId(((User)authentication.getPrincipal()).getUsername());
-		model.addAttribute("bookMapList", myBookService.getBookTitleListThreeMonths(bookRecordSearchVO.getSearchMemId()));
 		if (bookRecordSearchVO.getSearchOrder() == null) {
 			bookRecordSearchVO.setSearchOrder("DESC");
 		}
@@ -37,7 +39,6 @@ public class MyBookController {
 		bookRecordSearchVO.setTotalDataCnt(myBookService.getBookRecordDataCnt(bookRecordSearchVO));
 		bookRecordSearchVO.setPageInfo();
 		model.addAttribute("recordList", myBookService.getMyBookRecord(bookRecordSearchVO));
-		System.out.println(bookRecordSearchVO);
 		return "content/my/my_book_record";
 	}
 	
@@ -61,6 +62,13 @@ public class MyBookController {
 	@PostMapping("/updateBookRecordAjax")
 	public boolean updateBookRecordAjax(BookRecordVO bookRecordVO) {
 		return myBookService.updateBookRecord(bookRecordVO) == 1;
+	}
+	
+	// 도서 검색 모달
+	@ResponseBody
+	@PostMapping("/bookSearchAjax")
+	public List<BookVO> bookSearchAjax(@RequestBody Map<String, Object> mapData) {
+		return myBookService.bookSearchForModal(mapData);
 	}
 	
 }

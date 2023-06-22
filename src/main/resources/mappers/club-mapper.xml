@@ -531,5 +531,14 @@
 		ORDER BY COUNT(BB.BORROW_CODE) DESC
 	</select>
 	
+	<select id="getBookClubListForAdmin" resultMap="bookClub">
+		SELECT CLUB.CLUB_CODE
+	    	, CLUB_NAME
+		    , CLUB_CREATE_DATE
+		    , MEM_ID
+		    , CLUB_MEM_CNT
+		    , BC_ATTACHED_FILE_NAME
+		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
+	</select>
 	
 </mapper>

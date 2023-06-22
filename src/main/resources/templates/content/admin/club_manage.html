@@ -8,7 +8,39 @@
 </th:block>
 <th:block layout:fragment="content">
 	<div class="club-manage-div">
-		club_manage
+		<div class="row">
+			<div class="col">
+				<h1 style="text-align: center; margin-top: 25px;">북클럽 관리</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<td>No</td>
+							<td>북클럽</td>
+							<td>인원수</td>
+							<td>클럽장</td>
+							<td>생성 날짜</td>
+							<td>최근 활동 날짜</td>
+							<td>삭제</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="club, state : ${clubList}">
+							<td></td>
+							<td>
+								<img width="70px;" th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}">
+							[[${club.clubName}]]</td>
+							<td>[[${club.clubMemCnt}]]</td>
+							<td>[[${club.memId}]]</td>
+							<td>[[${club.clubCreateDate}]]</td>
+							<td></td>
+							<td>
+								<input type="button" class="btn custom-btn-del" value="삭제" onclick="deleteClub();">
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">

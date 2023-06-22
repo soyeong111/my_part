@@ -145,4 +145,6 @@ public interface ClubService {
 	//클럽마다 독서순위
 	List<Map<String, Object>> getRankingByClub(String clubCode);
 	
+	//관리자 북클럽 관리
+	List<BookClubVO> getBookClubListForAdmin();
 }
