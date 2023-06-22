@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragment/public_layout}">
+
+<!-- 연결해야 할 외부 css파일 -->
+<th:block layout:fragment="content_css">
+	<link rel="stylesheet" href="/css/content/club/book_of_this_month.css">
+</th:block>
+
+<!-- 본문 내용 -->
+<th:block layout:fragment="content">
+	<div>
+		<div class="head-div">
+			이달의 책
+		</div>
+		<div class="content-div">
+			<table>
+				<tbody>
+					<tr>
+						<td>제목</td>
+						<td>ㅋㅋ</td>
+					</tr>
+					<tr>
+						<td>저자</td>
+						<td>ㅇㅇ</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	
+	
+	
+</th:block>
+
+<!-- 연결해야 할 외부 js파일 -->
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/club/book_of_this_month.js"></script>
+</th:block>
+
+</html>

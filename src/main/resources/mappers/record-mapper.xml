@@ -15,20 +15,6 @@
 		<association property="bookVO" resultMap="bookMapper.book"></association>
 	</resultMap>
 	
-	<!-- 최근 3개월 대여 도서 제목 목록 -->
-	<select id="getBookTitleListThreeMonths" resultType="Map">
-		SELECT BOOK.BOOK_CODE
-			, BOOK_TITLE
-		FROM BOOK_BORROW BORROW
-			, BOOK BOOK
-		WHERE BORROW.BOOK_CODE = BOOK.BOOK_CODE
-			AND MEM_ID = #{memId}
-			AND BORROW_DATE > ADD_MONTHS(SYSDATE, -3)
-		GROUP BY BOOK.BOOK_CODE
-			, BOOK_TITLE
-		ORDER BY MAX(BORROW_DATE) DESC
-	</select>
-	
 	<!-- 독서 기록 등록 -->
 	<insert id="regBookRecord">
 		INSERT INTO BOOK_RECORD (
@@ -120,6 +106,20 @@
 			<if test="searchValue != null and !searchValue.equals('')">
 			AND ${searchColumn} LIKE '%'||#{searchValue}||'%'
 			</if>
+	</select>
+	
+	<!-- 도서 검색 모달 -->
+	<select id="bookSearchForModal" resultMap="bookMapper.book">
+		SELECT B.BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, TO_CHAR(BOOK_PUBLICATION_DATE, 'YYYY-MM-DD') BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, ATTACHED_FILE_NAME
+		FROM BOOK B, BOOK_IMAGE I
+		WHERE B.BOOK_CODE = I.BOOK_CODE
+			AND IS_MAIN_IMG = 'Y'
+			AND ${searchColumn} LIKE '%' || #{searchValue} || '%'
 	</select>
 	
 </mapper>

@@ -20,6 +20,7 @@
 		<result column="ISBN" 								property="isbn"/>
 		<result column="BORROW_CNT"							property="borrowCnt"/>
 		<result column="RESERVE_CNT"						property="reserveCnt"/>
+		<result column="BORROW_COUNT"							property="borrowCount"/>
 		<association property="categoryVO" 					resultMap="category"></association> 		
 		<association property="borrowVO" 					resultMap="borrow"></association> 		
 		<association property="bookStatusVO" 				resultMap="bookStatus"></association> 		
@@ -717,7 +718,7 @@
 	
 		
 		
-		<!-- 연장 버튼 클릭 후, 바뀐 반납 기한 -->
+		<!-- 연장 버튼 클릭 후, 바뀐  기한 -->
 	<select id="getReturnDuedate" resultType="String">
 		SELECT RETURN_DUEDATE
 		FROM BOOK_BORROW
@@ -758,6 +759,20 @@
 		AND B.BOOK_CODE = BR.BOOK_CODE(+)
 		GROUP BY C.BOOK_CATE_STR
 	</select>
+	
+		
+	<!-- 3개월 이내 대여수 TOP5-->
+	<select id="borrowTop5" resultMap="book">
+	SELECT B.BOOK_CODE, B.BOOK_TITLE, COUNT(B.BOOK_CODE) AS BORROW_COUNT
+	FROM BOOK B
+	JOIN BOOK_BORROW BR ON B.BOOK_CODE = BR.BOOK_CODE
+	WHERE BR.BORROW_DATE >= TRUNC(SYSDATE) - INTERVAL '3' MONTH
+	GROUP BY B.BOOK_CODE, B.BOOK_TITLE
+	ORDER BY BORROW_COUNT DESC
+	FETCH FIRST 10 ROWS ONLY
+	</select>
+	
+	
 	
 </mapper>
 

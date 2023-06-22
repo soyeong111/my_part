@@ -1,6 +1,7 @@
 package com.study.bookspace.club.controller;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.study.bookspace.alram.service.AlramService;
 import com.study.bookspace.alram.vo.AlramVO;
+import com.study.bookspace.book.service.BookService;
+import com.study.bookspace.book.vo.BookVO;
+import com.study.bookspace.book.vo.SearchBookVO;
 import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
@@ -23,6 +27,7 @@ import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.ConstVariable;
+import com.study.bookspace.util.DateUtil;
 import com.study.bookspace.util.PageVO;
 import com.study.bookspace.util.UploadUtil;
 
@@ -37,6 +42,8 @@ public class ClubController {
 	@Resource(name = "alramService")
 	private AlramService alramService;
 	
+	@Resource(name = "bookService")
+	private BookService bookService;
 	
 	//북클럽 이용안내
 	@GetMapping("/clubInfo")
@@ -122,9 +129,22 @@ public class ClubController {
 		//클럽 멤버 리스트 조회
 		model.addAttribute("memList", clubService.getMemListByClub(clubCode));
 		
+		//이번달
+		model.addAttribute("thisMonth", DateUtil.getMonth());
+		//랭킹
+		model.addAttribute("rankingList", clubService.getRankingByClub(clubCode));
 		
 		return "content/club/club_detail";
 	}
+	
+	//이달의 책 선택 클릭 시
+	@ResponseBody
+	@PostMapping("/bookChoiceAjax")
+	public List<BookVO> bookChoiceAjax(BookVO bookVO, Model model) {
+		
+		return bookService.getBookListForUser(bookVO);
+	}
+	
 	
 	//해당 클럽 가입 이력
 	@ResponseBody
@@ -401,7 +421,11 @@ public class ClubController {
 	}
 	
 	
-	
+	//이달의 책 등록 페이지
+	@GetMapping("/bookOfThisMonth")
+	public String bookOfThisMonth(SubMenuVO seMenuVO) {
+		return "content/club/book_of_this_month";
+	}
 	
 	
 	

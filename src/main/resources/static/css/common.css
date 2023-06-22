@@ -96,14 +96,13 @@ h1 {
 
 .pagination a:hover {
 	background-color: #ccc;
-	color: #fff;
+	color: #fff !important;
+	cursor: pointer;
 }
 
 .pagination-select {
 	background-color: #ccc;
 	color: #fff;
-	
-	
 }
 
 .mainHead{
@@ -114,12 +113,5 @@ h1 {
     font-size: 2rem;
     font-weight: bold;
 } 
-
-
-
-
-
-
-
 
 

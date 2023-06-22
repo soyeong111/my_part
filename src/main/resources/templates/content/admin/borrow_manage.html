@@ -10,67 +10,104 @@
 
 	   <h1 style="text-align: center; margin-top: 30px;">도서 대여 관리</h1><br>
 <div class="row" style="margin-top: 20px;">
-	<div class="col-4">
+	<div class="col-5 offset-1">
 		<canvas id="myChart"></canvas>
 	</div>
-</div>
+	
+	<div class="col-5">
+				<table class="table table-striped table-hover text-center mb-0">
+					<thead class="table-head"
+						style="background-color: #FFEE99;">
+						* 최근 3개월 기준<br>
+						<tr>
+							<td>대여 TOP10</td>
+						</tr>
+					</thead>
+				</table>
+
+
+			<table class="table table-hover text-center">
+				<tbody>
+					<tr th:each="top5, state : ${top5List}">
+						<td><span th:if="${state.index == 0}"> <img
+								src="/image/rank/gold.png" alt="Image 1" width="25px;">
+						</span> <span th:if="${state.index == 1}"> <img
+								src="/image/rank/silver.png" alt="Image 2" width="25px;">
+						</span> <span th:if="${state.index == 2}"> <img
+								src="/image/rank/bronze.png" alt="Image 3" width="25px;">
+						</span> <span th:unless="${state.index < 3}"> [[${state.index +
+								1}]]위 </span></td>
+						<td>[[${top5.bookTitle}]]</td>
+						<td>[[${top5.borrowCount}]]권</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+		</div>
 
 
 
 
-<div class="row" style="margin-top: 20px;">
-  <div class="col-12">
-     <div class="noticeExtend" style="margin-bottom: 5px;">
-    * 최근 3개월 대여 내역만 보여집니다. 
-    
-  	</div>
-  </div>
-  <div class="col">
-    <table class="table table-striped table-hover text-center mb-0">
-    
-      <thead class="table-head" style="background-color: #4e68b9; color: white;">
-        <tr>
-          <td>No</td>
-          <td>회원ID</td>
-          <td>제목</td>
-          <td>대여날짜</td>
-          <td>반납예정일</td>
-          <td>반납일</td>
-          <td>연체</td>
-        </tr>
-      </thead>
-     </table>
-    </div>
-    <div class="col-12 scrollBar">
-     <table class="table table-striped table-hover text-center">
-      <tbody>	
-      	<tr th:if="${#lists.size(borrowList) == 0 }">
-       		<td colspan="7"> 대여한 회원이 없습니다.</td>
-       </tr>
-      
-        <tr th:each="borrow, state : ${borrowList}">
-          <td th:text="${#lists.size(borrowList) - state.index}"></td>
-          <td>[[${borrow.memId}]]</td>
-          <td><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
-          <td>[[${borrow.borrowDate}]]</td>
-          <td>[[${borrow.returnDueDate}]]</td>
-          <td>[[${borrow.returnDate}]]</td>
-          <td>
-          	 <input th:if="${borrow.overDue == 'N'}" type="button" class="btn custom-btn-del"  
-			  th:id="'overDueBtn-' + ${borrow.borrowCode}" value="연체"
-			  th:onclick="overDue([[${borrow.memId}]], [[${borrow.bookCode}]]);">
-			  <span th:if="${borrow.overDue == 'Y'}" >연체</span>
-		 </td>
-        </tr>
-        </tbody>
-    </table>
-  </div>
-</div>
-	
-	
-	
-	
-	
+	<div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+		<div class="col-12">
+			<div class="noticeExtend" style="margin-bottom: 5px;">* 최근 3개월
+				대여 내역만 보여집니다.</div>
+		</div>
+			<div class="col">
+				<table class="table table-striped table-hover text-center mb-0">
+					<colgroup>
+						<col width="4%">
+						<col width="5%;">
+						<col width="">
+						<col width="20%;">
+						<col width="20%">
+						<col width="20%">
+						<col width="10%">
+					</colgroup>
+					<thead class="table-head"
+						style="background-color: #FFEE99;;">
+						<tr>
+							<td>No</td>
+							<td>회원ID</td>
+							<td>제목</td>
+							<td>대여날짜</td>
+							<td>반납예정일</td>
+							<td>반납일</td>
+							<td>연체</td>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<div class="col-12 scrollBar">
+				<table class="table table-striped table-hover text-center">
+					<tbody>
+						<tr th:if="${#lists.size(borrowList) == 0 }">
+							<td colspan="7">대여한 회원이 없습니다.</td>
+						</tr>
+
+						<tr th:each="borrow, state : ${borrowList}">
+							<td th:text="${#lists.size(borrowList) - state.index}"></td>
+							<td>[[${borrow.memId}]]</td>
+							<td><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
+							<td>[[${borrow.borrowDate}]]</td>
+							<td>[[${borrow.returnDueDate}]]</td>
+							<td>[[${borrow.returnDate}]]</td>
+							<td><input th:if="${borrow.overDue == 'N'}" type="button"
+								class="btn custom-btn-del"
+								th:id="'overDueBtn-' + ${borrow.borrowCode}" value="연체"
+								th:onclick="overDue([[${borrow.memId}]], [[${borrow.bookCode}]]);">
+								<span th:if="${borrow.overDue == 'Y'}">연체</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	</div>
+
+
+
+
+
 </th:block>
 <th:block layout:fragment="content_js">
 			<script type="text/javascript" src="/js/content/book/borrow_manage.js"></script> 

@@ -1,6 +1,7 @@
 package com.study.bookspace.club.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
@@ -141,5 +142,9 @@ public interface ClubService {
 	//커뮤니티 이미지 삭제
 	void deleteComImg(String comImgCode);
 
+	//클럽마다 독서순위
+	List<Map<String, Object>> getRankingByClub(String clubCode);
 	
+	//관리자 북클럽 관리
+	List<BookClubVO> getBookClubListForAdmin();
 }

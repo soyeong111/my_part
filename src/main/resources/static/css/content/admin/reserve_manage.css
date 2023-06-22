@@ -14,7 +14,7 @@
 
 .scrollBar::-webkit-scrollbar-thumb {
     height: 50%; /* 스크롤바의 길이 */
-    background: #6c96d8; /* 스크롤바의 색상 */
+    background: #FFD5B8; /* 스크롤바의 색상 */
     
     border-radius: 10px;
 }
@@ -22,5 +22,5 @@
 
 
 .scrollBar::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    background: #F2F2F2;  /*스크롤바 뒷 배경 색상*/
 }

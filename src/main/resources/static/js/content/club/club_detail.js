@@ -170,5 +170,43 @@ function getWeather(){
 
 
 function bookOfThisMonth(){
-	alert(1);
+	//ajax start
+	$.ajax({
+	   url: '/club/bookChoiceAjax', //요청경로
+	   type: 'post',
+	   async : true,
+	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+	   data: {}, //필요한 데이터
+	   success: function(result) {
+	      
+	      
+	      
+      	  
+	   },
+	   error: function() {
+	      alert('실패');
+	   }
+	});
+	//ajax end
 }
+
+function searchForm(){
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

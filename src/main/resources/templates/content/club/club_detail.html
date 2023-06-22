@@ -25,30 +25,12 @@
 				</th:block>
 				<input type="button" class="btn custom-btn" th:value="${club.clubName} + ' 커뮤니티'" th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 			</div>
-		</div>			
+		</div>
 		<div class="row detail-body">
 			<div class="col">
-				<div class="row mb-4">
-					<div class="col-4" style="background-color: lightgreen">
-						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="400px;"></div>
-					</div>
-					<div class="col-4" style="background-color: yellow">
-						<div class="row book-div">
-							<div class="offset-4 col-3">
-								이달의 책
-							</div>
-							<div class="col-2">
-								<input type="button" class="btn custom-btn" value="등록" onclick="bookOfThisMonth();">
-							</div>
-						</div>
-						<div class="row">
-							dd
-						</div>
-						
-					</div>
-				</div>	
-				<div class="row" style="background-color: pink">
-					<div class="col">
+				<div class="row">
+					<div class="col-9">
+						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="300px;" class="rounded-image"></div>
 						<table>
 							<colgroup>
 								<col width="27%">
@@ -70,7 +52,59 @@
 							</tr>
 						</table>
 					</div>
-				</div>	
+					<div class="col-2">
+						<div class="row outer-row">
+							<div class="col">
+								<div class="row">
+									<div class="offset-1 col this-book">
+										이달의 책
+										<th:block th:if="${club.memId == #authentication.name}">
+											<input type="button" class="btn custom-btn ms-1" value="등록" data-bs-toggle="modal" data-bs-target="#bookModal" onclick="bookOfThisMonth();">
+										</th:block>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col d-flex justify-content-center align-items-center">
+										<img alt="" src="/image/weather/sample.jpg" width="170px;" height="215px;">
+									</div>
+									<div class="col book-title">
+										zz
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+								<div class="row book-div">
+									<div class="col d-flex align-items-end">
+										[[${thisMonth}]]월 독서 순위
+										<img class="ms-2" src="/image/club/book.png" style="width:30px;">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col">
+										<th:block th:each="rank, state : ${rankingList}" th:if="${state.index &lt; 3}">
+											<table class="rank-div">
+												<tr>
+													<td>[[${state.index + 1}]]위
+										                <img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;">
+										                <img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;">
+										                <img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
+										            </td>
+												</tr>
+												<tr>
+													<td>이미지</td>
+													<td>[[${rank['MEM_NAME']}]]</td>
+													<td>[[${rank['BORROW_CNT']}]]권</td>
+												</tr>
+											</table>
+										</th:block>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<th:block th:if="${club.memId == #authentication.name}">
 					<div class="row manage-div">
 						<div class="offset-10 col-2">
@@ -80,8 +114,49 @@
 					</div>
 				</th:block>
 			</div>
-		</div>
+		</div>		
 	</div>
+		
+		
+		
+		
+		
+		
+					
+					
+					
+					
+					
+					
+					
+					
+					
+	
+	
+	
+	
+	<!-- Modal -->
+	<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookdModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="bookdModalLabel">이달의 책</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body" id="m-body">
+	       
+	    </div>
+	  </div>
+	</div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
 	<div class="weather-div">
 		<div class="weather">
 			<div class="weather-img"></div>

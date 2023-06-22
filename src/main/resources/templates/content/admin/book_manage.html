@@ -27,7 +27,7 @@
 		<div class="row" id="titleTable">
 			<div class="col">
 				<h1 style="text-align: center; margin-top: 25px;">도서 관리</h1>
-				<form th:action="@{/book/bookManage}" method="post">
+				<form th:action="@{/aBook/bookManage}" method="post">
 					<table class="table table-bordered align-middle text-center"
 						style="margin-top: 30px;">
 						<colgroup>
@@ -176,6 +176,7 @@
 				</form>
 			</div>
 		</div>
+	</div>
 
 		<!-- 도서 목록 영역 -->
 		<div>
@@ -202,7 +203,7 @@
 									<td>출판사</td>
 									<td>출판일</td>
 									<td>ISBN</td>
-									<td>도서상태</td>
+								<td>도서상태</td>
 									<td>재고</td>
 								</tr>
 							</thead>

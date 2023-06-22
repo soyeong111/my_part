@@ -7,6 +7,58 @@
 	<link rel="stylesheet" href="/css/content/my/my_book_record.css">
 </th:block>
 <th:block layout:fragment="content">
+
+
+
+
+
+
+
+	<div id="book-search-modal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">도서 검색</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				
+				
+					<div class="row">
+						<div class="col-3">
+							<select id="book-search-column" class="form-select">
+								<option value="BOOK_TITLE">제목</option>
+								<option value="BOOK_AUTHOR">작가</option>
+							</select>
+						</div>
+						<div class="col-7">
+							<input type="text" id="book-search-value" class="form-control">
+						</div>
+						<div class="col-2 d-grid">
+							<button type="button" class="btn custom-btn" onclick="book_search();">검색</button>
+						</div>
+					</div>
+					<div id="modal-change-div">
+						<div class="row mt-3 pt-3 border-top">
+							<div class="col text-center">
+								검색어를 입력해주세요.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    
+
+
+
+
+
+
+
+
 	<div class="my-book-record-div mt-5 w-75 m-auto">
 		<div class="row">
 			<div class="col">
@@ -18,12 +70,16 @@
 			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 			<div class="row mt-5">
 				<div class="col-6">
+				
+				
 					<div class="input-group">
-						<span class="input-group-text">대여도서</span>
-						<select class="form-select" name="bookCode">
-							<option th:each="bookMap : ${bookMapList}" th:value="${bookMap['BOOK_CODE']}" th:text="${bookMap['BOOK_TITLE']}"></option>
-						</select>
+						<span class="input-group-text">선택도서</span>
+						<input type="text" id="show-book-title" class="form-control" onclick="open_book_search_modal();"
+							placeholder="도서검색" readonly>
+						<input type="hidden" name="bookCode" id="selected-book-code">
 					</div>
+					
+					
 				</div>
 				<div class="col-3">
 					<div class="input-group">
