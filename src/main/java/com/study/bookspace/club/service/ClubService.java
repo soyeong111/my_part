@@ -3,6 +3,7 @@ package com.study.bookspace.club.service;
 import java.util.List;
 import java.util.Map;
 
+import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
@@ -147,4 +148,13 @@ public interface ClubService {
 	
 	//관리자 북클럽 관리
 	List<BookClubVO> getBookClubListForAdmin();
+	
+	//이달의 책 업데이트
+	void updateClubBookCode(BookClubVO bookClubVO);
+	
+	//클럽별 커뮤니티 활동 순위
+	List<CommunityVO> getCommunityRankByClub(String clubCode);
+	
+	//이달의 책 등록 시 북 정보 조회
+	BookVO getThisBookDetail(String thisBookCode);
 }

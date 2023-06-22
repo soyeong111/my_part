@@ -21,6 +21,7 @@ table {
 
 thead{
 	font-weight: bold;
+	background-color: #e2ebfe;
 }
 
 .notice-row{
@@ -39,5 +40,4 @@ thead{
 
 .table thead tr td {
   border-bottom: 2px solid lightgray;
-  border-top: 2px solid lightgray;
 }
