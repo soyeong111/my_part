@@ -126,7 +126,6 @@ public class InfoController {
 	
 	  @PostMapping("/updateAnswer")
 		public String updateAnswer(AnswerVO answerVO) {
-		  System.out.println(111);
 			answerService.updateAnswer(answerVO);
 		return "redirect:/info/qnaDetail?qnaCode=" + answerVO.getQnaCode();
 		}
@@ -174,9 +173,10 @@ public class InfoController {
 		model.addAttribute("noticeList",answerService.noticeForPublic(noticeVO));
 		return "content/info/notice";
 	}
-	@GetMapping("/noticeDetail")
+	@RequestMapping("/noticeDetail")
 	public String noticeDetail(SubMenuVO subMenuVO, String noticeNo, Model model) {
 		model.addAttribute("noticeVO",answerService.noticeDetailForPublic(noticeNo));
+		System.out.println(noticeNo);
 		return "content/info/notice_detail";
 	}
 	
@@ -194,10 +194,21 @@ public class InfoController {
 		return "redirect:/info/notice";
 	}
 	
-	@PostMapping("/deleteNotice")
+	@GetMapping("/deleteNotice")
 	public String deleteNotice(String noticeNo) {
 		answerService.deleteNotice(noticeNo);
+		
 		return "redirect:/info/notice";
+	}
+	
+	@PostMapping("/updateNotice")
+	public String updateNotice(NoticeVO noticeVO) {
+		System.out.println(111);
+		
+		answerService.updateNotice(noticeVO);
+		
+		System.out.println(noticeVO);
+		return "redirect:/info/noticeDetail?noticeNo=" +noticeVO.getNoticeNo();
 	}
 
 	

@@ -1,3 +1,5 @@
+setFinalPrice();
+
 //장바구니 버튼 클릭 시 실행
 function regCart(memId, goodsCode){
 	if(memId == 'anonymousUser'){
@@ -21,14 +23,14 @@ function regCartAjax(goodsCode){
 
 	//ajax start
 	$.ajax({
-	   url: '/myCart/regCartAjax', //요청경로
+	   url: '/mCart/regCartAjax', //요청경로
 	   type: 'post',
 	   data: {'goodsCode' : goodsCode, 'cartRegCnt' : cartCnt}, //필요한 데이터
 	   success: function(result) {
 			const result1 = confirm('장바구니에 상품을 추가했습니다.\n장바구니 목록 페이지로 가시겠습니까?');
 			
 			if(result1){
-				location.href = '/myCart/cartList';
+				location.href = '/mCart/cartList';
 			}
 			
 	   },
@@ -46,7 +48,7 @@ function deleteCart(cartCode){
 	const result = confirm('해당 상품을 삭제할까요?');
 	
 	if(result){
-		location.href = `/myCart/deleteCart?cartCode=${cartCode}`;
+		location.href = `/mCart/deleteCart?cartCode=${cartCode}`;
 	}
 	
 }
@@ -116,6 +118,8 @@ function check(){
 
 //체크된 체크박스의 상품의 최종 금액
 function setFinalPrice (){
+	updateTotalPrice();
+	
 	let checked_chks = document.querySelectorAll('.chk:checked');
 	let final_price = 0;
 	
@@ -151,18 +155,13 @@ function deleteCarts(){
 		cartCodeArr[index] = chk.value;
 	});
 	
-	location.href = `/myCart/deleteCarts?cartCodes=${cartCodeArr}`;	
+	location.href = `/mCart/deleteCarts?cartCodes=${cartCodeArr}`;	
 }
 
 
 
-
-
-
-
-    	
-$("#check_module").click(function () {
-	
+function buyKakao(){
+		alert(1);
 		var IMP = window.IMP; // 생략가능
 		IMP.init('imp04555812'); 
 		// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
@@ -204,7 +203,9 @@ $("#check_module").click(function () {
 			}
 			alert(msg);
 		});
-	});
+	
+}
+
 
 
 
@@ -214,7 +215,7 @@ $("#check_module").click(function () {
 
 
 
-//선택 구매
+// 구매
 function buys(){
 	const checked_checkboxes = document.querySelectorAll('.chk:checked');
 	

@@ -27,4 +27,7 @@ public interface AnswerService {
 	//공지 삭제
 	int deleteNotice(String noticeNo);
 	
+	//공지 수정
+	int updateNotice(NoticeVO noticeVO);
+	
 }

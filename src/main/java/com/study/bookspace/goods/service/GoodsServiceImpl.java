@@ -95,6 +95,11 @@ public class GoodsServiceImpl implements GoodsService {
 		return sqlSession.selectList("goodsMapper.goodsListForBest", goodsVO);
 	}
 
+	@Override
+	public List<GoodsVO> selectNewGoods(GoodsVO goodsVO) {
+		return sqlSession.selectList("goodsMapper.selectNewGoods", goodsVO);
+	}
+
 	
 
 

@@ -19,7 +19,7 @@ import com.study.bookspace.myCart.vo.GoodsCartVO;
 import jakarta.annotation.Resource;
 
 @Controller
-@RequestMapping("/myCart")
+@RequestMapping("/mCart")
 public class MyCartController {
 	@Resource(name="cartService")
 	private CartService cartService;
@@ -61,7 +61,7 @@ public class MyCartController {
 	public String updateCartRegCnt(GoodsCartVO goodsCartVO) {
 		cartService.updateCartRegCnt(goodsCartVO);
 		
-		return "redirect:/myCart/cartList";
+		return "redirect:/mCart/cartList";
 	}
 	
 	//상품 삭제
@@ -70,7 +70,7 @@ public class MyCartController {
 		
 		cartService.deleteCart(cartCode);
 		
-		return "redirect:/myCart/cartList";
+		return "redirect:/mCart/cartList";
 	}
 	
 	//선택 삭제 
@@ -83,7 +83,7 @@ public class MyCartController {
 		
 		cartService.deleteCarts(goodsCartVO);
 		
-		return "redirect:/myCart/cartList";
+		return "redirect:/mCart/cartList";
 		
 	}
 	

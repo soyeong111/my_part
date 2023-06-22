@@ -18,11 +18,12 @@
 		, ORDER_NO
 		, BUY_PRICE
 	) VALUES (
-		(SELECT 'ORDER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ORDER_CODE, 7))), 0) + 1, 3, '0') AS ORDER_CODE
-			FROM GOODS_ORDER)
+			(SELECT 'ORDER_' || LPAD(NVL(MAX(TO_NUMBER(SUBSTR(ORDER_CODE, 7))), 0) + 1, 3, '0') AS ORDER_CODE 
+			FROM GOODS_ORDER) 
 			, #{memId}
 			, 1
 			, #{buyPrice}
+			
 	)
 </insert>
 
