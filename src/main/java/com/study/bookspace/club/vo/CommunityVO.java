@@ -23,8 +23,4 @@ public class CommunityVO extends CommunityListSearchVO{
 	private int rowNumber;
 	private CommunityImageVO communityImageVO;
 	private MemberVO memberVO;
-	
-	
-	
-	
 }

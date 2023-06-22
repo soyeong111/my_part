@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.club.vo.BookClubImageVO;
 import com.study.bookspace.club.vo.BookClubMemberVO;
 import com.study.bookspace.club.vo.BookClubVO;
@@ -303,6 +304,22 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	public List<BookClubVO> getBookClubListForAdmin() {
 		return sqlSession.selectList("clubMapper.getBookClubListForAdmin");
+	}
+
+	//이달의 책 업데이트
+	@Override
+	public void updateClubBookCode(BookClubVO bookClubVO) {
+		sqlSession.update("clubMapper.updateClubBookCode", bookClubVO);
+	}
+
+	@Override
+	public List<CommunityVO> getCommunityRankByClub(String clubCode) {
+		return sqlSession.selectList("clubMapper.getCommunityRankByClub", clubCode);
+	}
+
+	@Override
+	public BookVO getThisBookDetail(String thisBookCode) {
+		return sqlSession.selectOne("clubMapper.getThisBookDetail", thisBookCode);
 	}
 
 
