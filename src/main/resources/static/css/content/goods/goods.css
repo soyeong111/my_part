@@ -249,7 +249,6 @@ li {
 .goodsHead{
 	
 	 height: 100px;
-    box-sizing: border-box;
  	margin-top: 8rem;
    color: #4F709C;
     line-height: 100px;
@@ -308,15 +307,6 @@ li {
   'GRAD' 0,
   'opsz' 48
 }
-
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
-}
-
 
 
 .recGoods{

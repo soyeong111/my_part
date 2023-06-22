@@ -20,7 +20,7 @@
 <th:block layout:fragment="content">
 
     <div id="index_03">
-    <div id="header3" class="goodsHead">이 달의 굿즈</div> <hr>
+    <div id="header3" class="goodsHead" style="margin-top: 10rem;">이 달의 굿즈</div> <hr>
         <div id="slide3">
     <div style=" font-size:xx-large; text-align:center; margin-bottom: 1rem; letter-spacing: 5px;" >"문학작품을 향수로 만나다."</div>
             <ul>
@@ -44,7 +44,7 @@
     </div>
    <div class="row row-cols-3 g-4 " >
 		<th:block th:each="goods : ${goodsList}">
-			<div class="col">
+			<div class="col mt-5">
 				<div class="newGoods">
 				  <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode})}">
 				  		<img th:src="${'/image/goods/'+goods.goodsImgList[0].attachedFileName}" class="newGoods" style="margin-top: 2rem;">
