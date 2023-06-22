@@ -17,24 +17,33 @@
 	<div class="col-5">
 				<table class="table table-striped table-hover text-center mb-0">
 					<thead class="table-head"
-						style="background-color: gray; color: white;">
+						style="background-color: #FFEE99;">
 						* 최근 3개월 기준<br>
 						<tr>
 							<td>대여 TOP10</td>
 						</tr>
 					</thead>
 				</table>
-			
-			
-			<table class="table table-striped table-hover text-center">
-					<tbody>
-						<tr th:each="top5, state : ${top5List}">
-							<td>[[${top5.bookTitle}]]</td>
-							<td>[[${top5.borrowCount}]]권</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+
+
+			<table class="table table-hover text-center">
+				<tbody>
+					<tr th:each="top5, state : ${top5List}">
+						<td><span th:if="${state.index == 0}"> <img
+								src="/image/rank/gold.png" alt="Image 1" width="25px;">
+						</span> <span th:if="${state.index == 1}"> <img
+								src="/image/rank/silver.png" alt="Image 2" width="25px;">
+						</span> <span th:if="${state.index == 2}"> <img
+								src="/image/rank/bronze.png" alt="Image 3" width="25px;">
+						</span> <span th:unless="${state.index < 3}"> [[${state.index +
+								1}]]위 </span></td>
+						<td>[[${top5.bookTitle}]]</td>
+						<td>[[${top5.borrowCount}]]권</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
 		</div>
 
 
@@ -57,7 +66,7 @@
 						<col width="10%">
 					</colgroup>
 					<thead class="table-head"
-						style="background-color: gray; color: white;">
+						style="background-color: #FFEE99;;">
 						<tr>
 							<td>No</td>
 							<td>회원ID</td>
