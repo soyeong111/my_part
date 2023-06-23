@@ -41,11 +41,10 @@ a-a:hover:before
 a.button {
   display: block;
   position: relative;
-  float: left;
-  width: 16rem;
+ /*  float: left; */
+  width: 13rem;
+  margin: auto;
   padding: 0;
-margin-left: 1rem;
-margin-top: 1rem;
   font-weight: 600;
   text-align: center;
   line-height: 50px;
@@ -74,7 +73,9 @@ margin-top: 1rem;
   background: #6c96d8;
 }
 
-
+.goodsListDiv{
+	margin-left: 3rem;
+}
 
 /* BORDER */
 
@@ -84,7 +85,17 @@ margin-top: 1rem;
 
 .btnLightBlue.btnBorder:hover {
   box-shadow: 0px 0px 0px 5px #4e68b9;
+  
 }
+
+.btnLightBlue-search{
+	background-color: #6c96d8;
+}
+
+.btnLightBlue-search:hover{
+	background-color: #4e68b9;
+}
+
 
 /*  */
  
@@ -246,6 +257,16 @@ li {
    
 }
 
+.regGoodsHead{
+ 	margin-top: 3rem;
+   color: #4F709C;
+    line-height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+
 .goodsHead{
 	
 	 height: 100px;
@@ -255,6 +276,35 @@ li {
     font-size: 2rem;
     font-weight: bold;
 }
+
+.orderHead{
+	 color: #4F709C;
+    line-height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+     height: 100px;
+     margin-top: 2rem;
+     text-align: center;
+}
+
+
+.orderT{
+	width: 80%;
+	margin: auto;
+}
+
+
+.regGoodsBtn{
+	background-color: #4e68b9;
+	width: 9rem;
+}
+
+.regGoodsBtn:hover{
+	background-color: #6c96d8;
+	border-color: #6c96d8;
+}
+
+
 
 
 #slide3{
@@ -325,6 +375,9 @@ li {
 	margin-top: 6rem;
 	margin-bottom: 14rem;
 }
+
+
+
 
 .goodsDetailDiv{
 	margin-top: 12rem;

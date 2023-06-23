@@ -4,15 +4,15 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/member_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	<link rel="stylesheet" href="/css/common.css"> 
 </th:block>
 
 <th:block layout:fragment="content">
 
 
 <div class="search">
-		<div class="row p-5">
-			 <h1 style="text-align: center;">신규 도서 등록</h1><br>
+		<div class="mainHead">
+			 신규 도서 등록
 		</div>
 	</div>
 
@@ -22,7 +22,7 @@
 			<div class="col-12">
 				<form id="" class="row g-3" th:action="@{/book/regBookProcess}" method="post" enctype="multipart/form-data">
 					<div class="col-5">
-						<h5><label for="" class="form-label">카테고리</label> </h5>
+						<h5><label for="" class="form-label ts">카테고리</label> </h5>
 						<select id="" name="bookCateNo" class="form-select">
 							<th:block th:each="category : ${categoryList}">
 								<option th:value="${category.bookCateNo}">[[${category.bookCateStr}]]</option>
@@ -30,39 +30,39 @@
 						</select>
 					</div>
 					<div class="col-5">
-						<h5><label for="" class="form-label">제목</label></h5>
+						<h5><label for="" class="form-label ts">제목</label></h5>
 						<input type="text" class="form-control" id="" name="bookTitle">
 					</div>
 					<div class="col-5">
-						<h5><label for="" class="form-label">작가</label></h5>
+						<h5><label for="" class="form-label ts">작가</label></h5>
 						<input type="text" class="form-control" id="" name="bookAuthor">
 					</div>
 					<div class="col-5">
-						<h5><label for="" class="form-label">출판사</label> </h5>
+						<h5><label for="" class="form-label ts">출판사</label> </h5>
 						<input type="text" class="form-control" id="" name="bookPublisher">
 					</div>
 					<div class="col-4">
-						<h5><label for="" class="form-label">ISBN</label></h5>
+						<h5><label for="" class="form-label ts">ISBN</label></h5>
 						 <input type="text" class="form-control" id="" name="isbn">
 					</div>
 					<div class="col-3">
-						<h5><label for="" class="form-label">발행일</label> </h5>
+						<h5><label for="" class="form-label ts">발행일</label> </h5>
 						<input type="date" class="form-control" id="" name="bookPublicationDate">
 					</div>
 					<div class="col-3">
-						<h5><label for="" class="form-label">재고 수량</label> </h5>
+						<h5><label for="" class="form-label ts">재고 수량</label> </h5>
 						<input id = "cntInput" name="bookStockCnt" type="number" class="form-control" value="1" min="1">
 					</div>
 					<div class="col-5">
-						<h5><label for="" class="form-label">앞 이미지</label> </h5>
+						<h5><label for="" class="form-label ts">앞 이미지</label> </h5>
 						<input type="file" class="form-control" id="" name="mainImg">
 					</div>
 					<div class="col-5">
-						<h5><label for="" class="form-label">뒤 이미지</label> </h5>
+						<h5><label for="" class="form-label ts">뒤 이미지</label> </h5>
 						<input type="file" class="form-control" id="" name="subImg" multiple>
 					</div>
 					<div class="col-10">
-						<h5><label for="" class="form-label" >도서 소개</label> </h5>
+						<h5><label for="" class="form-label ts" >도서 소개</label> </h5>
 						<textarea rows="7" class="form-control" name="bookIntro" style="resize: none;"></textarea>
 					</div>
 					<div class="col-10 d-flex justify-content-center">

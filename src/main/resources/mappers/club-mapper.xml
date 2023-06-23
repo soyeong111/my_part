@@ -11,8 +11,10 @@
 		<result column="CLUB_MEM_CNT" 		property="clubMemCnt"/>
 		<result column="CLUB_STATUS_NO" 	property="clubStatusNo"/>
 		<result column="MEM_ID" 			property="memId"/>
+		<result column="THIS_BOOK_CODE" 	property="thisBookCode"/>
 		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
 		<association property="bookClubMemberVO" resultMap="bookClubMember"></association>
+		<association property="communityVO" resultMap="community"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.BookClubImageVO" id="bookClubImage">
@@ -180,6 +182,7 @@
 			, CLUB_IMG_CODE
 			, BC_ATTACHED_FILE_NAME
 			, MEM_ID
+			, THIS_BOOK_CODE
 		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
 		WHERE CLUB.CLUB_CODE = IMG.CLUB_CODE
 		AND CLUB.CLUB_CODE = #{clubCode}
@@ -532,13 +535,55 @@
 	</select>
 	
 	<select id="getBookClubListForAdmin" resultMap="bookClub">
-		SELECT CLUB.CLUB_CODE
-	    	, CLUB_NAME
-		    , CLUB_CREATE_DATE
+		SELECT CLUB_CODE
+		    , CLUB_NAME
+		    , TO_CHAR(CLUB_CREATE_DATE, 'YYYY-MM-DD') AS CLUB_CREATE_DATE
 		    , MEM_ID
 		    , CLUB_MEM_CNT
 		    , BC_ATTACHED_FILE_NAME
-		FROM BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
+		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
+		FROM (
+		    SELECT CLUB.CLUB_CODE
+		        , CLUB_NAME
+		        , CLUB_CREATE_DATE
+		        , MEM_ID
+		        , CLUB_MEM_CNT
+		        , BC_ATTACHED_FILE_NAME
+		        , REG_DATE
+		        , ROW_NUMBER() OVER (PARTITION BY CLUB.CLUB_CODE ORDER BY REG_DATE DESC) AS rn
+		    FROM BOOK_CLUB CLUB
+		    LEFT JOIN BOOK_CLUB_IMAGE IMG ON CLUB.CLUB_CODE = IMG.CLUB_CODE
+		    LEFT JOIN COMMUNITY_BOARD BOARD ON CLUB.CLUB_CODE = BOARD.CLUB_CODE
+		) subquery
+		WHERE rn = 1
 	</select>
+	
+	<update id="updateClubBookCode">
+		UPDATE BOOK_CLUB
+		SET THIS_BOOK_CODE = #{thisBookCode}
+		WHERE CLUB_CODE = #{clubCode}
+	</update>
+	
+	<select id="getCommunityRankByClub" resultMap="community">
+		SELECT COUNT(BOARD_NUM) AS BOARD_NUM
+		    , MEM_ID
+		    , MEM_NAME
+		FROM COMMUNITY_BOARD CB, MEMBER M
+		WHERE CB.BOARD_WRITER = M.MEM_ID
+		AND CLUB_CODE = 'CLUB_004'
+		GROUP BY MEM_ID, MEM_NAME
+		ORDER BY BOARD_NUM DESC
+	</select>
+	
+	<select id="getThisBookDetail" resultMap="bookMapper.book">
+		SELECT BOOK_TITLE
+		    , BOOK_AUTHOR
+		    , ATTACHED_FILE_NAME
+		FROM BOOK, BOOK_IMAGE IMG
+		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		AND IS_MAIN_IMG = 'Y'
+		AND BOOK.BOOK_CODE = #{thisBookCode}
+	</select>
+	
 	
 </mapper>

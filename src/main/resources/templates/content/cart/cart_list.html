@@ -7,6 +7,8 @@
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
 	<link rel="stylesheet" href="/css/content/cart/cart.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+	
 </th:block>
 
 <th:block layout:fragment="content">
@@ -19,15 +21,15 @@
   	<table class="table">
   		<colgroup>
   			<col width="5%">
+  			<col width="18%">
   			<col width="20%">
   			<col width="20%">
-  			<col width="15%">
   			<col width="10%">
   			<col width="*">
   			<col width="5%">
   		</colgroup>
-		<thead>
-				 <tr>
+		<thead style="background-color: #BAD0E8;">
+				 <tr style="text-align: center;">
 			      <th scope="col"><input onclick="setCheckState();" id="checkAll" type="checkbox"></th>
 			      <th scope="col">이미지</th>
 			      <th scope="col">상품명</th>
@@ -37,29 +39,29 @@
 			      <th scope="col"></th>
 			    </tr>
 		</thead>
-		<tbody class="table">
+		<tbody class="" >
 			<th:block th:if="${#lists.size(cartList) == 0}">
 				<tr>
-					<td colspan="7">장바구니가 비어있습니다</td>
+					<td colspan="7" style="text-align: center;">장바구니가 비어있습니다</td>
 				</tr>
 			</th:block>
 			<th:block th:if="${#lists.size(cartList) != 0}">
-				<tr th:each=" cart : ${cartList} ">
+				<tr th:each=" cart : ${cartList} " style="text-align: center; line-height: 70px; ">
 				<td>
-					<input th:value="${cart.cartCode}" onclick="check();" type="checkbox" class="form-check-input chk"
+					<input th:value="${cart.cartCode}" onclick="check();" type="checkbox" class="form-check-input chk"  style="margin-top: 34px ;"
 					th:data-goods-code="${cart.goodsCode}" th:data-buy-detail-cnt="${cart.cartRegCnt}" th:data-buy-detail-price="${cart.totalPrice}">
 				</td>
 				<td>
 					<img style="width: 50%;" th:src="${'/image/goods/' + cart.goodsVO.goodsImgList[0].attachedFileName}">
 				</td>
-						<td class="text-start">[[${cart.goodsVO.goodsName}]]</td>
+						<td class="">[[${cart.goodsVO.goodsName}]]</td>
 						<td class="goodsPriceTd">[[${#numbers.formatCurrency(cart.goodsVO.goodsPrice)}]]</td>
 						<td>
 						<!-- 	<form th:action="@{/myCart/updateCartRegCnt}" method="post"> -->
 								<input type="hidden" name="cartCode" th:value="${cart.cartCode}">
 								<!-- 수량 -->
 								<div class="row">
-									<div class="col-7">
+									<div class="col" style="margin-top: 18px;">
 										<input name="cartRegCnt" min="1" type="number" class="form-control"
 										th:value="${cart.cartRegCnt}" onchange="updateTotalPrice(this);">
 									</div>
@@ -75,7 +77,7 @@
 						<td>
 							<div class="row">
 								<div class="col d-grid">
-									<input type="button" class="btn btn-secondary" value="삭 제" th:onclick="deleteCart([[${cart.cartCode}]]);">
+									<input type="button" style="margin-top: 18px;" class="btn btn-secondary" value="삭 제" th:onclick="deleteCart([[${cart.cartCode}]]);">
 								</div>
 							</div>
 						</td>
@@ -85,26 +87,23 @@
 	</table>
 			<div class="row mb-3">
 				<div class="offset-9 col-3">
-					<table class="table table-borderless text-center align-middle">
-						<tr style="font-size: 1.3rem;">
-							<td style="background-color: #0d6efd; color: white; border-top-left-radius: 10px; border-bottom: 1px solid #0d6efd;">구 매 금 액</td>
-							<td class="text-end" style="border-bottom: 1px solid #0d6efd; font-weight: bold; font-style: italic;"><span id="finalPriceSpan">[[${#numbers.formatCurrency(finalPrice)}]]</span></td>
-						</tr>
-					</table>
+					<div class="" style="margin-top: 4rem;">
+							<div style="color:#4e68b9; font-weight:bold; font-size: large; text-align: center;">총 구매 금액</div>
+							<div class="" style="font-weight: bold; font-style: italic; font-size: xx-large; text-align: center;">
+								<span id="finalPriceSpan">[[${#numbers.formatCurrency(finalPrice)}]]</span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="row mb-3 mt-5">
-				<div class="offset-4 col-2 d-grid">
-			<button  onclick="buyKakao();">결제하기</button>
+			<div class="row mb-3">
+				<div class="offset-4 col-2 pl-2 d-grid">
+					<a href="javascript:void(0);"  title="Button border lightblue" class="button btnBorder btnLightRed"  onclick="deleteCarts();">삭 제</a>
 				</div>
-				<div class="col-2 d-grid">
-					<input type="button" class="btn btn-primary" style="font-size: 1.1rem;" value="선택삭제" onclick="deleteCarts();">
-				</div>
-				<div>
-					<a th:href="@{/mBuy/buyList}">구매내역</a>
+				<div class="col-4 d-grid">
+					<a href="javascript:void(0);" title="Button border lightblue" class="button btnBorder btnLightBlue" onclick="buyKakao();">결 제</a>
 				</div>
 			</div>
-</div>
 
 </th:block>
 

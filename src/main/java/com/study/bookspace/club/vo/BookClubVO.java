@@ -1,5 +1,8 @@
 package com.study.bookspace.club.vo;
 
+import java.util.List;
+
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +19,8 @@ public class BookClubVO {
 	private int clubStatusNo;
 	private String memId;
 	private String clubShortInfo;
+	private String thisBookCode;
 	private BookClubImageVO bookClubImageVO;
 	private BookClubMemberVO bookClubMemberVO;
+	private CommunityVO communityVO;
 }

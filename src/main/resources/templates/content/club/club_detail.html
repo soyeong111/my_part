@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{fragment/public_layout}">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/public_layout}">
 
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
@@ -13,27 +13,37 @@
 <th:block layout:fragment="content">
 	<div class="club-detail-div">
 		<div class="club-name-div">
-			[[${club.clubName}]]
+			북클럽 <input type="hidden" id="clubCode" th:value="${club.clubCode}">
 			<div>
 				<th:block th:if="${club.memId != #authentication.name}">
 					<th:block th:if="${clubMemCnt < club.clubMemCnt}">
-						<input type="button" class="btn custom-btn" value="가입 신청" th:disabled="${clubMemCnt >= club.clubMemCnt}" th:onclick="joinClub([[${#authentication.name}]], [[${club.clubCode}]]);">
+						<input type="button" class="btn custom-btn" value="가입 신청"
+							th:disabled="${clubMemCnt >= club.clubMemCnt}"
+							th:onclick="joinClub([[${#authentication.name}]], [[${club.clubCode}]]);">
 					</th:block>
 					<th:block th:unless="${clubMemCnt < club.clubMemCnt}">
 						<input type="button" class="btn custom-btn" value="신청 마감" disabled>
 					</th:block>
 				</th:block>
-				<input type="button" class="btn custom-btn" th:value="${club.clubName} + ' 커뮤니티'" th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+				<input type="button" class="btn custom-btn"
+					th:value="${club.clubName} + ' 커뮤니티'"
+					th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 			</div>
 		</div>
-		<div class="row detail-body">
-			<div class="col">
-				<div class="row">
-					<div class="col-9">
-						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" height="300px;" class="rounded-image"></div>
-						<table>
+
+
+		<div class="row">
+			<div class="col-9">
+				<div class="row content-outer-row">
+					<div class="col-3">
+						<div><img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" width="100%;" class="rounded-image"></div>
+					</div>
+					<div class="col-8 info-div">
+						<div class="name-div">[[${club.clubName}]]</div>
+						<div class="short-div">[[${club.clubShortInfo}]]</div>
+						<table class="table table-borderless book-club-info">
 							<colgroup>
-								<col width="27%">
+								<col width="20%">
 								<col width="*">
 							</colgroup>
 							<tr>
@@ -44,53 +54,86 @@
 								<td><span>북클럽 인원</span></td>
 								<td>[[${clubMemCnt}]] / [[${club.clubMemCnt}]]</td>
 							</tr>
-							<tr>
-								<td>회원</td>
-								<th:block th:each="member : ${memList}">
-									<td>[[${member.memberVO.memName}]]</td>
-								</th:block>
-							</tr>
 						</table>
 					</div>
-					<div class="col-2">
-						<div class="row outer-row">
-							<div class="col">
-								<div class="row">
-									<div class="offset-1 col this-book">
+				</div>
+				
+				<div class="row content-outer-row">
+					<div class="col-12 com-head-div">
+						북클럽 활동 순위
+						<img alt="" src="/image/club/friend.png" width="60px;">
+					</div>
+					<div class="col-12 com-div">
+			            <div th:each="rank, state : ${comRankgingList}" class="d-inline-block board_rank_outer-row">
+			                <div style="margin-bottom: 10px;">
+				                 [[${state.index + 1}]]등
+				                <img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;"> 
+								<img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;"> 
+								<img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
+				            </div>
+				            <div class="rank_img_box"></div>
+							<div class="mem-info1">[[${rank.memberVO.memName}]]</div>
+							<div class="mem-info2">작성 글 수 - [[${rank.boardNum}]]</div>
+			            </div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-2">
+				<div class="row outer-row">
+					<div class="col">
+						<div class="row">
+							<div class="col this-book align-items-center">
+								<div class="row align-items-center">
+									<div class="col-7">
 										이달의 책
+									</div>
+									<div class="col-5 text-end d-grid">
 										<th:block th:if="${club.memId == #authentication.name}">
-											<input type="button" class="btn custom-btn ms-1" value="등록" data-bs-toggle="modal" data-bs-target="#bookModal" onclick="bookOfThisMonth();">
+											<input type="button" class="btn custom-btn ms-2 btn-sm" value="등 록" data-bs-toggle="modal" data-bs-target="#book-search-modal">
 										</th:block>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col d-flex justify-content-center align-items-center">
-										<img alt="" src="/image/weather/sample.jpg" width="170px;" height="215px;">
-									</div>
-									<div class="col book-title">
-										zz
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
+							<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
+								<img alt="" th:src="${'/image/book/' + thisBook.imgList[0].attachedFileName}" width="90%;" style="border-radius: 6px;">
+							</div>
+						</div>
+						<div class="row">
 							<div class="col">
+								<div class="row">
+									<div class="col text-center month-book-title" th:text="${thisBook.bookTitle}"></div>
+								</div>
+								<div class="row">
+									<div class="col text-center month-book-autho" th:text="${thisBook.bookAuthor}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<div class="row rank-outer">
+							<div class="col" style="padding-left: 0px">
 								<div class="row book-div">
 									<div class="col d-flex align-items-end">
-										[[${thisMonth}]]월 독서 순위
-										<img class="ms-2" src="/image/club/book.png" style="width:30px;">
+										[[${thisMonth}]]월 독서 순위 <img class="ms-2" src="/image/club/book.png" style="width: 30px;">
 									</div>
 								</div>
 								<div class="row">
-									<div class="col">
-										<th:block th:each="rank, state : ${rankingList}" th:if="${state.index &lt; 3}">
-											<table class="rank-div">
+									<div class="col" style="padding-right: 0px;">
+										<th:block th:each="rank, state : ${rankingList}"
+											th:if="${state.index &lt; 3}">
+											<table class="rank-div" style="width: 100%;">
 												<tr>
-													<td>[[${state.index + 1}]]위
-										                <img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;">
-										                <img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;">
-										                <img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
-										            </td>
+													<td>
+														[[${state.index + 1}]]위 
+														<img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;"> 
+														<img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;"> 
+														<img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
+													</td>
 												</tr>
 												<tr>
 													<td>이미지</td>
@@ -105,59 +148,56 @@
 						</div>
 					</div>
 				</div>
-				<th:block th:if="${club.memId == #authentication.name}">
-					<div class="row manage-div">
-						<div class="offset-10 col-2">
-							<input type="button" value="북클럽 수정" class="btn custom-btn" th:onclick="|location.href='@{/club/updateClubForm(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
-							<input type="button" value="북클럽 삭제" class="btn custom-btn" th:onclick="deleteClub([[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+			</div>
+		</div>
+
+
+
+
+
+
+
+	</div>
+
+	<!-- 모델 태그 -->
+	<div id="book-search-modal" class="modal fade" tabindex="-1"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="exampleModalLabel">도서 검색</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-3">
+							<select id="book-search-column" class="form-select">
+								<option value="BOOK_TITLE">제목</option>
+								<option value="BOOK_AUTHOR">작가</option>
+							</select>
+						</div>
+						<div class="col-7">
+							<input type="text" id="book-search-value" class="form-control">
+						</div>
+						<div class="col-2 d-grid">
+							<button type="button" class="btn custom-btn"
+								onclick="book_search();">검색</button>
 						</div>
 					</div>
-				</th:block>
+					<div id="modal-change-div">
+						<div class="row mt-3 pt-3 border-top">
+							<div class="col text-center">검색어를 입력해주세요.</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>		
+		</div>
 	</div>
-		
-		
-		
-		
-		
-		
-					
-					
-					
-					
-					
-					
-					
-					
-					
-	
-	
-	
-	
-	<!-- Modal -->
-	<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookdModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg modal-dialog-scrollable">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="bookdModalLabel">이달의 책</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body" id="m-body">
-	       
-	    </div>
-	  </div>
-	</div>
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="weather-div">
+
+</th:block>
+
+<div class="weather-div">
 		<div class="weather">
 			<div class="weather-img"></div>
 			<h1 id="temperature"></h1>
@@ -171,9 +211,9 @@
 		</div>
 <span id="description"></span>
 		<span id="description"></span>
-	</div>
+	</div>	
 
-</th:block>
+
 
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">

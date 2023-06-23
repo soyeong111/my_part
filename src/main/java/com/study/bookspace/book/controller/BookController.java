@@ -52,6 +52,7 @@ public class BookController {
 	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO, BookVO bookVO) {
 		
 		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
+	
 		
 		//전체 게시글 수 조회
 		int totalDataCnt = bookService.getBookCnt();
@@ -61,6 +62,9 @@ public class BookController {
 		
 		//페이징 정보 세팅
 		bookVO.setPageInfo();
+		
+		
+		System.out.println(searchBookVO);
 		
 		List<BookVO> bookList = bookService.getBookListForUser(searchBookVO);
 		model.addAttribute("bookList", bookList);
@@ -425,8 +429,9 @@ public class BookController {
 	
 
 //	도서 관리) 도서 삭제
-	@GetMapping("/deleteBook")
-	public String deleteBook(String[] bookCodes ,BookVO bookVO) {
+	@ResponseBody
+	@PostMapping("/deleteBookAjax")
+	public String deleteBookAjax(String[] bookCodes ,BookVO bookVO) {
 		
 //		배열을 리스트로
 		List<String> bookCodeList = Arrays.asList(bookCodes);
