@@ -138,7 +138,9 @@
 													</td>
 												</tr>
 												<tr>
-													<td>이미지</td>
+													<td>
+														<img alt="" src="/image/club/dog.jpg" width="50px;" class="book-rank-img">
+													</td>
 													<td>[[${rank['MEM_NAME']}]]</td>
 													<td>[[${rank['BORROW_CNT']}]]권</td>
 												</tr>
@@ -152,8 +154,16 @@
 				</div>
 			</div>
 		</div>
-
-
+		<div class="row">
+			<th:block th:if="${club.memId == #authentication.name}">
+					<div class="row manage-div">
+						<div class="offset-10 col-2">
+							<input type="button" value="북클럽 수정" class="btn custom-btn" th:onclick="|location.href='@{/club/updateClubForm(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+							<input type="button" value="북클럽 삭제" class="btn custom-btn" th:onclick="deleteClub([[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+						</div>
+					</div>
+				</th:block>
+		</div>
 
 
 
