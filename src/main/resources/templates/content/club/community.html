@@ -11,10 +11,10 @@
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	<div class="community-head-div">
-		<div>커뮤니티</div>
-	</div>
 	<div class="community-div">
+	<div class="title-div">북클럽</div>
+	<div class="public-title">커뮤니티</div>
+	<div class="body-div">
 		<div class="row">
 			<div class="col">
 				<table class="table table-hover">
@@ -70,8 +70,8 @@
 				</table>
 			</div>
 		</div>
-		<div class="row">
-			<div class="offset-11 col">
+		<div class="row btn-div">
+			<div class="col">
 				<input type="button" class="btn com-btn" value="글쓰기" th:onclick="|location.href='@{/club/regBoardForm(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 			</div>
 		</div>
@@ -107,6 +107,7 @@
 				<a><img src="/image/search.png" width="28px;" onclick="searchForm();" style="cursor: pointer;"></a>
 			</div>
 		</form>
+		</div>
 	</div>
 </th:block>
 

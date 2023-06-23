@@ -1,16 +1,22 @@
 @charset "UTF-8";
 
 
-.club-title{
-	margin-bottom: 5rem; 
-	margin-top: 3rem; 
-	margin-left: 2rem;  
-	margin-right: 2rem;
-	font-size: 20px; 
-	font-weight: bold;
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+	margin-bottom: 4rem;
+	margin-right: 5rem;
 	display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.body-div{
+	padding-right: 5rem;
+	padding-left: 4rem;
+	margin-top: 2rem;
 }
 
 .card-title{

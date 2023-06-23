@@ -1,5 +1,13 @@
 @charset "EUC-KR";
 
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+	margin-bottom: 4rem;
+}
+
 .head-div{
 	margin-bottom: 5rem; 
 	margin-top: 3rem; 
@@ -9,6 +17,35 @@
 }
 
 .body-div{
-	margin-left: 2rem;  
-	margin-right: 2rem;
+	margin-top: 2rem;
+	margin-left: 4rem;
+	margin-right: 23rem;
+}
+
+table{
+	border: 1px solid lightgray;
+}
+
+tr td:first-child {
+	font-weight: bold;
+    text-align: center;
+    width: 10%;
+    background-color: #e2ebfe;
+    vertical-align: middle;
+}
+
+.com-btn{
+	border: none;
+	background-color: #6c96d8;
+	border-radius: 3%; 
+	height: 2rem;
+	color: white;
+}
+
+tr:nth-child(2) td:nth-child(2) {
+    padding-left: 0.7rem;
+}
+
+tr:nth-child(3) td:nth-child(2) {
+    padding-left: 0.7rem;
 }
