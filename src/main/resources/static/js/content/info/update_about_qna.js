@@ -14,7 +14,7 @@ function updateAnswer(selectedTag, answerCode, qnaCode){
 		str += `<form id="updateAnswerForm" action="/info/updateAnswer" method="post">`;
 		str += `<input type="hidden" value="${qnaCode}" name="qnaCode">`;
 		str += `<input type="hidden" value="${answerCode}" name="answerCode">`;
-		str += `<textarea  rows="10" cols="50" value="${answerContent}" name="answerContent"></textarea>`;
+		str += `<textarea  class="form-control" required rows="10" cols="70"  value="${answerContent}" name="answerContent" style="resize: none; ></textarea>`;
 		str += `</form>`;
 		
 		//선택한 태그의 자식태그로 추가

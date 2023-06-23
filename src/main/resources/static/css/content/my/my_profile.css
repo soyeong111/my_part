@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
-.profile-img-div {
+.profile-img-div .card {
 	height: 300px;
-	background-color: #eeeeee;
+}
+
+.profile-img-div img {
+	height: 50px;
 }

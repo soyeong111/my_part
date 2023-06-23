@@ -4,21 +4,27 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.bookspace.book.service.BookService;
 import com.study.bookspace.book.vo.BookVO;
+import com.study.bookspace.book.vo.BorrowVO;
+import com.study.bookspace.book.vo.ReserveVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myBook.service.MyBookService;
 import com.study.bookspace.myBook.vo.BookRecordSearchVO;
 import com.study.bookspace.myBook.vo.BookRecordVO;
 
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/mBook")
@@ -26,6 +32,9 @@ public class MyBookController {
 	
 	@Resource(name = "myBookService")
 	private MyBookService myBookService;
+	
+	@Resource(name = "bookService")
+	private BookService bookService;
 	
 	// 독서 기록 페이지로
 	@RequestMapping("/myBookRecord")
@@ -70,5 +79,37 @@ public class MyBookController {
 	public List<BookVO> bookSearchAjax(@RequestBody Map<String, Object> mapData) {
 		return myBookService.bookSearchForModal(mapData);
 	}
+	
+	
+// 	내 정보)) 도서 대여 관리
+	@GetMapping("/myBorrow")
+	public String borrowManage(Model model, SubMenuVO subMenuVO, HttpSession session) {
+		
+		String memId = SecurityContextHolder.getContext().getAuthentication().getName();
+	    BorrowVO borrowVO = new BorrowVO();
+	    borrowVO.setMemId(memId);
+	    
+
+		model.addAttribute("myBorrowList", bookService.myBorrow(borrowVO));
+		
+		return "content/my/my_borrow";
+	}
+	
+	
+// 	내 정보)) 도서 예약 관리
+	@GetMapping("/myReserve")
+	public String reservewManage(Model model, SubMenuVO subMenuVO, HttpSession session, ReserveVO reserveVO) {
+		
+		String memId = SecurityContextHolder.getContext().getAuthentication().getName();
+		
+	    reserveVO.setMemId(memId);
+	    
+	    model.addAttribute("myReserveList", bookService.myReserve(reserveVO));
+
+	    
+		return "content/my/my_reserve";
+	}
+	
+	
 	
 }

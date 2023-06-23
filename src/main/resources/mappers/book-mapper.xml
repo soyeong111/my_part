@@ -429,7 +429,32 @@
 	
 	<!-- 목록조회 -->
 	<select id="getBookListForUser" resultMap="book">
-		SELECT BOOK.BOOK_CODE
+	SELECT BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, ISBN
+			, ATTACHED_FILE_NAME
+			, BORROW_CNT
+            , RN
+    FROM 
+    (SELECT BOOK_CODE
+			, BOOK_TITLE
+			, BOOK_AUTHOR
+			, BOOK_PUBLICATION_DATE
+			, BOOK_PUBLISHER
+			, BOOK_INTRO
+			, BOOK_CATE_NO
+			, BOOK_STOCK_CNT
+			, ISBN
+			, ATTACHED_FILE_NAME
+			, BORROW_CNT
+            , ROWNUM RN
+    FROM(SELECT BOOK.BOOK_CODE
 			, BOOK_TITLE
 			, BOOK_AUTHOR
 			, BOOK_PUBLICATION_DATE
@@ -441,14 +466,18 @@
 			, ATTACHED_FILE_NAME
 			, BORROW_CNT
 		FROM BOOK BOOK, BOOK_IMAGE IMG
-		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
-		  <if test="searchOption == 'title'">
+		WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE	
+         <if test="searchOption == 'title'">
         AND LOWER(BOOK_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
     </if>
     <if test="searchOption == 'author'">
         AND LOWER(BOOK_AUTHOR) LIKE '%' || LOWER(#{searchText}) || '%'
     </if>
-		AND IS_MAIN_IMG = 'Y' 
+		AND IS_MAIN_IMG = 'Y'
+        ORDER BY BOOK_PUBLICATION_DATE))
+        WHERE RN &gt;= #{startDataNum} AND RN &lt;= #{endDataNum}
+	
+
 	</select>
 
 
@@ -474,21 +503,26 @@
 	
 	<!-- 베스트 셀러 -->
 	<select id="getBestBookList" resultMap="book">
-	    SELECT BOOK.BOOK_CODE
-	        , BOOK_TITLE
-	        , BOOK_AUTHOR
-	        , BOOK_PUBLICATION_DATE
-	        , BOOK_PUBLISHER
-	        , BOOK_INTRO
-	        , BOOK_CATE_NO
-	        , BOOK_STOCK_CNT
-	        , ISBN
-	        , ATTACHED_FILE_NAME
-	        , BORROW_CNT
-	    FROM BOOK BOOK, BOOK_IMAGE IMG
-	    WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
-	    AND IS_MAIN_IMG = 'Y'
-	    ORDER BY BORROW_CNT DESC
+	 SELECT *
+		FROM (
+		  SELECT BOOK.BOOK_CODE
+		    , BOOK_TITLE
+		    , BOOK_AUTHOR
+		    , BOOK_PUBLICATION_DATE
+		    , BOOK_PUBLISHER
+		    , BOOK_INTRO
+		    , BOOK_CATE_NO
+		    , BOOK_STOCK_CNT
+		    , ISBN
+		    , ATTACHED_FILE_NAME
+		    , BORROW_CNT
+		  FROM BOOK BOOK, BOOK_IMAGE IMG
+		  WHERE BOOK.BOOK_CODE = IMG.BOOK_CODE
+		    AND IS_MAIN_IMG = 'Y'
+		  ORDER BY BORROW_CNT DESC
+		)
+		WHERE ROWNUM &lt;= 10
+
 	</select>
 	
 	
@@ -662,17 +696,17 @@
 		
 	<!-- 도서관리) 도서 삭제  (자식 레코드)-->
 	<delete id="deleteBook">
-	  <foreach collection="bookCodeList" item="bookCode" separator=";">
-	    <![CDATA[
 	      BEGIN
+	  <foreach collection="bookCodeList" item="bookCode">
+	    <![CDATA[
 	        DELETE FROM BOOK_IMAGE WHERE BOOK_CODE = #{bookCode};
 	        DELETE FROM BOOK_RESERVE WHERE BOOK_CODE = #{bookCode};
 	        DELETE FROM BOOK_BORROW WHERE BOOK_CODE = #{bookCode};
 	        DELETE FROM BOOK WHERE BOOK_CODE = #{bookCode};
 	        COMMIT;
-	      END;
 	    ]]>
 	  </foreach>
+	      END;
 	</delete>
 
 

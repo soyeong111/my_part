@@ -17,9 +17,9 @@
     		새로 들어온 상품
     	</div><hr>
     </div>
-	<div class="row row-cols-5 g-4 ">
+	<div class="row row-cols-4 g-4">
 	  	<th:block th:each="goods : ${newGoodsList}">
-				<div class="col mb-5">
+				<div class="col">
 					<div class="newGoods">
 					  <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode})}">
 					  		<img th:src="${'/image/goods/'+goods.goodsImgList[0].attachedFileName}" class="newGoodsImg"  style="margin-top: 7rem;">

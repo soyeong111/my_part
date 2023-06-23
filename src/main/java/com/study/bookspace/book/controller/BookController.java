@@ -49,22 +49,25 @@ public class BookController {
 	
 //	도서 목록 조회
 	@RequestMapping("/bookList")
-	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO, BookVO bookVO) {
+	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO) {
 		
 		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
 	
 		
+		
 		//전체 게시글 수 조회
 		int totalDataCnt = bookService.getBookCnt();
 		
+		System.out.println(totalDataCnt + "dfsfsdfdsfsfsd");
 		//전체 데이터 수 세팅
-		bookVO.setTotalDataCnt(totalDataCnt);
+		searchBookVO.setTotalDataCnt(totalDataCnt);
 		
 		//페이징 정보 세팅
-		bookVO.setPageInfo();
+		searchBookVO.setPageInfo();
 		
 		
-		System.out.println(searchBookVO);
+		System.out.println(searchBookVO + "ddddddddddd");
+		
 		
 		List<BookVO> bookList = bookService.getBookListForUser(searchBookVO);
 		model.addAttribute("bookList", bookList);
@@ -103,12 +106,9 @@ public class BookController {
 		//--- 파일 첨부 ---//
 //		메인 이미지 업로드 (앞)
 		ImgVO mainImgVO = UploadUtil.uploadFile(mainImg);
-		
-//		서브 이미지 업로드 (뒤)
-//		ImgVO subImgVO = UploadUtil.uploadFile(subImg);
 	    
 // 		옆 이미지 업로드
-	    ImgVO subImgVO = UploadUtil.uploadFile(sideImg);
+	    ImgVO subImgVO = UploadUtil.uploadFile(subImg);
 	    
 	    
 //	    등록될 도서코드 조회
@@ -246,6 +246,12 @@ public class BookController {
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
 		
+//		예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부
+		int checkBorrowCnt = bookService.getCheckBorrow(borrowVO);
+		if(checkBorrowCnt != 0) {
+			return 200;
+		}
+		
 //		예약 없이 대여 가능한 책의 개수 (모든사람)
 		int ableBookCnt = bookService.getAbleBookCnt(borrowVO.getBookCode());
 		if(ableBookCnt > 0) {
@@ -253,12 +259,6 @@ public class BookController {
 			
 		}
 		
-		
-//		예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부
-		int checkBorrowCnt = bookService.getCheckBorrow(borrowVO);
-		if(checkBorrowCnt != 0) {
-			return 200;
-		}
 		
 	
 		System.out.println(borrowVO + "DDDDDDDDDDDDDDDDDDDDD");
@@ -431,10 +431,10 @@ public class BookController {
 //	도서 관리) 도서 삭제
 	@ResponseBody
 	@PostMapping("/deleteBookAjax")
-	public String deleteBookAjax(String[] bookCodes ,BookVO bookVO) {
+	public String deleteBookAjax(@RequestBody List<String> bookCodes ,BookVO bookVO) {
 		
 //		배열을 리스트로
-		List<String> bookCodeList = Arrays.asList(bookCodes);
+		List<String> bookCodeList = bookCodes;
 		
 		bookVO.setBookCodeList(bookCodeList);
 		// 도서 삭제
@@ -467,28 +467,28 @@ public class BookController {
 	@PostMapping("/updateBookDetailAjax")
 	public boolean updateBookDetailAjax(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg) {
 		List<ImgVO> imgList = new ArrayList<>();
+		System.out.println(imgList + "!!!!!!!!!!!!!!!!!!!!!");
 
 		//--- 파일 첨부 ---//
 //		메인 이미지 업로드 (앞)
-		if (mainImg != null) {
 			ImgVO mainImgVO = UploadUtil.uploadFile(mainImg);
-			if (mainImgVO != null) {
+			if (mainImgVO.getAttachedFileName() != null) {
 				imgList.add(mainImgVO);
 			}
-		}
+		
+		System.out.println(imgList + ".......................");
 		
 //		서브 이미지 업로드 (뒤)
 		  // 서브 이미지 업로드 (뒤)
-	    if (subImg != null) {
 	        ImgVO subImgVO = UploadUtil.uploadFile(subImg);
-	        if(subImgVO != null) {
+	        if(subImgVO.getAttachedFileName() != null) {
 	        	subImgVO.setIsMainImg("N");
 	        	imgList.add(subImgVO);
 	        }
-	    }
+	    
 	    
 
-	    System.out.println(444444);
+	    System.out.println(imgList + "~~~~~~~~~~~");
 	    
 	    
 		

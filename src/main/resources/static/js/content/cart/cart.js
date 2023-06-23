@@ -66,6 +66,7 @@ function updateTotalPrice(updateCntTag){
 	const totalPrice= Number(originPrice) * updateCnt;
 	
 	updateCntTag.closest('tr').querySelector('.totalPriceSpan').textContent = '￦' + totalPrice.toLocaleString();
+	
 	setFinalPrice();
 	
 }
@@ -118,7 +119,7 @@ function check(){
 
 //체크된 체크박스의 상품의 최종 금액
 function setFinalPrice (){
-	updateTotalPrice();
+	//updateTotalPrice();
 	
 	let checked_chks = document.querySelectorAll('.chk:checked');
 	let final_price = 0;
@@ -140,7 +141,6 @@ function setFinalPrice (){
 
 //선택삭제 버튼 클릭 시 실행
 function deleteCarts(){
-	alert(11);
 	//체크한 체크박스
 	const chks = document.querySelectorAll('.chk:checked');
 	

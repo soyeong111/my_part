@@ -14,9 +14,9 @@ function updateNotice(selectedTag, noticeNo){
 		
 		//태그에 input 추가 구문 문자열로 저장
 		let str = ``;
-		str += `<form id="updateNoticeForm" action="/info/updateNotice" method="post">`;
+		str += `<form id="updateNoticeForm" action="/info/updateNotice" method="post" >`;
 		str += `<input type="hidden" value="${noticeNo}" name="noticeNo">`;
-		str += `<textarea  rows="10" cols="50" value="${noticeContent}" name="noticeContent"></textarea>`;
+		str += `<textarea class="form-control" required rows="10" cols="70" value="${noticeContent}" name="noticeContent" style="resize: none; "></textarea>`;
 		str += `</form>`;
 		
 		
