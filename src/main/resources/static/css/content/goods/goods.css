@@ -275,6 +275,16 @@ li {
     line-height: 100px;
     font-size: 2rem;
     font-weight: bold;
+    text-align: center;
+}
+
+.bestGoodsHead{
+ 	margin-top: 3rem;
+   color: #4F709C;
+    line-height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
 }
 
 .orderHead{
@@ -286,6 +296,18 @@ li {
      margin-top: 2rem;
      text-align: center;
 }
+
+
+.newGoodsHead{
+   color: #4F709C;
+    line-height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+	
+}
+
+
 
 
 .orderT{
@@ -344,7 +366,6 @@ li {
 
 .bestGoodsDiv{
 	margin: auto;
-	margin-top: 11rem;
 	margin-bottom: 12rem;
 	width: 80%;
 	border-right: thin;
@@ -372,7 +393,7 @@ li {
 
 
 .newGoodsDiv{
-	margin-top: 6rem;
+	margin-top: 3rem;
 	margin-bottom: 14rem;
 }
 
@@ -386,7 +407,15 @@ li {
 }
 
 
-
+.goodsManageHead{
+	margin-top: 3rem;
+ 	margin-bottom: 4rem;
+   color: #4F709C;
+    line-height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
 
 
 

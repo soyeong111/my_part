@@ -1,21 +1,13 @@
 @charset "UTF-8";
 
-.buy-title{
-		margin-right: 1rem;
-	}
-.buy-index{
-		font-size: 1.1rem;
-		font-weight: bold;
-	}
-	
-.buyListDiv{
+.saleDiv{
 	width: 70%;
 	margin: auto;
-	margin-top: 2rem;
+	margin-top: 4rem;
 	margin-bottom: 6rem;
 }
 
-.buyHead{
+.saleHead{
 	height: 90px;
  	margin-top: 3rem;
    color: #4F709C;

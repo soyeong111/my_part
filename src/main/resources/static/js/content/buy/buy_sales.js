@@ -10,7 +10,6 @@ function getSaleStatusByCategoryAjax(){
 	   contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   data: {}, //필요한 데이터
 	   success: function(result) {
-		alert(1);
 			drawChart(result);
 			drawTable(result);
 	   },
@@ -94,7 +93,7 @@ function drawChart(data){
 				},
 				title: {
 					display: true,
-					text: 'Chart.js Pie Chart'
+					text: '카테고리별 매출 현황'
 				},
 				datalabels:{
 					color:'#4e342e',

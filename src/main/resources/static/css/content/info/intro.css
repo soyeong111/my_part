@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .library-intro-div{
-	margin-top: 3rem;
+	margin-top: 4rem;
 	width: 90%;
 	
 }
@@ -9,14 +9,13 @@
 .infoTitle{
 	margin-bottom: 4rem; 
 	margin-top: 3rem; 
-	
 	font-size: 20px; 
 	font-weight: bold;
 }
 
 .libTitle{
-	margin-bottom: 5rem; 
-	margin-left: 2rem; 
+	margin-bottom: 3rem; 
+	margin-left: 4rem; 
 	margin-right: 2rem;
 	font-weight: bolder;
 	font-size: xx-large;
