@@ -32,7 +32,7 @@
 		</div>
 
 
-		<div class="row">
+		<div class="row ms-2">
 			<div class="col-9">
 				<div class="row content-outer-row">
 					<div class="col-3">
@@ -65,7 +65,7 @@
 					</div>
 					<div class="col-12 com-div">
 			            <div th:each="rank, state : ${comRankgingList}" class="d-inline-block board_rank_outer-row" th:if="${state.index &lt; 3}">
-			                <div style="margin-bottom: 10px;">
+			                <div style="margin-bottom: 10px; font-weight: bold;">
 				                 [[${state.index + 1}]]등
 				                <img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;"> 
 								<img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;"> 
@@ -130,7 +130,7 @@
 											th:if="${state.index &lt; 3}">
 											<table class="rank-div" style="width: 100%;">
 												<tr>
-													<td>
+													<td style="font-weight: bold;">
 														[[${state.index + 1}]]위 
 														<img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;"> 
 														<img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;"> 

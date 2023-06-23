@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+.board-write-div{
+	width: 90%;
+}
+
 .write-div{
 	margin-bottom: 7rem; 
 	margin-top: 3rem; 
@@ -17,3 +21,10 @@ tr td:first-child {
 	margin-right: 2rem;
 }
 
+.com-btn{
+	margin-top: 1rem;
+	border: none;
+	background-color: #6c96d8;
+	border-radius: 3%; 
+	color: white;
+}

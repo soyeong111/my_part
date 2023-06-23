@@ -5,6 +5,13 @@
 	width: 90%;
 }
 
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+}
+
 .info-div{
 	margin-bottom: 5rem; 
 	margin-left: 2rem; 
