@@ -105,7 +105,6 @@ function bookSeleted(book_img, book_title, book_author, book_code) {
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 	   data: {'clubCode':club_code, 'thisBookCode':book_code}, //필요한 데이터
 	   success: function(result) {
-	      alert(result);
 	   },
 	   error: function() {
 	      alert('실패');
