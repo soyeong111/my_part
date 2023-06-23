@@ -304,6 +304,7 @@ li {
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
+    margin-top: 3rem;
 	
 }
 
@@ -395,6 +396,8 @@ li {
 .newGoodsDiv{
 	margin-top: 3rem;
 	margin-bottom: 14rem;
+	width: 90%;
+	margin: auto;
 }
 
 

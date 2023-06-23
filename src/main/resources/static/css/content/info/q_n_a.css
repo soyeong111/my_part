@@ -46,10 +46,10 @@
 	border: none;
 	background-color: #6c96d8;
 	border-radius: 3%; 
-	width: 6rem;
-	height: 2rem;
+	width: 10rem;
+	height: 3rem;
 	font-weight: bold;
-	margin-left: 4rem;
+	margin-left: 2rem;
 	
 }
 
@@ -70,7 +70,7 @@
 	text-align: center;
 	width: 80%;
 	padding-left: 7rem;
-	margin-top: 11rem;
+	margin-top: 6rem;
 	margin-bottom: 5rem;
 }
 
@@ -78,7 +78,7 @@
 .qnaDetail{
 	width: 90%;
 	margin-bottom: 5rem;
-	margin-top: 7rem;
+	margin-top: 5rem;
 	font-size: medium;
 }
 
@@ -89,8 +89,8 @@
 	font-weight: bold;
 	border: medium;
 	border-top: 1px solid gray;
-	padding-top: 1rem;
-	padding-left: 2rem;
+	padding-top: 2rem;
+	text-align: center;
 }
 
 .aTitle2{
@@ -106,7 +106,7 @@
 }
 
 .aContent{
-	padding-top: 1rem;
+	padding-top: 4rem;
 	height: 20rem;
 	font-size: medium;
 	padding-left: 2rem;

@@ -11,16 +11,13 @@
 }
 
 .noticeForm{
+	text-align: center;
 	width: 80%;
-	padding-top: 7rem;
+	padding-left: 7rem;
+	margin-top: 6rem;
+	margin-bottom: 5rem;
 }
 
-
-.noticeContent{
-	height: 25rem;
-	margin-top: 1rem;
-	resize: none;
-}
 
 
 .noticeDiv{
@@ -31,20 +28,17 @@
 
 
 .nBtn{
-border: none;
+	border: none;
 	background-color: #6c96d8;
 	border-radius: 3%; 
-	width: 6rem;
-	height: 2rem;
+	width: 10rem;
+	height: 3rem;
 	font-weight: bold;
-	margin-left: 4rem;
-	margin-top: 3rem;
+	margin-left: 2rem;
+	margin-top: 2rem;
 	color: white;
+	text-align: center;
 }
 
-.btnDiv{
-	margin-top: 2rem;
-	text-align: center;
-	
-}
+
 
