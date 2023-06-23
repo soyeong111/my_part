@@ -29,23 +29,21 @@ function goodsDetail(goodsCode){
 			
 			let str = '';
 			                                                                                    
-			str += `	<form action="/goods/updateGoods" method="post">                                                                      `;
+			str += `	<form action="/aGoods/updateGoods" method="post">                                                                      `;
 	        str += `	<input type="hidden" name="goodsCode" value="${result['goods'].goodsCode}">`;
 	        str += `    <div class="row">                                                           `;
 	        str += `       <div class="col-9 sub-title">                                            `;
-	        str += `          상품 기본 정보                                                        `;
+	        str += `                                                                 `;
 	        str += `       </div>                                                                   `;
 	        str += `       <div class="col-3 sub-title d-grid">                                     `;
-	        str += `          <button type="submit" class="btn btn-primary">                        `;
-	        str += `              수 정                                                             `;
-	        str += `          </button>                                                             `;
+	      
 	        str += `       </div>                                                                   `;
 	        str += `    </div>                                                                      `;
 	        str += `    <div class="row">                                                           `;
-	        str += `       <div class="col-1"></div>                                                `;
+	   
 	        str += `       <div class="col-11">                                                     `;
 	        str += `          <div class="row update-content">                                      `;
-	        str += `             <label class="col-3 col-form-label text-end">카테고리</label>      `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">카테고리</label>      `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <select id="" name="goodsCateCode" class="form-select">                      `;
 	        for(const e of result['cateList']){
@@ -54,15 +52,15 @@ function goodsDetail(goodsCode){
 			}
 	        str += `                </select>                                                       `;
 	        str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end">상품명</label>        `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">상품명</label>        `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <input type="text" class="form-control" name="goodsName" value="${result['goods'].goodsName}">                        `;
 	        str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end">판매가격</label>      `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">판매가격</label>      `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <input type="text" class="form-control" name="goodsPrice" value="${result['goods'].goodsPrice}">                        `;
 	        str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end">상품소개</label>      `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">상품소개</label>      `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <textarea class="form-control" rows="3" name="goodsIntro">${result['goods'].goodsIntro}</textarea>             `;
 	        str += `             </div>                                                             `;
@@ -71,14 +69,14 @@ function goodsDetail(goodsCode){
 	        str += `    </div>                                                                      `;
 	        str += `    <div class="row">                                                           `;
 	        str += `       <div class="col-9 sub-title">                                            `;
-	        str += `          상품 판매 정보                                                        `;
+	        str += `                                                              `;
 	        str += `       </div>                                                                   `;
 	        str += `    </div>                                                                      `;
 	        str += `    <div class="row">                                                           `;
-	        str += `       <div class="col-1"></div>                                                `;
+	       
 	        str += `       <div class="col-11">                                                     `;
 	        str += `          <div class="row update-content">                                      `;
-	        str += `             <label class="col-3 col-form-label text-end">상품상태</label>      `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">상품상태</label>      `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <select id="" name="goodsStatus" class="form-select">                      `;
 	        if(result['goods'].goodsStatus == 1){
@@ -99,7 +97,7 @@ function goodsDetail(goodsCode){
 			
 	        str += `                </select>                                                       `;
 	        str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end">재 고</label>         `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">재 고</label>         `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <input type="text" class="form-control" name="goodsStockCnt" value="${result['goods'].goodsStockCnt}">                        `;
 	        str += `             </div>                                                             `;
@@ -108,18 +106,18 @@ function goodsDetail(goodsCode){
 	        str += `    </div>                                                                      `;
 	        str += `    <div class="row">                                                           `;
 	        str += `       <div class="col sub-title">                                              `;
-	        str += `          상품 이미지 정보                                                      `;
+	        str += `                                                         `;
 	        str += `       </div>                                                                   `;
 	        str += `    </div>                                                                      `;
 	        str += `    <div class="row">                                                           `;
-	        str += `       <div class="col-1"></div>                                                `;
+	   
 	        str += `       <div class="col-11">                                                     `;
 	        str += `          <div class="row update-content">                                      `;
-	        str += `             <label class="col-3 col-form-label text-end">메인 이미지</label>   `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">메인 이미지</label>   `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <input type="file" class="form-control">                        `;
 	        str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end"></label>   `;
+	        str += `             <label class="col-3 col-form-label"></label>   `;
 	        str += `             <div class="col-9">                                                `;
 	       	for(const img of result['goods'].goodsImgList){
 				if(img.isMain == 'Y'){
@@ -127,13 +125,13 @@ function goodsDetail(goodsCode){
 				}
 			}
 	        str += `             </div>                                                             `;
-	        str += `             <label class="col-3 col-form-label text-end">상세 이미지</label>   `;
+	        str += `             <label class="col-3 col-form-label" style="text-align: center;">상세 이미지</label>   `;
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <input type="file" class="form-control">                        `;
 	        str += `             </div>   	                                                        `;
 	       	for(const img of result['goods'].goodsImgList){
 				if(img.isMain == 'N'){
-					str += `             <label class="col-3 col-form-label text-end"></label>   `;
+					str += `             <label class="col-3 col-form-label"></label>   `;
 	    		    str += `             <div class="col-9">                                                `;
 			        str += `                <label class="form-label"><a href="javascript:void(0);" onclick="openImgModal('${img.attachedFileName}', '${img.originFileName}');">${img.originFileName}</a></label>                        `;
 			        str += `             </div> `;
@@ -142,6 +140,9 @@ function goodsDetail(goodsCode){
 	        str += `          </div>                                                                `;
 	        str += `       </div>                                                                   `;
 	        str += `    </div>                                                                      `;
+	          str += `          <button type="submit" class="btn button btnBorder btnLightBlue-search "  style="color: white; width: 40%; margin-left:10rem;" >                        `;
+	        str += `              수 정                                                             `;
+	        str += `          </button>                                                             `;
 	        str += ` </form>                                                                        `;
 			
 			goodsDetailDiv.insertAdjacentHTML('afterbegin', str);

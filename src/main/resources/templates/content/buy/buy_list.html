@@ -6,86 +6,104 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href=""> -->
-	<style>
-		.buy-title{
-			margin-right: 1rem;
-		}
-		.buy-index{
-			font-size: 1.1rem;
-			font-weight: bold;
-		}
-	</style>
+	<link rel="stylesheet" href="/css/content/buy/buy.css">
+
 </th:block>
 
 <th:block layout:fragment="content">
-<a th:href="@{/mCart/cartList}">장바구니</a>
-   <div class="row">
-		<div class="col">
-			<div class="row mb-3">
-			구매 이력
+	<div class="buyHead">
+		구매 내역
+		<hr>
+	</div>
+	<div class="status" style="text-align: center; font-size: large; width: 70%; margin: auto;">
+		<span>주문 상태를 확인하시려면 아래 목록을 눌러주세요.</span>
+		<div id="orderIcon">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+			  <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+			</svg>
+		</div>
+		<div id="progressDiv">
+			<div class="progress" role="progressbar" aria-label="Basic example"
+			aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+				<div class="progress-bar" style="width: 0%"></div>
 			</div>
-			<div class="row">
-				<div class="col">
-					<div class="accordion" id="accordionPanelsStayOpenExample">
-					  <th:block th:each="buy, state : ${buyList}">
-						  <div class="accordion-item">
-						    <h2 class="accordion-header">
-						      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
-						      th:data-bs-target="${'#panel_' + state.count}" 
-						      aria-expanded="false" aria-controls="panelsStayOpen-collapseOne">
-						        <span class="buy-title buy-index">[[${#numbers.formatInteger(#lists.size(buyList) - state.index, 2)}]] | </span>
-						        <span class="buy-title">구매일시 [[${buy.buyDate}]]</span>
-						        <span class="buy-title">구매금액 [[${#numbers.formatCurrency(buy.buyPrice)}]]</span>
-						        <span class="buy-title">
-						        	구매내역 [[${buy.buyDetailList[0].goodsVO.goodsName}]]
-							        <th:blcok th:if="${buy.etc >= 2}">
+		</div>
+		
+		
+	</div>
+	<div class=" buyListDiv">
+		
+		<div class="row" style="margin-top: 3rem;">
+			<div class="col">
+				<div class="accordion" id="accordionPanelsStayOpenExample">
+					<th:block th:each="buy, state : ${buyList}">
+
+
+						<div class="accordion-item">
+							<h2 class="accordion-header">
+								<button class="accordion-button collapsed" type="button"
+									data-bs-toggle="collapse"
+									th:data-bs-target="${'#panel_' + state.count}"
+									aria-expanded="false"
+									aria-controls="panelsStayOpen-collapseOne"
+									onclick="orderStatus(this);">
+									<span class="buy-title buy-index">[[${#numbers.formatInteger(#lists.size(buyList)
+										- state.index, 2)}]] | </span> <span class="buy-title"
+										style="width: 20rem;">
+										[[${buy.buyDetailList[0].goodsVO.goodsName}]] <th:blcok
+											th:if="${buy.etc >= 2}">
 							        	외 [[${buy.etc - 1}]]건
 							        </th:blcok>
-							    </span>
-						      </button>
-						    </h2>
-						    <div th:id="${'panel_' + state.count}" class="accordion-collapse collapse">
-						      <div class="accordion-body">
-								<table class="table text-center align-middle">
-									<colgroup>
-										<col width="">
-										<col width="">
-										<col width="">
-										<col width="">
-										<col width="">
-										<col width="">
-									</colgroup>
-									<thead>
-										<tr>
-											<td>No</td>
-											<td>상품정보</td>
-											<td>가 격</td>
-											<td>수 량</td>
-											<td>구매가격</td>
-											<td>배송 상태</td>
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="buyDetail, detailState : ${buy.buyDetailList}">
-											<td>[[${#lists.size(buy.buyDetailList) - detailState.index}]]</td>
-											<td class="text-start">
-												<img width="70px" th:src="${'/image/goods/' + buyDetail.goodsVO.goodsImgList[0].attachedFileName}">
-												[[${buyDetail.goodsVO.goodsName}]]
-											</td>
-											<td>[[${#numbers.formatCurrency(buyDetail.goodsVO.goodsPrice)}]]</td>
-											<td>[[${buyDetail.buyDetailCnt}]]</td>
-											<td>[[${#numbers.formatCurrency(buyDetail.buyDetailPrice)}]]</td>
-											<td th:text="${buy.orderStr}">
-											</td>
-										</tr>
-									</tbody>
-								</table>
-						      </div>
-						    </div>
-						  </div>
-					  </th:block>
-					</div>
+									</span>
+									<!--      <span class="buy-title"  > 구매금액 :  [[${#numbers.formatCurrency(buy.buyPrice)}]]</span> -->
+									<!-- <span class="" style="text-align: right; font-size:medium; width: 20rem;"> 구매일시 :  [[${buy.buyDate}]]</span> -->
+								</button>
+							</h2>
+
+							<div th:id="${'panel_' + state.count}"
+								class="accordion-collapse collapse">
+								<div class="accordion-body">
+									<table class="table text-center align-middle">
+										<colgroup>
+											<col width="">
+											<col width="">
+											<col width="">
+											<col width="">
+											<col width="">
+											<col width="">
+										</colgroup>
+										<thead>
+											<tr>
+												<td>No</td>
+												<td>이미지</td>
+												<td>상품명</td>
+												<td>가 격</td>
+												<td>수 량</td>
+												<td>구매가격</td>
+												<td>배송 상태</td>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="buyDetail, detailState : ${buy.buyDetailList}">
+												<td>[[${#lists.size(buy.buyDetailList) -
+													detailState.index}]]</td>
+												<td class=""><img width="70px"
+													th:src="${'/image/goods/' + buyDetail.goodsVO.goodsImgList[0].attachedFileName}">
+												</td>
+												<td>[[${buyDetail.goodsVO.goodsName}]]</td>
+												<td>[[${#numbers.formatCurrency(buyDetail.goodsVO.goodsPrice)}]]</td>
+												<td>[[${buyDetail.buyDetailCnt}]]</td>
+												<td>[[${#numbers.formatCurrency(buyDetail.buyDetailPrice)}]]</td>
+												<td id="orderStr" th:text="${buy.orderStr}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+
+					</th:block>
 				</div>
 			</div>
 		</div>

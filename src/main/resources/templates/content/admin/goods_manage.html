@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/member_layout}">
 <th:block layout:fragment="content_css">
-	<!-- <link rel="stylesheet" href="/css/.css"> -->
+	 <link rel="stylesheet" href="/css/content/goods/goods.css">
 	<style>
 		.item-search-table >:not(caption)>*>*{
 			padding-top: 0px;
@@ -69,7 +69,7 @@
 						<input type="text" placeholder="상품명을 입력하세요." class="form-control" name="goodsSearchVO.searchGoodsName" th:value="${goodsVO.goodsSearchVO == null ? '' : goodsVO.goodsSearchVO.searchGoodsName}">
 					</div>
 					<div class="col-3 d-grid">
-						<input type="submit" value="검 색" class="btn btn-primary" >
+						<input type="submit" value="검 색" class="btn button btnBorder btnLightBlue-search " style="color: white;" >
 					</div>
 				</div>
 				<div class="row mt-2 m-auto">
@@ -80,7 +80,7 @@
 							<tr>
 						<th:block th:each="category : ${goodsCateList}">
 								<td class="form-check form-check-inline m-auto"  >
-									<input class="form-check-input chk"  th:value="${category.goodsCateCode}" style="margin-left: 1rem;" type="checkbox" id="" name="goodsSearchVO.searchCateCode" 
+									<input class="form-check-input chk"  th:value="${category.goodsCateCode}" style="margin-left: 1rem; background-color: #4e68b9; border-color: #4e68b9;" type="checkbox" id="" name="goodsSearchVO.searchCateCode" 
 										th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, category.goodsCateCode)}">
 										[[${category.goodsCateName}]]
 										<span th:if="${category.goodsCateIsUse == 'N'}">(미사용)</span>
@@ -104,18 +104,15 @@
 	<!-- 상품목록 영역 -->
 	<div class="row mb-3 mt-5">
 		<div class="col">
-			<table class="table table-striped table-hover text-center" style="margin-bottom: 0rem;">
+			<table class="table table-hover text-center" style="margin-bottom: 0rem;">
 				<colgroup>
-					<col width="8%">
-					<col width="25%">
 					<col width="*">
-					<col width="18%">
-					<col width="13%">
+					<col width="25%">
+					<col width="25%">
+					<col width="20%">
 				</colgroup>
 				<thead class="table-head">
 					<tr>
-						<td>No</td>
-						<td>카테고리</td>
 						<td>상품명</td>
 						<td>상품 상태</td>
 						<td>재고량</td>
@@ -124,37 +121,34 @@
 				</thead>
 			</table>
 			<div class=" table-scroll">
-			<table class="table table-striped table-hover text-center">
+			<table class="table table-hover text-center">
 				<colgroup>
-					<col width="8%">
-					<col width="25%">
 					<col width="*">
-					<col width="18%">
-					<col width="13%">
+					<col width="25%">
+					<col width="25%">
+					<col width="20%">
 				</colgroup>
 				<tbody>           
-					<tr th:each="goods, state : ${goodsList}">
-						<td th:text="${#lists.size(goodsList) - state.index}"></td>
-						<td>[[${goods.goodsCategoryVO.goodsCateName}]]</td>    
-						<td  class="text-start"><a href="javascript:void(0);" th:onclick="goodsDetail([[${goods.goodsCode}]]);">[[${goods.goodsName}]]</a></td>
-						<td>[[${goods.goodsStatusStr}]]</td>
-						<td>[[${goods.goodsStockCnt}]]</td>
-						<td>
-							<a th:href="@{/goods/deleteGoods?(goodsCode=${goods.goodsCode})}">삭제</a>
+					<tr th:each="goods, state : ${goodsList}" style="text-align: center; ">
+						<td style="padding-top: 2rem; "><a href="javascript:void(0);" th:onclick="goodsDetail([[${goods.goodsCode}]]);">[[${goods.goodsName}]]</a></td>
+						<td style="padding-top: 2rem; ">[[${goods.goodsStatusStr}]]</td>
+						<td style="padding-top: 2rem; ">[[${goods.goodsStockCnt}]]</td>
+						<td style="padding-top: 2rem; ">
+							<a title="Button border lightblue" class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem; padding-bottom: 2rem;" th:href="@{/goods/deleteGoods?(goodsCode=${goods.goodsCode})}">삭제</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 			</div>
 		</div>
-		<div class="col" id="goodsDetailDiv">
+		<div class="col" id="goodsDetailDiv" style=" margin-left: 2rem; margin-top: 4rem;">
 			
 		</div>
 	</div>
 	
 	<!-- 굿즈 등록하러 가기 버튼 -->
 	<div>
-		<a th:href="@{/goods/regGoods}">굿즈 등록하기</a>
+		<a th:href="@{/aGoods/regGoods}">굿즈 등록하기</a>
 		<button onclick="goodsCateForm();">굿즈 카테고리 등록하기</button>
 	</div>
 	

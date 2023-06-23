@@ -14,6 +14,6 @@ public class GoodsOrderVO {
 	private int orderNo;
 	private String orderStr;
 	private int buyPrice;
-	
+	private String buyCode;
 
 }
