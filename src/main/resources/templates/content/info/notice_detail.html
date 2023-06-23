@@ -10,14 +10,14 @@
 </th:block>
 
 <th:block layout:fragment="content">
-
+<div class="public-title">공지 사항</div>
 <div class="qnaDetail">
 
   <div class="aTitle">
      [[${noticeVO.noticeTitle}]]
   </div>
   <div class="aTitle2">
-  <span style="margin-right: 30rem;">	작성자 : [[${noticeVO.memId}]]</span>
+  <span style="margin-left: 37rem;">	작성자 : [[${noticeVO.memId}]]</span>
   <span>작성일 :  [[${noticeVO.noticeCreateDate}]]</span>
   </div>
 	
@@ -25,7 +25,7 @@
 			[[${noticeVO.noticeContent}]]
 	</div>
 	
-		<div  th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+		<div  th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style=" text-align: center;">
 				<input type="button" class="aBtn" value="수정" th:onclick="updateNotice(this, [[${noticeVO.noticeNo}]]);">
 				<input type="button" class="aBtn" value="삭제" th:onclick="|location.href='@{/info/deleteNotice(noticeNo=${noticeVO.noticeNo})}'|">
 		</div>

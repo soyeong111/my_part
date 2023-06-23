@@ -15,5 +15,8 @@ public interface BuyService {
 	//구매 목록 조회
 	List<GoodsBuyVO> getBuyList(GoodsBuyVO goodsBuyVO);
 	
+	//order no 업데이트
+	int updateBuyOrder(String buyCode);
+	
 
 }

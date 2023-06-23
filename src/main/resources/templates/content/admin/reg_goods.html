@@ -6,19 +6,15 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/goods/goods.css">
 </th:block>
 
 <th:block layout:fragment="content">
-
-	<div class="regGoodsDiv w-75 m-auto mt-5">
+<div class="member-title">상품 등록</div>
+	<div class="regGoodsDiv w-75 m-auto mt-5 mb-5">
 	
 		<form th:action="@{/goods/regGoodsProcess}" method="post" enctype="multipart/form-data">
-			<div class="row">
-				<div class="col">
-					<h2>상품 등록</h2>
-				</div>
-			</div>
+		
 			<div class="row mt-5">
 				<div class="col-3">
 					<select id="" name="goodsCateCode" class="form-select">
@@ -111,16 +107,13 @@
 			</div>
 			<div class="row mt-5" style="text-align: center;">
 				<div class="col">
-					<button id="" type="submit" class="btn btn-primary">
+					<button id="" type="submit" class="btn btn-primary regGoodsBtn">
 						등 록
 					</button>
 				</div>
 			</div>
 		</form>
-		<div>
-			<a th:href="@{/goods/goodsManage}">굿즈 목록 보기</a>
-		</div>
-	
+
 	</div>
 
 </th:block>

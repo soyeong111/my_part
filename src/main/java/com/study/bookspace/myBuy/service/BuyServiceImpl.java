@@ -20,6 +20,7 @@ public class BuyServiceImpl implements BuyService {
 		sqlSession.insert("buyMapper.buyFromCart", goodsBuyVO);
 		sqlSession.insert("buyMapper.getNextBuyCode");
 		sqlSession.insert("buyMapper.buyDetails", goodsBuyVO);
+		sqlSession.insert("orderMapper.insertOrder", goodsBuyVO);
 	}
 
 	@Override
@@ -31,6 +32,12 @@ public class BuyServiceImpl implements BuyService {
 	public List<GoodsBuyVO> getBuyList(GoodsBuyVO goodsBuyVO) {
 		return sqlSession.selectList("buyMapper.getBuyList", goodsBuyVO);
 	}
+
+	@Override
+	public int updateBuyOrder(String buyCode) {
+		return sqlSession.update("buyMapper.updateBuyOrder",buyCode);
+	}
+
 	
 	
 	

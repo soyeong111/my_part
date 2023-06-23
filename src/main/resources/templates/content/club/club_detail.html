@@ -32,7 +32,7 @@
 		</div>
 
 
-		<div class="row">
+		<div class="row ms-2">
 			<div class="col-9">
 				<div class="row content-outer-row">
 					<div class="col-3">
@@ -64,16 +64,18 @@
 						<img alt="" src="/image/club/friend.png" width="60px;">
 					</div>
 					<div class="col-12 com-div">
-			            <div th:each="rank, state : ${comRankgingList}" class="d-inline-block board_rank_outer-row">
-			                <div style="margin-bottom: 10px;">
+			            <div th:each="rank, state : ${comRankgingList}" class="d-inline-block board_rank_outer-row" th:if="${state.index &lt; 3}">
+			                <div style="margin-bottom: 10px; font-weight: bold;">
 				                 [[${state.index + 1}]]등
 				                <img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;"> 
 								<img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;"> 
 								<img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
 				            </div>
-				            <div class="rank_img_box"></div>
+				            <div class="rank_img_box">
+				            	<img alt="" src="/image/club/dog.jpg">
+				            </div>
 							<div class="mem-info1">[[${rank.memberVO.memName}]]</div>
-							<div class="mem-info2">작성 글 수 - [[${rank.boardNum}]]</div>
+							<div class="mem-info2">점수  [[${rank.boardNum}]]</div>
 			            </div>
 					</div>
 				</div>
@@ -128,7 +130,7 @@
 											th:if="${state.index &lt; 3}">
 											<table class="rank-div" style="width: 100%;">
 												<tr>
-													<td>
+													<td style="font-weight: bold;">
 														[[${state.index + 1}]]위 
 														<img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;"> 
 														<img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;"> 
@@ -136,7 +138,9 @@
 													</td>
 												</tr>
 												<tr>
-													<td>이미지</td>
+													<td>
+														<img alt="" src="/image/club/dog.jpg" width="50px;" class="book-rank-img">
+													</td>
 													<td>[[${rank['MEM_NAME']}]]</td>
 													<td>[[${rank['BORROW_CNT']}]]권</td>
 												</tr>
@@ -150,8 +154,16 @@
 				</div>
 			</div>
 		</div>
-
-
+		<div class="row">
+			<th:block th:if="${club.memId == #authentication.name}">
+					<div class="row manage-div">
+						<div class="offset-10 col-2">
+							<input type="button" value="북클럽 수정" class="btn custom-btn" th:onclick="|location.href='@{/club/updateClubForm(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+							<input type="button" value="북클럽 삭제" class="btn custom-btn" th:onclick="deleteClub([[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+						</div>
+					</div>
+				</th:block>
+		</div>
 
 
 

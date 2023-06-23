@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.saleDiv{
+	width: 70%;
+	margin: auto;
+	margin-top: 4rem;
+	margin-bottom: 6rem;
+}
+
+.saleHead{
+	height: 90px;
+ 	margin-top: 3rem;
+   color: #4F709C;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}

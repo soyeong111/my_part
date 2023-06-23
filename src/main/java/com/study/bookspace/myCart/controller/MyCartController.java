@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myCart.service.CartService;
 import com.study.bookspace.myCart.vo.GoodsCartVO;
 
@@ -38,8 +39,7 @@ public class MyCartController {
 	//장바구니로 이동
 	//마이페이지니까 마이 사이드 추가 필요
 	@GetMapping("/cartList")
-	public String cartList(Model model, Authentication authentication, GoodsCartVO cartVO) {
-		
+	public String cartList(Model model, Authentication authentication, GoodsCartVO cartVO,SubMenuVO subMenuVO) {
 		
 		User user = (User)authentication.getPrincipal();
 		List<GoodsCartVO> cartList = cartService.cartList(user.getUsername());
@@ -76,13 +76,9 @@ public class MyCartController {
 	//선택 삭제 
 	@GetMapping("/deleteCarts")
 	public String deleteCarts(String[] cartCodes, GoodsCartVO goodsCartVO) {
-		
-		List<String> cartCodeList = Arrays.asList(cartCodes);
-		
+		List<String> cartCodeList = Arrays.asList(cartCodes); 
 		goodsCartVO.setCartCodeList(cartCodeList);
-		
 		cartService.deleteCarts(goodsCartVO);
-		
 		return "redirect:/mCart/cartList";
 		
 	}

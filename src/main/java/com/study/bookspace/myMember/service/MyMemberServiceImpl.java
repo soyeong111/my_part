@@ -1,5 +1,7 @@
 package com.study.bookspace.myMember.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,12 @@ public class MyMemberServiceImpl implements MyMemberService {
 	@Override
 	public int updateMember(MemberVO memberVO) {
 		return sqlSession.update("memberMapper.updateMember", memberVO);
+	}
+
+	// 내 프로필 간단 정보
+	@Override
+	public MemberVO getMyProfile(String memId) {
+		return sqlSession.selectOne("memberMapper.getMyProfile", memId);
 	}
 	
 }

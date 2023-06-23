@@ -10,14 +10,14 @@
 </th:block>
 
 <th:block layout:fragment="content">
-   notice form
+<div class="public-title">공지 작성</div>
    <div class="noticeForm">
    <form action="/info/insertNotice" method="post">
    		<div>
-   			<input type="text" class="form-control noticeTitle" required placeholder="제목을 입력해주세요." name="noticeTitle">
+   			<input type="text" class="form-control" required placeholder="제목을 입력하세요." style="margin-bottom: 1rem;" name="noticeTitle">
    		</div>
    		<div>
-   			<textarea class="form-control noticeContent" required name="noticeContent"> </textarea>
+   			<textarea rows="10" cols="70" name="noticeContent" class="form-control " required placeholder="내용을 입력하세요."   style="resize: none;"> </textarea>
    		</div>
    		<div class="btnDiv">
    			<button class="nBtn">등 록</button>
