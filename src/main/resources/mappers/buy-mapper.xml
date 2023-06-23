@@ -120,4 +120,11 @@
 		GROUP BY CATE_CODE
 	</select>
 	
+	<update id="updateBuyOrder">
+	UPDATE GOODS_BUY
+	SET ORDER_NO = ORDER_NO + 1
+	WHERE BUY_CODE = #{buyCode}
+</update>
+	
+	
 </mapper>

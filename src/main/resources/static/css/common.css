@@ -136,6 +136,22 @@ h1 {
 
 .ts{
 	background-color: #BAD0E8;
-	
 }
 
+.public-title{
+	margin-top: 3rem;
+	margin-left: 1rem;
+	font-weight: bolder;
+	font-size: xx-large;
+	letter-spacing: 2px;
+	color: #4e68b9;
+}
+
+.member-title{
+	margin-top: 3rem;
+	text-align: center;
+	font-weight: bolder;
+	font-size: xx-large;
+	letter-spacing: 2px;
+	color: #4e68b9;
+}

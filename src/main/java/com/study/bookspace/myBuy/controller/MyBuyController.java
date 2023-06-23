@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.study.bookspace.adminOrder.service.OrderService;
 import com.study.bookspace.adminOrder.vo.GoodsOrderVO;
+import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myBuy.service.BuyService;
 import com.study.bookspace.myBuy.vo.GoodsBuyDetailVO;
 import com.study.bookspace.myBuy.vo.GoodsBuyVO;
@@ -39,30 +40,27 @@ public class MyBuyController {
 	@Resource(name = "orderService")
 	private OrderService orderService;
 	
-	
-	@PostMapping("/buyDetail")
-	public String buyDetail(Model model, Authentication authentication, GoodsBuyVO goodsBuyVO,@RequestParam int finalPrice) {
-		User user = (User)authentication.getPrincipal();
-
-		String memId = user.getUsername();
-		 goodsBuyVO.setMemId(memId);
-		 goodsBuyVO.setBuyPrice(finalPrice);
-		 
-		 System.out.println(goodsBuyVO);
-			
-		buyService.buyFromCart(goodsBuyVO);
-//		model.addAttribute("buyList", buyService.getBuyList(goodsBuyVO)) ;
-		System.out.println(buyService.getBuyList(goodsBuyVO));
-		return "content/buy/buy_detail";
-	}
-	
+	/*
+	 * @PostMapping("/buyDetail") public String buyDetail(Model model,
+	 * Authentication authentication, GoodsBuyVO goodsBuyVO,@RequestParam int
+	 * finalPrice) { User user = (User)authentication.getPrincipal();
+	 * 
+	 * String memId = user.getUsername(); goodsBuyVO.setMemId(memId);
+	 * goodsBuyVO.setBuyPrice(finalPrice);
+	 * 
+	 * System.out.println(goodsBuyVO);
+	 * 
+	 * buyService.buyFromCart(goodsBuyVO); // model.addAttribute("buyList",
+	 * buyService.getBuyList(goodsBuyVO)) ;
+	 * System.out.println(buyService.getBuyList(goodsBuyVO)); return
+	 * "content/buy/buy_detail"; }
+	 */
 	
 	
 	 @ResponseBody
 	  @PostMapping("/buysAjax") 
-	 public void buysAjax(@RequestBody HashMap<String, Object> mapData, GoodsBuyVO goodsBuyVO, Authentication authentication, GoodsOrderVO goodsOrderVO ) {
+	 public void buysAjax(@RequestBody HashMap<String, Object> mapData, GoodsBuyVO goodsBuyVO, Authentication authentication, GoodsOrderVO goodsOrderVO, String buyCode ) {
 	  
-	 System.out.println(mapData);
 	  
 	  String nextBuyCode = buyService.getNextBuyCode();
 	  
@@ -71,13 +69,11 @@ public class MyBuyController {
 	  
 	  int buyPrice = Integer.parseInt(mapData.get("final_price").toString());
 	  
-	  System.out.println(buyPrice);
 	  
 	  goodsBuyVO.setBuyCode(nextBuyCode); 
 	  goodsBuyVO.setMemId(memId);
 	  goodsBuyVO.setBuyPrice(buyPrice);
 	  
-	  System.out.println(goodsBuyVO);
 	  
 	  ObjectMapper mapper = new ObjectMapper(); 
 	  GoodsBuyDetailVO[] buyDetailArr = mapper.convertValue(mapData.get("detail_info_arr"), GoodsBuyDetailVO[].class);
@@ -89,21 +85,19 @@ public class MyBuyController {
 	  
 	  goodsBuyVO.setBuyDetailList(buyDetailList);
 	  
-	  System.out.println(goodsBuyVO);
+	  goodsOrderVO.setMemId(memId);
+	  goodsOrderVO.setBuyPrice(buyPrice);
+	  goodsOrderVO.setBuyCode(buyCode);
 	 
 	  buyService.buyFromCart(goodsBuyVO); 
 	  
-	  goodsOrderVO.setMemId(memId);
-	  goodsOrderVO.setBuyPrice(buyPrice);
-	  
-	  orderService.insertOrder(goodsOrderVO);
 	}
 	
 
 	
 
 	@RequestMapping("/buyList")
-	public String buyList(Authentication authentication, Model model, GoodsBuyVO goodsBuyVO) {
+	public String buyList(Authentication authentication, Model model, GoodsBuyVO goodsBuyVO, SubMenuVO subMenuVO) {
 	
 		String nowDate = DateUtil.getNowDateToString();
 		
@@ -123,8 +117,8 @@ public class MyBuyController {
 			goodsBuyVO.setToDate(nowDate);
 		}
 		
-		System.out.println("111"+buyList);
-		
+		model.addAttribute("order", orderService.selectOrder());
+
 		return "content/buy/buy_list";
 	}
 	

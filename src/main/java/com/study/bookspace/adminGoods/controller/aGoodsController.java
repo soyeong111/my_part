@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.study.bookspace.adminOrder.service.OrderService;
+import com.study.bookspace.adminOrder.vo.GoodsOrderVO;
 import com.study.bookspace.goods.service.GoodsService;
 import com.study.bookspace.goods.vo.GoodsCategoryVO;
 import com.study.bookspace.goods.vo.GoodsImgVO;
 import com.study.bookspace.goods.vo.GoodsVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myBuy.service.BuyService;
+import com.study.bookspace.myBuy.vo.GoodsBuyVO;
 import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
@@ -175,9 +177,15 @@ public class aGoodsController {
 	}
 	
 	@GetMapping("/updateOrder")
-	public String  updateOrder(String orderCode) {
+	public String  updateOrder(String orderCode, String buyCode, GoodsBuyVO goodsBuyVO, GoodsOrderVO goodsOrderVO) {
 		orderService.updateOrder(orderCode);
 		
+		System.out.println(orderCode);
+		System.out.println(111);
+		System.out.println(goodsOrderVO);
+		
+		goodsBuyVO.setBuyCode(buyCode);
+		buyService.updateBuyOrder(buyCode);
 		return "redirect:/aGoods/buyManage";
 	}
 	

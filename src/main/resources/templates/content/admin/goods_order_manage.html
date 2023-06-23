@@ -6,18 +6,16 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<!--<link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="/css/content/goods/goods.css">
 </th:block>
 
 <th:block layout:fragment="content">
- 	<div class="row">
- 		<div class="col">
-
+ 		<div class="orderHead">배송 관리</div>
  			<div class="row">
  				<div class="col">
- 					<table class="table table-hover">
+ 					<table class="table orderT" style="margin-top: 8rem;">
  						<thead>
- 							<tr>
+ 							<tr style="text-align: center;">
  								<td>구매 코드</td>
  								<td>ID</td>
  								<td>결제금액</td>
@@ -27,25 +25,28 @@
  						</thead>
  						<tbody>
  						<th:block th:if="${#lists.size(orderList) == 0 }">
- 							<tr>
+ 							<tr style="text-align: center;">
  								<td colspan="6">주문 내역이 없습니다</td>
  							</tr>
  						</th:block>
  						<th:block th:unless="${#lists.size(orderList) == 0 }">
- 							<tr th:each="order  : ${orderList}">
-							    <td th:text="${order.orderCode}"></td>
-							    <td th:text="${order.memId}"></td>
-							    <td th:text="${order.buyPrice}"></td>
-							    <td th:text="${order.buyDate}"></td>
-							   	<td><a th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode})}">[[${order.orderStr}]]</a></td>
+ 							<tr th:each="order  : ${orderList}"  style="text-align: center; ">
+							    <td style="padding-top: 1rem;"  th:text="${order.orderCode}"></td>
+							    <td style="padding-top: 1rem;" th:text="${order.memId}"></td>
+							    <td style="padding-top: 1rem;" th:text="${order.buyPrice}"></td>
+							    <td style="padding-top: 1rem;" th:text="${order.buyDate}"></td>
+						
+							   	<td style="padding-left: 6rem;">
+								   	<a title="Button border lightblue" class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+								   	[[${order.orderStr}]]
+								   	</a>
+							   	</td>
 							</tr>
  						</th:block>
  						</tbody>
  					</table>
  				</div>
  			</div>
- 		</div>
- 	</div>
 </th:block>
 
 <!--연결해야 할 외부 js 파일  -->
