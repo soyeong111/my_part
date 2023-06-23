@@ -7,6 +7,9 @@
 	<link rel="stylesheet" href="/css/content/my/my_book_record.css">
 </th:block>
 <th:block layout:fragment="content">
+	<div>
+		<h2 class="member-title">독서 기록</h2>
+	</div>
 	<div id="book-search-modal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
@@ -41,11 +44,6 @@
 		</div>
 	</div>
 	<div class="my-book-record-div mt-5 w-75 m-auto">
-		<div class="row">
-			<div class="col">
-				<h2>독서 기록</h2>
-			</div>
-		</div>
 		<form action="/mBook/regBookRecord" method="post">
 			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
 			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">

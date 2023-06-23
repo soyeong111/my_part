@@ -16,36 +16,29 @@ import com.study.bookspace.goods.vo.GoodsVO;
 
 
 public class UploadUtil {
-//	단일 파일 업로드 메소드
 	public static ImgVO uploadFile(MultipartFile img) {
-		
-		ImgVO imgVO = null;
-		System.out.println(img == null);
-		if(!img.isEmpty()) {
-			
-			imgVO = new ImgVO(); 
-			
-			String originFileName = img.getOriginalFilename();
-			String uuid = UUID.randomUUID().toString();
-			String extension = originFileName.substring(originFileName.lastIndexOf("."));
-			String attachedFileName = uuid + extension;
+        ImgVO imgVO = new ImgVO();
 
-			try {
-				File file = new File(ConstVariable.BOOK_UPLOAD_PATH + attachedFileName);
-				img.transferTo(file);
-				
-				imgVO.setOriginFileName(originFileName);
-				imgVO.setAttachedFileName(attachedFileName);
-				imgVO.setIsMainImg("Y");
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			
-		}
-		return imgVO;
-	}
+        if (!img.isEmpty()) {
+            String originFileName = img.getOriginalFilename();
+            String uuid = UUID.randomUUID().toString();
+            String extension = originFileName.substring(originFileName.lastIndexOf("."));
+            String attachedFileName = uuid + extension;
+
+            try {
+                File file = new File(ConstVariable.BOOK_UPLOAD_PATH + attachedFileName);
+                img.transferTo(file);
+
+                imgVO.setOriginFileName(originFileName);
+                imgVO.setAttachedFileName(attachedFileName);
+                imgVO.setIsMainImg("Y");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return imgVO;
+    }
 	
 
 	//클럽 이미지 단일 파일 업로드 메소드
