@@ -48,7 +48,10 @@
 	</style>
 </th:block>
 <th:block layout:fragment="content">
-<div class="goodsManageDiv  m-auto mt-5 ">
+<div class="goodsManageHead">
+	상품 관리
+</div>
+<div class="goodsManageDiv  m-auto mt-5 mb-5">
 		<div class=" m-auto">
 			<form th:action="@{/goods/goodsManage}" method="post">
 				<div class="row w-75 m-auto">
@@ -146,11 +149,6 @@
 		</div>
 	</div>
 	
-	<!-- 굿즈 등록하러 가기 버튼 -->
-	<div>
-		<a th:href="@{/aGoods/regGoods}">굿즈 등록하기</a>
-		<button onclick="goodsCateForm();">굿즈 카테고리 등록하기</button>
-	</div>
 	
 	
 	

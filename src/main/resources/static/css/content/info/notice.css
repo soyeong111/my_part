@@ -1,6 +1,14 @@
 @charset "UTF-8";
 
-
+.noticeHead{
+	margin-top: 4rem; 
+	margin-left: 4rem; 
+	margin-right: 2rem;
+	font-weight: bolder;
+	font-size: xx-large;
+	letter-spacing: 2px;
+	color: #4e68b9;
+}
 
 .noticeForm{
 	width: 80%;
@@ -14,13 +22,23 @@
 	resize: none;
 }
 
+
+.noticeDiv{
+	width: 90%;
+	margin: auto;
+}
+
+
+
 .nBtn{
-	border: none;
+border: none;
 	background-color: #6c96d8;
 	border-radius: 3%; 
-	width: 12rem;
-	height: 3rem;
+	width: 6rem;
+	height: 2rem;
 	font-weight: bold;
+	margin-left: 4rem;
+	margin-top: 3rem;
 	color: white;
 }
 
@@ -29,3 +47,4 @@
 	text-align: center;
 	
 }
+
