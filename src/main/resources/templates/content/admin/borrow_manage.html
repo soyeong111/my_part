@@ -22,7 +22,7 @@
 						style="background-color: #BAD0E8;">
 						* 최근 3개월 기준<br>
 						<tr>
-							<td>대여 TOP10</td>
+							<td style="font-weight: bold;">대여 TOP10</td>
 						</tr>
 					</thead>
 				</table>
@@ -37,7 +37,7 @@
 								src="/image/rank/silver.png" alt="Image 2" width="25px;">
 						</span> <span th:if="${state.index == 2}"> <img
 								src="/image/rank/bronze.png" alt="Image 3" width="25px;">
-						</span> <span th:unless="${state.index < 3}"> [[${state.index +
+						</span> <span th:unless="${state.index < 3}"  style="font-weight: bold;"> [[${state.index +
 								1}]]위 </span></td>
 						<td>[[${top5.bookTitle}]]</td>
 						<td>[[${top5.borrowCount}]]권</td>
@@ -68,7 +68,7 @@
 						<col width="10%">
 					</colgroup>
 					<thead class="table-head"
-						style="background-color: #BAD0E8;">
+						style="background-color: #BAD0E8; font-weight: bold;">
 						<tr>
 							<td>No</td>
 							<td>회원ID</td>
@@ -83,6 +83,15 @@
 			</div>
 			<div class="col-12 scrollBar">
 				<table class="table table-striped table-hover text-center">
+						<colgroup>
+							<col width="4%">
+							<col width="5%;">
+							<col width="*">
+							<col width="20%;">
+							<col width="20%">
+							<col width="20%">
+							<col width="10%">
+						</colgroup>
 					<tbody>
 						<tr th:if="${#lists.size(borrowList) == 0 }">
 							<td colspan="7">대여한 회원이 없습니다.</td>

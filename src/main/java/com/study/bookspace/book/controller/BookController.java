@@ -103,12 +103,9 @@ public class BookController {
 		//--- 파일 첨부 ---//
 //		메인 이미지 업로드 (앞)
 		ImgVO mainImgVO = UploadUtil.uploadFile(mainImg);
-		
-//		서브 이미지 업로드 (뒤)
-//		ImgVO subImgVO = UploadUtil.uploadFile(subImg);
 	    
 // 		옆 이미지 업로드
-	    ImgVO subImgVO = UploadUtil.uploadFile(sideImg);
+	    ImgVO subImgVO = UploadUtil.uploadFile(subImg);
 	    
 	    
 //	    등록될 도서코드 조회
@@ -246,6 +243,12 @@ public class BookController {
 		reserveVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
 		
 		
+//		예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부
+		int checkBorrowCnt = bookService.getCheckBorrow(borrowVO);
+		if(checkBorrowCnt != 0) {
+			return 200;
+		}
+		
 //		예약 없이 대여 가능한 책의 개수 (모든사람)
 		int ableBookCnt = bookService.getAbleBookCnt(borrowVO.getBookCode());
 		if(ableBookCnt > 0) {
@@ -253,12 +256,6 @@ public class BookController {
 			
 		}
 		
-		
-//		예약하기 버튼 클릭 시, 대여한 회원인지 아닌지 확인 여부
-		int checkBorrowCnt = bookService.getCheckBorrow(borrowVO);
-		if(checkBorrowCnt != 0) {
-			return 200;
-		}
 		
 	
 		System.out.println(borrowVO + "DDDDDDDDDDDDDDDDDDDDD");

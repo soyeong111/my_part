@@ -18,9 +18,9 @@
 
 
 	<div class="book-reg-div">
-		<div class="row offset-1">
-			<div class="col-12">
-				<form id="" class="row g-3" th:action="@{/book/regBookProcess}" method="post" enctype="multipart/form-data">
+		<div class="row offset-3">
+			<div class="col-9">
+				<form id="regBookForm" class="row g-3" th:action="@{/book/regBookProcess}" method="post" enctype="multipart/form-data">
 					<div class="col-5">
 						<h5><label for="" class="form-label ts">카테고리</label> </h5>
 						<select id="" name="bookCateNo" class="form-select">
@@ -31,23 +31,27 @@
 					</div>
 					<div class="col-5">
 						<h5><label for="" class="form-label ts">제목</label></h5>
-						<input type="text" class="form-control" id="" name="bookTitle">
+						<input type="text" class="form-control" id="bookTitle" name="bookTitle"
+						placeholder="제목을 입력하세요.">
 					</div>
 					<div class="col-5">
 						<h5><label for="" class="form-label ts">작가</label></h5>
-						<input type="text" class="form-control" id="" name="bookAuthor">
+						<input type="text" class="form-control" id="bookAuthor" name="bookAuthor"
+						placeholder="작가를 입력하세요.">
 					</div>
 					<div class="col-5">
 						<h5><label for="" class="form-label ts">출판사</label> </h5>
-						<input type="text" class="form-control" id="" name="bookPublisher">
+						<input type="text" class="form-control" id="bookPublisher" name="bookPublisher"
+						placeholder="출판사를 입력하세요.">
 					</div>
 					<div class="col-4">
 						<h5><label for="" class="form-label ts">ISBN</label></h5>
-						 <input type="text" class="form-control" id="" name="isbn">
+						 <input type="text" class="form-control" id="isbn" name="isbn"
+						 placeholder="ISBN을 입력하세요.">
 					</div>
 					<div class="col-3">
 						<h5><label for="" class="form-label ts">발행일</label> </h5>
-						<input type="date" class="form-control" id="" name="bookPublicationDate">
+						<input type="date" class="form-control" id="bookPublicationDate" name="bookPublicationDate">
 					</div>
 					<div class="col-3">
 						<h5><label for="" class="form-label ts">재고 수량</label> </h5>
@@ -55,18 +59,19 @@
 					</div>
 					<div class="col-5">
 						<h5><label for="" class="form-label ts">앞 이미지</label> </h5>
-						<input type="file" class="form-control" id="" name="mainImg">
+						<input type="file" class="form-control" id="mainImg" name="mainImg">
 					</div>
 					<div class="col-5">
 						<h5><label for="" class="form-label ts">뒤 이미지</label> </h5>
-						<input type="file" class="form-control" id="" name="subImg" multiple>
+						<input type="file" class="form-control" id="subImg" name="subImg">
 					</div>
 					<div class="col-10">
 						<h5><label for="" class="form-label ts" >도서 소개</label> </h5>
-						<textarea rows="7" class="form-control" name="bookIntro" style="resize: none;"></textarea>
+						<textarea rows="9" class="form-control" name="bookIntro" id="bookIntro" placeholder="도서 소개를 작성하세요." 
+						style="resize: none;"></textarea>
 					</div>
 					<div class="col-10 d-flex justify-content-center">
-  						<button id="" type="submit" class="btn custom-btn">등록</button>
+  						<button id="" type="button" class="btn custom-btn" onclick="regBook();">등록</button>
 					</div>
 				</form>
 			</div>
@@ -74,6 +79,7 @@
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+    <script type="text/javascript" src="/js/content/book/reg_book.js"></script> 
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </th:block>
 </html>
