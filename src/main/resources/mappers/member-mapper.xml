@@ -148,5 +148,15 @@
 			, MEM_ADDR_DETAIL = #{memAddrDetail}
 		WHERE MEM_ID = #{memId}
 	</update>
+	
+	<!-- 내 프로필 간단 정보 -->
+	<select id="getMyProfile" resultMap="member">
+		SELECT MEM_ID
+			, MEM_NAME
+			, MEM_IMG_URL
+			, OVERDUE_CNT
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
 
 </mapper>

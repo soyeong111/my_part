@@ -46,7 +46,13 @@ public class MyMemberController {
 	
 	// 내프로필 페이지
 	@GetMapping("/myProfile")
-	public String myProfile(SubMenuVO subMenuVO) {
+	public String myProfile(SubMenuVO subMenuVO, Model model, Authentication authentication, MemberVO memberVO) {
+		memberVO.setMemId(((User)authentication.getPrincipal()).getUsername());
+		memberVO = myMemberService.getMyProfile(memberVO.getMemId());
+		
+		
+		
+		System.out.println(memberVO);
 		return "content/my/my_profile";
 	}
 	

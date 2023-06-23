@@ -7,13 +7,6 @@
 	<link rel="stylesheet" href="/css/content/my/my_book_record.css">
 </th:block>
 <th:block layout:fragment="content">
-
-
-
-
-
-
-
 	<div id="book-search-modal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-scrollable">
 			<div class="modal-content">
@@ -22,8 +15,6 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-				
-				
 					<div class="row">
 						<div class="col-3">
 							<select id="book-search-column" class="form-select">
@@ -49,16 +40,6 @@
 			</div>
 		</div>
 	</div>
-
-    
-
-
-
-
-
-
-
-
 	<div class="my-book-record-div mt-5 w-75 m-auto">
 		<div class="row">
 			<div class="col">
@@ -70,16 +51,12 @@
 			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 			<div class="row mt-5">
 				<div class="col-6">
-				
-				
 					<div class="input-group">
 						<span class="input-group-text">선택도서</span>
 						<input type="text" id="show-book-title" class="form-control" onclick="open_book_search_modal();"
 							placeholder="도서검색" readonly>
 						<input type="hidden" name="bookCode" id="selected-book-code">
 					</div>
-					
-					
 				</div>
 				<div class="col-3">
 					<div class="input-group">
