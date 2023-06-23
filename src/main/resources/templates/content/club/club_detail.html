@@ -64,16 +64,18 @@
 						<img alt="" src="/image/club/friend.png" width="60px;">
 					</div>
 					<div class="col-12 com-div">
-			            <div th:each="rank, state : ${comRankgingList}" class="d-inline-block board_rank_outer-row">
+			            <div th:each="rank, state : ${comRankgingList}" class="d-inline-block board_rank_outer-row" th:if="${state.index &lt; 3}">
 			                <div style="margin-bottom: 10px;">
 				                 [[${state.index + 1}]]등
 				                <img th:if="${state.index == 0}" src="/image/rank/gold.png" alt="Image 1" width="25px;"> 
 								<img th:if="${state.index == 1}" src="/image/rank/silver.png" alt="Image 2" width="25px;"> 
 								<img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
 				            </div>
-				            <div class="rank_img_box"></div>
+				            <div class="rank_img_box">
+				            	<img alt="" src="/image/club/dog.jpg">
+				            </div>
 							<div class="mem-info1">[[${rank.memberVO.memName}]]</div>
-							<div class="mem-info2">작성 글 수 - [[${rank.boardNum}]]</div>
+							<div class="mem-info2">점수  [[${rank.boardNum}]]</div>
 			            </div>
 					</div>
 				</div>
