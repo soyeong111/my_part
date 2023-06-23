@@ -159,6 +159,7 @@ function deleteBook() {
   }).then((result) => {
     if (result.isConfirmed) {
       // bookCode를 여러개 담을 수 있는 배열 생성
+      
       const bookCodeArr = [];
 
       chks.forEach(function (chk, index) {
@@ -171,12 +172,14 @@ function deleteBook() {
         type: 'post',
         async: true,
         contentType: 'application/json; charset=UTF-8',
-        data: JSON.stringify({ 'bookCode': boio }), // 필요한 데이터
+        data: JSON.stringify(bookCodeArr), // 필요한 데이터
         success: function (result) {
-          Swal.fire({
+            Swal.fire({
             title: '성공',
             text: '도서 삭제를 완료했습니다.',
             icon: 'success',
+          }).then(() => {
+            location.reload(); // 페이지 새로고침
           });
         },
         error: function () {
