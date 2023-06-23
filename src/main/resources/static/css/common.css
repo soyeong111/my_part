@@ -134,7 +134,10 @@ h1 {
     font-weight: bold;
 }
 
-<<<<<<< HEAD
+.ts{
+	background-color: #BAD0E8;
+}
+
 .public-title{
 	margin-top: 3rem;
 	margin-left: 1rem;
@@ -142,15 +145,6 @@ h1 {
 	font-size: xx-large;
 	letter-spacing: 2px;
 	color: #4e68b9;
-=======
-.ts{
-	background-color: #BAD0E8;
-	
->>>>>>> 26adc226c625da71ac3ccf7d835f4edd7816be63
-}
-
-.ts{
-	background-color: #BAD0E8;
 }
 
 .member-title{
