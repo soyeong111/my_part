@@ -197,7 +197,9 @@ public class BookServiceImpl implements BookService {
 	@Transactional(rollbackFor = Exception.class)
 	public void updateBookDetail(BookVO bookVO) {
 		sqlSession.update("bookMapper.updateBookDetail", bookVO);
-		sqlSession.insert("bookMapper.insertImges", bookVO);
+		if(bookVO.getImgList().size() > 0) {
+			sqlSession.insert("bookMapper.insertImges", bookVO);
+		}
 	}
 
 	@Override

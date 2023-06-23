@@ -121,9 +121,10 @@ public class ClubController {
 	//북클럽 상세페이지
 	@GetMapping("/clubDetail")
 	public String clubDetail(Model model, String clubCode, SubMenuVO subMenuVO) {
-		System.out.println("@@@@@@@@@@@@@@" + subMenuVO);
 		//클럽 상세 조회
-		model.addAttribute("club", clubService.getClubDetail(clubCode));
+		BookClubVO bookClubVO = clubService.getClubDetail(clubCode);
+		model.addAttribute("club", bookClubVO);
+		model.addAttribute("thisBook", clubService.getThisBookDetail(bookClubVO.getThisBookCode()));
 		//클럽 활동 중인 회원수
 		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		//클럽 멤버 리스트 조회
@@ -131,8 +132,10 @@ public class ClubController {
 		
 		//이번달
 		model.addAttribute("thisMonth", DateUtil.getMonth());
-		//랭킹
+		//독서 랭킹
 		model.addAttribute("rankingList", clubService.getRankingByClub(clubCode));
+		//커뮤니티 활동 랭킹
+		model.addAttribute("comRankgingList", clubService.getCommunityRankByClub(clubCode));
 		
 		return "content/club/club_detail";
 	}
@@ -143,6 +146,16 @@ public class ClubController {
 	public List<BookVO> bookChoiceAjax(BookVO bookVO, Model model) {
 		
 		return bookService.getBookListForUser(bookVO);
+	}
+	
+	//이달의 책 업데이트
+	@ResponseBody
+	@PostMapping("/updateClubBookAjax")
+	public void updateClubBookAjax(BookClubVO bookClubVO) {
+		
+		System.out.println("@@@" + bookClubVO);
+		
+		clubService.updateClubBookCode(bookClubVO);
 	}
 	
 	

@@ -52,6 +52,7 @@ public class BookController {
 	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO, BookVO bookVO) {
 		
 		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
+	
 		
 		//전체 게시글 수 조회
 		int totalDataCnt = bookService.getBookCnt();
@@ -61,6 +62,9 @@ public class BookController {
 		
 		//페이징 정보 세팅
 		bookVO.setPageInfo();
+		
+		
+		System.out.println(searchBookVO);
 		
 		List<BookVO> bookList = bookService.getBookListForUser(searchBookVO);
 		model.addAttribute("bookList", bookList);
@@ -101,25 +105,25 @@ public class BookController {
 		ImgVO mainImgVO = UploadUtil.uploadFile(mainImg);
 		
 //		서브 이미지 업로드 (뒤)
-		ImgVO subImgVO = UploadUtil.uploadFile(subImg);
+//		ImgVO subImgVO = UploadUtil.uploadFile(subImg);
 	    
 // 		옆 이미지 업로드
-	    ImgVO sideImgVO = UploadUtil.uploadSideImage(sideImg);
+	    ImgVO subImgVO = UploadUtil.uploadFile(sideImg);
 	    
 	    
 //	    등록될 도서코드 조회
 	    String bookCode = bookService.getNextBookCode();
 	    bookVO.setBookCode(bookCode);
 	    
+//	    subImgVO.setIsMainImg("N");
 	    subImgVO.setIsMainImg("N");
-	    sideImgVO.setIsMainImg("C");
 		
 //		------도서 이미지 DB 등록-------
 //		도서 이미지 등록 쿼리 실행 시 모든 빈 값을 채워줄 데이터를 가진 List
 	    List<ImgVO> imgList = new ArrayList<>();
 	    imgList.add(mainImgVO);
 	    imgList.add(subImgVO);
-	    imgList.add(sideImgVO);
+//	    imgList.add(sideImgVO);
 	    
 //		BOOK_CODE 데이터 추가
 		for(ImgVO img : imgList) {
@@ -134,7 +138,7 @@ public class BookController {
 	    bookService.regBook(bookVO);
 		
 		
-	    return "redirect:/book/regBook";
+	    return "redirect:/aBook/regBook";
 		
 	}
 	
@@ -425,8 +429,9 @@ public class BookController {
 	
 
 //	도서 관리) 도서 삭제
-	@GetMapping("/deleteBook")
-	public String deleteBook(String[] bookCodes ,BookVO bookVO) {
+	@ResponseBody
+	@PostMapping("/deleteBookAjax")
+	public String deleteBookAjax(String[] bookCodes ,BookVO bookVO) {
 		
 //		배열을 리스트로
 		List<String> bookCodeList = Arrays.asList(bookCodes);
@@ -460,23 +465,29 @@ public class BookController {
 //	도서 관리) 도서 이미지, 소개 수정
 	@ResponseBody
 	@PostMapping("/updateBookDetailAjax")
-	public boolean updateBookDetailAjax(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg, MultipartFile sideImg) {
+	public boolean updateBookDetailAjax(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg) {
 		List<ImgVO> imgList = new ArrayList<>();
 
 		//--- 파일 첨부 ---//
 //		메인 이미지 업로드 (앞)
-		ImgVO mainImgVO = UploadUtil.uploadFile(mainImg);
-		imgList.add(mainImgVO);
-//		서브 이미지 업로드 (뒤)
-		ImgVO subImgVO = UploadUtil.uploadFile(subImg);
-		subImgVO.setIsMainImg("N");
-		imgList.add(subImgVO);
-// 		옆 이미지 업로드
-		if (sideImg != null) {// (sideImg 있을 경우 삭제)
-			ImgVO sideImgVO = UploadUtil.uploadSideImage(sideImg);
-			sideImgVO.setIsMainImg("C");
-			imgList.add(sideImgVO);
+		if (mainImg != null) {
+			ImgVO mainImgVO = UploadUtil.uploadFile(mainImg);
+			if (mainImgVO != null) {
+				imgList.add(mainImgVO);
+			}
 		}
+		
+//		서브 이미지 업로드 (뒤)
+		  // 서브 이미지 업로드 (뒤)
+	    if (subImg != null) {
+	        ImgVO subImgVO = UploadUtil.uploadFile(subImg);
+	        if(subImgVO != null) {
+	        	subImgVO.setIsMainImg("N");
+	        	imgList.add(subImgVO);
+	        }
+	    }
+	    
+
 	    System.out.println(444444);
 	    
 	    
@@ -486,9 +497,7 @@ public class BookController {
 	    
 //		BOOK_CODE 데이터 추가
 		for(ImgVO img : imgList) {
-			if (img != null) {// (sideImg 있을 경우 삭제)
 				img.setBookCode(bookVO.getBookCode());
-			}
 			
 		}
 	    

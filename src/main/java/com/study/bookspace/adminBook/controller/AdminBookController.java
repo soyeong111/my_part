@@ -51,6 +51,16 @@ public class AdminBookController {
 	}
 
 	
+//	도서 등록 페이지
+	@GetMapping("/regBook")
+	public String regBook(Model model, BookVO bookVO, SubMenuVO subMenuVO) {
+		
+		model.addAttribute("categoryList", bookService.getCateListInUse());
+		
+		return "content/book/book_reg";
+		
+	}
+	
 	
 	
 	
@@ -113,5 +123,19 @@ public class AdminBookController {
 	public void delReserveAjax(ReserveVO reserveVO) {
 		bookService.cancelReserve(reserveVO);
 	}
+	
+
+//	도서 상세 페이지
+	@GetMapping("/bookDetail")
+	public String bookDetail(Model model, String bookCode, SubMenuVO subMenuVO) {
+		 
+//		 도서 상세 정보
+		 model.addAttribute("book", bookService.getBookDetail(bookCode));
+		 
+		return "content/book/book_detail";
+		
+	}
+	
+	
 	
 }
