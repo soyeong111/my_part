@@ -7,14 +7,12 @@
 	<!-- <link rel="stylesheet" href="/css/.css"> -->
 </th:block>
 <th:block layout:fragment="content">
-	<div class="find-id-div w-25 m-auto">
+	<div>
+		<h2 class="member-title">아이디 찾기</h2>
+	</div>
+	<div class="find-id-div w-25 m-auto pt-5">
 		<form id="find-id-form">
 			<input type="hidden" name="value" id="find-id-value-input">
-			<div class="row find-id-title-div mt-5">
-				<div class="col">
-					<h2>아이디 찾기</h2>
-				</div>
-			</div>
 			<div class="row find-id-radio-div mt-5">
 				<div class="col d-flex align-items-center">
 					<input type="radio" name="column" id="find-id-opt-tell" class="form-check-input m-1" value="MEM_TELL" onchange="draw_tell_find_id();" checked>
