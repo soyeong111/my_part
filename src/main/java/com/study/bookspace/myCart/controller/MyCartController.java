@@ -28,7 +28,7 @@ public class MyCartController {
 	//장바구니 생성
 	@ResponseBody
 	@PostMapping("/regCartAjax")
-	public void regCartAjax(GoodsCartVO goodsCartVO, Authentication authentication) {
+	public void regCartAjax(GoodsCartVO goodsCartVO, Authentication authentication, SubMenuVO subMenuVO) {
 		
 		User user = (User)authentication.getPrincipal();
 		goodsCartVO.setMemId(user.getUsername());

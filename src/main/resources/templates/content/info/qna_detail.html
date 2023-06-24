@@ -23,7 +23,7 @@
     [[${qna.qnaTitle}]]
   </div>
   <div class="aTitle2">
-  <span style="margin-left: 30rem;">	작성자 : [[${qna.memId}]]</span>
+  <span style="margin-left: 25rem;">	작성자 : [[${qna.memId}]]</span>
   <span>작성일 : [[${qna.qnaCreateDate}]]</span>
   <span>조회수 : [[${qna.qnaViewCnt}]]</span>
 
@@ -31,9 +31,11 @@
 	
   
   </div>
+	<div style="border-bottom-style:solid; border-bottom-width: 2px; border-bottom-color: gray; margin-bottom: 2rem;">
+		<div id="qnaContent" class="aContent">
+			[[${qna.qnaContent}]]
+		</div>
 	
-	<div id="qnaContent" class="aContent">
-		[[${qna.qnaContent}]]
 	</div>
 	
 		<div  th:if="${#authentication.name == qna.memId}">
@@ -72,7 +74,9 @@
 					
 						<div style="text-align: right;">[[${answer.answerCreateDate}]]</div>
 			<div style="margin-bottom: 10px; resize: none;  border-top: 2px solid gray;">
+			<div style="border-bottom-style:solid; border-bottom-width: 2px; border-bottom-color: gray; margin-bottom: 2rem;">
 						<div id="answerContent" style=" width:80%; margin: auto; height: auto; padding-top: 2rem; padding-bottom: 4rem;">[[${answer.answerContent}]]</div>
+			</div>
 				<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="text-align: right;">
 					<input class="aBtn"  type="button" value="수정"  th:onclick="updateAnswer(this, [[${answer.answerCode}]], [[${answer.qnaCode}]]);"> 
 					<input class="aBtn" type="button" value="삭제" th:onclick="|location.href='@{/info/deleteAnswer(qnaCode=${answer.qnaCode}, answerCode=${answer.answerCode})}'|">
