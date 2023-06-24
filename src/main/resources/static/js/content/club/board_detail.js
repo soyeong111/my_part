@@ -1,10 +1,25 @@
 
-function deleteBoard(boardNum, clubCode, mainMenuCode, subMenuCode){
-	const result = confirm('게시글을 삭제하시겠습니까?');
-	
-	if(result){
-		location.href=`/club/deleteBoard?boardNum=${boardNum}&clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
-	}
+function deleteBoard(boardNum, clubCode, mainMenuCode, subMenuCode) {
+  Swal.fire({
+    title: '게시글 삭제',
+    text: '게시글을 삭제하시겠습니까?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: '삭제',
+    cancelButtonText: '취소'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        '게시글 삭제됨',
+        '게시글이 삭제되었습니다.',
+        'success'
+      ).then(() => {
+        location.href = `/club/deleteBoard?boardNum=${boardNum}&clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+      });
+    }
+  });
 }
 
 function updateReply(selectedTag, replyNum, boardNum, clubCode, mainMenuCode, subMenuCode){
@@ -43,12 +58,27 @@ function updateReply(selectedTag, replyNum, boardNum, clubCode, mainMenuCode, su
 	}
 }
 
-function deleteReply(replyNum, boardNum, mainMenuCode, subMenuCode){
-	const result = confirm('댓글을 삭제하시겠습니까?');
-	
-	if(result){
-		location.href=`/club/deleteReply?replyNum=${replyNum}&boardNum=${boardNum}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
-	}
+function deleteReply(replyNum, boardNum, mainMenuCode, subMenuCode) {
+  Swal.fire({
+    title: '댓글 삭제',
+    text: '댓글을 삭제하시겠습니까?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: '삭제',
+    cancelButtonText: '취소'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire(
+        '댓글 삭제됨',
+        '댓글이 삭제되었습니다.',
+        'success'
+      ).then(() => {
+        location.href = `/club/deleteReply?replyNum=${replyNum}&boardNum=${boardNum}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+      });
+    }
+  });
 }
 
 

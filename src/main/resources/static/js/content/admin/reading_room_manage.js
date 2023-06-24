@@ -6,11 +6,17 @@ function allCheckOut() {
     text: '전부 퇴실시키겠습니까?',
     icon: 'question',
     showCancelButton: true,
-    confirmButtonText: "확인",
-    cancelButtonText: "취소"
+    confirmButtonText: '확인',
+    cancelButtonText: '취소'
   }).then((result) => {
     if (result.isConfirmed) {
-      location.href = `/aLibrary/allCheckOut`;
+      Swal.fire(
+        '전체 퇴실 완료',
+        '전체 퇴실이 완료되었습니다.',
+        'success'
+      ).then(() => {
+        location.href = '/aLibrary/allCheckOut';
+      });
     }
   });
 }
