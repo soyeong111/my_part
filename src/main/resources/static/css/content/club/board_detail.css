@@ -39,9 +39,9 @@ table {
 }
 
 .board-title-div{
-	padding-left: 36rem;
+	padding-left: 5rem;
 	font-weight: bold;
-	font-size: 25px;
+	font-size: 22px;
 	margin-top: 1.2rem;
 	margin-bottom: 1.2rem;
 }
@@ -75,11 +75,11 @@ table {
 }
 
 .update-btn{
-	background-color: white;
+	background-color: none;
 }
 
 .delete-btn{
-	background-color: white;
+	background-color: none;
 	color: #b94e51;
 }
 
@@ -96,3 +96,20 @@ table {
 	height: 2rem;
 	color: white;
 }
+
+.notice-btn{
+	background-color: #b94e51;
+	color: white;
+	border-color: #b94e51;
+	border: none;
+	padding: 3px 5px;
+	font-weight: lighter;
+	margin-right: 0.5rem;
+}
+
+.replyList-div{
+	font-weight: lighter;
+	border-bottom: solid 1px lightgray;
+	 width: 100%;
+}
+

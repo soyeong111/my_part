@@ -338,7 +338,6 @@ public class ClubController {
 	public String boardDetail(Model model, CommunityVO communityVO, CommunityReplyVO communityReplyVO, SubMenuVO subMenuVO) {
 		clubService.updateReadCnt(communityVO.getBoardNum());
 		
-		//model.addAttribute("board", clubService.getBoardDetail(boardNum));
 		model.addAttribute("board", clubService.getBoardDetail(communityVO.getBoardNum()));
 		model.addAttribute("replyList", clubService.getReplyList(communityReplyVO.getBoardNum()));
 		
