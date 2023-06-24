@@ -12,9 +12,8 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="update-form-div">
-		<div class="head-div">
-			게시글 수정
-		</div>
+		<div class="title-div">북클럽</div>
+		<div class="public-title">게시글 수정</div>
 		<div class="body-div">
 			<form th:action="@{/club/updateBoard}" id="updateForm" method="post" enctype="multipart/form-data">
 				<input type="hidden" th:value="${board.boardNum}" name="boardNum">
@@ -47,21 +46,21 @@
 								</td>
 							</tr>
 							<tr>
-								<td>첨부파일</td>
+								<td>내용</td>
 								<td>
-									<input type="file" class="form-control" name="communityImg" id="communityImg"><br>
+									<textarea rows="15" cols="100" class="form-control" id="content-tag" name="boardContent" style="resize: none;">[[${board.boardContent}]]</textarea>
 								</td>
 							</tr>
 							<tr>
-								<td>내용</td>
+								<td>첨부파일</td>
 								<td>
-									<textarea rows="20" cols="100" class="form-control" id="content-tag" name="boardContent">[[${board.boardContent}]]</textarea>
+									<input type="file" class="form-control" name="communityImg" id="communityImg">
 								</td>
 							</tr>
 						</table>
 					</div>
-					<div class="offset-4 col-4">
-						<input type="button" class="btn custom-btn" value="수정" onclick="updateBoard();">
+					<div class="col" style="text-align: right;">
+						<input type="button" class="btn com-btn" value="게시글 수정" onclick="updateBoard();">
 					</div>
 			</form>
 		</div>

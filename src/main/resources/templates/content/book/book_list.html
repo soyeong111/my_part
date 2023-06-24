@@ -40,7 +40,8 @@
 							<img th:src="${'/image/book/' + book.imgList[0].attachedFileName}"
 							style="width: 200px; height: 310px;">
 						</a>
-						<div class="bookList-title">[[${book.bookTitle}]]</div>
+						<div class="bookList-title" style="font-weight: bold; margin-top: 7px; margin-bottom: 10px;">
+						[[${book.bookTitle}]]</div>
 					</div>
 				</div>
 			</th:block>
@@ -51,23 +52,20 @@
 		<div class="pagination">
 			<div class="col"
 				style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-				<th:block th:if="${bookVO.prevPageFlag}">
-					<a
-						th:href="@{/book/bookList(nowPageNum=${bookVO.startPageNum - 1}, 
-						mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">이전</a>
+				<th:block th:if="${searchBookVO.prevPageFlag}">
+					<a th:href="@{/book/bookList(nowPageNum=${searchBookVO.startPageNum - 1}, 
+						mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}"><</a>
 				</th:block>
 				<th:block
-					th:each="pageNum : ${#numbers.sequence(bookVO.startPageNum, bookVO.endPageNum)}">
-					<a
-						th:href="@{/book/bookList(nowPageNum=${pageNum},
+					th:each="pageNum : ${#numbers.sequence(searchBookVO.startPageNum, searchBookVO.endPageNum)}">
+					<a th:classappend="${pageNum == searchBookVO.nowPageNum} ? pagination-select" th:href="@{/book/bookList(nowPageNum=${pageNum},
 					mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
 						<span th:text="${pageNum}"></span>
 					</a>
 				</th:block>
-				<th:block th:if="${bookVO.nextPageFlag}">
-					<a
-						th:href="@{/book/bookList(nowPageNum=${bookVO.endPageNum + 1},
-					mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">다음</a>
+				<th:block th:if="${searchBookVO.nextPageFlag}">
+					<a th:href="@{/book/bookList(nowPageNum=${searchBookVO.endPageNum + 1},
+					mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">></a>
 				</th:block>
 			</div>
 		</div>

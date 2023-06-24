@@ -19,6 +19,8 @@ public class UploadUtil {
 	public static ImgVO uploadFile(MultipartFile img) {
         ImgVO imgVO = new ImgVO();
 
+        System.out.println(img.isEmpty() + "zzzzzzzzzzzzzzzzz");
+        	
         if (!img.isEmpty()) {
             String originFileName = img.getOriginalFilename();
             String uuid = UUID.randomUUID().toString();

@@ -1,37 +1,73 @@
 @charset "UTF-8";
 
 
-.community-head-div{
-	margin-bottom: 4rem; 
-	margin-top: 3rem; 
-	margin-left: 2rem;  
-	font-size: 20px; 
-	font-weight: bold;
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+	margin-bottom: 4rem;
 }
 
-table {
-	margin-top: 2rem;
+hr{
+	width: 71%;
+	margin-left: 4rem;
+	font-weight: bold;
+	border: none; 
+    height: 2px; 
+    background-color: black;
+    margin-top: 2rem;
 }
 
 span{
 	font-weight: bold;
+	margin-right: 2rem;
+}
+
+table {
+	margin-top: 0px;
+	font-weight: bold;
+}
+
+.first-table{
+	border-top: 1px solid lightgray;
+}
+
+.first-table td{
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.board-title-div{
+	padding-left: 36rem;
+	font-weight: bold;
 	font-size: 25px;
+	margin-top: 1.2rem;
+	margin-bottom: 1.2rem;
 }
 
 .detail-body{
-	margin-left: 2rem;  
-	margin-right: 2rem;
-	width: 100%;
+	margin-left: 4rem;  
+	margin-right: 23rem;
 }
 
-.board-body{
-	width: 100%;
-	height: 300px;
-	display: flex;
+.content{
+	margin-top: 1rem;
 }
 
 .board-body {
-    height: 400px;
+   height: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.board-btn-div{
+	text-align: right;
 }
 
 .reply-div{
@@ -47,3 +83,16 @@ span{
 	color: #b94e51;
 }
 
+.btn-div{
+	text-align: right;
+}
+
+.com-btn{
+	margin-top: 1rem;
+	border: none;
+	background-color: #6c96d8;
+	border-radius: 3%; 
+	width: 6rem;
+	height: 2rem;
+	color: white;
+}

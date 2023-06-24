@@ -28,66 +28,68 @@
 			</div>
 		</th:block>
 		<th:block th:if="${#lists.size(myClubDetail) != 0}">
-		    <div class="mainHead">나의 북클럽</div>
-		    <table class="table text-center">
-		        <thead style="background-color: #BAD0E8;">
-		            <tr>
-		                <td>No</td>
-		                <td>클럽명</td>
-		                <td>가입날짜</td>
-		                <td>이동/탈퇴</td>
-		            </tr>
-		        </thead>
-		        <tbody>
-		            <th:block th:if="${hasApprovedClubs}">
-		                <th:block th:each="club, state : ${myClubDetail}">
-		                    <tr th:if="${club.clubMemStatus == 2}">
-		                    	<td>[[${state.count}]]</td>
-		                        <td>[[${club.bookClubVO.clubName}]]</td>
-		                        <td>[[${club.clubRegDate}]]</td>
-		                        <td>
-                                <input type="button" class="btn custom-btn" value="이동" th:onclick="|location.href='@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">
-                                <input type="button" class="btn custom-btn-del" th:attr="disabled=${club.memId == #authentication.name}" value="탈퇴" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]]);">
-                            </td>
-		                    </tr>
-		                </th:block>
-		            </th:block>
-		            <tr th:unless="${hasApprovedClubs}">
-		                <td colspan="4">가입 승인된 클럽이 없습니다.</td>
-		            </tr>
-		        </tbody>
-		    </table>
-		    <div class="mainHead">북클럽 신청</div>
-		    <table class="table text-center">
-		        <thead style="background-color: #BAD0E8;">
-		            <tr>
-		                <td>No</td>
-		                <td>클럽명</td>
-		                <td>상태</td>
-		                <td>취소</td>
-		            </tr>
-		        </thead>
-		        <tbody>
-		        	<th:block th:if="${hasApproveWaitClubs}">
-		            <th:block th:each="club, state : ${myClubDetail}">
-		                <tr th:if="${club.clubMemStatus == 1}">
-		                	<td>[[${state.count}]]</td>
-		                    <td>[[${club.bookClubVO.clubName}]]</td>
-		                    <td>
-							    <span th:if="${club.clubMemStatus == 1}">승인대기</span>
-							    <span th:if="${club.clubMemStatus == 3}">거절</span>
-							</td>
-		                    <td>
-		                        <input type="button" class="btn custom-btn-del" value="취소" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]]);">
-		                    </td>
-		                </tr>
-		            </th:block>
-		            </th:block>
-		            <tr th:unless="${hasApproveWaitClubs}">
-		                <td colspan="4">신청한 클럽이 없습니다.</td>
-		            </tr>
-		        </tbody>
-		    </table>
+			    <div class="mainHead">나의 북클럽</div>
+			    <table class="table text-center">
+			        <thead style="background-color: #BAD0E8;">
+			            <tr>
+			                <td>No</td>
+			                <td>클럽명</td>
+			                <td>가입날짜</td>
+			                <td>이동/탈퇴</td>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <th:block th:if="${hasApprovedClubs}">
+			                <th:block th:each="club, state : ${myClubDetail}">
+			                    <tr th:if="${club.clubMemStatus == 2}">
+			                    	<td style="padding-top:0.9rem;">[[${state.count}]]</td>
+			                        <td style="padding-top:0.9rem;">[[${club.bookClubVO.clubName}]]</td>
+			                        <td style="padding-top:0.9rem;">[[${club.clubRegDate}]]</td>
+			                        <td>
+	                                <input type="button" class="btn custom-btn" value="이동" th:onclick="|location.href='@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">
+	                                <input type="button" class="btn custom-btn-del" th:attr="disabled=${club.memId == #authentication.name}" value="탈퇴" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]]);">
+	                            </td>
+			                    </tr>
+			                </th:block>
+			            </th:block>
+			            <tr th:unless="${hasApprovedClubs}">
+			                <td colspan="4">가입 승인된 클럽이 없습니다.</td>
+			            </tr>
+			        </tbody>
+			    </table>
+		    <div class="first-div">
+			    <div class="mainHead">북클럽 신청</div>
+			    <table class="table text-center">
+			        <thead style="background-color: #BAD0E8;">
+			            <tr>
+			                <td>No</td>
+			                <td>클럽명</td>
+			                <td>상태</td>
+			                <td>취소</td>
+			            </tr>
+			        </thead>
+			        <tbody>
+			        	<th:block th:if="${hasApproveWaitClubs}">
+			            <th:block th:each="club, state : ${myClubDetail}">
+			                <tr th:if="${club.clubMemStatus == 1}">
+			                	<td style="padding-top:0.9rem;">[[${state.count}]]</td>
+			                    <td style="padding-top:0.9rem;">[[${club.bookClubVO.clubName}]]</td>
+			                    <td style="padding-top:0.9rem;">
+								    <span th:if="${club.clubMemStatus == 1}">승인대기</span>
+								    <span th:if="${club.clubMemStatus == 3}">거절</span>
+								</td>
+			                    <td>
+			                        <input type="button" class="btn custom-btn-del" value="취소" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]]);">
+			                    </td>
+			                </tr>
+			            </th:block>
+			            </th:block>
+			            <tr th:unless="${hasApproveWaitClubs}">
+			                <td colspan="4">신청한 클럽이 없습니다.</td>
+			            </tr>
+			        </tbody>
+			    </table>
+		    </div>
 		</th:block>
 	</div>
 </th:block>

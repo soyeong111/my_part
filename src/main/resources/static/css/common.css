@@ -121,8 +121,8 @@ h1 {
 }
 
 .pagination-select {
-	background-color: #ccc;
-	color: #fff;
+	background-color: #ccc !important;
+	color: #fff !important;
 }
 
 .mainHead{

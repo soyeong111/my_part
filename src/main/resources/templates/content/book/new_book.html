@@ -23,9 +23,10 @@
         <div class="bookList" style="text-align: center;">
         <a th:href="@{/book/bookDetail(bookCode=${book.bookCode}, 
         mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-          <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width: 200px; height: 310px;">
-          </a>
-            <div class="bookList-title">
+         <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}"
+							style="width: 200px; height: 310px;">
+						</a>
+						<div class="bookList-title" style="font-weight: bold; margin-top: 7px; margin-bottom: 10px;">
               [[${book.bookTitle}]]
             </div>
         </div>

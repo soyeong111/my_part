@@ -124,12 +124,13 @@ public class ClubController {
 		//클럽 상세 조회
 		BookClubVO bookClubVO = clubService.getClubDetail(clubCode);
 		model.addAttribute("club", bookClubVO);
-		model.addAttribute("thisBook", clubService.getThisBookDetail(bookClubVO.getThisBookCode()));
+		if(bookClubVO.getThisBookCode() != null) {
+			model.addAttribute("thisBook", clubService.getThisBookDetail(bookClubVO.getThisBookCode()));
+		}
 		//클럽 활동 중인 회원수
 		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		//클럽 멤버 리스트 조회
 		model.addAttribute("memList", clubService.getMemListByClub(clubCode));
-		
 		//이번달
 		model.addAttribute("thisMonth", DateUtil.getMonth());
 		//독서 랭킹

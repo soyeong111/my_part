@@ -312,6 +312,7 @@
 		WHERE BOARD_WRITER = MEM_ID
 		AND CLUB_CODE = #{clubCode}
 		AND CLUB_NOTICE = 'Y'
+		ORDER BY REG_DATE DESC
 	</select>
 	
 	
@@ -576,7 +577,8 @@
 	</select>
 	
 	<select id="getThisBookDetail" resultMap="bookMapper.book">
-		SELECT BOOK_TITLE
+		SELECT BOOK.BOOK_CODE
+			, BOOK_TITLE
 		    , BOOK_AUTHOR
 		    , ATTACHED_FILE_NAME
 		FROM BOOK, BOOK_IMAGE IMG
