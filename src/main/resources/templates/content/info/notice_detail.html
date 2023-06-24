@@ -21,9 +21,11 @@
   <span style="margin-left: 37rem;">	작성자 : [[${noticeVO.memId}]]</span>
   <span>작성일 :  [[${noticeVO.noticeCreateDate}]]</span>
   </div>
+	<div style="border-bottom-style:solid; border-bottom-width: 2px; border-bottom-color: gray;">
+		<div id="noticeContent" class="aContent">
+				[[${noticeVO.noticeContent}]]
+		</div>
 	
-	<div id="noticeContent" class="aContent">
-			[[${noticeVO.noticeContent}]]
 	</div>
 	
 		<div  th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style=" text-align: center; margin-top: 3rem;">
