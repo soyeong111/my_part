@@ -56,6 +56,7 @@ public class ClubController {
 		
 		model.addAttribute("clubList", clubService.getClubList());
 		model.addAttribute("noticeList", answerService.noticeForPublic(noticeVO));
+		model.addAttribute("bookList", bookService.getNewBookList());
 		
 		return "content/club/main_test";
 	}
