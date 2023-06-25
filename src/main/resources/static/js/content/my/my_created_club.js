@@ -5,8 +5,6 @@ function acceptMember(acceptCode, clubCode) {
     title: '승인하시겠습니까?',
     icon: 'question',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: '확인',
     cancelButtonText: '취소'
   }).then((result) => {
@@ -22,8 +20,7 @@ function acceptMember(acceptCode, clubCode) {
           Swal.fire({
             title: '승인이 완료되었습니다.',
             icon: 'success',
-            showConfirmButton: true,
-            confirmButtonText: '확인',
+            showConfirmButton: false,
             timer: 1500
           }).then(() => {
             location.href = `/mClub/myCreatedClub?clubCode=${clubCode}`;

@@ -178,7 +178,7 @@ function joinClubAjax(clubCode) {
     data: { clubCode: clubCode },
     success: function (result) {
       Swal.fire({
-        text: '신청이 완료되었습니다.클럽장의 승인을 기다려주세요.',
+        html: '신청이 완료되었습니다.<br/>클럽장의 승인을 기다려주세요.',
         icon: 'success',
       });
     },
