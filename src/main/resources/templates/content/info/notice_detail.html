@@ -29,8 +29,8 @@
 	</div>
 	
 		<div  th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style=" text-align: center; margin-top: 3rem;">
-				<input type="button" class="aBtn" value="수정" th:onclick="updateNotice(this, [[${noticeVO.noticeNo}]]);">
-				<input type="button" class="aBtn" value="삭제" th:onclick="|location.href='@{/info/deleteNotice(noticeNo=${noticeVO.noticeNo})}'|">
+				<input type="button" class="btn custom-btn" value="수정" th:onclick="updateNotice(this, [[${noticeVO.noticeNo}]]);">
+				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="|location.href='@{/info/deleteNotice(noticeNo=${noticeVO.noticeNo})}'|">
 		</div>
 
 	
