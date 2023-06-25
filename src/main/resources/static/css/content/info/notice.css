@@ -1,5 +1,38 @@
 @charset "UTF-8";
 
+
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+	margin-bottom: 4rem;
+}
+
+
+.body-div{
+	margin-top: 2rem;
+	margin-left: 4rem;
+	margin-right: 19rem;
+}
+
+.message-is-invalid {
+   font-size: 0.7rem;
+   color: red;
+   margin-top: 2px;
+}
+
+.reg-form-div{
+	margin-bottom: 4rem; 
+	margin-top: 3rem; 
+	font-size: 20px; 
+	font-weight: bold;
+}
+
+.form-label{
+	font-weight: bold;
+}
+
 .noticeHead{
 	margin-top: 4rem; 
 	margin-left: 4rem; 
