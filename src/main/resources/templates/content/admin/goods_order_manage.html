@@ -11,6 +11,12 @@
 
 <th:block layout:fragment="content">
  		<div class="member-title">배송 관리</div>
+ 		<div>
+ 			  <form action="/sendMessage" method="post">
+        <input type="text" name="message" placeholder="Enter a message">
+        <input type="submit" value="Send">
+    </form>
+ 		</div>
  			<div class="row">
  				<div class="col">
  					<table class="table orderT" style="margin-top: 8rem;">

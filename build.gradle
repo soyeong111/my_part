@@ -19,6 +19,17 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.projectreactor:reactor-core:3.4.11'
+    //implementation 'com.linecorp.bot:line-bot-model:2.10.0'
+    // 롬복(Lombok) 종속성
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    
+    // Spring Framework 종속성
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.2'
+    implementation 'com.linecorp.bot:line-bot-api-client:2.1.0'
+	implementation 'com.linecorp.bot:line-bot-api-client:5.0.0'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	
 	implementation group: 'org.apache.httpcomponents.core5', name: 'httpcore5', version: '5.2.1'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'

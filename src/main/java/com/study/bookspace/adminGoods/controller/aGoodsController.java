@@ -169,7 +169,7 @@ public class aGoodsController {
 	
 	
 	//배송 정보 관리 
-	@GetMapping("/buyManage")
+	@RequestMapping("/buyManage")
 	public String goodsOrderManage( Model model, SubMenuVO subMenuVO) {
 		model.addAttribute("orderList", orderService.selectOrder());
 		
