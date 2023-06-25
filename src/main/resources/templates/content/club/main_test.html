@@ -6,47 +6,24 @@
 <script src='/js/content/admin/main.min.js'></script>
 <script>
 
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-    	googleCalendarApiKey : "AIzaSyAWw1w8auy0TJQOTl-YHfi8R9CFnL9WegA",
-        eventSources :[ 
-            {
-                googleCalendarId : '69d9f3562fdd3d1d5f6df7da5a903719b34dad458924f4d15dac7b5792319b01@group.calendar.google.com'
-                , color: '#4e68b9'   // an option!
-                , textColor: 'white' // an option!
-            } 
-        ],
-     	});
-    	
-      
-
-    calendar.render();
-  });
+ 
 
 </script>
 <style>
 
-  body {
-    margin: 40px 10px;
-    padding: 0;
-    font-size: 14px;
-  }
-
-  #calendar {
-    max-width: 1100px;
-    margin: 0 auto;
-    background-color: #e2ebfe;
-  }
 
 </style>
 </head>
 <body>
-	<div class="row">
-		<div class="col-4"></div>
-		<div class="col-4"></div>
-		<div class="col-4" id='calendar' style="width:500px;"></div>
-	</div>
+	<button class="button" type="button">현재 날씨는?</button>
+    <dl>
+      <dt>기온</dt>
+      <dd class="temperature"></dd>
+      <dt>위치</dt>
+      <dd class="place"></dd>
+      <dt>설명</dt>
+      <dd class="description"></dd>
+    </dl>
+    <script src="weather.js"></script>
 </body>
 </html>
