@@ -1,4 +1,12 @@
 
+init();
+
+function init() {
+	
+}
+
+// 차트 그리기
+
 // 사진 플러스 눌렀을 때
 function add_icon_click() {
 	document.querySelector('#mem-img-input').click();
@@ -56,4 +64,9 @@ function del_icon_click(memImgUrl) {
 			}
 		});
 	}
+}
+
+// 차트 연도 셀렉트 바꿨을 때
+function year_change(year_select, main_meunu_code, sub_menu_code) {
+	location.href = `/mMember/myProfile?mainMenuCode=${main_meunu_code}&subMenuCode=${sub_menu_code}&nowYear=${year_select.value}`;
 }
