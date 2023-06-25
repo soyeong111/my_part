@@ -1,6 +1,5 @@
 function regBook() {
 	
-	alert(111);
   // 입력값 가져오기
   const bookTitle = document.querySelector("#bookTitle");
   bookTitle.value = bookTitle.value.trim();
@@ -29,7 +28,7 @@ function regBook() {
   // 입력값 유효성 검사
   if (bookTitle.value === "") {
     // 제목이 비어있는 경우
-     Swal.fire("도서명은 필수 입력입니다.");
+     Swal.fire("도서명은 필수입니다.");
     return;
   }
 
@@ -41,7 +40,7 @@ function regBook() {
 
   if (bookPublisher.value === "") {
     // 출판사가 비어있는 경우
-     Swal.fire("출판사는 필수입력입니다.");
+     Swal.fire("출판사는 필수입니다.");
     return;
   }
 
@@ -55,7 +54,7 @@ function regBook() {
   if (mainImgFile) {
     var mainImgFileType = mainImgFile.type;
     if (mainImgFileType !== "image/jpeg") {
-      Swal.fire("앞 이미지는 JPG 형식만 가능합니다.");
+      Swal.fire("이미지는 JPG 형식만 가능합니다.");
       return false;
     }
   }
@@ -63,7 +62,7 @@ function regBook() {
   if (subImgFile) {
     var subImgFileType = subImgFile.type;
     if (subImgFileType !== "image/jpeg") {
-      Swal.fire("뒤 이미지는 JPG 형식만 가능합니다.");
+      Swal.fire("이미지는 JPG 형식만 가능합니다.");
       return false;
     }
   }
@@ -71,7 +70,7 @@ function regBook() {
   
   if (bookIntro.value === "") {
     // 도서 소개가 비어있는 경우
-    Swal.fire("도서 소개는 필수 입력값입니다.");
+    Swal.fire("도서 소개는 필수입니다.");
     return;
   }
 

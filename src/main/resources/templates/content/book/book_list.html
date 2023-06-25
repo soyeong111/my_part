@@ -11,6 +11,8 @@
 	<div class="search">
 		<form th:action="@{/book/bookList}" method="post"
 			th:object="${searchBookVO}">
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+         <input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 			<div class="row p-5">
 				<div class="col-2">
 					<select class="form-select" th:field="*{searchOption}">

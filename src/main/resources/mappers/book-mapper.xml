@@ -316,7 +316,12 @@
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
-	
+	<!-- 예약수 -->
+	<select id="getReserveCnt">
+		SELECT RESERVE_CNT
+		FROM BOOK
+		WHERE BOOK_CODE = #{bookCode}
+	</select>
 	
 
 	<!-- 도서 대여 개수 -->
@@ -667,6 +672,7 @@
 		SELECT B.BOOK_TITLE
 			, RE.RESERVE_DATE
 			, RE.RESERVE_DUEDATE
+			, RE.BOOK_ALRAM_DATE
 			, RE.MEM_ID
 			, RE.RESERVE_CODE
 			, B.BOOK_CODE
@@ -750,7 +756,20 @@
 	    WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
-		
+	
+	<!-- 예약 시작일 업데이트 -->
+	<update id="updateBookAlramDate">
+	    UPDATE BOOK_RESERVE
+	    SET BOOK_ALRAM_DATE = SYSDATE
+	    WHERE BOOK_CODE = #{bookCode}
+	</update>
+	
+		<!-- 예약 마감일 업데이트 -->
+	<update id="updateReserveDueDate">
+	    UPDATE BOOK_RESERVE
+	    SET RESERVE_DUEDATE = SYSDATE + 3
+	    WHERE BOOK_CODE = #{bookCode}
+	</update>
 		
 		<!-- 연장 버튼 클릭 후, 바뀐  기한 -->
 	<select id="getReturnDuedate" resultType="String">

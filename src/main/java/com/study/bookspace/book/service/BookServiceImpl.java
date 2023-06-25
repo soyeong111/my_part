@@ -80,6 +80,8 @@ public class BookServiceImpl implements BookService {
 		sqlSession.update("bookMapper.returnBook", borrowVO);
 		sqlSession.update("bookMapper.updateReturnCnt", borrowVO);
 		sqlSession.update("bookMapper.borrowStatus", borrowVO);
+		sqlSession.update("bookMapper.updateBookAlramDate", borrowVO);
+		sqlSession.update("bookMapper.updateReserveDueDate", borrowVO);
 		return sqlSession.selectOne("bookMapper.alramId", borrowVO);
 	}
 
