@@ -111,32 +111,7 @@ function bookSeleted(book_img, book_title, book_author, book_code) {
 	   }
 	});
 	//ajax end
-	
-	// 로컬 스토리지에 책 정보 저장
-	//localStorage.setItem('book_img', book_img);
-	//localStorage.setItem('book_title', book_title);
-	//localStorage.setItem('book_author', book_author);
-	
-	
 }
-
-// 페이지 로드 시 저장된 책 정보 확인
-/* window.addEventListener('DOMContentLoaded', function() {
-	// 저장된 책 정보 가져오기
-	const storedBookImg = localStorage.getItem('book_img');
-	const storedBookTitle = localStorage.getItem('book_title');
-	const storedBookAuthor = localStorage.getItem('book_author');
-
-	// 책 정보가 있을 경우 업데이트
-	if (storedBookImg && storedBookTitle && storedBookAuthor) {
-		document.querySelector('#book-img img').src = "/image/book/" + storedBookImg;
-		document.querySelector('#book-title').textContent = storedBookTitle;
-		document.querySelector('#book-author').textContent = storedBookAuthor;
-	}
-}); */
-
-
-
 
 //클럽 가입 신청 버튼 클릭 시
 function joinClub(memId, clubCode) {
@@ -203,7 +178,7 @@ function joinClubAjax(clubCode) {
     data: { clubCode: clubCode },
     success: function (result) {
       Swal.fire({
-        text: '가입 신청이 완료되었습니다.\n클럽장의 승인을 기다려주세요.',
+        text: '신청이 완료되었습니다.클럽장의 승인을 기다려주세요.',
         icon: 'success',
       });
     },
@@ -303,25 +278,24 @@ function getWeather(){
 				else if (data['description'] === 'Rainy') {
 					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
 				}
+				else if (data['description'] === 'Partly cloudy') {
+					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
+				}
+				else if (data['description'] === 'Clear') {
+					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
+				}
+				else if (data['description'] === 'Snowy') {
+					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
+				}
+				else if (data['description'] === 'Windy') {
+					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
+				}
+				else if (data['description'] === 'Foggy') {
+					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
+				}
 			});
 		}
 }
-
-
-
-function searchForm(){
-	
-}
-
-
-
-
-
-
-
-
-
-
 
 
 

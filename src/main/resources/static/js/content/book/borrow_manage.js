@@ -5,7 +5,7 @@ function init() {
 }
 
 //연체 버튼 클릭 시 실행
-function overDue(memId, bookCode) {
+function overDue(memId, borrowCode) {
 	Swal.fire({
 		title: '연체상태로 바꾸시겠습니까?',
 		icon: 'question',
@@ -19,7 +19,7 @@ function overDue(memId, bookCode) {
 				type: 'post',
 				async: true,
 				contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-				data: { 'memId': memId, 'bookCode': bookCode },
+				data: { 'memId': memId, 'borrowCode': borrowCode },
 				success: function(result) {
 					Swal.fire('연체상태로 변경되었습니다.', '', 'success')
 						.then(() => {

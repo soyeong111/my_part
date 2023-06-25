@@ -65,7 +65,7 @@
 						<col width="20%;">
 						<col width="20%">
 						<col width="20%">
-						<col width="10%">
+						<col width="11%">
 					</colgroup>
 					<thead class="table-head"
 						style="background-color: #BAD0E8; font-weight: bold;">
@@ -104,11 +104,15 @@
 							<td>[[${borrow.borrowDate}]]</td>
 							<td>[[${borrow.returnDueDate}]]</td>
 							<td>[[${borrow.returnDate}]]</td>
-							<td><input th:if="${borrow.overDue == 'N'}" type="button"
+							<td>
+							
+							<span th:if="${borrow.returnDate != NULL AND borrow.overDue == 'N'}"> 반납 </span>
+							<span th:if="${borrow.overDue == 'Y'}" style="color: #B94E51;"> 연체 </span>
+							<input th:if="${borrow.returnDate == NULL and borrow.overDue == 'N'}" type="button"
 								class="btn custom-btn-del"
 								th:id="'overDueBtn-' + ${borrow.borrowCode}" value="연체"
-								th:onclick="overDue([[${borrow.memId}]], [[${borrow.bookCode}]]);">
-								<span th:if="${borrow.overDue == 'Y'}">연체</span></td>
+								th:onclick="overDue([[${borrow.memId}]], [[${borrow.borrowCode}]]);">
+								</td>
 						</tr>
 					</tbody>
 				</table>

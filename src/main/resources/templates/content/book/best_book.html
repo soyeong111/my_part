@@ -25,8 +25,8 @@
         mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
             <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" style="width: 200px; height: 310px;">
           </a>
-            <span th:text="|${iterStat.count}위 | " style="font-weight: bold;"></span><br>
           <div class="bookList-title" style="margin-bottom: 10px;">
+            <span th:text="|${iterStat.count}위 | " style="font-weight: bold;"></span><br>
             [[${book.bookTitle}]]
           </div>
         </div>

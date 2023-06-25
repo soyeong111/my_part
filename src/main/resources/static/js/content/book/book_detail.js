@@ -58,63 +58,7 @@ function borrow(memId, bookCode) {
 	borrowAjax(memId, bookCode);
 }
 
-/*
-// 중복 대여 여부
-function checkBorrow(memId, bookCode, callback) {
-  $.ajax({
-    url: '/book/borrowAjax',
-    type: 'post',
-    data: { 'memId': memId, 'bookCode': bookCode },
-    success: function(response) {
-      if (response == 1) {
-        Swal.fire({
-          title: "대여 불가",
-          text: "이미 대여한 책입니다.",
-          icon: "error" //"info,success,warning,error" 중 택1
-        });
-      } else {
-        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
-      }
-    },
-    error: function() {
-      Swal.fire({
-        title: "에러",
-        text: "대여 가능 여부를 확인하는데 실패했습니다.",
-        icon: "error"
-      });
-    }
-  });
-}
 
-
-// 초과 대여 여부
-function checkBorrowLimit(memId, bookCode, callback) {
-  $.ajax({
-    url: '/book/borrowAjax',
-    type: 'post',
-    data: { 'memId': memId, 'bookCode': bookCode },
-    success: function(response) {
-      if (response == 4) {
-        Swal.fire({
-          title: "대여 불가",
-          text: "대여 가능한 권수(4권)을 초과하였습니다.",
-          icon: "error" //"info,success,warning,error" 중 택1
-        });
-      } else {
-        callback(); // 대여 가능 여부 확인 완료 후 콜백 실행
-      }
-    },
-    error: function() {
-      Swal.fire({
-        title: "에러",
-        text: "대여 가능 여부를 확인하는데 실패했습니다.",
-        icon: "error"
-      });
-    }
-  });
-}
-
-*/
 
 // 도서 대여
 function borrowAjax(memId, bookCode) {
@@ -139,7 +83,7 @@ function borrowAjax(memId, bookCode) {
 					icon: "success"
 				}).then(function(result) {
 					if (result.isConfirmed) {
-					location.href = `/book/bookDetail?bookCode=${bookCode}`;
+					location.href = `/book/bookDetail?bookCode=${bookCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 					}
 				});
 			}
@@ -236,7 +180,7 @@ function checkBorrow(memId, bookCode) {
 			else if (result == 2) {
 				Swal.fire({
 					title: "예약 불가",
-					text: "예약 가능한 권수를 초과하였습니다.",
+					text: "예약 가능한 권수(2권)를 초과하였습니다.",
 					icon: "error"
 				});
 			}

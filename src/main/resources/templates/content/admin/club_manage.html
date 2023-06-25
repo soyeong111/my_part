@@ -26,7 +26,7 @@
 					<tbody>
 						<tr th:each="club, state : ${clubList}">
 							<td style="padding-top:1rem;">[[${state.count}]]</td>
-							<td>
+							<td style="text-align: left; padding-left: 3rem;">
 								<img width="40px;" th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}">
 							[[${club.clubName}]]</td>
 							<td style="padding-top:1rem;">[[${club.clubMemCnt}]]</td>

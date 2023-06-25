@@ -27,6 +27,7 @@
         <col width="">
         <col width="">
         <col width="">
+        <col width="">
       </colgroup>
       <thead class="table-head" style="background-color: #BAD0E8;">
         <tr>
@@ -38,21 +39,30 @@
           <td>취소</td>
         </tr>
       </thead>
-      <tbody>	
-      
+      <tbody>
         <tr th:each="reserve, state : ${myReserveList}">
           <td th:text="${#lists.size(myReserveList) - state.index}"></td>
-          <td><a href="javascript:void(0);">[[${reserve.bookTitle}]]</a></td>
+          <td><a th:href="@{/book/bookDetail(bookCode=${reserve.bookCode}, 
+        mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
+          [[${reserve.bookTitle}]]</a></td>
           <td>[[${reserve.reserveDate}]]</td>
           <td class="dueDate">[[${reserve.reserveDueDate}]]</td>
-          <td> 
+          
+           <td> 
+          	<span th:if="${reserve.bookAlramDate != NULL}">
+          		 <input type="button" class="btn custom-btn"  
+			  		th:id="'brBtn-' + ${reserve.reserveCode}" value="가능">
+          	</span>
 		       <input type="button" class="btn custom-btn-del"  
-			  th:id="'exBtn-' + ${reserve.reserveCode}" value="대여불가"></td>
-          <td> 
+			  th:id="'exBtn-' + ${reserve.reserveCode}" value="불가"
+			  th:if="${reserve.bookAlramDate == NULL}"></td>
+          <td>
 		       <input type="button" class="btn custom-btn-del"  
 			  th:id="'cancelBtn-' + ${reserve.reserveCode}" value="취소"
-			  th:onclick="cancelReserve(this,[[${#authentication.name}]], [[${reserve.bookCode}]]);"></td>
-     
+			  th:onclick="cancelReserve(this,[[${#authentication.name}]], [[${reserve.bookCode}]]);">
+
+          </td>    
+          
         </tr>
         </tbody>
     </table>

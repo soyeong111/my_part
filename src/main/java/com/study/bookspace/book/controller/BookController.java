@@ -209,8 +209,11 @@ public class BookController {
 	//		현재 보유 개수 (예약한 사람이 대여할 수 있는 개수)
 				int nowStockCnt = bookService.getNowStockCnt(borrowVO.getBookCode());
 				System.out.println(nowStockCnt);
-				if (nowStockCnt < 1) {
-					return 300;
+				if (nowStockCnt == 0) {
+				    if (ableBookCnt == 0) {
+				        return 300;
+				    }
+				    return 100;
 				}
 				
 				
@@ -299,7 +302,7 @@ public class BookController {
 	}
 	
 	
-// 	내 정보)) 도서 예약 관리
+// 	내 정보)) 도서 예약 내역
 	@GetMapping("/myReserve")
 	public String reservewManage(Model model, SubMenuVO subMenuVO, HttpSession session, ReserveVO reserveVO) {
 		
@@ -309,7 +312,6 @@ public class BookController {
 	    
 	    model.addAttribute("myReserveList", bookService.myReserve(reserveVO));
 
-	    
 		return "content/my/my_reserve";
 	}
 	
