@@ -1,5 +1,8 @@
 package com.study.bookspace.myMember.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -64,6 +67,11 @@ public class MyMemberServiceImpl implements MyMemberService {
 	@Override
 	public int withdrawal(String memId) {
 		return sqlSession.update("memberMapper.withdrawal", memId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMyBorrowCntListForChart(String nowYear) {
+		return sqlSession.selectList("memberMapper.getMyBorrowCntListForChart", nowYear);
 	}
 	
 }
