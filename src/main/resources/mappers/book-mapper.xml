@@ -627,7 +627,8 @@
 			FROM BOOK_BORROW BR, BOOK B, MEMBER M
 			WHERE BR.BOOK_CODE = B.BOOK_CODE
 			AND BR.MEM_ID = M.MEM_ID
-			AND BORROW_DATE &gt;= ADD_MONTHS(SYSDATE,-3) 
+			AND BORROW_DATE &gt;= ADD_MONTHS(SYSDATE,-3)
+			ORDER BY BR.BORROW_DATE DESC
 	</select>
 	
 	<!-- 도서관리) 예약 관리 -->
@@ -792,7 +793,7 @@
 		UPDATE BOOK_BORROW
 		SET OVERDUE = 'Y'
 		WHERE MEM_ID = #{memId}
-		AND BOOK_CODE = #{bookCode}
+		AND BORROW_CODE = #{borrowCode}
 	</update>
 	
 	<!-- 연체버튼 클릭 시, 회원 연체수-->
