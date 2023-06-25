@@ -19,6 +19,7 @@
 		<result column="BORROW_RESTRICT_DUEDATE"	property="borrowRestrictDuedate"/>
 		<result column="MEM_LOGIN_DATE"				property="memLoginDate"/>
 		<result column="MEM_IMG_URL"				property="memImgUrl"/>
+		<result column="OVERDUE_CNT"				property="overdueCnt"/>
 	</resultMap>
 
 	<!-- 아이디 중복 체크 -->
@@ -153,10 +154,19 @@
 	<select id="getMyProfile" resultMap="member">
 		SELECT MEM_ID
 			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_TELL
 			, MEM_IMG_URL
-			, OVERDUE_CNT
+			, TO_CHAR(MEM_JOIN_DATE, 'YYYY-MM-DD') MEM_JOIN_DATE
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
 	</select>
+	
+	<!-- 내 프로필 사진 등록, 삭제 -->
+	<update id="updateMemImg">
+		UPDATE MEMBER
+		SET MEM_IMG_URL = #{memImgUrl}
+		WHERE MEM_ID = #{memId}
+	</update>
 
 </mapper>

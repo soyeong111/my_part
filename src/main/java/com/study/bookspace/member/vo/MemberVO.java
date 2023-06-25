@@ -24,6 +24,7 @@ public class MemberVO {
 	private String borrowRestrictDuedate; // 대여 제한 마지막 날짜
 	private String memLoginDate; // 마지막 로그인 날짜
 	private String memImgUrl;
+	private int overdueCnt;
 	
 	private String[] memEmailArr;
 	private String[] memTellArr;

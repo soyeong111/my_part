@@ -23,6 +23,9 @@ public class ConstVariable {
     
     // 커뮤니티 게시글 이미지 첨부 파일 경로(집)
     public static final String HCOMMUNITY_UPLOAD_PATH = PathVariable.LOCAL_PATH + "\\BookSpace\\src\\main\\resources\\static\\image\\community\\";
+    
+    // 회원 사진 경로
+    public static final String MEMBER_UPLOAD_PATH = PathVariable.LOCAL_PATH + "\\BookSpace\\src\\main\\resources\\static\\image\\member\\";
 
 	// ASCII 범위 – 영숫자(0-9, a-z, A-Z)
 	public static final String CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
