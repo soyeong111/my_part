@@ -1,193 +1,52 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="~{fragment/public_layout}">
+<html>
+<head>
+<meta charset='utf-8' />
+<link href='/css/content/admin/main.min.css' rel='stylesheet' />
+<script src='/js/content/admin/main.min.js'></script>
+<script>
 
-<!-- 연결해야 할 외부 css파일 -->
-<th:block layout:fragment="content_css">
- 	<link rel="stylesheet" href="/css/content/club/main_test.css">
-</th:block>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
 
-<!-- 본문 내용 -->
-<th:block layout:fragment="content">
-	<div class="row first-row" style="margin-top: 15rem;">
-		<div class="col-4">
-			<div class="card">
-				<div class="weather">
-					<div class="weather-img"></div>
-					<img alt="" src="" class="weather-icon">
-					<h1 id="temperature"></h1>
-					<h5>책 읽기 좋은 날씨에요.</h5>
-					<span id="description"></span>
-				</div>
-			</div>		
-		</div>
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+    	googleCalendarApiKey : "AIzaSyAWw1w8auy0TJQOTl-YHfi8R9CFnL9WegA",
+        eventSources :[ 
+            {
+                googleCalendarId : '69d9f3562fdd3d1d5f6df7da5a903719b34dad458924f4d15dac7b5792319b01@group.calendar.google.com'
+                , color: '#4e68b9'   // an option!
+                , textColor: 'white' // an option!
+            } 
+        ],
+     	});
+    	
+      
+
+    calendar.render();
+  });
+
+</script>
+<style>
+
+  body {
+    margin: 40px 10px;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  #calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: #e2ebfe;
+  }
+
+</style>
+</head>
+<body>
+	<div class="row">
 		<div class="col-4"></div>
-		<div class="col-4">
-			<div id="carouselExampleAutoplaying" class="carousel slide"
-				data-bs-ride="carousel">
-				<div class="carousel-inner">
-				<div style="font-weight: bold; font-size: 25px;">북클럽에 가입해보세요!</div>
-					<div th:each="club, iterStat : ${clubList}" class="carousel-item"
-						data-bs-interval="5000"
-						th:classappend="${iterStat.index == 0} ? 'active'">
-						<div class="in-list text-center">
-						<a href="/club/club">
-							<img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" style="width:100%; border-radius: 20px;">
-							<div style="font-size:23px; font-weight: bold">[[${club.clubName}]]</div>
-							<div>[[${club.clubShortInfo}]]</div></a>
-						</div>
-					</div>
-				</div>
-				<button class="carousel-control-prev" type="button"
-					data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Previous</span>
-				</button>
-				<button class="carousel-control-next" type="button"
-					data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<span class="visually-hidden">Next</span>
-				</button>
-			</div>
-		</div>
+		<div class="col-4"></div>
+		<div class="col-4" id='calendar' style="width:500px;"></div>
 	</div>
-	<hr>
-	<div class="row section-icons">
-		<div class="row short-cut-list">
-			<div class="col item1">
-				<div class="image-wrapper">
-					<a
-						th:href="@{/book/bestBook(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img alt="" src="/image/main/bestBook.PNG" width="120px;">
-					</a>
-				</div>
-				<div class="text-wrapper">
-					<a
-						th:href="@{/book/bestBook(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<span>베스트셀러</span>
-					</a>
-				</div>
-			</div>
-			<div class="col item2">
-				<div class="image-wrapper">
-					<a
-						th:href="@{/book/newBook(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img alt="" src="/image/main/newBook.PNG" width="120px;">
-					</a>
-				</div>
-				<div class="text-wrapper">
-					<a
-						th:href="@{/book/newBook(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<span>이달의 신작</span>
-					</a>
-				</div>
-			</div>
-			<div class="col item3">
-				<div class="image-wrapper">
-					<a
-						th:href="@{/goods/bestGoods(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img alt="" src="/image/main/goods.PNG" width="120px;">
-					</a>
-				</div>
-				<div class="text-wrapper">
-					<a
-						th:href="@{/goods/bestGoods(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<span>베스트상품</span>
-					</a>
-				</div>
-			</div>
-			<div class="col item4">
-				<div class="image-wrapper">
-					<a
-						th:href="@{/club/club(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img alt="" src="/image/main/club.PNG" width="120px;">
-					</a>
-				</div>
-				<div class="text-wrapper">
-					<a
-						th:href="@{/club/club(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<span>북클럽</span>
-					</a>
-				</div>
-			</div>
-			<div class="col item5">
-				<div class="image-wrapper">
-					<a
-						th:href="@{/room/readingRoom(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img alt="" src="/image/main/room.PNG" width="120px;">
-					</a>
-				</div>
-				<div class="text-wrapper">
-					<a
-						th:href="@{/room/readingRoom(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<span>열람실</span>
-					</a>
-				</div>
-			</div>
-			<div class="col item6">
-				<div class="image-wrapper">
-					<a
-						th:href="@{/info/wayToLibrary(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img alt="" src="/image/main/way.PNG" width="120px;">
-					</a>
-				</div>
-				<div class="text-wrapper">
-					<a
-						th:href="@{/info/wayToLibrary(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<span>찾아오는길</span>
-					</a>
-				</div>
-			</div>
-			<div class="col item7">
-				<div class="image-wrapper">
-					<a
-						th:href="@{/mBook/myBorrow(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img alt="" src="/image/main/borrow.PNG" width="120px;">
-					</a>
-				</div>
-				<div class="text-wrapper">
-					<a
-						th:href="@{/mBook/myBorrow(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<span>대여내역</span>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<hr>
-	<div class="row notice-zone">
-		<div class="col-4">
-			<div class="sub-title">공지사항<a href="/info/notice"><span>더보기</span></a></div>
-			<table class="table">
-				<tr th:each=" notice, state : ${noticeList}" th:if="${state.count} &lt;= 5">
-					<td><a th:href="@{/info/noticeDetail(noticeNo=${notice.noticeNo})}">[[${notice.noticeTitle}]]</a></td>
-					<td>&nbsp;</td>
-				</tr>
-			</table>
-		</div>
-		<div class="col-8">
-			<div class="new-list">
-				<div class="sub-title">
-					  <span>이달의 책</span>
-					  <a href="/book/newBook" class="more-link"><span>+</span></a>
-					</div>
-				<div th:each="book, state : ${bookList}" class="d-inline-block" th:if="${state.count} &lt;= 5">
-					 <a th:href="@{/book/bookDetail(bookCode=${book.bookCode}, 
-        							mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
-						<img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" width="180px;" height="250px;">
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</th:block>
-
-<!-- 연결해야 할 외부 js파일 -->
-<th:block layout:fragment="content_js">
-	<script type="text/javascript" src="/js/content/club/main_test.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</th:block>
-
+</body>
 </html>
