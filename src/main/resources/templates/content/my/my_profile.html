@@ -32,7 +32,7 @@
 			<div class="col-7">
 				<div class="card shadow">
 					<div class="card-header">
-						<a href="/mMember/myInfo" class="d-flex justify-content-between">
+						<a href="/mMember/myInfo?mainMenuCode=MAIN_MENU_006&subMenuCode=SUB_MENU_016" class="d-flex justify-content-between">
 							<span>내 정보 보기</span>
 							<span>&gt;</span>
 						</a>
@@ -51,16 +51,16 @@
 					</div>
 				</div>
 				<div class="card shadow mt-1">
-					<div class="card-header">
-						<a href="/mMember/myPassword" class="d-flex justify-content-between">
+					<div class="card-header rounded-bottom">
+						<a href="/mMember/myPassword?mainMenuCode=MAIN_MENU_006&subMenuCode=SUB_MENU_017" class="d-flex justify-content-between">
 							<span>비밀번호 변경</span>
 							<span>&gt;</span>
 						</a>
 					</div>
 				</div>
 				<div class="card shadow mt-1">
-					<div class="card-header">
-						<a href="/mMember/myPassword" class="d-flex justify-content-between">
+					<div class="card-header rounded-bottom">
+						<a th:href="@{/mMember/withdrawalForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}" class="d-flex justify-content-between">
 							<span>회원 탈퇴</span>
 							<span>&gt;</span>
 						</a>
