@@ -67,6 +67,49 @@ a.button {
   color: #222;
 }
 
+.btnLightOrder1{
+	background: #A3D8F4;
+}
+
+.btnLightOrder1.btnBorder {
+  box-shadow: 0px 0px 0px 0px #9AB3F5;
+}
+
+.btnLightOrder1.btnBorder:hover {
+  box-shadow: 0px 0px 0px 5px #9AB3F5;
+  
+}
+
+
+
+.btnLightOrder2{
+	background: #9AB3F5;
+}
+
+.btnLightOrder2.btnBorder {
+  box-shadow: 0px 0px 0px 0px #7579E7;
+}
+
+.btnLightOrder2.btnBorder:hover {
+  box-shadow: 0px 0px 0px 5px #7579E7;
+  
+}
+
+
+
+.btnLightOrder3{
+	background: #7579E7;
+}
+
+.btnLightOrder3.btnBorder {
+  box-shadow: 0px 0px 0px 0px #655DBB;
+}
+
+.btnLightOrder3.btnBorder:hover {
+  box-shadow: 0px 0px 0px 5px #655DBB;
+  
+}
+
 
 
 .btnLightBlue {

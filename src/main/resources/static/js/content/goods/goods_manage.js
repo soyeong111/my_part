@@ -157,28 +157,43 @@ function goodsDetail(goodsCode){
 }
 
 //검색 영역 체크박스 컨트롤
-//전체 체크박스 선택, 해제 시 ...
-function setAllCheck(all_chk){
-	const is_checked = all_chk.checked;
-	const chk_boxes =  document.querySelectorAll('.chk');
-	
-	if(is_checked){
-		for(const chk of chk_boxes){
-			chk.checked = true;
-		}
+
+//전체 체크 박스
+const checkAll = document.querySelector('#checkAll');
+
+//전체를 제외한 체크박스들
+const checkboxes = document.querySelectorAll('.chk');
+
+checkAll.addEventListener('click', function(){
+	if(checkAll.checked){
+		for(const checkbox of checkboxes){
+			checkbox.checked = true;
+		}		
 	}
 	else{
-		for(const chk of chk_boxes){
-			chk.checked = false;
-		}
+		for(const checkbox of checkboxes){
+			checkbox.checked = false;
+		}		
 	}
-	
+});
+
+//카테고리 체크박스 중 전체를 제외한 체크박스 클릭 시
+for(const checkbox of checkboxes){
+	checkbox.addEventListener('click', function(){
+		//전체를 제외한 체크박스 개수
+		const totalCnt = checkboxes.length;
+		
+		//전체를 제외한 체크박스 중 체크된 체크박스 개수
+		const checkedCnt = document.querySelectorAll('.chk:checked').length;
+		
+		if(totalCnt == checkedCnt){
+			checkAll.checked = true;
+		}
+		else{
+			checkAll.checked = false;
+		}
+	});
 }
-
-
-
-
-
 
 
 
