@@ -316,7 +316,12 @@
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
-	
+	<!-- 예약수 -->
+	<select id="getReserveCnt">
+		SELECT RESERVE_CNT
+		FROM BOOK
+		WHERE BOOK_CODE = #{bookCode}
+	</select>
 	
 
 	<!-- 도서 대여 개수 -->
