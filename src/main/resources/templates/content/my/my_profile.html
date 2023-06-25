@@ -11,30 +11,88 @@
 		<h2 class="member-title">내 프로필</h2>
 	</div>
 	<div class="my-profile-div pt-5">
+		<div class="d-none">
+			<input type="file" id="mem-img-input" accept="image/*" onchange="mem_img_change();">
+		</div>
+	
 		<div class="row mt-5 w-50 m-auto">
-			<div class="col-4 profile-img-div">
-				<div class="card shadow-sm">
-					<div class="card-body d-flex">
-						<!-- <img src="/image/admin.svg"> -->
-						<img src="/image/icon_add.png">
+			<div class="col-5 profile-img-div">
+				<div class="card shadow">
+					<div class="card-body d-flex justify-content-center align-items-center position-relative">
+						<img th:src="@{'/image/member/' + ${memberVO.memImgUrl}}" class="mem-img" th:if="${memberVO.memImgUrl != null}">
+						<a href="javascript:void(0);" th:if="${memberVO.memImgUrl != null}" class="z-3 position-absolute top-0 end-0 m-1">
+							<img src="/image/icon-del.png" class="icon-del" th:onclick="del_icon_click([[${memberVO.memImgUrl}]]);">
+						</a>
+						<a href="javascript:void(0);" th:if="${memberVO.memImgUrl == null}">
+							<img src="/image/icon_add.png" class="icon-add" onclick="add_icon_click();">
+						</a>
 					</div>
 				</div>
 			</div>
-			<div class="col-8">
-				<div class="card">
-					<div class="card-body">
-					
+			<div class="col-7">
+				<div class="card shadow">
+					<div class="card-header">
+						<a href="/mMember/myInfo?mainMenuCode=MAIN_MENU_006&subMenuCode=SUB_MENU_016" class="d-flex justify-content-between">
+							<span>내 정보 보기</span>
+							<span>&gt;</span>
+						</a>
+					</div>
+					<div class="card-body row">
+						<div class="col-4">아이디</div>
+						<div class="col-8">[[${memberVO.memId}]]</div>
+						<div class="col-4 mt-1">이름</div>
+						<div class="col-8 mt-1">[[${memberVO.memName}]]</div>
+						<div class="col-4 mt-1">이메일</div>
+						<div class="col-8 mt-1">[[${memberVO.memEmail}]]</div>
+						<div class="col-4 mt-1">연락처</div>
+						<div class="col-8 mt-1">[[${memberVO.memTell}]]</div>
+						<div class="col-4 mt-1">가입일</div>
+						<div class="col-8 mt-1">[[${memberVO.memJoinDate}]]</div>
+					</div>
+				</div>
+				<div class="card shadow mt-1">
+					<div class="card-header rounded-bottom">
+						<a href="/mMember/myPassword?mainMenuCode=MAIN_MENU_006&subMenuCode=SUB_MENU_017" class="d-flex justify-content-between">
+							<span>비밀번호 변경</span>
+							<span>&gt;</span>
+						</a>
+					</div>
+				</div>
+				<div class="card shadow mt-1">
+					<div class="card-header rounded-bottom">
+						<a th:href="@{/mMember/withdrawalForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}" class="d-flex justify-content-between">
+							<span>회원 탈퇴</span>
+							<span>&gt;</span>
+						</a>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		<div class="row mt-5 w-50 m-auto">
-		ㄴㄴ
+		<div class="row mt-5 mb-5 w-50 m-auto">
+			<div class="col">
+				<div class="card shadow">
+					<div class="card-header">
+						<a href="/mBook/myBorrow?mainMenuCode=MAIN_MENU_007&subMenuCode=SUB_MENU_018" class="d-flex justify-content-between">
+							<span>대여 내역 보기</span>
+							<span>&gt;</span>
+						</a>
+					</div>
+					<div class="card-body">
+						<div>
+							<select class="form-select" th:onchange="year_change(this, [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+								<option th:each="year : ${yearList}" th:text="${year}" th:selected="${year == nowYear}"></option>
+							</select>
+						</div>
+						<div>
+							<canvas id="myChart"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<script type="text/javascript" src="/js/content/my/my_profile.js"></script>
 </th:block>
 </html>

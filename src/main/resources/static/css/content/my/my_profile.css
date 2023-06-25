@@ -1,9 +1,22 @@
 @charset "UTF-8";
 
-.profile-img-div .card {
-	height: 300px;
+.profile-img-div .card-body {
+	height: 303px;
 }
 
-.profile-img-div img {
-	height: 50px;
+.profile-img-div .icon-add {
+	height: 40px;
+}
+
+.profile-img-div .icon-del {
+	height: 20px;
+}
+
+.profile-img-div .mem-img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+.card-header {
+	background-color: #BAD0E8;
 }

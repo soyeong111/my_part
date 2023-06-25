@@ -19,6 +19,7 @@
 		<result column="BORROW_RESTRICT_DUEDATE"	property="borrowRestrictDuedate"/>
 		<result column="MEM_LOGIN_DATE"				property="memLoginDate"/>
 		<result column="MEM_IMG_URL"				property="memImgUrl"/>
+		<result column="OVERDUE_CNT"				property="overdueCnt"/>
 	</resultMap>
 
 	<!-- 아이디 중복 체크 -->
@@ -153,10 +154,64 @@
 	<select id="getMyProfile" resultMap="member">
 		SELECT MEM_ID
 			, MEM_NAME
+			, MEM_EMAIL
+			, MEM_TELL
 			, MEM_IMG_URL
-			, OVERDUE_CNT
+			, TO_CHAR(MEM_JOIN_DATE, 'YYYY-MM-DD') MEM_JOIN_DATE
 		FROM MEMBER
 		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 내 프로필 사진 등록, 삭제 -->
+	<update id="updateMemImg">
+		UPDATE MEMBER
+		SET MEM_IMG_URL = #{memImgUrl}
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 회원 탈퇴 전 사진 경로 받기 -->
+	<select id="getMemImgUrlForWithdrawal" resultType="String">
+		SELECT MEM_IMG_URL
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="withdrawal">
+		UPDATE MEMBER
+		SET MEM_STATUS = '탈퇴'
+			, MEM_IMG_URL = ''
+		WHERE MEM_ID = #{memId}
+	</update>
+	
+	<!-- 내 프로필 차트 데이터 받기 -->
+	<select id="getMyBorrowCntListForChart" resultType="Map">
+		SELECT BOOK_CATE_STR "카테고리"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '01' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "01월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '02' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "02월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '03' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "03월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '04' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "04월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '05' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "05월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '06' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "06월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '07' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "07월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '08' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "08월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '09' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "09월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '10' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "10월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '11' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "11월"
+			, (SELECT COUNT(BORROW_CODE) FROM BOOK BK, BOOK_BORROW BB WHERE BK.BOOK_CODE = BB.BOOK_CODE
+				AND TO_CHAR(BORROW_DATE, 'YYYY-MM') = #{nowYear} || '-' || '12' AND BC.BOOK_CATE_NO = BK.BOOK_CATE_NO) "12월"
+		FROM BOOK_CATEGORY BC
 	</select>
 
 </mapper>
