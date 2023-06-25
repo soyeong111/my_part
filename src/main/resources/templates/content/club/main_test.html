@@ -11,7 +11,7 @@
 
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	<div class="row" style="margin-top: 15rem;">
+	<div class="row first-row" style="margin-top: 15rem;">
 		<div class="col-4">
 			<div class="card">
 				<div class="weather">
@@ -53,6 +53,7 @@
 			</div>
 		</div>
 	</div>
+	<hr>
 	<div class="row section-icons">
 		<div class="row short-cut-list">
 			<div class="col item1">
@@ -155,21 +156,28 @@
 			</div>
 		</div>
 	</div>
-	<div class="row notice-zone mt-5">
+	<hr>
+	<div class="row notice-zone">
 		<div class="col-4">
 			<div class="sub-title">공지사항<a href="/info/notice"><span>더보기</span></a></div>
 			<table class="table">
 				<tr th:each=" notice, state : ${noticeList}" th:if="${state.count} &lt;= 5">
-					<td>[[${notice.noticeTitle}]]</td>
+					<td><a th:href="@{/info/noticeDetail(noticeNo=${notice.noticeNo})}">[[${notice.noticeTitle}]]</a></td>
 					<td>&nbsp;</td>
 				</tr>
 			</table>
 		</div>
 		<div class="col-8">
 			<div class="new-list">
-				<div class="sub-title">이달의 책</div>
-				<div th:each="book : ${bookList}">
-					  <img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" width="180px;">
+				<div class="sub-title">
+					  <span>이달의 책</span>
+					  <a href="/book/newBook" class="more-link"><span>+</span></a>
+					</div>
+				<div th:each="book, state : ${bookList}" class="d-inline-block" th:if="${state.count} &lt;= 5">
+					 <a th:href="@{/book/bookDetail(bookCode=${book.bookCode}, 
+        							mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
+						<img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" width="180px;" height="250px;">
+					</a>
 				</div>
 			</div>
 		</div>
