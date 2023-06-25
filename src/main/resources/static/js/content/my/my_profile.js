@@ -6,6 +6,9 @@ function init() {
 }
 
 // 차트 그리기
+function drawChart() {
+	
+}
 
 // 사진 플러스 눌렀을 때
 function add_icon_click() {
