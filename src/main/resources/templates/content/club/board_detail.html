@@ -14,8 +14,12 @@
 	<div class="board-detail-div">
 		<div class="title-div">북클럽</div>
 		<div class="public-title">게시글 상세</div>
-		<hr>
-		<div class="board-title-div">[[${board.boardTitle}]]</div>
+		<div class="board-title-div">
+			<th:block th:if="${board.clubNotice == 'Y'}">
+				<span class="notice-btn">공지</span>
+				[[${board.boardTitle}]]
+			</th:block>
+			</div>
 		<div class="detail-body">
 			<div class="row">
 				<div class="col">
@@ -25,7 +29,7 @@
 								<table>
 									<tr>
 										<td rowspan="2">
-											<img alt="" src="/image/club/dog.jpg" width="50px" height="50px" style="border-radius: 50%; margin-right: 1rem;">
+											<img alt="" src="/image/club/dog.jpg" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
 										</td>
 										<td>[[${board.boardWriter}]]</td>
 									</tr>
@@ -71,30 +75,37 @@
 				</div>
 			</form>
 			<th:block th:each="reply : ${replyList}">
-				<table>
-					<tr>
-						<td>
-							<table>
-								<tr>
-									<td rowspan="2">이미지</td>
-									<td>[[${reply.replyWriter}]]</td>
-								</tr>
-								<tr>
-									<td>[[${reply.regDate}]]</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					<tr>
-						<td>[[${reply.replyContent}]]</td>
-					</tr>
-					<tr>
-						<td th:if="${reply.replyWriter == #authentication.name}" class="offset-10" style="text-align: right;">
-							<input type="button" class="btn update-btn" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
-							<input type="button" class="btn delete-btn" value="삭제" th:onclick="deleteReply([[${reply.replyNum}]], [[${board.boardNum}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
-						</td>
-					</tr>
-				</table>
+				<div style="margin-top: 3rem;">
+					<table class="replyList-div">
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td rowspan="2">
+											<img alt="" src="/image/club/dog.jpg" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
+										</td>
+										<td>[[${reply.replyWriter}]]</td>
+									</tr>
+									<tr>
+										<td style="font-weight: lighter;">[[${reply.regDate}]]</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr style="height: 1.5rem;">
+							<td></td>
+						</tr>
+						<tr>
+							<td>[[${reply.replyContent}]]</td>
+						</tr>
+						<tr>
+							<td th:if="${reply.replyWriter == #authentication.name}" class="offset-10" style="text-align: right;">
+								<input type="button" class="btn update-btn" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+								<input type="button" class="btn delete-btn" value="삭제" th:onclick="deleteReply([[${reply.replyNum}]], [[${board.boardNum}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+							</td>
+						</tr>
+					</table>
+				</div>
 			</th:block>
 		</div>
 		</div>
@@ -104,6 +115,7 @@
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/club/board_detail.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </th:block>
 
 </html>

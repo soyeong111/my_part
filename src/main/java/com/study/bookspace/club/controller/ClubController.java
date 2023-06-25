@@ -25,6 +25,8 @@ import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.info.service.AnswerService;
+import com.study.bookspace.info.vo.NoticeVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.DateUtil;
@@ -44,6 +46,20 @@ public class ClubController {
 	
 	@Resource(name = "bookService")
 	private BookService bookService;
+	
+	@Resource(name = "answerService")
+	private AnswerService answerService;
+	
+	//메인 테스트
+	@GetMapping("/maintest")
+	public String maintest(SubMenuVO subMenuVO, Model model, NoticeVO noticeVO) {
+		
+		model.addAttribute("clubList", clubService.getClubList());
+		model.addAttribute("noticeList", answerService.noticeForPublic(noticeVO));
+		
+		return "content/club/main_test";
+	}
+	
 	
 	//북클럽 이용안내
 	@GetMapping("/clubInfo")
@@ -338,7 +354,6 @@ public class ClubController {
 	public String boardDetail(Model model, CommunityVO communityVO, CommunityReplyVO communityReplyVO, SubMenuVO subMenuVO) {
 		clubService.updateReadCnt(communityVO.getBoardNum());
 		
-		//model.addAttribute("board", clubService.getBoardDetail(boardNum));
 		model.addAttribute("board", clubService.getBoardDetail(communityVO.getBoardNum()));
 		model.addAttribute("replyList", clubService.getReplyList(communityReplyVO.getBoardNum()));
 		

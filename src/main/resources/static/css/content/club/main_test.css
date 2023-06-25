@@ -1,0 +1,49 @@
+@charset "EUC-KR";
+
+.card{
+	width: 90%;
+	max-width: 470px;
+	background: linear-gradient(135deg, #00feba, #5b548a);
+	color: #fff;
+	margin: 100px auto 0;
+	border-radius: 20px;
+	padding: 40px 35px;
+	text-align: center;
+}
+
+.weather-icon{
+	width: 170px;
+	margin-top: 30px;
+}
+
+.weather h1{
+	font-size: 80px;
+	font-weight: bold;
+}
+
+.weather h5{
+	font-size: 25px;
+	font-weight: bold;
+	margin-top: 30px;
+}
+
+.short-cut-list{
+	font-weight: bold;
+	font-size: 22px;
+	text-align: center;
+}
+
+.image-wrapper{
+	height: 130px;
+}
+
+.notice-title{
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.table{
+	font-size: 20px;
+	font-weight: bold;
+}
+

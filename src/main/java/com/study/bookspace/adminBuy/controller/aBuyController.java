@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.bookspace.adminBuy.service.aBuyService;
+import com.study.bookspace.menu.vo.SubMenuVO;
 
 import jakarta.annotation.Resource;
 
@@ -27,7 +28,7 @@ public class aBuyController {
 	
 	
 	@GetMapping("/buySales")
-	public String buySales (){
+	public String buySales (SubMenuVO subMenuVO){
 		
 		return "content/admin/buy_sales";
 	}

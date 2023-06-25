@@ -181,7 +181,7 @@ public class InfoController {
 	}
 	
 	@GetMapping("/noticeForm")
-	public String noticeForm() {
+	public String noticeForm(SubMenuVO subMenuVO) {
 		return "content/info/notice_form";
 	}
 	
