@@ -16,6 +16,7 @@ import com.study.bookspace.goods.vo.GoodsVO;
 
 
 public class UploadUtil {
+	
 	public static ImgVO uploadFile(MultipartFile img) {
         ImgVO imgVO = new ImgVO();
 
@@ -41,7 +42,6 @@ public class UploadUtil {
 
         return imgVO;
     }
-	
 
 	//클럽 이미지 단일 파일 업로드 메소드
 	public static BookClubImageVO uploadFileClub(MultipartFile clubImg) {
@@ -70,11 +70,6 @@ public class UploadUtil {
 		}
 		return bookClubImageVO;
 	}
-	
-	
-	
-	
-	
 	
 //	단일 파일 업로드- 굿즈
 	public static GoodsImgVO goodsUploadFile(MultipartFile goodsImg) {
@@ -124,10 +119,6 @@ public class UploadUtil {
 		return result;
 	}
 	
-	
-	
-	
-	
 	//클럽 커뮤니티 게시글 이미지 단일 파일 업로드 메소드
 	public static CommunityImageVO communityUploadFile(MultipartFile communityImg) {
 		
@@ -155,8 +146,23 @@ public class UploadUtil {
 		}
 		return communityImageVO;
 	}
-
-
 	
-	
+	// 회원 프로필 사진 업로드
+	public static String uploadMemberFile(MultipartFile memImg) {
+		String attachedFileName = "";
+		if (!memImg.isEmpty()) {
+			String originFileName = memImg.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+			String extension = originFileName.substring(originFileName.lastIndexOf("."));
+			attachedFileName = uuid + extension;
+            try {
+                File file = new File(ConstVariable.MEMBER_UPLOAD_PATH + attachedFileName);
+                memImg.transferTo(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return attachedFileName;
+	}
+
 }

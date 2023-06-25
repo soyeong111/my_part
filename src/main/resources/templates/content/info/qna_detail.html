@@ -40,12 +40,12 @@
 	
 		<div  th:if="${#authentication.name == qna.memId}">
 			<div th:if="${qna.isAdminAnswer == 'N' }" style=" text-align: center;">
-				<input type="button" class="aBtn" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]] );">
-				<input type="button" class="aBtn" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
+				<input type="button" class="btn custom-btn" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]] );">
+				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
 			</div>
 		</div>
 		<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="margin-bottom: 2rem; text-align: right;">
-			<input type="button" class="deleteBtn" value="강제 삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
+			<input type="button" class="btn custom-btn-del" value="강제 삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
 		</div>
 	
 	
@@ -58,7 +58,7 @@
 		<form th:action="@{/info/sendAnswer}" method="post">
 			<input type="hidden" th:value="${qna.qnaCode}" name="qnaCode">
 			<textarea class="form-control" required rows="10" cols="70" name="answerContent" id="uploadAnswerContent" style="resize: none;"></textarea>
-			<div style="text-align: center;"><input type="submit" value="답변 등록" class="aBtn" style="margin-top: 2rem;"></div>
+			<div style="text-align: center;"><input type="submit" value="답변 등록" class="btn custom-btn" style="margin-top: 2rem;"></div>
 		</form>
 	</div>
 	
@@ -78,8 +78,8 @@
 						<div id="answerContent" style=" width:80%; margin: auto; height: auto; padding-top: 2rem; padding-bottom: 4rem;">[[${answer.answerContent}]]</div>
 			</div>
 				<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="text-align: right;">
-					<input class="aBtn"  type="button" value="수정"  th:onclick="updateAnswer(this, [[${answer.answerCode}]], [[${answer.qnaCode}]]);"> 
-					<input class="aBtn" type="button" value="삭제" th:onclick="|location.href='@{/info/deleteAnswer(qnaCode=${answer.qnaCode}, answerCode=${answer.answerCode})}'|">
+					<input class="btn custom-btn"  type="button" value="수정"  th:onclick="updateAnswer(this, [[${answer.answerCode}]], [[${answer.qnaCode}]]);"> 
+					<input class="btn custom-btn-del" type="button" value="삭제" th:onclick="|location.href='@{/info/deleteAnswer(qnaCode=${answer.qnaCode}, answerCode=${answer.answerCode})}'|">
 			</div>
 			</div>
 		</div>

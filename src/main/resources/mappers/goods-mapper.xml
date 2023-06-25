@@ -111,12 +111,7 @@
 		<if test="goodsSearchVO != null and goodsSearchVO.searchGoodsStatus != 0">
 		AND GOODS_STATUS = #{goodsSearchVO.searchGoodsStatus}
 		</if>
-		<if test='goodsSearchVO != null and !goodsSearchVO.searchFromGoodsStock.equals("")'>
-		AND GOODS_STOCK_CNT &gt;= TO_NUMBER(#{goodsSearchVO.searchFromGoodsStock})
-		</if>
-		<if test='goodsSearchVO != null and !goodsSearchVO.searchToGoodsStock.equals("")'> 
-		AND GOODS_STOCK_CNT &lt;= TO_NUMBER(#{goodsSearchVO.searchToGoodsStock})
-		</if> 
+		
 		
 	</select>
 	

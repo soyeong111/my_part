@@ -1,5 +1,6 @@
 package com.study.bookspace.myMember.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +14,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.myMember.service.MyMemberService;
 import com.study.bookspace.sms.SmsService;
 import com.study.bookspace.sms.SmsVO;
+import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.MailService;
 import com.study.bookspace.util.MailVO;
+import com.study.bookspace.util.UploadUtil;
 
 import jakarta.annotation.Resource;
 
@@ -49,11 +54,38 @@ public class MyMemberController {
 	public String myProfile(SubMenuVO subMenuVO, Model model, Authentication authentication, MemberVO memberVO) {
 		memberVO.setMemId(((User)authentication.getPrincipal()).getUsername());
 		memberVO = myMemberService.getMyProfile(memberVO.getMemId());
-		
+		model.addAttribute("memberVO", memberVO);
 		
 		
 		System.out.println(memberVO);
 		return "content/my/my_profile";
+	}
+	
+	// 내 프로필 사진 등록
+	@ResponseBody
+	@PostMapping("/updateMemImgAjax")
+	public int updateMemImgAjax(MemberVO memberVO, MultipartFile memImg, Authentication authentication) {
+		memberVO.setMemImgUrl(UploadUtil.uploadMemberFile(memImg));
+		if (!memberVO.getMemImgUrl().equals("")) {
+			memberVO.setMemId(((User)authentication.getPrincipal()).getUsername());
+			return myMemberService.updateMemImg(memberVO);
+		}
+		return 0;
+	}
+	
+	// 내 프로필 사진 삭제
+	@ResponseBody
+	@PostMapping("/deleteMemImgAjax")
+	public int deleteMemImgAjax(MemberVO memberVO, Authentication authentication) {
+		memberVO.setMemId(((User)authentication.getPrincipal()).getUsername());
+		String imgUrl = ConstVariable.MEMBER_UPLOAD_PATH + memberVO.getMemImgUrl();
+		memberVO.setMemImgUrl("");
+		int result = myMemberService.updateMemImg(memberVO);
+		if (result == 1) {
+			File file = new File(imgUrl);
+			file.delete();
+		}
+		return result;
 	}
 	
 	// 내정보변경 페이지

@@ -21,7 +21,7 @@
 			, NOTICE_CREATE_DATE
 			, MEM_ID
 		FROM NOTICE
-		ORDER BY NOTICE_CREATE_DATE
+		ORDER BY NOTICE_CREATE_DATE DESC
 	</select>
 	
 	<!-- 공지 상세 조회(퍼블릭) -->

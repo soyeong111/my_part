@@ -15,7 +15,7 @@
  				<div class="col">
  					<table class="table orderT" style="margin-top: 8rem;">
  						<thead>
- 							<tr style="text-align: center;">
+ 							<tr style="text-align: center; font-weight: bold;">
  								<td>구매 코드</td>
  								<td>ID</td>
  								<td>결제금액</td>
@@ -37,9 +37,26 @@
 							    <td style="padding-top: 1rem;" th:text="${order.buyDate}"></td>
 						
 							   	<td style="padding-left: 6rem;">
-								   	<a title="Button border lightblue" class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
-								   	[[${order.orderStr}]]
-								   	</a>
+								   	<th:block  th:if="${order.orderStr == '주문접수'}">
+									   	<a title="Button border lightblue" class="button btnBorder btnLightOrder1" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	[[${order.orderStr}]]
+									   	</a>
+								   	</th:block>
+								   	<th:block  th:if="${order.orderStr == '배송준비'}">
+									   	<a title="Button border lightblue" class="button btnBorder btnLightOrder2" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	[[${order.orderStr}]]
+									   	</a>
+								   	</th:block>
+								   	<th:block  th:if="${order.orderStr == '배송중'}">
+									   	<a title="Button border lightblue" class="button btnBorder btnLightOrder3" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	[[${order.orderStr}]]
+									   	</a>
+								   	</th:block>
+								   	<th:block  th:if="${order.orderStr == '배송완료'}">
+									   	<a title="Button border lightblue" class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	[[${order.orderStr}]]
+									   	</a>
+								   	</th:block>
 							   	</td>
 							</tr>
  						</th:block>

@@ -1,7 +1,5 @@
 package com.study.bookspace.myMember.service;
 
-import java.util.List;
-
 import com.study.bookspace.member.vo.MemberVO;
 
 public interface MyMemberService {
@@ -23,5 +21,8 @@ public interface MyMemberService {
 	
 	// 내 프로필 간단 정보
 	MemberVO getMyProfile(String memId);
+	
+	// 내 프로필 사진 등록, 삭제
+	int updateMemImg(MemberVO memberVO);
 	
 }

@@ -10,7 +10,8 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<div class="public-title">질문 작성</div>
+<div class="title-div">Q & A</div>
+<div class="public-title"> > 질문 작성</div>
   <div class="qForm">
 	  <form th:action="@{/info/sendQuestion}" method="post" >
 	  		
@@ -23,8 +24,11 @@
 		  	<div>
 		  		<textarea rows="10" cols="70" name="qnaContent" class="form-control" required placeholder="내용을 입력하세요." style="resize: none;"></textarea>
 		  	</div>
+		  		<div class="col-12" style="margin-top: 1rem;">
+						<input type="file" class="form-control" name="" id="">
+					</div>
 		  	<div>
-		  		<button type="submit" class="qBtn"  style="margin-top: 2rem;"><font color="white">작 성</font></button>
+		  		<button type="submit" class="btn custom-btn"  style="margin-top: 2rem;"><font color="white">작 성</font></button>
 		  	</div>
 	  	</form>
   </div>
