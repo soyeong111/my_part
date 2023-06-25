@@ -168,5 +168,20 @@
 		SET MEM_IMG_URL = #{memImgUrl}
 		WHERE MEM_ID = #{memId}
 	</update>
+	
+	<!-- 회원 탈퇴 전 사진 경로 받기 -->
+	<select id="getMemImgUrlForWithdrawal" resultType="String">
+		SELECT MEM_IMG_URL
+		FROM MEMBER
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<!-- 회원 탈퇴 -->
+	<update id="withdrawal">
+		UPDATE MEMBER
+		SET MEM_STATUS = '탈퇴'
+			, MEM_IMG_URL = ''
+		WHERE MEM_ID = #{memId}
+	</update>
 
 </mapper>

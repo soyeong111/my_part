@@ -53,5 +53,17 @@ public class MyMemberServiceImpl implements MyMemberService {
 	public int updateMemImg(MemberVO memberVO) {
 		return sqlSession.update("memberMapper.updateMemImg", memberVO);
 	}
+
+	// 회원 탈퇴 전 사진 경로 받기
+	@Override
+	public String getMemImgUrlForWithdrawal(String memId) {
+		return sqlSession.selectOne("memberMapper.getMemImgUrlForWithdrawal", memId);
+	}
+
+	// 회원 탈퇴
+	@Override
+	public int withdrawal(String memId) {
+		return sqlSession.update("memberMapper.withdrawal", memId);
+	}
 	
 }

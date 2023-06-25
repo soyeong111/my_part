@@ -25,4 +25,10 @@ public interface MyMemberService {
 	// 내 프로필 사진 등록, 삭제
 	int updateMemImg(MemberVO memberVO);
 	
+	// 회원 탈퇴 전 사진 경로 받기
+	String getMemImgUrlForWithdrawal(String memId);
+	
+	// 회원 탈퇴
+	int withdrawal(String memId);
+	
 }

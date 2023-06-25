@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
@@ -168,6 +167,26 @@ public class MyMemberController {
 	@PostMapping("/updateLoginDateAjax")
 	public void updateLoginDateAjax(String memId) {
 		myMemberService.updateMemLoginDate(memId);
+	}
+	
+	// 회원 탈퇴 페이지
+	@GetMapping("/withdrawalForm")
+	public String withdrawalForm(SubMenuVO subMenuVO) {
+		return "content/my/withdrawal";
+	}
+	
+	// 회원 탈퇴
+	@ResponseBody
+	@PostMapping("/withdrawalAjax")
+	public boolean withdrawalAjax(Authentication authentication) {
+		String memId = ((User)authentication.getPrincipal()).getUsername();
+		String memImgUrl = myMemberService.getMemImgUrlForWithdrawal(memId);
+		int result = myMemberService.withdrawal(memId);
+		if (memImgUrl != null && result == 1) {
+			File file = new File(memImgUrl);
+			file.delete();
+		}
+		return result == 1;
 	}
 	
 }
