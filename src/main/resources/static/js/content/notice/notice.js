@@ -16,12 +16,14 @@ function updateNotice(selectedTag, noticeNo){
 		let str = ``;
 		str += `<form id="updateNoticeForm" action="/info/updateNotice" method="post" >`;
 		str += `<input type="hidden" value="${noticeNo}" name="noticeNo">`;
-		str += `<textarea class="form-control" required rows="10" cols="70" value="${noticeContent}" name="noticeContent" style="resize: none; "></textarea>`;
+		str += `<input type="hidden" value="${mainMenuCode}" name="mainMenuCode">`;
+		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
+		str += `<textarea class="form-control" required rows="10" cols="70" name="noticeContent" style="resize: none; ">${noticeContent}</textarea>`;
 		str += `</form>`;
 		
 		
 		//선택한 태그의 자식태그로 추가
-		noticeContentDiv.insertAdjacentHTML('beforeend', str);
+		noticeContentDiv.insertAdjacentHTML('afterbegin', str);
 		//수정 버튼의 글자 변경
 		selectedTag.value = '확인';		
 	}else{

@@ -49,6 +49,7 @@
 	<update id="updateAnswer">
 		UPDATE QNA_ANSWER
 		SET ANSWER_CONTENT = #{answerContent}
+			, ANSWER_TITLE =#{answerTitle}
 		WHERE ANSWER_CODE = #{answerCode}
 	</update>
 	
