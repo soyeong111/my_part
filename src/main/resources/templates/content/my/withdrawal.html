@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragment/member_layout}">
+<th:block layout:fragment="content_css">
+	<!-- <link rel="stylesheet" href="/css/content/my/.css"> -->
+</th:block>
+<th:block layout:fragment="content">
+	<div>
+		<h2 class="member-title">회원 탈퇴</h2>
+	</div>
+	<div class="withdrawal-div pt-5">
+		<div class="row mt-5 w-50 m-auto">
+			<div class="offset-2 col-8 mt-5">
+				<div class="input-group">
+					<span class="input-group-text">비밀번호</span>
+					<input type="password" class="form-control" id="mem-pw" onkeyup="mem_pw_keyup(this);">
+				</div>
+			</div>
+			<div class="offset-2 col-8 mt-5 d-grid">
+				<button type="button" class="btn btn-primary custom-btn" onclick="check_pw();">탈퇴하기</button>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="content_js">
+	<script type="text/javascript" src="/js/content/my/withdrawal.js"></script>
+</th:block>
+</html>

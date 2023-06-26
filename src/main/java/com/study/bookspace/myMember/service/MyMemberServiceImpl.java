@@ -1,5 +1,8 @@
 package com.study.bookspace.myMember.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,6 +55,23 @@ public class MyMemberServiceImpl implements MyMemberService {
 	@Override
 	public int updateMemImg(MemberVO memberVO) {
 		return sqlSession.update("memberMapper.updateMemImg", memberVO);
+	}
+
+	// 회원 탈퇴 전 사진 경로 받기
+	@Override
+	public String getMemImgUrlForWithdrawal(String memId) {
+		return sqlSession.selectOne("memberMapper.getMemImgUrlForWithdrawal", memId);
+	}
+
+	// 회원 탈퇴
+	@Override
+	public int withdrawal(String memId) {
+		return sqlSession.update("memberMapper.withdrawal", memId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMyBorrowCntListForChart(String nowYear) {
+		return sqlSession.selectList("memberMapper.getMyBorrowCntListForChart", nowYear);
 	}
 	
 }

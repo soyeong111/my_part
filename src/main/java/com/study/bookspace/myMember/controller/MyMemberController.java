@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.member.vo.MemberVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
@@ -24,6 +23,7 @@ import com.study.bookspace.myMember.service.MyMemberService;
 import com.study.bookspace.sms.SmsService;
 import com.study.bookspace.sms.SmsVO;
 import com.study.bookspace.util.ConstVariable;
+import com.study.bookspace.util.DateUtil;
 import com.study.bookspace.util.MailService;
 import com.study.bookspace.util.MailVO;
 import com.study.bookspace.util.UploadUtil;
@@ -51,13 +51,15 @@ public class MyMemberController {
 	
 	// 내프로필 페이지
 	@GetMapping("/myProfile")
-	public String myProfile(SubMenuVO subMenuVO, Model model, Authentication authentication, MemberVO memberVO) {
+	public String myProfile(SubMenuVO subMenuVO, Model model, Authentication authentication, MemberVO memberVO, String nowYear) {
 		memberVO.setMemId(((User)authentication.getPrincipal()).getUsername());
 		memberVO = myMemberService.getMyProfile(memberVO.getMemId());
 		model.addAttribute("memberVO", memberVO);
-		
-		
-		System.out.println(memberVO);
+		if (nowYear == null) {
+			nowYear = DateUtil.getNowYear() + "";
+		}
+		model.addAttribute("nowYear", nowYear);
+		model.addAttribute("yearList", DateUtil.getFiveYears());
 		return "content/my/my_profile";
 	}
 	
@@ -168,6 +170,26 @@ public class MyMemberController {
 	@PostMapping("/updateLoginDateAjax")
 	public void updateLoginDateAjax(String memId) {
 		myMemberService.updateMemLoginDate(memId);
+	}
+	
+	// 회원 탈퇴 페이지
+	@GetMapping("/withdrawalForm")
+	public String withdrawalForm(SubMenuVO subMenuVO) {
+		return "content/my/withdrawal";
+	}
+	
+	// 회원 탈퇴
+	@ResponseBody
+	@PostMapping("/withdrawalAjax")
+	public boolean withdrawalAjax(Authentication authentication) {
+		String memId = ((User)authentication.getPrincipal()).getUsername();
+		String memImgUrl = myMemberService.getMemImgUrlForWithdrawal(memId);
+		int result = myMemberService.withdrawal(memId);
+		if (memImgUrl != null && result == 1) {
+			File file = new File(memImgUrl);
+			file.delete();
+		}
+		return result == 1;
 	}
 	
 }

@@ -1,5 +1,8 @@
 package com.study.bookspace.myMember.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.study.bookspace.member.vo.MemberVO;
 
 public interface MyMemberService {
@@ -24,5 +27,14 @@ public interface MyMemberService {
 	
 	// 내 프로필 사진 등록, 삭제
 	int updateMemImg(MemberVO memberVO);
+	
+	// 회원 탈퇴 전 사진 경로 받기
+	String getMemImgUrlForWithdrawal(String memId);
+	
+	// 회원 탈퇴
+	int withdrawal(String memId);
+	
+	// 내 프로필 차트 데이터 받기
+	List<Map<String, Object>> getMyBorrowCntListForChart(String nowYear);
 	
 }

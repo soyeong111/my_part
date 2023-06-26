@@ -77,7 +77,7 @@
 						<td>
 							<div class="row">
 								<div class="col d-grid">
-									<input type="button" style="margin-top: 18px;" class="btn btn-secondary" value="삭 제" th:onclick="deleteCart([[${cart.cartCode}]]);">
+									<input type="button" style="margin-top: 18px;" class="btn custom-btn-del" value="삭 제" th:onclick="deleteCart([[${cart.cartCode}]]);">
 								</div>
 							</div>
 						</td>
@@ -97,11 +97,11 @@
 				</div>
 			</div>
 			<div class="row mb-3">
-				<div class="offset-4 col-2 pl-2 d-grid">
-					<a href="javascript:void(0);"  title="Button border lightblue" class="button btnBorder btnLightRed"  onclick="deleteCarts();">삭 제</a>
+				<div class="offset-3 col-2 pl-2 d-grid">
+					<a href="javascript:void(0);"  class="btn custom-btn-del"  onclick="deleteCarts();">삭 제</a>
 				</div>
-				<div class="col-4 d-grid">
-					<a href="javascript:void(0);" title="Button border lightblue" class="button btnBorder btnLightBlue" onclick="buyKakao();">결 제</a>
+				<div class="offset-1 col-2 pr-2 d-grid">
+					<a href="javascript:void(0);" class="btn custom-btn" onclick="buyKakao();">결 제</a>
 				</div>
 			</div>
 
