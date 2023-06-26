@@ -56,7 +56,7 @@ public class BookController {
 		
 		
 		//전체 게시글 수 조회
-		int totalDataCnt = bookService.getBookCnt();
+		int totalDataCnt = bookService.getBookCnt(searchBookVO);
 		
 		System.out.println(totalDataCnt + "dfsfsdfdsfsfsd");
 		//전체 데이터 수 세팅

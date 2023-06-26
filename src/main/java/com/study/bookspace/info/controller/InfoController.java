@@ -86,14 +86,14 @@ public class InfoController {
 	}
 	
 	@PostMapping("/updateQna")
-	public String updateQna(QnaVO qnaVO, Authentication authentication) {
+	public String updateQna(QnaVO qnaVO, Authentication authentication, SubMenuVO subMenuVO) {
 		  User user = (User)authentication.getPrincipal(); 
 		  qnaVO.setMemId(user.getUsername());
 		  
 		  //관리자가 답글을 달면 글 수정 못하게
 		  
 		  qnaService.updateQna(qnaVO);
-		  return "redirect:/info/qnaDetail?qnaCode=" + qnaVO.getQnaCode();
+		  return "redirect:/info/qnaDetail?qnaCode=" + qnaVO.getQnaCode() + "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 		
 	}
 	
@@ -101,13 +101,13 @@ public class InfoController {
 	
   
   @GetMapping("/deleteQna")
-  public String deleteQna(String qnaCode, QnaVO qnaVO, Authentication authentication) {
+  public String deleteQna(String qnaCode, QnaVO qnaVO, Authentication authentication, SubMenuVO subMenuVO) {
 	  User user = (User)authentication.getPrincipal(); 
 	  qnaVO.setMemId(user.getUsername());
   
 	  answerService.deleteAnswer(qnaCode);
 	  qnaService.deleteQna(qnaCode);
-	  return "redirect:/info/qna";
+	  return "redirect:/info/qna?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
   }
 
 	
@@ -120,14 +120,14 @@ public class InfoController {
 		  answerService.insertAnswer(answerVO); 
 		  qnaService.updateIsAdminAnswer(qnaCode);
 		  
-	  return "redirect:/info/qnaDetail?qnaCode=" + answerVO.getQnaCode();
+	  return "redirect:/info/qnaDetail?qnaCode=" + answerVO.getQnaCode()+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 
 	  }
 	
 	  @PostMapping("/updateAnswer")
-		public String updateAnswer(AnswerVO answerVO) {
+		public String updateAnswer(AnswerVO answerVO, SubMenuVO subMenuVO) {
 			answerService.updateAnswer(answerVO);
-		return "redirect:/info/qnaDetail?qnaCode=" + answerVO.getQnaCode();
+		return "redirect:/info/qnaDetail?qnaCode=" + answerVO.getQnaCode()+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 		}
 	  
 	  @GetMapping("/deleteAnswer")
