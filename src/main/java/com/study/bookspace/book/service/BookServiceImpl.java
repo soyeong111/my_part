@@ -205,8 +205,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public int getBookCnt() {
-		return sqlSession.selectOne("bookMapper.getBookCnt");
+	public int getBookCnt(SearchBookVO searchBookVO) {
+		return sqlSession.selectOne("bookMapper.getBookCnt", searchBookVO);
 	}
 
 	@Override

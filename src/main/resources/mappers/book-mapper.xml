@@ -785,6 +785,13 @@
 	<select id="getBookCnt" resultType="int">
 		SELECT COUNT(*) 
 		FROM BOOK
+		WHERE 1=1
+         <if test="searchOption == 'title'">
+        AND LOWER(BOOK_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
+    <if test="searchOption == 'author'">
+        AND LOWER(BOOK_AUTHOR) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
 	</select>
 	
 	
