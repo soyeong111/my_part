@@ -27,4 +27,6 @@ public interface MyBookService {
 	// 도서 검색 모달
 	List<BookVO> bookSearchForModal(Map<String, Object> mapData);
 
+	//독서 기록 목록 (메인)
+	List<BookRecordVO> getBookRecordList();
 }

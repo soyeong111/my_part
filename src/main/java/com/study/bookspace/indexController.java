@@ -10,6 +10,7 @@ import com.study.bookspace.club.service.ClubService;
 import com.study.bookspace.info.service.AnswerService;
 import com.study.bookspace.info.vo.NoticeVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
+import com.study.bookspace.myBook.service.MyBookService;
 
 import jakarta.annotation.Resource;
 
@@ -24,13 +25,17 @@ public class indexController {
 	@Resource(name = "answerService")
 	private AnswerService answerService;
 	
+	@Resource(name = "myBookService")
+	private MyBookService myBookService;
+	
 	
 	@GetMapping("/")
 	public String index(SubMenuVO subMenuVO, SearchBookVO searchBookVO, Model model, NoticeVO noticeVO) {
-		
+		System.out.println(subMenuVO);
 		model.addAttribute("clubList", clubService.getClubList());
 		model.addAttribute("noticeList", answerService.noticeForPublic(noticeVO));
 		model.addAttribute("bookList", bookService.getNewBookList());
+		model.addAttribute("recordList", myBookService.getBookRecordList());
 		
 		return "content/main";
 	}

@@ -47,16 +47,10 @@ public class ClubController {
 	@Resource(name = "bookService")
 	private BookService bookService;
 	
-	@Resource(name = "answerService")
-	private AnswerService answerService;
-	
 	//메인 테스트
 	@GetMapping("/maintest")
-	public String maintest(SubMenuVO subMenuVO, Model model, NoticeVO noticeVO) {
+	public String maintest(SubMenuVO subMenuVO, Model model) {
 		
-		model.addAttribute("clubList", clubService.getClubList());
-		model.addAttribute("noticeList", answerService.noticeForPublic(noticeVO));
-		model.addAttribute("bookList", bookService.getNewBookList());
 		
 		return "content/club/main_test";
 	}

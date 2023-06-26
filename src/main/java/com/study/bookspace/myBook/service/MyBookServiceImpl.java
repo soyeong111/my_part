@@ -53,4 +53,9 @@ public class MyBookServiceImpl implements MyBookService {
 		return sqlSession.selectList("recordMapper.bookSearchForModal", mapData);
 	}
 
+	@Override
+	public List<BookRecordVO> getBookRecordList() {
+		return sqlSession.selectList("recordMapper.getBookRecordList");
+	}
+
 }
