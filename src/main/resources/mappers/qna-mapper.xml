@@ -116,6 +116,7 @@
 	<update id="updateQna">
 		UPDATE QNA
 		SET QNA_CONTENT = #{qnaContent}
+			, QNA_TITLE = #{qnaTitle}
 		WHERE QNA_CODE = #{qnaCode}
 	</update>
 	
