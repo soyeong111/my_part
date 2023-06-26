@@ -1,7 +1,5 @@
 package com.study.bookspace.myMember.service;
 
-import java.util.List;
-
 import com.study.bookspace.member.vo.MemberVO;
 
 public interface MyMemberService {
