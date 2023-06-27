@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+
+.newGoodsDiv{
+	margin-top: 3rem;
+	margin-bottom: 14rem;
+	width: 90%;
+	margin: auto;
+	height: 65rem;
+}
+
+
+.newGoodsHead{
+   color: #4F709C;
+    line-height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 3rem;
+	
+}
+
+
+
+.newGoods{
+	width: 14rem;
+	height: 15rem;
+	margin-top: 4rem;
+}
+
+
+
+.newGoodsImg{
+	width: 13rem;
+	height: 14rem;
+	margin-top: 4rem;
+}
+
+
+
+.goodsN{
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+

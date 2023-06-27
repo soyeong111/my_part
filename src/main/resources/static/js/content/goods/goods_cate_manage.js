@@ -104,7 +104,7 @@ function selectGoodsCateListAjax(){
 				str += `	</div>`;
 				str += `</td>`;
 				str += `<td>${result[i].goodsCateOrderNo}</td>`;
-				str += `<td><input type="button" value="삭제" class="btn btn-secondary" onclick="location.href='/goods/deleteGoodsCategory?goodsCateCode=${result[i].goodsCateCode}';"></td>`;
+				str += `<td><input type="button" value="삭제" class="btn custom-btn-del" onclick="location.href='/goods/deleteGoodsCategory?goodsCateCode=${result[i].goodsCateCode}';"></td>`;
 				str += '</tr>';
 			}
 			

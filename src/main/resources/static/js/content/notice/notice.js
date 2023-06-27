@@ -1,4 +1,4 @@
-function updateNotice(selectedTag, noticeNo){
+function updateNotice(selectedTag, noticeNo, mainMenuCode, subMenuCode){
 		
 
 		//수정 버튼 클릭 시
@@ -24,8 +24,10 @@ function updateNotice(selectedTag, noticeNo){
 		let str = ``;
 		str += `<form id="updateNoticeForm" action="/info/updateNotice" method="post" >`;
 		str += `<input type="hidden" value="${noticeNo}" name="noticeNo">`;
+		str += `<input type="hidden" value="${mainMenuCode}" name="mainMenuCode">`;
+		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
 		str += `<textarea class="form-control" required rows="2" cols="50" name="noticeTitle" style="resize: none;">${noticeTitle}</textarea>`;
-		str += `<textarea class="form-control" required rows="10" cols="50" name="noticeContent" style="resize: none; margin-top:1rem; ">${noticeContent}</textarea>`;
+		str += `<textarea class="form-control" required rows="10" cols="50" name="noticeContent" style="resize: none; margin-top:1rem;">${noticeContent}</textarea>`;
 		str += `</form>`;
 		
 		
