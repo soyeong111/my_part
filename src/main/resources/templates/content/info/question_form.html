@@ -16,7 +16,8 @@
 	  <form th:action="@{/info/sendQuestion}" method="post" >
 	  		
 	  		<input type="hidden" th:value="${#authentication.name}" name="memId">
-
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 	  		
 	  		<div>
 	  			<input type="text" required placeholder="제목을 입력하세요." name="qnaTitle" class="form-control" style="margin-bottom: 1rem;">

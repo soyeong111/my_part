@@ -1,6 +1,6 @@
 
 
-function updateQna(selectedTag,  qnaCode){
+function updateQna(selectedTag,  qnaCode, mainMenuCode, subMenuCode){
 	//수정 버튼 클릭 시
 	if(selectedTag.value == '문의 수정'){
 		//클릭한 수정 버튼에서 댓글 내용이 있는 태그 찾아가기
@@ -20,7 +20,10 @@ function updateQna(selectedTag,  qnaCode){
 		let str = ``;
 		str += `<form id="updateForm" action="/info/updateQna" method="post">`;
 		str += `<input type="hidden" value="${qnaCode}" name="qnaCode">`;
-		str += `<textarea class="form-control" required rows="2" cols="50" name="qnaTitle" style="resize: none;">${qnaTitle}</textarea>`;
+		str += `<input type="hidden" value="${mainMenuCode}" name="mainMenuCode">`;
+		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
+		str += `<input type="text" class="form-control" name="qnaTitle" value="${qnaTitle}">`;
+		//str += `<textarea class="form-control" required rows="2" cols="50" name="qnaTitle" style="resize: none;">${qnaTitle}</textarea>`;
 		str += `<textarea class="form-control" required  rows="10" cols="50" name="qnaContent" style="resize: none; margin-top:1rem; margin-bottom: 2rem;">${qnaContent}</textarea>`;
 		str += `</form>`;
 		
@@ -40,7 +43,7 @@ function updateQna(selectedTag,  qnaCode){
 
 
 
-function updateAnswer(selectedTag, answerCode, qnaCode){
+function updateAnswer(selectedTag, answerCode, qnaCode, mainMenuCode, subMenuCode){
 	console.log(answerCode);
 	console.log(qnaCode);
 	//수정 버튼 클릭 시
@@ -59,6 +62,8 @@ function updateAnswer(selectedTag, answerCode, qnaCode){
 		str += `<form id="updateAnswerForm" action="/info/updateAnswer" method="post">`;
 		str += `<input type="hidden" value="${qnaCode}" name="qnaCode">`;
 		str += `<input type="hidden" value="${answerCode}" name="answerCode">`;
+		str += `<input type="hidden" value="${mainMenuCode}" name="mainMenuCode">`;
+		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
 		str += `<textarea  class="form-control" required rows="10" cols="50" name="answerContent" style="resize: none;" >${answerContent}</textarea>`;
 		str += `</form>`;
 		
@@ -73,6 +78,33 @@ function updateAnswer(selectedTag, answerCode, qnaCode){
 	}
 	
 }
+
+
+//qna 삭제, 강제삭제 버튼 클릭시
+function deleteQna(qnaCode, mainMenuCode, subMenuCode){
+	const result = confirm('삭제하시겠습니까?');
+	if(result){
+		alert('삭제되었습니다.');
+		location.href = `/info/deleteQna?qnaCode=${qnaCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+	}
+	
+}
+
+//qna 답변 삭제 버튼 클릭 시
+function deleteAnswer(qnaCode, answerCode, mainMenuCode, subMenuCode){
+	const result = confirm('삭제하시겠습니까?');
+	if(result){
+		alert('삭제되었습니다.');
+		location.href = `/info/deleteAnswer?qnaCode=${qnaCode}&answerCode=${answerCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+	}
+}
+
+
+
+
+
+
+
 
 
 

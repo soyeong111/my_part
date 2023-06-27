@@ -49,13 +49,13 @@ public class IntercepterConfig implements WebMvcConfigurer {
 			.addPathPatterns("/mMember/**"
 							, "/mBook/**"
 							, "/mClub/**"
-							, "/mGoods/**")
+							, "/mCart/**"
+							, "/mBuy/**")
 			.excludePathPatterns("/**/*Ajax"
 								, "/mBook/regBookRecord"
 								, "/mCart/updateCartRegCnt"
 								, "/mCart/deleteCart"
-								, "/mCart/deleteCarts"
-								);
+								, "/mCart/deleteCarts");
 		
 		registry.addInterceptor(getAdminMenuIntercepter())
 			.addPathPatterns("/aBook/**"

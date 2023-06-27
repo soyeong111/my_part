@@ -16,9 +16,11 @@
 		<div class="row body-div">
 			<div class="col">
 				<form class="row g-2" th:action="@{/info/insertNotice}" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<div class="col-12">
 						<label for="" class="form-label">제목</label>
-						<input type="text" class="form-control"  name="noticeTitle" placeholder="제목을 작성해주세요.">
+						<input type="text" class="form-control" name="noticeTitle" placeholder="제목을 작성해주세요.">
 					</div>
 					<div class="col-12">
 						<label for="" class="form-label">첨부 파일</label>

@@ -1,7 +1,7 @@
 setFinalPrice();
 
 //장바구니 버튼 클릭 시 실행
-function regCart(memId, goodsCode){
+function regCart(memId, goodsCode, cartRegCnt, mainMenuCode, subMenuCode){
 	if(memId == 'anonymousUser'){
 		const result = confirm('먼저 로그인 해야 합니다.\n로그인 하시겠습니까?');
 		
@@ -13,12 +13,12 @@ function regCart(memId, goodsCode){
 		return ;
 	}
 	
-	regCartAjax(goodsCode);
+	regCartAjax(goodsCode, mainMenuCode, subMenuCode);
 }
 
 
 //장바구니 등록 ajax
-function regCartAjax(goodsCode){
+function regCartAjax(goodsCode, mainMenuCode, subMenuCode){
 	const cartCnt = document.querySelector('#goodsCnt').value;
 
 	//ajax start
@@ -30,7 +30,7 @@ function regCartAjax(goodsCode){
 			const result1 = confirm('장바구니에 상품을 추가했습니다.\n장바구니 목록 페이지로 가시겠습니까?');
 			
 			if(result1){
-				location.href = '/mCart/cartList';
+				location.href = `/mCart/cartList?mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 			}
 			
 	   },

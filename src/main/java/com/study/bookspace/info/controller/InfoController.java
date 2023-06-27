@@ -72,7 +72,7 @@ public class InfoController {
 	public String sendQuestion(QnaVO qnaVO, AnswerVO answerVO,SubMenuVO subMenuVO) {
 		qnaService.insertQna(qnaVO);
 		
-		return "redirect:/info/qna";
+		return "redirect:/info/qna?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	@GetMapping("/qnaDetail")
@@ -131,9 +131,9 @@ public class InfoController {
 		}
 	  
 	  @GetMapping("/deleteAnswer")
-	  public String deleteAnswer(String answerCode, AnswerVO answerVO) {
+	  public String deleteAnswer(String answerCode, AnswerVO answerVO, SubMenuVO subMenuVO) {
 		  answerService.deleteAnswer(answerCode);
-		  return "redirect:/info/qnaDetail?qnaCode=" + answerVO.getQnaCode();
+		  return "redirect:/info/qnaDetail?qnaCode=" + answerVO.getQnaCode()+ "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	  }
 	
 	
@@ -159,9 +159,10 @@ public class InfoController {
 		System.out.println("ㅇ야야ㅑ야야야ㅑ야야야야ㅑ야야야야야야ㅑ");
 		
 		searchQnaVO.setSearchKeyword(searchKeyword);
+		System.out.println(searchKeyword);
 		qnaVO.setSearchQnaVO(searchQnaVO);
-		System.out.println(qnaVO);
-		model.addAttribute("search", qnaService.searchQna(qnaVO));
+		System.out.println(searchKeyword);
+		model.addAttribute("qnaList", qnaService.searchQna(qnaVO));
 		
 		return "content/info/qna_list";
 	}
@@ -186,29 +187,29 @@ public class InfoController {
 	}
 	
 	@PostMapping("/insertNotice")
-	public String insertNotice(NoticeVO noticeVO, Authentication authentication) {
+	public String insertNotice(NoticeVO noticeVO, Authentication authentication, SubMenuVO subMenuVO) {
 		User user =(User)authentication.getPrincipal();
 		noticeVO.setMemId(user.getUsername());
 		
 		answerService.insertNotice(noticeVO);
-		return "redirect:/info/notice";
+		return "redirect:/info/notice?&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	@GetMapping("/deleteNotice")
-	public String deleteNotice(String noticeNo) {
+	public String deleteNotice(String noticeNo, SubMenuVO subMenuVO) {
 		answerService.deleteNotice(noticeNo);
 		
-		return "redirect:/info/notice";
+		return "redirect:/info/notice?&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	@PostMapping("/updateNotice")
-	public String updateNotice(NoticeVO noticeVO) {
+	public String updateNotice(NoticeVO noticeVO, SubMenuVO subMenuVO) {
 		System.out.println(111);
 		
 		answerService.updateNotice(noticeVO);
 		
 		System.out.println(noticeVO);
-		return "redirect:/info/noticeDetail?noticeNo=" +noticeVO.getNoticeNo();
+		return "redirect:/info/noticeDetail?noticeNo=" +noticeVO.getNoticeNo() + "&mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 
 	

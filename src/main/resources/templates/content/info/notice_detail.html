@@ -22,18 +22,16 @@
   <span>작성일 :  [[${noticeVO.noticeCreateDate}]]</span>
   </div>
 	<div style="border-bottom-style:solid; border-bottom-width: 2px; border-bottom-color: gray;">
-		<div id="noticeContent" class="aContent">
-				[[${noticeVO.noticeContent}]]
-		</div>
+		<div id="noticeContent" class="aContent">[[${noticeVO.noticeContent}]]</div>
 	
 	</div>
 </div>
 
 	
 		<div  th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style=" text-align: center; margin-top: 3rem;">
-				<input type="button" class="btn custom-btn" value="수정" th:onclick="updateNotice(this, [[${noticeVO.noticeNo}]])">
+				<input type="button" class="btn custom-btn" value="수정" th:onclick="updateNotice(this, [[${noticeVO.noticeNo}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]])">
 
-				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="|location.href='@{/info/deleteNotice(noticeNo=${noticeVO.noticeNo})}'|">
+				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="deleteNotice([[${noticeVO.noticeNo}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 		</div>
 
 	
