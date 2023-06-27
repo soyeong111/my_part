@@ -23,16 +23,20 @@ public class SecurityConfig {
 									, "/book/newBook"
 									, "/book/bestBook"
 									, "/book/bookDetail"
-									, "/book/imgListAjax"
+//									, "/book/imgListAjax"
 									, "/club/clubInfo"
 									, "/club/club"
 									, "/club/clubDetail"
 									, "/goods/goodsList"
+									, "/goods/goodsDetail"
+									, "/goods/newGoods"
+									, "/goods/bestGoods"
 									, "/info/libraryIntro"
 									, "/info/qna"
 									, "/info/qnaDetail"
 									, "/info/wayToLibrary"
 									, "/info/notice"
+									, "/info/noticeDetail"
 									, "/info/searchQna"
 									, "/room/readingRoomInfo"
 									, "/room/readingRoom").permitAll()
@@ -41,7 +45,15 @@ public class SecurityConfig {
 									, "/aClub/**"
 									, "/aGoods/**"
 									, "/aLibrary/**"
-									, "/aOrder/**").hasRole("ADMIN")
+									, "/aOrder/**"
+//									, "/info/sendAnswer"
+//									, "/info/qnaAnswer"
+									, "/info/updateAnswer"
+									, "/info/deleteAnswer"
+									, "/info/noticeForm"
+									, "/info/insertNotice"
+									, "/info/deleteNotice"
+									, "/info/updateNotice").hasRole("ADMIN")
 					.requestMatchers("/member/**").hasRole("ANONYMOUS")
 					.anyRequest().authenticated()
 				.and()
