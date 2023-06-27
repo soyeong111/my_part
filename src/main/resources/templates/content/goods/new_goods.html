@@ -6,7 +6,7 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<link rel="stylesheet" href="/css/content/goods/goods.css">
+	<link rel="stylesheet" href="/css/content/goods/new_goods.css">
 </th:block>
 
 <th:block layout:fragment="content">
@@ -21,7 +21,7 @@
 	  	<th:block th:each="goods : ${newGoodsList}">
 				<div class="col">
 					<div class="newGoods">
-					  <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode})}">
+					  <a th:href="@{/goods/goodsDetail(goodsCode=${goods.goodsCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
 					  		<img th:src="${'/image/goods/'+goods.goodsImgList[0].attachedFileName}" class="newGoodsImg"  style="margin-top: 7rem;">
 					  	</a>
 					  <div class="col mt-4">

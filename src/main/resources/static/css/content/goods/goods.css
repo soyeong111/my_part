@@ -80,58 +80,10 @@ a.button {
 
 
 
-.btnLightOrder1{
-	background: #A3D8F4;
-}
-
-.btnLightOrder1.btnBorder {
-  box-shadow: 0px 0px 0px 0px #9AB3F5;
-}
-
-.btnLightOrder1.btnBorder:hover {
-  box-shadow: 0px 0px 0px 5px #9AB3F5;
-  
-}
-
-
-
-.btnLightOrder2{
-	background: #9AB3F5;
-}
-
-.btnLightOrder2.btnBorder {
-  box-shadow: 0px 0px 0px 0px #7579E7;
-}
-
-.btnLightOrder2.btnBorder:hover {
-  box-shadow: 0px 0px 0px 5px #7579E7;
-  
-}
-
-
-
-.btnLightOrder3{
-	background: #7579E7;
-}
-
-.btnLightOrder3.btnBorder {
-  box-shadow: 0px 0px 0px 0px #655DBB;
-}
-
-.btnLightOrder3.btnBorder:hover {
-  box-shadow: 0px 0px 0px 5px #655DBB;
-  
-}
-
-
-
 .btnLightBlue {
   background: #6c96d8;
 }
 
-.goodsListDiv{
-	margin-left: 3rem;
-}
 
 /* BORDER */
 
@@ -308,7 +260,7 @@ li {
 
 
 #index_03{
-    width: 1100px;
+    width: 100%;
     height: 400px;
    
 }
@@ -334,14 +286,6 @@ li {
     text-align: center;
 }
 
-.bestGoodsHead{
- 	margin-top: 3rem;
-   color: #4F709C;
-    line-height: 100px;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-}
 
 .orderHead{
 	 color: #4F709C;
@@ -354,42 +298,12 @@ li {
 }
 
 
-.newGoodsHead{
-   color: #4F709C;
-    line-height: 100px;
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 3rem;
-	
-}
-
-
-
-
-.orderT{
-	width: 80%;
-	margin: auto;
-}
-
-
-.regGoodsBtn{
-	background-color: #4e68b9;
-	width: 9rem;
-}
-
-.regGoodsBtn:hover{
-	background-color: #6c96d8;
-	border-color: #6c96d8;
-}
-
-
-
 
 #slide3{
      margin-top: 5rem;
     height: 300px;
     width: 100%;
+    margin-left: 6rem;
     
 }
 
@@ -400,7 +314,7 @@ li {
 
 
 .zzz{
-	width: 1100px;
+	width: 100%;
 	height: 300px;
 }
 
@@ -409,32 +323,9 @@ li {
 	height: 200px;
 }
 
-.newGoods{
-	width: 14rem;
-	height: 15rem;
-	margin-top: 4rem;
-}
 
-.newGoodsImg{
-	width: 13rem;
-	height: 14rem;
-	margin-top: 4rem;
-}
 
-.bestGoodsDiv{
-	margin: auto;
-	margin-bottom: 12rem;
-	width: 80%;
-	border-right: thin;
-}
 
-.material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 48
-}
 
 
 .recGoods{
@@ -444,27 +335,6 @@ li {
 
 
 
-.goodsN{
-	text-align: center;
-}
-
-
-.newGoodsDiv{
-	margin-top: 3rem;
-	margin-bottom: 14rem;
-	width: 90%;
-	margin: auto;
-	height: 65rem;
-}
-
-
-
-
-.goodsDetailDiv{
-	margin-top: 12rem;
-	margin-bottom: 12rem;
-	margin-left: 13rem;
-}
 
 
 .goodsManageHead{
@@ -475,6 +345,13 @@ li {
     font-size: 2rem;
     font-weight: bold;
     text-align: center;
+}
+
+
+.newGoods{
+	width: 14rem;
+	height: 15rem;
+	margin-top: 4rem;
 }
 
 

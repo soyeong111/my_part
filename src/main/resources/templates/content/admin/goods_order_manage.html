@@ -6,17 +6,17 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<link rel="stylesheet" href="/css/content/goods/goods.css">
+	<link rel="stylesheet" href="/css/content/goods/goods_order_manage.css">
 </th:block>
 
 <th:block layout:fragment="content">
  		<div class="member-title">배송 관리</div>
- 		<div>
+ 		<!-- <div>
  			  <form action="/sendMessage" method="post">
         <input type="text" name="message" placeholder="Enter a message">
         <input type="submit" value="Send">
     </form>
- 		</div>
+ 		</div> -->
  			<div class="row">
  				<div class="col">
  					<table class="table orderT" style="margin-top: 8rem;">
@@ -42,24 +42,24 @@
 							    <td style="padding-top: 1rem;" th:text="${order.buyPrice}"></td>
 							    <td style="padding-top: 1rem;" th:text="${order.buyDate}"></td>
 						
-							   	<td style="padding-left: 6rem;">
+							   	<td>
 								   	<th:block  th:if="${order.orderStr == '주문접수'}">
-									   	<a title="Button border lightblue" class="button btnBorder btnLightOrder1" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	<a  class="button btnBorder btnLightOrder1" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
 									   	[[${order.orderStr}]]
 									   	</a>
 								   	</th:block>
 								   	<th:block  th:if="${order.orderStr == '배송준비'}">
-									   	<a title="Button border lightblue" class="button btnBorder btnLightOrder2" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	<a class="button btnBorder btnLightOrder2" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
 									   	[[${order.orderStr}]]
 									   	</a>
 								   	</th:block>
 								   	<th:block  th:if="${order.orderStr == '배송중'}">
-									   	<a title="Button border lightblue" class="button btnBorder btnLightOrder3" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	<a class="button btnBorder btnLightOrder3" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
 									   	[[${order.orderStr}]]
 									   	</a>
 								   	</th:block>
 								   	<th:block  th:if="${order.orderStr == '배송완료'}">
-									   	<a title="Button border lightblue" class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem; margin-left: 2rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	<a class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
 									   	[[${order.orderStr}]]
 									   	</a>
 								   	</th:block>

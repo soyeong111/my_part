@@ -47,14 +47,6 @@ public class RoomController {
 		return "content/room/reading_room";
 	}
 	
-	// 열람실 좌석 클릭 시 ajax 실행
-	@ResponseBody
-	@PostMapping("/readingRoomAjax")
-	public SeatVO readingRoomAjax(String seatCode) {
-		
-		return roomService.getSeatDetail(seatCode);
-		
-	}
 	
 	
 	//입실 버튼 클릭시 좌석 등록

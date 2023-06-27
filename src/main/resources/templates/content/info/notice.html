@@ -51,7 +51,7 @@
    	
    			<!-- 관리자 권한을 가진 사용자만 보이는 버튼 -->
 	<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="margin-top: 4rem;">
-			<input class="btn custom-btn" type="button" value="공지 작성" th:onclick="|location.href='@{/info/noticeForm}'|">
+			<input class="btn custom-btn" type="button" value="공지 작성" th:onclick="|location.href='@{/info/noticeForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}'|">
 		</div>
    	
    </div>

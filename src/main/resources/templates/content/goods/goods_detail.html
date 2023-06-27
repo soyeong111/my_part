@@ -6,7 +6,7 @@
 
 <!--연결해야 할 외부 css파일  -->
 <th:block layout:fragment="content_css">
-	<link rel="stylesheet" href="/css/content/goods/goods.css">
+	<link rel="stylesheet" href="/css/content/goods/goods_detail.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 </th:block>
 
@@ -50,7 +50,7 @@
 				
 						<div class="col" style=" margin-left: 3rem;">
 						<span class="material-symbols-outlined" style="color: #4e68b9; margin-top: 6px; margin-right: 1rem; padding-bottom: 0;">shopping_cart</span>
-						 <a style="width: 9rem;" class="btn custom-btn"  th:onclick="regCart([[${#authentication.name}]], [[${goods.goodsCode}]],[[${cartRegCnt}]]);">구 매 하 기</a>
+						 <a style="width: 9rem;" class="btn custom-btn"  th:onclick="regCart([[${#authentication.name}]], [[${goods.goodsCode}]],[[${cartRegCnt}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">구 매 하 기</a>
 						</div>
 					</div>
 				</div>
