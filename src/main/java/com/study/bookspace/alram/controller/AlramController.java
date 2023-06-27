@@ -31,12 +31,6 @@ public class AlramController {
 		return alramService.getAlramList(memId);
 	}
 	
-	//알림읽음 Ajax
-	//@ResponseBody
-	//@RequestMapping("/updateAlramACheckAjax")
-	//public void updateAlramACheckAjax(AlramVO alramVO) {
-	//	alramService.updateAlramACheck(alramVO);
-	//}
 	
 	//알림삭제 Ajax
 	@ResponseBody
@@ -47,8 +41,8 @@ public class AlramController {
 	
 	//알람 상세 조회 Ajax
 	@ResponseBody
-	@RequestMapping("/getAlramMessage")
-	public AlramVO getAlramMessage(String alramCode, AlramVO alramVO) {
+	@RequestMapping("/getAlramMessageAjax")
+	public AlramVO getAlramMessageAjax(String alramCode, AlramVO alramVO) {
 		alramService.updateAlramACheck(alramVO);
 		return alramService.getAlramDetail(alramCode);
 	}
