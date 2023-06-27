@@ -9,8 +9,7 @@
 <th:block layout:fragment="content">
 
 	<div class="search">
-		<form th:action="@{/book/bookList}" method="post"
-			th:object="${searchBookVO}" id="searchForm">
+		<form th:action="@{/book/bookList}" method="post" th:object="${searchBookVO}" id="searchForm">
 			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}"> 
 			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}"> 
 			<input type="hidden" id="nowPageNum" name="nowPageNum" value="1"> 
@@ -68,8 +67,7 @@
 				<th:block
 					th:each="pageNum : ${#numbers.sequence(searchBookVO.startPageNum, searchBookVO.endPageNum)}">
 					<a th:classappend="${pageNum == searchBookVO.nowPageNum} ? pagination-select" 
-					href="javascript:void(0);"
-					th:onclick="page([[${pageNum}]]);">
+					href="javascript:void(0);" th:onclick="page([[${pageNum}]]);">
 						<span th:text="${pageNum}"></span>
 					</a>
 				</th:block>
