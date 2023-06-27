@@ -90,13 +90,26 @@ function drawBookSearchModal(book_list) {
 // 책 선택
 function bookSeleted(book_img, book_title, book_author, book_code) {
 	document.querySelector('#book-img img').src = "/image/book/" + book_img;
-	document.querySelector('.month-book-title').textContent = book_title;
-	document.querySelector('.month-book-autho').textContent = book_author;
-	const club_code = document.querySelector('#clubCode').value;
+	const change_div = document.querySelector('.change-div');
+	change_div.replaceChildren();
 	
+	let str = '';
+	str += `<div class="col-12">                                                 `;
+	str += `	<div class="text-center month-book-title">${book_title}</div>  `;
+	str += `</div>                                                               `;
+	str += `<div class="col-12">                                                 `;
+	str += `	<div class="text-center month-book-autho">${book_author}</div> `;
+	str += `</div>                                                               `;
+   
+   change_div.insertAdjacentHTML('afterbegin', str);
+   
+                                                                                 
+	const club_code = document.querySelector('#clubCode').value;
+	console.log(111111);
 	
 	close_book_search_modal();
 	
+	console.log(111111);
 	//ajax start
 	$.ajax({
 	   url: '/club/updateClubBookAjax', //요청경로
@@ -105,6 +118,7 @@ function bookSeleted(book_img, book_title, book_author, book_code) {
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 	   data: {'clubCode':club_code, 'thisBookCode':book_code}, //필요한 데이터
 	   success: function(result) {
+		
 	   },
 	   error: function() {
 	      alert('실패');
@@ -256,46 +270,8 @@ function memberOnly(memId, clubCode, mainMenuCode, subMenuCode) {
   // Ajax end
 }
 
-getWeather();
 
-function getWeather(){
-	document.addEventListener("DOMContentLoaded", getWeather);
 
-		function getWeather() {
-			fetch('https://goweather.herokuapp.com/weather/Ulsan')
-			.then((response) => response.json())
-			.then((data) => {
-				document.getElementById("temperature").innerHTML = data['temperature'];
-				document.getElementById("wind").innerHTML = data['wind'];
-				document.getElementById("description").innerHTML = data['description'];
-
-				if (data['description'] === 'Sunny') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/sunny.png")';
-				}
-				else if (data['description'] === 'Cloudy') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/cloudy.png")';
-				}
-				else if (data['description'] === 'Rainy') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
-				}
-				else if (data['description'] === 'Partly cloudy') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
-				}
-				else if (data['description'] === 'Clear') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
-				}
-				else if (data['description'] === 'Snowy') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
-				}
-				else if (data['description'] === 'Windy') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
-				}
-				else if (data['description'] === 'Foggy') {
-					document.querySelector('.weather-img').style.backgroundImage = 'url("/image/weather/rainy.png")';
-				}
-			});
-		}
-}
 
 
 

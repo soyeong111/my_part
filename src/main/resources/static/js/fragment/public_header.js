@@ -117,7 +117,7 @@ function deleteAlram(alramCode) {
 function openAlramMessage(alramCode, acheck) {
   // 알림 내용 가져오기 AJAX 요청
   $.ajax({
-    url: '/alram/getAlramMessage',
+    url: '/alram/getAlramMessageAjax',
     type: 'post',
     async: true,
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',

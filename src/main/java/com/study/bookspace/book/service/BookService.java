@@ -137,6 +137,6 @@ public interface BookService {
 	String getReturnDuedate(String borrowCode);
 	
 //	페이징 처리 위한 전체 도서 개수
-	int getBookCnt();
+	int getBookCnt(SearchBookVO searchBookVO);
 	
 }

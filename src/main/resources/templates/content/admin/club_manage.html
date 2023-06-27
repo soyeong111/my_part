@@ -12,11 +12,18 @@
 		<div class="row" style="margin-top: 20px;">
 			<div class="col-12">
 				<table class="table table-striped table-hover text-center mb-0">
+					<colgroup>
+						<col width="10%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+						<col width="20%">
+						<col width="10%">
+					</colgroup>
 					<thead class="table-head" style="background-color: #BAD0E8; font-weight: bold;">
 						<tr>
 							<td>No</td>
 							<td>북클럽</td>
-							<td>인원수</td>
 							<td>클럽장</td>
 							<td>생성 날짜</td>
 							<td>최근 활동 날짜</td>
@@ -29,7 +36,6 @@
 							<td style="text-align: left; padding-left: 3rem;">
 								<img width="40px;" th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}">
 							[[${club.clubName}]]</td>
-							<td style="padding-top:1rem;">[[${club.clubMemCnt}]]</td>
 							<td style="padding-top:1rem;">[[${club.memId}]]</td>
 							<td style="padding-top:1rem;">[[${club.clubCreateDate}]]</td>
 							<td style="padding-top:1rem;">[[${club.communityVO.regDate}]]</td>

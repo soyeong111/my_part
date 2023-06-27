@@ -118,7 +118,6 @@ function regClubValidate(){
 		result_clubCnt = false;
 	}
 
-	
 	//클럽 한줄소개
 	const club_short_info = document.querySelector('#clubShortInfo').value;
 	if(club_short_info == ''){

@@ -3,6 +3,7 @@ package com.study.bookspace.myMember.controller;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -61,6 +62,13 @@ public class MyMemberController {
 		model.addAttribute("nowYear", nowYear);
 		model.addAttribute("yearList", DateUtil.getFiveYears());
 		return "content/my/my_profile";
+	}
+	
+	// 차트 데이터 받기
+	@ResponseBody
+	@PostMapping("/getChartDataAjax")
+	public List<Map<String, Object>> getChartDataAjax(String nowYear) {
+		return myMemberService.getMyBorrowCntListForChart(nowYear);
 	}
 	
 	// 내 프로필 사진 등록

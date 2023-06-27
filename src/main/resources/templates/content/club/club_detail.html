@@ -72,7 +72,7 @@
 								<img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
 				            </div>
 				            <div class="rank_img_box">
-				            	<img alt="" src="/image/club/dog.jpg">
+				            	<img alt="" th:src="@{'/image/member/' + ${rank.memberVO.memImgUrl}}">
 				            </div>
 							<div class="mem-info1">[[${rank.memberVO.memName}]]</div>
 							<div class="mem-info2">점수  [[${rank.boardNum}]]</div>
@@ -99,29 +99,27 @@
 							</div>
 						</div>
 						<th:block th:if="${thisBook != null}">
-						<div class="row">
-							<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
-								<img alt="" th:src="${'/image/book/' + thisBook.imgList[0].attachedFileName}" width="90%;" style="border-radius: 6px;">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<div class="row">
-									<div class="col text-center month-book-title" th:text="${thisBook.bookTitle}"></div>
-								</div>
-								<div class="row">
-									<div class="col text-center month-book-autho" th:text="${thisBook.bookAuthor}"></div>
+							<div class="row">
+								<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
+									<img alt="" th:src="${'/image/book/' + thisBook.imgList[0].attachedFileName}" width="90%;" height="300px;" style="border-radius: 6px;">
 								</div>
 							</div>
-						</div>
+							<div class="row change-div">
+								<div class="col-12">
+									<div class="text-center month-book-title" th:text="${thisBook.bookTitle}"></div>
+								</div>
+								<div class="col-12">
+									<div class="text-center month-book-autho" th:text="${thisBook.bookAuthor}"></div>
+								</div>
+							</div>
 						</th:block>
 						<th:block  th:unless="${thisBook != null}">
 							<div class="row">
 								<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
-									<img alt="" src="/image/club/regBook.PNG" width="90%;" style="border-radius: 6px;">
+									<img alt="" src="/image/club/regBook.PNG" width="90%;" height="300px;" style="border-radius: 6px;">
 								</div>
 							</div>
-							<div class="row" style="margin-top: 1.7rem; font-weight: bold; text-align: center">
+							<div class="row change-div" style="margin-top: 0.2rem; font-weight: bold; text-align: center">
 								<div class="col">
 									이달의 책을 등록해주세요.
 								</div>
@@ -153,7 +151,7 @@
 												</tr>
 												<tr>
 													<td>
-														<img alt="" src="/image/club/dog.jpg" width="50px;" class="book-rank-img">
+														<img alt="" th:src="@{'/image/member/' + ${rank['MEM_IMG_URL']}}" width="50px;" class="book-rank-img">
 													</td>
 													<td>[[${rank['MEM_NAME']}]]</td>
 													<td>[[${rank['BORROW_CNT']}]]권</td>
@@ -217,22 +215,6 @@
 	</div>
 
 </th:block>
-
-<div class="weather-div">
-		<div class="weather">
-			<div class="weather-img"></div>
-			<h1 id="temperature"></h1>
-			<div class="wind-container">
-				<img src="/image/weather/wind.png" class="wind-icon">
-				<div>
-					<p class="wind" id="wind"></p>
-					<p class="wind">Wind Speed</p>
-					</div>
-			</div>
-		</div>
-<span id="description"></span>
-		<span id="description"></span>
-	</div>	
 
 
 

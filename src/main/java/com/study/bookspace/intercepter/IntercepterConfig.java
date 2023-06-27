@@ -40,15 +40,22 @@ public class IntercepterConfig implements WebMvcConfigurer {
 								, "/info/updateAnswer"
 								, "/info/deleteAnswer"
 								, "/info/qnaAnswer"
+								, "/info/insertNotice"
+								, "/info/deleteNotice"
+								, "/info/updateNotice"
 								, "/room/checkOutSeat");
 		
 		registry.addInterceptor(getMyMenuIntercepter())
 			.addPathPatterns("/mMember/**"
 							, "/mBook/**"
 							, "/mClub/**"
-							, "/mGoods/**")
+							, "/mBuy/**")
 			.excludePathPatterns("/**/*Ajax"
-								, "/mBook/regBookRecord");
+								, "/mBook/regBookRecord"
+								, "/mCart/updateCartRegCnt"
+								, "/mCart/deleteCart"
+								, "/mCart/deleteCarts"
+								);
 		
 		registry.addInterceptor(getAdminMenuIntercepter())
 			.addPathPatterns("/aBook/**"
@@ -56,7 +63,14 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/aGoods/**"
 							, "/aMember/**"
 							, "/aLibrary/**")
-			.excludePathPatterns("/**/*Ajax");
+			.excludePathPatterns("/**/*Ajax"
+								, "/aGoods/deleteGoodsCategory"
+								, "/aGoods/regGoodsProcess"
+								, "/aGoods/updateGoods"
+								, "/aGoods/deleteGoods"
+								, "/aGoods/updateOrder"
+								, "/aLibrary/allCheckOut"
+								, "/aBook/regBookProcess");
 		
 	}
 	
