@@ -79,12 +79,13 @@
 					</div>
 					<div class="card-body">
 						<div>
-							<select class="form-select" th:onchange="year_change(this, [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+							<select class="form-select" id="year-select"
+								th:onchange="year_change(this, [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 								<option th:each="year : ${yearList}" th:text="${year}" th:selected="${year == nowYear}"></option>
 							</select>
 						</div>
 						<div>
-							<canvas id="myChart"></canvas>
+							<canvas id="profile-chart" class="w-100"></canvas>
 						</div>
 					</div>
 				</div>

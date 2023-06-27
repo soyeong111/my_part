@@ -49,7 +49,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 			.addPathPatterns("/mMember/**"
 							, "/mBook/**"
 							, "/mClub/**"
-							, "/mGoods/**")
+							, "/mBuy/**")
 			.excludePathPatterns("/**/*Ajax"
 								, "/mBook/regBookRecord"
 								, "/mCart/updateCartRegCnt"
