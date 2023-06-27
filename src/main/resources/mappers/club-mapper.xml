@@ -488,6 +488,12 @@
 		SELECT COUNT(BOARD_NUM) 
 		FROM COMMUNITY_BOARD
 		WHERE CLUB_CODE = #{clubCode}
+		<if test="searchOption == 'title'">
+			 AND LOWER(BOARD_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
+		</if>
+		 <if test="searchOption == 'writer'">
+			 AND LOWER(BOARD_WRITER) LIKE '%' || LOWER(#{searchText}) || '%'
+		</if>
 	</select>
 	
 	<select id="getMemListByClub" resultMap="bookClubMember">

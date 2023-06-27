@@ -72,16 +72,18 @@
 		</div>
 		<div class="row btn-div">
 			<div class="col">
-				<input type="button" class="btn com-btn" value="글쓰기" th:onclick="|location.href='@{/club/regBoardForm(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+				<input type="button" class="btn custom-btn" value="글쓰기" th:onclick="|location.href='@{/club/regBoardForm(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 			</div>
 		</div>
+		
+		
 		
 		
 		
 		<div class="row pagination">
 			<div class="col" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 				<th:block th:if="${communityVO.prevPageFlag}">
-					<a href="javascript:void(0);" th:onclik="page([[${communityVO.startPageNum - 1}]])"><</a>
+					<a href="javascript:void(0);" th:onclick="page([[${communityVO.startPageNum - 1}]])"><</a>
 				</th:block>
 				<th:block
 					th:each="pageNum : ${#numbers.sequence(communityVO.startPageNum, communityVO.endPageNum)}">

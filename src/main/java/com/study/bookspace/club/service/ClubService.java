@@ -99,7 +99,7 @@ public interface ClubService {
 	boolean isClubMember(BookClubMemberVO bookClubMemberVO);
 	
 	//전체 게시글 수 조회
-	int getBoardCnt(String clubCode);
+	int getBoardCnt(CommunityVO communityVO);
 	
 	//조회수 증가
 	int updateReadCnt(String boardNum);

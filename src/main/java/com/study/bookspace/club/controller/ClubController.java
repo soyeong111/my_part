@@ -290,7 +290,7 @@ public class ClubController {
 	public String community(SubMenuVO subMenuVO, Model model, CommunityVO communityVO) {
 		System.out.println("@@@@@@@@@@@@@2" + communityVO);
 		//전체 게시글 수 조회
-		int totalDataCnt = clubService.getBoardCnt(communityVO.getClubCode());
+		int totalDataCnt = clubService.getBoardCnt(communityVO);
 		
 		//전체 데이터 수 세팅
 		communityVO.setTotalDataCnt(totalDataCnt);
