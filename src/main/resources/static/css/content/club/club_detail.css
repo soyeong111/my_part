@@ -28,48 +28,7 @@ span{
 	text-align: right;
 	margin-right: 6rem;
 }
-.weather-div {
-	text-align: center;
-	margin-top: 100px;
-	font-family: Arial, sans-serif;
-}
 
-.weather {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	color: white;
-	background-color: gray;
-	width:470px;
-}
-
-.weather-img {
-	width: 100px;
-	height: 100px;
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position: center;
-}
-
-.wind-container {
-	display: flex;
-	align-items: center;
-	margin-top: 20px;
-}
-
-.wind-icon {
-	width: 50px;
-}
-
-.wind {
-	font-size: 24px;
-	margin-left: 10px;
-	font-weight:bold;
-}
-
-.weather h1{
-	font-weight:bold;
-}
 
 .book-div{
 	font-weight: bold;
