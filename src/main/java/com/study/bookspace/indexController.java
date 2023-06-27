@@ -31,18 +31,11 @@ public class indexController {
 	
 	@GetMapping("/")
 	public String index(SubMenuVO subMenuVO, SearchBookVO searchBookVO, Model model, NoticeVO noticeVO) {
-		System.out.println(subMenuVO);
 		model.addAttribute("clubList", clubService.getClubList());
 		model.addAttribute("noticeList", answerService.noticeForPublic(noticeVO));
 		model.addAttribute("bookList", bookService.getNewBookList());
 		model.addAttribute("recordList", myBookService.getBookRecordList());
-		
 		return "content/main";
-	}
-	
-	@GetMapping("/pythonChart")
-	public String pythonChart() {
-		return "content/python_chart";
 	}
 	
 	// 접근 제한 화면으로
