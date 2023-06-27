@@ -11,36 +11,7 @@
 	text-align: center;
 }
 
-.weather-div {
-	text-align: center;
-	margin-top: 100px;
-	font-family: Arial, sans-serif;
-}
 
-
-.weather-img {
-	width: 100px;
-	height: 100px;
-	background-repeat: no-repeat;
-	background-size: contain;
-	background-position: center;
-}
-
-.weather-icon{
-	width: 170px;
-	margin-top: 30px;
-}
-
-.weather h1{
-	font-size: 80px;
-	font-weight: bold;
-}
-
-.weather h5{
-	font-size: 25px;
-	font-weight: bold;
-	margin-top: 30px;
-}
 
 .first-row{
 	margin-bottom: 4rem;
