@@ -39,12 +39,12 @@
 </div>
 		<div  th:if="${#authentication.name == qna.memId}">
 			<div th:if="${qna.isAdminAnswer == 'N' }" style=" text-align: center;">
-				<input type="button" class="btn custom-btn" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]]);">
-				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
+				<input type="button" class="btn custom-btn" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}'|">
 			</div>
 		</div>
 		<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="margin-bottom: 2rem; text-align: right;">
-			<input type="button" class="btn custom-btn-del" value="강제 삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
+			<input type="button" class="btn custom-btn-del" value="강제 삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}'|">
 		</div>
 	
 	
@@ -77,7 +77,7 @@
 		</div>	
 		
 		<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="text-align: right;">
-				<input class="btn custom-btn"  type="button" value="수정"  th:onclick="updateAnswer(this, [[${answer.answerCode}]], [[${answer.qnaCode}]]);"> 
+				<input class="btn custom-btn"  type="button" value="수정"  th:onclick="updateAnswer(this, [[${answer.answerCode}]], [[${answer.qnaCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);"> 
 				<input class="btn custom-btn-del" type="button" value="삭제" th:onclick="|location.href='@{/info/deleteAnswer(qnaCode=${answer.qnaCode}, answerCode=${answer.answerCode},mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}'|">
 		</div>
 		

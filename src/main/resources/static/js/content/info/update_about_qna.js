@@ -1,6 +1,6 @@
 
 
-function updateQna(selectedTag,  qnaCode){
+function updateQna(selectedTag,  qnaCode, mainMenuCode, subMenuCode){
 	//수정 버튼 클릭 시
 	if(selectedTag.value == '문의 수정'){
 		//클릭한 수정 버튼에서 댓글 내용이 있는 태그 찾아가기
@@ -20,6 +20,8 @@ function updateQna(selectedTag,  qnaCode){
 		let str = ``;
 		str += `<form id="updateForm" action="/info/updateQna" method="post">`;
 		str += `<input type="hidden" value="${qnaCode}" name="qnaCode">`;
+		str += `<input type="hidden" value="${mainMenuCode}" name="mainMenuCode">`;
+		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
 		str += `<textarea class="form-control" required rows="2" cols="50" name="qnaTitle" style="resize: none;">${qnaTitle}</textarea>`;
 		str += `<textarea class="form-control" required  rows="10" cols="50" name="qnaContent" style="resize: none; margin-top:1rem; margin-bottom: 2rem;">${qnaContent}</textarea>`;
 		str += `</form>`;
@@ -40,7 +42,7 @@ function updateQna(selectedTag,  qnaCode){
 
 
 
-function updateAnswer(selectedTag, answerCode, qnaCode){
+function updateAnswer(selectedTag, answerCode, qnaCode, mainMenuCode, subMenuCode){
 	console.log(answerCode);
 	console.log(qnaCode);
 	//수정 버튼 클릭 시
@@ -59,6 +61,8 @@ function updateAnswer(selectedTag, answerCode, qnaCode){
 		str += `<form id="updateAnswerForm" action="/info/updateAnswer" method="post">`;
 		str += `<input type="hidden" value="${qnaCode}" name="qnaCode">`;
 		str += `<input type="hidden" value="${answerCode}" name="answerCode">`;
+		str += `<input type="hidden" value="${mainMenuCode}" name="mainMenuCode">`;
+		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
 		str += `<textarea  class="form-control" required rows="10" cols="50" name="answerContent" style="resize: none;" >${answerContent}</textarea>`;
 		str += `</form>`;
 		

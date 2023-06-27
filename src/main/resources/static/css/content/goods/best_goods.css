@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.bestGoodsDiv{
+	margin: auto;
+	margin-bottom: 12rem;
+	width: 80%;
+	border-right: thin;
+}
+
+.bestGoodsHead{
+ 	margin-top: 3rem;
+   color: #4F709C;
+    line-height: 100px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+
+
+
+

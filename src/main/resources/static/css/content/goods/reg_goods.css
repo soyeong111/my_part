@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+
+
+
+.regGoodsBtn{
+	background-color: #4e68b9;
+	width: 9rem;
+}
+
+.regGoodsBtn:hover{
+	background-color: #6c96d8;
+	border-color: #6c96d8;
+}

@@ -31,7 +31,7 @@
 						<input id="goodsCateName" name="goodsCateName" type="text" class="form-control" placeholder="추가할 카테고리명 입력">
 					</div>
 					<div class="col-2 d-grid">
-						<button onclick="regCategory();" type="button" class="btn custom-btn-del mb-3">
+						<button onclick="regCategory();" type="button" class="btn custom-btn mb-3">
 							등 록
 						</button>
 					</div>
@@ -66,7 +66,7 @@
 					<tbody>
 						<th:block th:if="${#lists.size(cateList) == 0}">
 							<tr>
-								<td colspan="4">등록된 카테고리가 존재하지 않습니다.</td>
+								<td colspan="5">등록된 카테고리가 존재하지 않습니다.</td>
 							</tr>
 						</th:block>
 						<th:block th:unless="${#lists.size(cateList) == 0}">
@@ -86,7 +86,8 @@
 								</td>
 								<td>[[${category.goodsCateOrderNo}]]</td>
 								<td>
-									<input type="button" value="삭제" class="btn custom-btn-del" th:onclick="|location.href='@{/aGoods/deleteGoodsCategory(goodsCateCode=${category.goodsCateCode})}';|">
+									<input type="button" value="삭제" class="btn custom-btn-del" 
+									th:onclick="|location.href='@{/aGoods/deleteGoodsCategory(goodsCateCode=${category.goodsCateCode})}';|">
 								</td>
 							</tr>
 						</th:block>
