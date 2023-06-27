@@ -99,29 +99,27 @@
 							</div>
 						</div>
 						<th:block th:if="${thisBook != null}">
-						<div class="row">
-							<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
-								<img alt="" th:src="${'/image/book/' + thisBook.imgList[0].attachedFileName}" width="90%;" style="border-radius: 6px;">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col">
-								<div class="row">
-									<div class="col text-center month-book-title" th:text="${thisBook.bookTitle}"></div>
-								</div>
-								<div class="row">
-									<div class="col text-center month-book-autho" th:text="${thisBook.bookAuthor}"></div>
+							<div class="row">
+								<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
+									<img alt="" th:src="${'/image/book/' + thisBook.imgList[0].attachedFileName}" width="90%;" height="300px;" style="border-radius: 6px;">
 								</div>
 							</div>
-						</div>
+							<div class="row change-div">
+								<div class="col-12">
+									<div class="text-center month-book-title" th:text="${thisBook.bookTitle}"></div>
+								</div>
+								<div class="col-12">
+									<div class="text-center month-book-autho" th:text="${thisBook.bookAuthor}"></div>
+								</div>
+							</div>
 						</th:block>
 						<th:block  th:unless="${thisBook != null}">
 							<div class="row">
 								<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
-									<img alt="" src="/image/club/regBook.PNG" width="90%;" style="border-radius: 6px;">
+									<img alt="" src="/image/club/regBook.PNG" width="90%;" height="300px;" style="border-radius: 6px;">
 								</div>
 							</div>
-							<div class="row" style="margin-top: 1.7rem; font-weight: bold; text-align: center">
+							<div class="row change-div" style="margin-top: 0.2rem; font-weight: bold; text-align: center">
 								<div class="col">
 									이달의 책을 등록해주세요.
 								</div>

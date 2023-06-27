@@ -90,13 +90,26 @@ function drawBookSearchModal(book_list) {
 // 책 선택
 function bookSeleted(book_img, book_title, book_author, book_code) {
 	document.querySelector('#book-img img').src = "/image/book/" + book_img;
-	document.querySelector('.month-book-title').textContent = book_title;
-	document.querySelector('.month-book-autho').textContent = book_author;
-	const club_code = document.querySelector('#clubCode').value;
+	const change_div = document.querySelector('.change-div');
+	change_div.replaceChildren();
 	
+	let str = '';
+	str += `<div class="col-12">                                                 `;
+	str += `	<div class="text-center month-book-title">${book_title}</div>  `;
+	str += `</div>                                                               `;
+	str += `<div class="col-12">                                                 `;
+	str += `	<div class="text-center month-book-autho">${book_author}</div> `;
+	str += `</div>                                                               `;
+   
+   change_div.insertAdjacentHTML('afterbegin', str);
+   
+                                                                                 
+	const club_code = document.querySelector('#clubCode').value;
+	console.log(111111);
 	
 	close_book_search_modal();
 	
+	console.log(111111);
 	//ajax start
 	$.ajax({
 	   url: '/club/updateClubBookAjax', //요청경로
@@ -105,6 +118,7 @@ function bookSeleted(book_img, book_title, book_author, book_code) {
 	   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 	   data: {'clubCode':club_code, 'thisBookCode':book_code}, //필요한 데이터
 	   success: function(result) {
+		
 	   },
 	   error: function() {
 	      alert('실패');

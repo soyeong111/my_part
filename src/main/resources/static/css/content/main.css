@@ -55,16 +55,12 @@ hr{
 	border: rgb(246, 246, 246);
 }
 
- body {
-    margin: 40px 10px;
-    padding: 0;
-    font-size: 14px;
-  }
 
-  #calendar {
+#calendar {
     margin: 0 auto;
     height: 440px;
-  }
+    font-size: 12px;
+}
 
 .card-title{
 	font-size: 37px;
