@@ -19,29 +19,25 @@ function init() {
 
 // 차트 그리기
 function drawChart(chart_data) {
-	console.log(chart_data);
 	const chart_canvas = document.querySelector('#profile-chart');
-	
 	const datasets = [];
-	
-	for (const i = 1; i <= 12; i++) {
-		
-	}
-	
+	chart_data.forEach((cate_data, index) => {
+		const setting = {};
+		setting['label'] = cate_data['CATE'];
+		const data = [];
+		for (let i = 1; i <= 12; i++) {
+			data.push(cate_data[i]);
+		}
+		setting['data'] = data;
+		setting['backgroundColor'] = `rgba(${250 - (index * 20)}, ${20 + (index * 20)}, ${70 + (index * 10)}, 0.2)`;
+		setting['borderColor'] = `rgba(${255 - (index * 20)}, ${25 + (index * 20)}, ${75 + (index * 10)})`;
+		setting['borderWidth'] = 1;
+		datasets.push(setting);
+	});
 	new Chart(chart_canvas, {
 		type: 'bar',
 		data: {
-			datasets: [{
-				label: 'My First Dataset',
-				data: [1,2,5,7,2],
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)'
-				],
-				borderColor: [
-					'rgb(255, 99, 132)'
-				],
-				borderWidth: 1
-			}],
+			datasets: datasets,
 			labels: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 		},
 		options: {
@@ -49,7 +45,6 @@ function drawChart(chart_data) {
 				x: {
 					stacked: true,
 					ticks: {
-						stepSize: 1,
 						callback: function(value) {
 							return value + 1 + '월';
 						}
@@ -57,7 +52,10 @@ function drawChart(chart_data) {
 				},
 				y: {
 					stacked: true,
-					beginAtZero: true
+					beginAtZero: true,
+					ticks: {
+						stepSize: 1
+					}
 				}
 			}
 		}

@@ -55,8 +55,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 								, "/mBook/regBookRecord"
 								, "/mCart/updateCartRegCnt"
 								, "/mCart/deleteCart"
-								, "/mCart/deleteCarts"
-								);
+								, "/mCart/deleteCarts");
 		
 		registry.addInterceptor(getAdminMenuIntercepter())
 			.addPathPatterns("/aBook/**"
