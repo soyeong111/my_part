@@ -40,6 +40,11 @@ public class indexController {
 		return "content/main";
 	}
 	
+	@GetMapping("/pythonChart")
+	public String pythonChart() {
+		return "content/python_chart";
+	}
+	
 	// 접근 제한 화면으로
 	@GetMapping("/accessDeny")
 	public String accessDeny() {

@@ -75,38 +75,57 @@
 				<input type="button" class="btn com-btn" value="글쓰기" th:onclick="|location.href='@{/club/regBoardForm(clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 			</div>
 		</div>
+		
+		
+		
 		<div class="row pagination">
 			<div class="col" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 				<th:block th:if="${communityVO.prevPageFlag}">
-					<a th:href="@{/club/community(nowPageNum=${communityVO.startPageNum - 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}"><</a>
+					<a href="javascript:void(0);" th:onclik="page([[${communityVO.startPageNum - 1}]])"><</a>
 				</th:block>
 				<th:block
 					th:each="pageNum : ${#numbers.sequence(communityVO.startPageNum, communityVO.endPageNum)}">
-					<a th:href="@{/club/community(nowPageNum=${pageNum}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}"><span
-						th:text="${pageNum}"></span></a>
+					<a th:classappend="${pageNum == communityVO.nowPageNum} ? pagination-select" 
+					href="javascript:void(0);"  th:onclick="page([[${pageNum}]]);">
+					<span th:text="${pageNum}"></span></a>
 				</th:block>
 				<th:block th:if="${communityVO.nextPageFlag}">
-					<a th:href="@{/club/community(nowPageNum=${communityVO.endPageNum + 1}, clubCode=${clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">></a>
+					<a href="javascript:void(0);"
+	               th:onclick="page([[${communityVO.endPageNum + 1}]]);">></a>
 				</th:block>
 			</div>
 		</div>
-		<form class="row" id="searchForm" th:action="@{/club/community}" method="post" th:object="${communityVO}">
-			<input type="hidden" name="clubCode" th:value="${clubCode}">
-			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
-			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
-			<div class="offset-4 col-1">
-				<select class="form-select" th:field="*{searchOption}">
-					<option value="title">제목</option>
-					<option value="writer">작성자</option>
-				</select>
+		
+		
+		
+		
+		
+		
+		
+		
+			<form class="row" id="searchForm" th:action="@{/club/community}" method="post" th:object="${communityVO}">
+				<input type="hidden" name="clubCode" th:value="${clubCode}">
+				<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+				<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
+				<input type="hidden" id="nowPageNum" name="nowPageNum" value="1"> 
+	         	<input type="hidden" id="searchOption" name="searchOption" th:value="${communityVO.searchOption}"> 
+	         	<input type="hidden" id="searchText" name="searchText" th:value="${communityVO.searchText}">
+			</form>
+			
+			<div class="row">
+				<div class="offset-4 col-1">
+					<select class="form-select" th:value="${communityVO.searchOption}" id="searchOption2">
+						<option value="title">제목</option>
+						<option value="writer">작성자</option>
+					</select>
+				</div>
+				<div class="col-2">	
+					<input type="text" class="form-control" th:value="${communityVO.searchText}" id="searchText2">
+				</div>
+				<div class="col-2">
+					<a><img src="/image/search.png" width="28px;" onclick="searchForm();" style="cursor: pointer;"></a>
+				</div>
 			</div>
-			<div class="col-2">	
-				<input type="text" class="form-control" th:field="*{searchText}">
-			</div>
-			<div class="col-2">
-				<a><img src="/image/search.png" width="28px;" onclick="searchForm();" style="cursor: pointer;"></a>
-			</div>
-		</form>
 		</div>
 	</div>
 </th:block>
