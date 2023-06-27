@@ -18,7 +18,7 @@ function regCategory(){
 	
 	//ajax start
 	$.ajax({
-	   url: '/goods/regGoodsCategoryAjax', //요청경로
+	   url: '/aGoods/regGoodsCategoryAjax', //요청경로
 	   type: 'post',
 	   async: false, 
 	   data: {'goodsCateName':goodsCateNameTag.value}, //필요한 데이터
@@ -45,7 +45,7 @@ function checkCateName(goodsCateName){
 	
 	//ajax start
 	$.ajax({
-	   url: '/goods/checkCateNameAjax', 
+	   url: '/aGoods/checkCateNameAjax', 
 	   type: 'post',
 	   async: false, 
 	   data: {'goodsCateName': goodsCateName}, 
@@ -68,7 +68,7 @@ function checkCateName(goodsCateName){
 function selectGoodsCateListAjax(){
 	//ajax start
 	$.ajax({
-	   url: '/goods/selectGoodsCateListAjax', //요청경로
+	   url: '/aGoods/selectGoodsCateListAjax', //요청경로
 	   type: 'post',
 	   async: false,
 	   data: {}, //필요한 데이터
@@ -123,7 +123,7 @@ function selectGoodsCateListAjax(){
 function changeIsUse(goodsCateCode){
 	//ajax start
 	$.ajax({
-	   url: '/goods/changeIsUseAjax', //요청경로
+	   url: '/aGoods/changeIsUseAjax', //요청경로
 	   type: 'post',
 	   data: {'goodsCateCode':goodsCateCode}, //필요한 데이터
 	   success: function(result) {

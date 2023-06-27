@@ -12,7 +12,7 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="club-detail-div">
-		<div class="club-name-div">
+		<div class="title-div">
 			북클럽 <input type="hidden" id="clubCode" th:value="${club.clubCode}">
 			<div>
 				<th:block th:if="${club.memId != #authentication.name}">
@@ -72,7 +72,7 @@
 								<img th:if="${state.index == 2}" src="/image/rank/bronze.png" alt="Image 3" width="25px;">
 				            </div>
 				            <div class="rank_img_box">
-				            	<img alt="" src="/image/club/dog.jpg">
+				            	<img alt="" th:src="@{'/image/member/' + ${rank.memberVO.memImgUrl}}">
 				            </div>
 							<div class="mem-info1">[[${rank.memberVO.memName}]]</div>
 							<div class="mem-info2">점수  [[${rank.boardNum}]]</div>
@@ -92,12 +92,13 @@
 									</div>
 									<div class="col-5 text-end d-grid">
 										<th:block th:if="${club.memId == #authentication.name}">
-											<input type="button" class="btn custom-btn ms-2 btn-sm" value="등 록" data-bs-toggle="modal" data-bs-target="#book-search-modal">
+											<input type="button" class="btn reg-btn ms-2 btn-sm" value="등 록" data-bs-toggle="modal" data-bs-target="#book-search-modal">
 										</th:block>
 									</div>
 								</div>
 							</div>
 						</div>
+						<th:block th:if="${thisBook != null}">
 						<div class="row">
 							<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
 								<img alt="" th:src="${'/image/book/' + thisBook.imgList[0].attachedFileName}" width="90%;" style="border-radius: 6px;">
@@ -113,6 +114,19 @@
 								</div>
 							</div>
 						</div>
+						</th:block>
+						<th:block  th:unless="${thisBook != null}">
+							<div class="row">
+								<div class="col d-flex justify-content-center align-items-center" id="book-img" style="padding-left: 0px; padding-right: 0px;">
+									<img alt="" src="/image/club/regBook.PNG" width="90%;" style="border-radius: 6px;">
+								</div>
+							</div>
+							<div class="row" style="margin-top: 1.7rem; font-weight: bold; text-align: center">
+								<div class="col">
+									이달의 책을 등록해주세요.
+								</div>
+							</div>
+						</th:block>
 					</div>
 				</div>
 				<div class="row">
@@ -139,7 +153,7 @@
 												</tr>
 												<tr>
 													<td>
-														<img alt="" src="/image/club/dog.jpg" width="50px;" class="book-rank-img">
+														<img alt="" th:src="@{'/image/member/' + ${rank['MEM_IMG_URL']}}" width="50px;" class="book-rank-img">
 													</td>
 													<td>[[${rank['MEM_NAME']}]]</td>
 													<td>[[${rank['BORROW_CNT']}]]권</td>
@@ -153,22 +167,17 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<th:block th:if="${club.memId == #authentication.name}">
+			<div class="col">
+				<th:block th:if="${club.memId == #authentication.name}">
 					<div class="row manage-div">
-						<div class="offset-10 col-2">
-							<input type="button" value="북클럽 수정" class="btn custom-btn" th:onclick="|location.href='@{/club/updateClubForm(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
-							<input type="button" value="북클럽 삭제" class="btn custom-btn" th:onclick="deleteClub([[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+						<div class="col">
+							<input type="button" value="북클럽 수정" class="btn update-btn" th:onclick="|location.href='@{/club/updateClubForm(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+							<input type="button" value="북클럽 삭제" class="btn delete-btn" th:onclick="deleteClub([[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 						</div>
 					</div>
 				</th:block>
+			</div>
 		</div>
-
-
-
-
-
 	</div>
 
 	<!-- 모델 태그 -->

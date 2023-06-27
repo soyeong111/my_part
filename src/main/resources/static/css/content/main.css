@@ -1,1 +1,88 @@
 @charset "UTF-8";
+
+
+.whole-div{
+	width: 70%;
+	margin: 0 auto;
+}
+
+.first-row{
+	margin-bottom: 4rem;
+}
+
+hr{
+	color: black;
+	margin-top: 2rem;
+	width: 100%;
+}
+
+
+.short-cut-list{
+	font-weight: bold;
+	font-size: 22px;
+	text-align: center;
+}
+
+.image-wrapper{
+	height: 130px;
+}
+
+.notice-zone{
+	margin-top: 4rem;
+}
+
+
+.sub-title {
+	font-size: 25px;
+	font-weight: bold;
+	margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 3rem;
+    padding-top: 1.5rem;
+    padding-left: 1rem;
+}
+
+
+.more-link {
+  margin-left: auto;
+}
+
+.table{
+	font-size: 20px;
+	font-weight: bold;
+	border: rgb(246, 246, 246);
+}
+
+ body {
+    margin: 40px 10px;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  #calendar {
+    margin: 0 auto;
+    background-color: #e2ebfe;
+    height: 440px;
+  }
+
+.card-title{
+	font-size: 37px;
+	font-weight: bold;
+	padding-left: 1.5rem;
+	padding-top: 1rem;
+}
+
+.text-body-secondary{
+	font-size: 30px;
+	padding-left: 2.5rem;
+}
+
+.card-text{
+	font-size: 30px;
+	font-style: italic;
+	margin-top: 1rem;
+	padding-left: 2rem;
+}
+

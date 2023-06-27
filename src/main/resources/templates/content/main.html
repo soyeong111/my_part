@@ -5,12 +5,15 @@
 	layout:decorate="~{fragment/main_layout}">
 <th:block layout:fragment="content_css">
 	<link rel="stylesheet" href="/css/content/main.css">
+	<link href='/css/content/admin/main.min.css' rel='stylesheet' />
 </th:block>
 <th:block layout:fragment="content">
 	<div class="main-div">
 		<form th:action="@{/book/bookList}" method="post" th:object="${searchBookVO}">
+		<input type="hidden" name="mainMenuCode" value="MAIN_MENU_002">
+		<input type="hidden" name="subMenuCode" value="SUB_MENU_005">
         <div class="row p-5">
-            <div class="offset-2 col-2">
+            <div class="offset-1 col-2">
                 <select class="form-select" th:field="*{searchOption}">
                     <option value="title">제목</option>
                     <option value="author">저자</option>
@@ -23,10 +26,202 @@
                 <input type="submit" value="검색" class="btn btn-primary custom-btn">
             </div>
         </div>
-    </form>
+   		</form>
+   		<div class="whole-div">
+	    <div class="row main-div" style="margin-top: 2rem;">
+	    	<div class="col-4" id='calendar'></div>
+			<div class="col-8">
+				<div id="carouselExampleAutoplaying" class="carousel slide"
+					data-bs-ride="carousel">
+					<div class="carousel-inner">
+						<div th:each="record, iterStat : ${recordList}">
+							<div class="carousel-item" data-bs-interval="7000"
+								th:classappend="${iterStat.index == 0} ? 'active'">
+								<div class="card mb-3" style="max-height: 100%;">
+									<div class="row g-0">
+										<div class="col-md-4">
+											<img
+												th:src="@{'/image/book/' + ${record.bookVO.imgList[0].attachedFileName}}"
+												class="img-fluid rounded-start" style="height: 440px;">
+										</div>
+										<div class="col-md-8">
+											<div class="card-body">
+												<div class="card-title">[[${record.bookVO.bookTitle}]]</div>
+												<div class="text-body-secondary">[[${record.bookVO.bookAuthor}]]</div>
+												<div class="card-text" style="font-weight: bold;">[[${record.bookReview}]]</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+			</div>
+			
+	    </div>
+	    <hr>
+	    <div class="row main-div">
+			<div class="row short-cut-list">
+				<div class="col item1">
+					<div class="image-wrapper">
+						<a
+							th:href="@{/book/bestBook(mainMenuCode='MAIN_MENU_002', subMenuCode='SUB_MENU_007')}">
+							<img alt="" src="/image/main/bestBook.PNG" width="120px;">
+						</a>
+					</div>
+					<div class="text-wrapper">
+						<a
+							th:href="@{/book/bestBook(mainMenuCode='MAIN_MENU_002', subMenuCode='SUB_MENU_007')}">
+							<span>베스트셀러</span>
+						</a>
+					</div>
+				</div>
+				<div class="col item2">
+					<div class="image-wrapper">
+						<a
+							th:href="@{/book/newBook(mainMenuCode='MAIN_MENU_002', subMenuCode='SUB_MENU_006')}">
+							<img alt="" src="/image/main/newBook.PNG" width="120px;">
+						</a>
+					</div>
+					<div class="text-wrapper">
+						<a
+							th:href="@{/book/newBook(mainMenuCode='MAIN_MENU_002', subMenuCode='SUB_MENU_006')}">
+							<span>이달의 신작</span>
+						</a>
+					</div>
+				</div>
+				<div class="col item3">
+					<div class="image-wrapper">
+						<a
+							th:href="@{/goods/bestGoods(mainMenuCode='MAIN_MENU_005', subMenuCode='SUB_MENU_014')}">
+							<img alt="" src="/image/main/goods.PNG" width="120px;">
+						</a>
+					</div>
+					<div class="text-wrapper">
+						<a
+							th:href="@{/goods/bestGoods(mainMenuCode='MAIN_MENU_005', subMenuCode='SUB_MENU_014')}">
+							<span>베스트상품</span>
+						</a>
+					</div>
+				</div>
+				<div class="col item4">
+					<div class="image-wrapper">
+						<a
+							th:href="@{/club/club(mainMenuCode='MAIN_MENU_004', subMenuCode='SUB_MENU_011')}">
+							<img alt="" src="/image/main/club.PNG" width="120px;">
+						</a>
+					</div>
+					<div class="text-wrapper">
+						<a
+							th:href="@{/club/club(mainMenuCode='MAIN_MENU_004', subMenuCode='SUB_MENU_011')}">
+							<span>북클럽</span>
+						</a>
+					</div>
+				</div>
+				<div class="col item5">
+					<div class="image-wrapper">
+						<a
+							th:href="@{/room/readingRoom(mainMenuCode='MAIN_MENU_003', subMenuCode='SUB_MENU_009')}">
+							<img alt="" src="/image/main/room.PNG" width="120px;">
+						</a>
+					</div>
+					<div class="text-wrapper">
+						<a
+							th:href="@{/room/readingRoom(mainMenuCode='MAIN_MENU_003', subMenuCode='SUB_MENU_009')}">
+							<span>열람실</span>
+						</a>
+					</div>
+				</div>
+				<div class="col item6">
+					<div class="image-wrapper">
+						<a
+							th:href="@{/info/wayToLibrary(mainMenuCode='MAIN_MENU_001', subMenuCode='SUB_MENU_002')}">
+							<img alt="" src="/image/main/way.PNG" width="120px;">
+						</a>
+					</div>
+					<div class="text-wrapper">
+						<a
+							th:href="@{/info/wayToLibrary(mainMenuCode='MAIN_MENU_001', subMenuCode='SUB_MENU_002')}">
+							<span>찾아오는길</span>
+						</a>
+					</div>
+				</div>
+				<div class="col item7">
+					<div class="image-wrapper">
+						<a
+							th:href="@{/mBook/myBorrow(mainMenuCode='MAIN_MENU_007', subMenuCode='SUB_MENU_018')}">
+							<img alt="" src="/image/main/borrow.PNG" width="120px;">
+						</a>
+					</div>
+					<div class="text-wrapper">
+						<a
+							th:href="@{/mBook/myBorrow(mainMenuCode='MAIN_MENU_007', subMenuCode='SUB_MENU_018')}">
+							<span>다른 도서관</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row main-div">
+			<div class="col-9" style="padding-right: 0px;">
+				<div class="new-list">
+					<div class="sub-title">
+						  <span>이달의 책</span>
+						  <a th:href="@{/book/newBook(mainMenuCode='MAIN_MENU_002', subMenuCode='SUB_MENU_006')}" class="more-link"><span>+</span></a>
+						</div>
+					<div th:each="book, state : ${bookList}" class="d-inline-block" th:if="${state.count} &lt;= 4">
+						 <a th:href="@{/book/bookDetail(bookCode=${book.bookCode}, 
+	        							mainMenuCode='MAIN_MENU_002', subMenuCode='SUB_MENU_006')}">
+							<img th:src="${'/image/book/' + book.imgList[0].attachedFileName}" width="220px;" height="320px;" style="padding-right: 0.5rem;">
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-3">
+	    		<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+					<div class="carousel-inner">
+					<div class="sub-title" style="font-weight: bold; font-size: 25px;">북클럽에 가입해보세요</div>
+						<div th:each="club, iterStat : ${clubList}" class="carousel-item"
+							data-bs-interval="5000"
+							th:classappend="${iterStat.index == 0} ? 'active'">
+							<div class="in-list text-center">
+							<a th:href="@{/club/club(mainMenuCode='MAIN_MENU_004', subMenuCode='SUB_MENU_011')}">
+								<img th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}" style="width:100%; border-radius: 20px; height: 320px;">
+								<div style="font-size:23px; font-weight: bold">[[${club.clubName}]]</div>
+								<div>[[${club.clubShortInfo}]]</div></a>
+							</div>
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+	    	</div>
+		</div>
+		</div>
 	</div>
 </th:block>
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/main.js"></script>
+	<script src='/js/content/admin/main.min.js'></script>
 </th:block>
 </html>

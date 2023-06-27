@@ -15,6 +15,7 @@ import com.study.bookspace.book.vo.BookVO;
 import com.study.bookspace.book.vo.BorrowVO;
 import com.study.bookspace.book.vo.ImgVO;
 import com.study.bookspace.book.vo.ReserveVO;
+import com.study.bookspace.book.vo.SearchBookVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 
 import jakarta.annotation.Resource;
@@ -136,6 +137,36 @@ public class AdminBookController {
 		
 	}
 	
+//	도서 목록 조회
+	@RequestMapping("/bookList")
+	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO) {
+		
+		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
+	
+		
+		
+		//전체 게시글 수 조회
+		int totalDataCnt = bookService.getBookCnt(searchBookVO);
+		
+		System.out.println(totalDataCnt + "dfsfsdfdsfsfsd");
+		//전체 데이터 수 세팅
+		searchBookVO.setTotalDataCnt(totalDataCnt);
+		
+		//페이징 정보 세팅
+		searchBookVO.setPageInfo();
+		
+		
+		System.out.println(searchBookVO + "ddddddddddd");
+		
+		
+		List<BookVO> bookList = bookService.getBookListForUser(searchBookVO);
+		model.addAttribute("bookList", bookList);
+		
+		
+		return "content/book/book_list";
+		
+	}
+
 	
 	
 }

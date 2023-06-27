@@ -5,8 +5,6 @@ function acceptMember(acceptCode, clubCode) {
     title: '승인하시겠습니까?',
     icon: 'question',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: '확인',
     cancelButtonText: '취소'
   }).then((result) => {
@@ -48,8 +46,6 @@ function refuse(acceptCode, clubCode) {
     title: '거절하시겠습니까?',
     icon: 'question',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: '확인',
     cancelButtonText: '취소'
   }).then((result) => {

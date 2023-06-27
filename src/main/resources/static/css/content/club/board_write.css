@@ -1,24 +1,29 @@
 @charset "UTF-8";
 
-.board-write-div{
-	width: 90%;
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+	margin-bottom: 4rem;
 }
 
-.write-div{
-	margin-bottom: 7rem; 
-	margin-top: 3rem; 
-	margin-left: 2rem;  
-	font-size: 20px; 
-	font-weight: bold;
+.body-div{
+	margin-top: 2rem;
+	margin-left: 4rem;
+	margin-right: 23rem;
+}
+
+table{
+	border: 1px solid lightgray;
 }
 
 tr td:first-child {
 	font-weight: bold;
-}
-
-.table-div{
-	margin-left: 2rem;
-	margin-right: 2rem;
+    text-align: center;
+    width: 10%;
+    background-color: #e2ebfe;
+    vertical-align: middle;
 }
 
 .com-btn{
@@ -27,4 +32,8 @@ tr td:first-child {
 	background-color: #6c96d8;
 	border-radius: 3%; 
 	color: white;
+}
+
+tr:nth-child(2) td:nth-child(2) {
+    padding-left: 0.7rem;
 }

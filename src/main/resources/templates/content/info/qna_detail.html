@@ -14,6 +14,7 @@
 <div class="public-title"> > Q & A 게시판 </div>
 
 <div class="qnaDetail">
+<div class="updateForm">
 
   <div class="aTitle">
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-right-quote" viewBox="0 0 16 16">
@@ -23,40 +24,39 @@
     [[${qna.qnaTitle}]]
   </div>
   <div class="aTitle2">
-  <span style="margin-left: 30rem;">	작성자 : [[${qna.memId}]]</span>
+  <span style="margin-left: 25rem;">	작성자 : [[${qna.memId}]]</span>
   <span>작성일 : [[${qna.qnaCreateDate}]]</span>
   <span>조회수 : [[${qna.qnaViewCnt}]]</span>
-
-	
-	
-  
   </div>
+	<div style="border-bottom-style:solid; border-bottom-width: 2px; border-bottom-color: gray; margin-bottom: 2rem;">
+		<div id="qnaContent" class="aContent">
+			[[${qna.qnaContent}]]
+		</div>
 	
-	<div id="qnaContent" class="aContent">
-		[[${qna.qnaContent}]]
 	</div>
 	
+
+</div>
 		<div  th:if="${#authentication.name == qna.memId}">
 			<div th:if="${qna.isAdminAnswer == 'N' }" style=" text-align: center;">
-				<input type="button" class="aBtn" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]] );">
-				<input type="button" class="aBtn" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
+				<input type="button" class="btn custom-btn" value="문의 수정" th:onclick="updateQna(this, [[${qna.qnaCode}]]);">
+				<input type="button" class="btn custom-btn-del" value="삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
 			</div>
 		</div>
 		<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="margin-bottom: 2rem; text-align: right;">
-			<input type="button" class="deleteBtn" value="강제 삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
+			<input type="button" class="btn custom-btn-del" value="강제 삭제" th:onclick="|location.href='@{/info/deleteQna(qnaCode=${qna.qnaCode})}'|">
 		</div>
 	
 	
 	<div>
 
 		<!-- 관리자 권한을 가진 사용자만 보이는 버튼 -->
-	<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+	<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" id="">
 
-	
-		<form th:action="@{/info/sendAnswer}" method="post">
+		<form th:action="@{/info/sendAnswer(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}" method="post">
 			<input type="hidden" th:value="${qna.qnaCode}" name="qnaCode">
 			<textarea class="form-control" required rows="10" cols="70" name="answerContent" id="uploadAnswerContent" style="resize: none;"></textarea>
-			<div style="text-align: center;"><input type="submit" value="답변 등록" class="aBtn" style="margin-top: 2rem;"></div>
+			<div style="text-align: center;"><input type="submit" value="답변 등록" class="btn custom-btn" style="margin-top: 2rem;"></div>
 		</form>
 	</div>
 	
@@ -69,16 +69,18 @@
 
 </span>
 	<span style="font-weight: bold; color: #2F58CD; margin-left:6px; ">관리자 [[${answer.memId}]] 의 답변</span>
-					
-						<div style="text-align: right;">[[${answer.answerCreateDate}]]</div>
-			<div style="margin-bottom: 10px; resize: none;  border-top: 2px solid gray;">
-						<div id="answerContent" style=" width:80%; margin: auto; height: auto; padding-top: 2rem; padding-bottom: 4rem;">[[${answer.answerContent}]]</div>
-				<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="text-align: right;">
-					<input class="aBtn"  type="button" value="수정"  th:onclick="updateAnswer(this, [[${answer.answerCode}]], [[${answer.qnaCode}]]);"> 
-					<input class="aBtn" type="button" value="삭제" th:onclick="|location.href='@{/info/deleteAnswer(qnaCode=${answer.qnaCode}, answerCode=${answer.answerCode})}'|">
-			</div>
-			</div>
+		<div id="adminUpdateAnswer">
+			<div style="text-align: right;">[[${answer.answerCreateDate}]]</div>
+			<div style="margin-bottom: 10px; resize: none;  border-top: 2px solid gray;"></div>
+			<div id="answerContent" style=" width:80%; margin: auto; height: auto; padding-top: 2rem; padding-bottom: 4rem;">[[${answer.answerContent}]]</div>
+			<div style="border-bottom-style:solid; border-bottom-width: 2px; border-bottom-color: gray; margin-bottom: 2rem;"></div>
+		</div>	
+		
+		<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" style="text-align: right;">
+				<input class="btn custom-btn"  type="button" value="수정"  th:onclick="updateAnswer(this, [[${answer.answerCode}]], [[${answer.qnaCode}]]);"> 
+				<input class="btn custom-btn-del" type="button" value="삭제" th:onclick="|location.href='@{/info/deleteAnswer(qnaCode=${answer.qnaCode}, answerCode=${answer.answerCode},mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}'|">
 		</div>
+		
 	</div>
 
 

@@ -25,6 +25,8 @@ import com.study.bookspace.club.vo.BookClubVO;
 import com.study.bookspace.club.vo.CommunityImageVO;
 import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
+import com.study.bookspace.info.service.AnswerService;
+import com.study.bookspace.info.vo.NoticeVO;
 import com.study.bookspace.menu.vo.SubMenuVO;
 import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.DateUtil;
@@ -44,6 +46,15 @@ public class ClubController {
 	
 	@Resource(name = "bookService")
 	private BookService bookService;
+	
+	//메인 테스트
+	@GetMapping("/maintest")
+	public String maintest(SubMenuVO subMenuVO, Model model) {
+		
+		
+		return "content/club/main_test";
+	}
+	
 	
 	//북클럽 이용안내
 	@GetMapping("/clubInfo")
@@ -124,12 +135,13 @@ public class ClubController {
 		//클럽 상세 조회
 		BookClubVO bookClubVO = clubService.getClubDetail(clubCode);
 		model.addAttribute("club", bookClubVO);
-		model.addAttribute("thisBook", clubService.getThisBookDetail(bookClubVO.getThisBookCode()));
+		if(bookClubVO.getThisBookCode() != null) {
+			model.addAttribute("thisBook", clubService.getThisBookDetail(bookClubVO.getThisBookCode()));
+		}
 		//클럽 활동 중인 회원수
 		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		//클럽 멤버 리스트 조회
 		model.addAttribute("memList", clubService.getMemListByClub(clubCode));
-		
 		//이번달
 		model.addAttribute("thisMonth", DateUtil.getMonth());
 		//독서 랭킹
@@ -337,7 +349,6 @@ public class ClubController {
 	public String boardDetail(Model model, CommunityVO communityVO, CommunityReplyVO communityReplyVO, SubMenuVO subMenuVO) {
 		clubService.updateReadCnt(communityVO.getBoardNum());
 		
-		//model.addAttribute("board", clubService.getBoardDetail(boardNum));
 		model.addAttribute("board", clubService.getBoardDetail(communityVO.getBoardNum()));
 		model.addAttribute("replyList", clubService.getReplyList(communityReplyVO.getBoardNum()));
 		

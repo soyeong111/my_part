@@ -316,7 +316,12 @@
 		WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
-	
+	<!-- 예약수 -->
+	<select id="getReserveCnt">
+		SELECT RESERVE_CNT
+		FROM BOOK
+		WHERE BOOK_CODE = #{bookCode}
+	</select>
 	
 
 	<!-- 도서 대여 개수 -->
@@ -622,7 +627,8 @@
 			FROM BOOK_BORROW BR, BOOK B, MEMBER M
 			WHERE BR.BOOK_CODE = B.BOOK_CODE
 			AND BR.MEM_ID = M.MEM_ID
-			AND BORROW_DATE &gt;= ADD_MONTHS(SYSDATE,-3) 
+			AND BORROW_DATE &gt;= ADD_MONTHS(SYSDATE,-3)
+			ORDER BY BR.BORROW_DATE DESC
 	</select>
 	
 	<!-- 도서관리) 예약 관리 -->
@@ -667,6 +673,7 @@
 		SELECT B.BOOK_TITLE
 			, RE.RESERVE_DATE
 			, RE.RESERVE_DUEDATE
+			, RE.BOOK_ALRAM_DATE
 			, RE.MEM_ID
 			, RE.RESERVE_CODE
 			, B.BOOK_CODE
@@ -750,7 +757,20 @@
 	    WHERE BOOK_CODE = #{bookCode}
 	</update>
 	
-		
+	
+	<!-- 예약 시작일 업데이트 -->
+	<update id="updateBookAlramDate">
+	    UPDATE BOOK_RESERVE
+	    SET BOOK_ALRAM_DATE = SYSDATE
+	    WHERE BOOK_CODE = #{bookCode}
+	</update>
+	
+		<!-- 예약 마감일 업데이트 -->
+	<update id="updateReserveDueDate">
+	    UPDATE BOOK_RESERVE
+	    SET RESERVE_DUEDATE = SYSDATE + 3
+	    WHERE BOOK_CODE = #{bookCode}
+	</update>
 		
 		<!-- 연장 버튼 클릭 후, 바뀐  기한 -->
 	<select id="getReturnDuedate" resultType="String">
@@ -765,6 +785,13 @@
 	<select id="getBookCnt" resultType="int">
 		SELECT COUNT(*) 
 		FROM BOOK
+		WHERE 1=1
+         <if test="searchOption == 'title'">
+        AND LOWER(BOOK_TITLE) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
+    <if test="searchOption == 'author'">
+        AND LOWER(BOOK_AUTHOR) LIKE '%' || LOWER(#{searchText}) || '%'
+    </if>
 	</select>
 	
 	
@@ -773,7 +800,7 @@
 		UPDATE BOOK_BORROW
 		SET OVERDUE = 'Y'
 		WHERE MEM_ID = #{memId}
-		AND BOOK_CODE = #{bookCode}
+		AND BORROW_CODE = #{borrowCode}
 	</update>
 	
 	<!-- 연체버튼 클릭 시, 회원 연체수-->

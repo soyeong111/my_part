@@ -1,6 +1,8 @@
 package com.study.bookspace.util;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class DateUtil {
 	
@@ -26,4 +28,22 @@ public class DateUtil {
 		Calendar cal = Calendar.getInstance();
 		return cal.get(Calendar.MONTH); 
 	}
+	
+	// 올해 연도만 받기 2023
+	public static int getNowYear() {
+		Calendar cal = Calendar.getInstance();
+		return cal.get(Calendar.YEAR);
+	}
+	
+	// 최근 5년 연도 리스트로 받기
+	public static List<String> getFiveYears() {
+		int nowYear = getNowYear();
+		List<String> fiveYears = new ArrayList<>();
+		fiveYears.add(nowYear + "");
+		for (int i = 1; i < 5; i++) {
+			fiveYears.add(nowYear - i + "");
+		}
+		return fiveYears;
+	}
+	
 }

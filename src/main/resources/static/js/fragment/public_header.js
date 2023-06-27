@@ -77,32 +77,42 @@ function updateAlramACheck(alramCode, acheck){
 }
 
 //쓰레기통(알림삭제) 클릭 시 
-function deleteAlram(alramCode){
-	const deleteMsg = confirm('알림을 삭제하시겠습니까?');
-	if(deleteMsg){
-		//ajax start
-		$.ajax({
-		   url: '/alram/deleteAlramAjax', //요청경로
-		   type: 'post',
-		   async : true,
-		   contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-		   data: {'alramCode':alramCode}, //필요한 데이터
-		   success: function(result) {
-			  alert('삭제가 완료되었습니다.');
-			  $('#openMsg').modal('hide');
-		      getAlramList();
-		   },
-		   error: function() {
-		      alert('실패');
-		   }
-		});
-		//ajax end
-		
-	}
-	
-	
+function deleteAlram(alramCode) {
+  Swal.fire({
+    text: '알림을 삭제하시겠습니까?',
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: "확인",
+    cancelButtonText: "취소"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // ajax start
+      $.ajax({
+        url: '/alram/deleteAlramAjax', // 요청경로
+        type: 'post',
+        async: true,
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: { 'alramCode': alramCode }, // 필요한 데이터
+        success: function (result) {
+          Swal.fire({
+            text: '삭제가 완료되었습니다.',
+            icon: 'success'
+          }).then(() => {
+            $('#openMsg').modal('hide');
+            getAlramList();
+          });
+        },
+        error: function () {
+          Swal.fire({
+            text: '실패',
+            icon: 'error'
+          });
+        }
+      });
+      // ajax end
+    }
+  });
 }
-
 // alramCnt 클릭 시 알림 내용 모달 열기
 function openAlramMessage(alramCode, acheck) {
   // 알림 내용 가져오기 AJAX 요청

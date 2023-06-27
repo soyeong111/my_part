@@ -12,20 +12,24 @@
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
 	<div class="board-detail-div">
-		<div class="community-head-div">
-			<div>커뮤니티</div>
-		</div>
+		<div class="title-div">북클럽</div>
+		<div class="public-title">게시글 상세</div>
+		<div class="board-title-div">
+			<th:block th:if="${board.clubNotice == 'Y'}">
+				<span class="notice-btn">공지</span>
+				[[${board.boardTitle}]]
+			</th:block>
+			</div>
 		<div class="detail-body">
 			<div class="row">
 				<div class="col">
-					<table class="table">
+					<table class="table first-table">
 						<tr>
 							<td>
 								<table>
-									<tr><td><span>[[${board.boardTitle}]]</span></td></tr>
 									<tr>
 										<td rowspan="2">
-											<img alt="" src="/image/rank/gold.png" width="70px">
+											<img alt="" th:src="@{'/image/member/' + ${board.memberVO.memImgUrl}}" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
 										</td>
 										<td>[[${board.boardWriter}]]</td>
 									</tr>
@@ -41,15 +45,15 @@
 						            <img th:src="${'/image/community/' + board.communityImageVO.bcAttachedFileName}" height="300px;">
 						        </div>
 						        <div class="content">
-						            <div>[[${board.boardContent}]]</div>
+						            [[${board.boardContent}]]
 						        </div>
 						    </td>
 						</tr>
 					</table>
 				</div>
 			</div>
-		<div class="row">
-			<div class="offset-10 col">
+		<div class="row board-btn-div">
+			<div class="col">
 				<th:block  th:if="${board.boardWriter == #authentication.name}">
 					<input type="button" class="btn update-btn" value="수정" th:onclick="|location.href='@{/club/updateBoardForm(boardNum=${board.boardNum}, clubCode=${board.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 					<input type="button" class="btn delete-btn" value="삭제" th:onclick="deleteBoard([[${board.boardNum}]],[[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
@@ -64,37 +68,44 @@
 					<input type="hidden" name="clubCode" th:value="${board.clubCode}">
 					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
 					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
-					<textarea rows="3" class="form-control" cols="100" name="replyContent"></textarea>
+					<textarea rows="3" class="form-control" cols="100" name="replyContent" style="resize: none;"></textarea>
 				</div>
-				<div class="offset-11">
-					<input sec:authorize="isAuthenticated()" class="btn custom-btn" type="submit" value="댓글 등록">
+				<div class="col btn-div">
+					<input sec:authorize="isAuthenticated()" class="btn com-btn" type="submit" value="댓글 등록">
 				</div>
 			</form>
 			<th:block th:each="reply : ${replyList}">
-				<table>
-					<tr>
-						<td>
-							<table>
-								<tr>
-									<td rowspan="2">이미지</td>
-									<td>[[${reply.replyWriter}]]</td>
-								</tr>
-								<tr>
-									<td>[[${reply.regDate}]]</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-					<tr>
-						<td>[[${reply.replyContent}]]</td>
-					</tr>
-					<tr>
-						<td th:if="${reply.replyWriter == #authentication.name}" class="offset-10" style="text-align: right;">
-							<input type="button" class="btn update-btn" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
-							<input type="button" class="btn delete-btn" value="삭제" th:onclick="deleteReply([[${reply.replyNum}]], [[${board.boardNum}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
-						</td>
-					</tr>
-				</table>
+				<div style="margin-top: 3rem;">
+					<table class="replyList-div">
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td rowspan="2">
+											<img alt="" th:src="@{'/image/member/' + ${reply.memberVO.memImgUrl}}" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
+										</td>
+										<td>[[${reply.replyWriter}]]</td>
+									</tr>
+									<tr>
+										<td style="font-weight: lighter;">[[${reply.regDate}]]</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr style="height: 1.5rem;">
+							<td></td>
+						</tr>
+						<tr>
+							<td>[[${reply.replyContent}]]</td>
+						</tr>
+						<tr>
+							<td th:if="${reply.replyWriter == #authentication.name}" class="offset-10" style="text-align: right;">
+								<input type="button" class="btn update-btn" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+								<input type="button" class="btn delete-btn" value="삭제" th:onclick="deleteReply([[${reply.replyNum}]], [[${board.boardNum}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+							</td>
+						</tr>
+					</table>
+				</div>
 			</th:block>
 		</div>
 		</div>
@@ -104,6 +115,7 @@
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/club/board_detail.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </th:block>
 
 </html>

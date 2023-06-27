@@ -10,22 +10,31 @@
 
 	<div class="search">
 		<form th:action="@{/book/bookList}" method="post"
-			th:object="${searchBookVO}">
-			<div class="row p-5">
-				<div class="col-2">
-					<select class="form-select" th:field="*{searchOption}">
-						<option value="title">제목</option>
-						<option value="author">저자</option>
-					</select>
-				</div>
-				<div class="col-8">
-					<input class="form-control" th:field="*{searchText}">
-				</div>
-				<div class="col-2 d-grid">
-					<input type="submit" value="검색" class="btn btn-primary custom-btn">
-				</div>
-			</div>
+			th:object="${searchBookVO}" id="searchForm">
+			<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}"> 
+			<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}"> 
+			<input type="hidden" id="nowPageNum" name="nowPageNum" value="1"> 
+			<input type="hidden" id="searchOption" name="searchOption" th:value="${searchBookVO.searchOption}"> 
+			<input type="hidden" id="searchText" name="searchText" th:value="${searchBookVO.searchText}">
 		</form>
+
+
+		<div class="row p-5">
+			<div class="col-2">
+				<select class="form-select" th:value="${searchBookVO.searchOption}" id="searchOption2">
+					<option value="title">제목</option> 
+					<option value="author">저자</option>
+				</select>
+			</div>
+			<div class="col-8">
+				<input class="form-control" th:value="${searchBookVO.searchText}" id="searchText2">
+			</div>
+			<div class="col-2 d-grid">
+				<input type="button" value="검색" class="btn btn-primary custom-btn" onclick="search();">
+			</div>
+		</div>
+
+
 	</div>
 
 
@@ -53,19 +62,20 @@
 			<div class="col"
 				style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
 				<th:block th:if="${searchBookVO.prevPageFlag}">
-					<a th:href="@{/book/bookList(nowPageNum=${searchBookVO.startPageNum - 1}, 
-						mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}"><</a>
+					<a href="javascript:void(0);"
+						th:onclick="page([[${searchBookVO.startPageNum - 1}]]);"><</a>
 				</th:block>
 				<th:block
 					th:each="pageNum : ${#numbers.sequence(searchBookVO.startPageNum, searchBookVO.endPageNum)}">
-					<a th:classappend="${pageNum == searchBookVO.nowPageNum} ? pagination-select" th:href="@{/book/bookList(nowPageNum=${pageNum},
-					mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">
+					<a th:classappend="${pageNum == searchBookVO.nowPageNum} ? pagination-select" 
+					href="javascript:void(0);"
+					th:onclick="page([[${pageNum}]]);">
 						<span th:text="${pageNum}"></span>
 					</a>
 				</th:block>
 				<th:block th:if="${searchBookVO.nextPageFlag}">
-					<a th:href="@{/book/bookList(nowPageNum=${searchBookVO.endPageNum + 1},
-					mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}">></a>
+					<a href="javascript:void(0);"
+					th:onclick="page([[${searchBookVO.endPageNum + 1}]]);">></a>
 				</th:block>
 			</div>
 		</div>
@@ -76,7 +86,7 @@
 
 
 <th:block layout:fragment="content_js">
-	<!-- <script type="text/javascript" src="/js/.js"></script> -->
+	<script type="text/javascript" src="/js/content/book/book_list.js"></script> 
 </th:block>
 </html>
 

@@ -71,6 +71,21 @@ function updateTotalPrice(updateCntTag){
 	
 }
 
+function setPrice(updateCntTag){
+	const updateCnt = updateCntTag.value;
+	
+	let originPrice = document.querySelector('#price').textContent;
+	
+	let originPrice_real = originPrice.replace(/[^0-9]/g, '');
+	let price = parseInt(originPrice_real);
+	
+	let finalPrice = price*updateCnt;
+	document.querySelector('#finalPrice').textContent =  '￦ ' + finalPrice.toLocaleString();;
+	
+	
+	
+}
+
 
 
 //모든 체크박스 컨트롤하는 체크박스
@@ -195,7 +210,7 @@ function buyKakao(){
 				console.log(rsp);
 			if (rsp.success) {
 				var msg = '결제가 완료되었습니다.';
-				msg += '결제 금액 : ' + rsp.paid_amount;
+				msg;
 				
 			buys();
   				

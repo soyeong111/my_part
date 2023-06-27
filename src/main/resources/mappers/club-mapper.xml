@@ -59,6 +59,7 @@
 		<result column="REG_DATE" 			property="regDate"/>
 		<result column="BOARD_NUM" 			property="boardNum"/>
 		<result column="CLUB_CODE" 			property="clubCode"/>
+		<association property="memberVO" resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityImageVO" id="communityImage">
@@ -312,6 +313,7 @@
 		WHERE BOARD_WRITER = MEM_ID
 		AND CLUB_CODE = #{clubCode}
 		AND CLUB_NOTICE = 'Y'
+		ORDER BY REG_DATE DESC
 	</select>
 	
 	
@@ -353,8 +355,11 @@
 			, CLUB_CODE
 			, COM_IMG_CODE
 			, BC_ATTACHED_FILE_NAME
-		FROM COMMUNITY_BOARD CB, COMMUNITY_IMAGE CM
+			, CLUB_NOTICE
+            , MEM_IMG_URL
+		FROM COMMUNITY_BOARD CB, COMMUNITY_IMAGE CM, MEMBER M
 		WHERE CB.BOARD_NUM = CM.BOARD_NUM(+)
+        AND CB.BOARD_WRITER = M.MEM_ID
 		AND CB.BOARD_NUM = #{boardNum}
 	</select>
 	
@@ -390,9 +395,11 @@
 		SELECT REPLY_NUM
 			, REPLY_CONTENT
 			, REPLY_WRITER
+			, MEM_IMG_URL
 			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
-		FROM COMMUNITY_REPLY
-		WHERE BOARD_NUM = #{boardNum}
+		FROM COMMUNITY_REPLY REPLY, MEMBER M
+		WHERE REPLY.REPLY_WRITER = M.MEM_ID
+		AND BOARD_NUM = #{boardNum}
 		ORDER BY REPLY_NUM DESC
 	</select>
 	
@@ -486,6 +493,7 @@
 	<select id="getMemListByClub" resultMap="bookClubMember">
 		SELECT ACCEPT_CODE
 		    , MEM_NAME
+		    , MEM_IMG_URL
 		FROM BOOK_CLUB_MEMBER CM, MEMBER M
 		WHERE CM.MEM_ID = M.MEM_ID
 		AND CLUB_CODE = #{clubCode}
@@ -525,12 +533,12 @@
 	</select>
 	
 	<select id="getRankingByClub" resultType="Map">
-		SELECT COUNT(BB.BORROW_CODE) AS BORROW_CNT, CM.MEM_ID, M.MEM_NAME
+		SELECT COUNT(BB.BORROW_CODE) AS BORROW_CNT, CM.MEM_ID, M.MEM_NAME, M.MEM_IMG_URL
 		FROM BOOK_BORROW BB
 		INNER JOIN BOOK_CLUB_MEMBER CM ON BB.MEM_ID = CM.MEM_ID
 		INNER JOIN MEMBER M ON CM.MEM_ID = M.MEM_ID
 		WHERE CM.CLUB_CODE = #{clubCode}
-		GROUP BY CM.MEM_ID, M.MEM_NAME
+		GROUP BY CM.MEM_ID, M.MEM_NAME, M.MEM_IMG_URL
 		ORDER BY COUNT(BB.BORROW_CODE) DESC
 	</select>
 	
@@ -568,15 +576,17 @@
 		SELECT COUNT(BOARD_NUM) AS BOARD_NUM
 		    , MEM_ID
 		    , MEM_NAME
+		    , MEM_IMG_URL
 		FROM COMMUNITY_BOARD CB, MEMBER M
 		WHERE CB.BOARD_WRITER = M.MEM_ID
-		AND CLUB_CODE = 'CLUB_004'
-		GROUP BY MEM_ID, MEM_NAME
+		AND CLUB_CODE = #{clubCode}
+		GROUP BY MEM_ID, MEM_NAME, MEM_IMG_URL
 		ORDER BY BOARD_NUM DESC
 	</select>
 	
 	<select id="getThisBookDetail" resultMap="bookMapper.book">
-		SELECT BOOK_TITLE
+		SELECT BOOK.BOOK_CODE
+			, BOOK_TITLE
 		    , BOOK_AUTHOR
 		    , ATTACHED_FILE_NAME
 		FROM BOOK, BOOK_IMAGE IMG

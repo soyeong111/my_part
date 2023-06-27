@@ -2,6 +2,8 @@ package com.study.bookspace.adminClub.controller;
 
 import java.io.File;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +25,16 @@ public class AdminClubController {
 	
 	//북클럽 관리 페이지
 	@GetMapping("/clubManage")
-	public String clubManage(SubMenuVO subMenuVO, Model model) {
+	public String clubManage(SubMenuVO subMenuVO, Model model, Authentication authentication) {
+		
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
+		
+		String clubCode = clubService.getClubCode(memId);
 		
 		model.addAttribute("clubList", clubService.getBookClubListForAdmin());
-		//model.addAttribute("memCnt", clubService.getc)
+		//클럽 활동 중인 회원수
+		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		
 		return "content/admin/club_manage";
 	}

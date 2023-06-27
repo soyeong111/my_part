@@ -31,7 +31,7 @@
 						<input id="goodsCateName" name="goodsCateName" type="text" class="form-control" placeholder="추가할 카테고리명 입력">
 					</div>
 					<div class="col-2 d-grid">
-						<button onclick="regCategory();" type="button" class="btn btnLightBlue btnLightBlue-reg mb-3">
+						<button onclick="regCategory();" type="button" class="btn custom-btn-del mb-3">
 							등 록
 						</button>
 					</div>
@@ -77,7 +77,7 @@
 								<td>
 									<div class="row">
 										<div class="form-check col-6">
-											<input th:name="${'goodsCateIsUse_' + state.count}" type="radio" style="background-color: #6c96d8; border-color: #6c96d8;" class="form-check-input" th:checked="${category.goodsCateIsUse == 'Y'}" th:onchange="changeIsUse([[${category.goodsCateCode}]]);">사용중 
+											<input th:name="${'goodsCateIsUse_' + state.count}" type="radio" class="form-check-input" th:checked="${category.goodsCateIsUse == 'Y'}" th:onchange="changeIsUse([[${category.goodsCateCode}]]);">사용중 
 										</div>
 										<div class="form-check col-6">
 											<input th:name="${'goodsCateIsUse_' + state.count}" type="radio" class="form-check-input" th:checked="${category.goodsCateIsUse == 'N'}"  th:onchange="changeIsUse([[${category.goodsCateCode}]]);">미사용 
@@ -86,7 +86,7 @@
 								</td>
 								<td>[[${category.goodsCateOrderNo}]]</td>
 								<td>
-									<input type="button" value="삭제" class="btn btnLightBlue btnLightBlue-delete" th:onclick="|location.href='@{/goods/deleteGoodsCategory(goodsCateCode=${category.goodsCateCode})}';|">
+									<input type="button" value="삭제" class="btn custom-btn-del" th:onclick="|location.href='@{/aGoods/deleteGoodsCategory(goodsCateCode=${category.goodsCateCode})}';|">
 								</td>
 							</tr>
 						</th:block>

@@ -1,5 +1,20 @@
 @charset "UTF-8";
 
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+	margin-bottom: 4rem;
+}
+
+
+.body-div{
+	margin-top: 2rem;
+	margin-left: 4rem;
+	margin-right: 23rem;
+}
+
 .message-is-invalid {
    font-size: 0.7rem;
    color: red;
@@ -13,10 +28,7 @@
 	font-size: 20px; 
 	font-weight: bold;
 }
-.head-div{
-	margin-bottom: 4rem; 
-	margin-top: 3rem; 
-	margin-left: 2rem;  
-	font-size: 20px; 
+
+.form-label{
 	font-weight: bold;
 }

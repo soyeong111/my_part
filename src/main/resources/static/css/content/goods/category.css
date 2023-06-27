@@ -26,12 +26,13 @@
 
 
 
-.btnLightBlue-delete{
-	background-color: #6c96d8;
+.btnLight-delete{
+	background-color: #F15A59;
+	color: white;
 }
 
-.btnLightBlue-delete:hover{
-	background-color: #4e68b9;
+.btnLight-delete:hover{
+	background-color: #FA9884;
 	color: white;
 }
 

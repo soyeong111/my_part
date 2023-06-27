@@ -122,4 +122,17 @@
 			AND ${searchColumn} LIKE '%' || #{searchValue} || '%'
 	</select>
 	
+	<select id="getBookRecordList" resultMap="record">
+		SELECT RECORD_CODE
+		    , BK.BOOK_CODE
+		    , BOOK_REVIEW
+		    , BOOK_TITLE
+		    , BOOK_AUTHOR
+		    , ATTACHED_FILE_NAME
+		FROM BOOK_RECORD BR, BOOK BK, BOOK_IMAGE BI
+		WHERE BR.BOOK_CODE = BK.BOOK_CODE
+		AND BK.BOOK_CODE = BI.BOOK_CODE
+		AND IS_MAIN_IMG = 'Y'
+	</select>
+	
 </mapper>

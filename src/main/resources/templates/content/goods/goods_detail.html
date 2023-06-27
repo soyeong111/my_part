@@ -30,7 +30,7 @@
 					</div>
 					<div class="row mb-3">
 						<label for="" class="col-3 col-form-label" style="font-weight: bold;">가 격</label>
-						<label for="" class="col-9 col-form-label">[[${#numbers.formatCurrency(goods.goodsPrice)}]]</label>
+						<label for="" id="price" class="col-9 col-form-label">[[${#numbers.formatCurrency(goods.goodsPrice)}]]</label>
 					</div>
 					<div class="row mb-3">
 						<label for="" class="col-3 col-form-label" style="font-weight: bold;">수 량</label>
@@ -38,21 +38,19 @@
 							<form id="buyForm">
 								<input type="hidden" name="goodsCode" th:value="${goods.goodsCode}">
 								<input type="hidden" name="goodsPrice" th:value="${goods.goodsPrice}">
-								<input id="goodsCnt" name="cartRegCnt" type="number" class="form-control" min="1" value="1" style="width: 12rem;">
+								<input id="goodsCnt" onclick="setPrice(this);" name="cartRegCnt" type="number" class="form-control" min="1" value="1" style="width: 12rem;">
 							</form>
 						</div>
 					</div>
 					<div class="row mb-3">
 						<label for="" class="col-3 col-form-label" style="font-weight: bold;">총 가격</label>
-						<label for="" class="col-9 col-form-label">[[${#numbers.formatCurrency(goods.goodsPrice)}]]</label>
+						<label for="" class="col-9 col-form-label" id="finalPrice">[[${#numbers.formatCurrency(goods.goodsPrice)}]]</label>
 					</div>
-					<div class="row mb-3 w-100 m-auto">
-					<div class="col-1">
-						<span class="material-symbols-outlined" style="color: #4e68b9; margin-top: 26px;">shopping_cart</span>
-					
-					</div>
-						<div class="col-11" style="padding-top: 10px;">
-						 <a href="" title="Button border lightblue" class="button btnBorder btnLightBlue"  th:onclick="regCart([[${#authentication.name}]], [[${goods.goodsCode}]],[[${cartRegCnt}]]);">구 매 하 기</a>
+					<div class="row mb-1 w-100 m-auto">
+				
+						<div class="col" style=" margin-left: 3rem;">
+						<span class="material-symbols-outlined" style="color: #4e68b9; margin-top: 6px; margin-right: 1rem; padding-bottom: 0;">shopping_cart</span>
+						 <a style="width: 9rem;" class="btn custom-btn"  th:onclick="regCart([[${#authentication.name}]], [[${goods.goodsCode}]],[[${cartRegCnt}]]);">구 매 하 기</a>
 						</div>
 					</div>
 				</div>

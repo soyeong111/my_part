@@ -88,45 +88,44 @@ function regClubValidate(){
 	//클럽명
 	const club_name = document.querySelector('#clubName').value;
 	if(club_name == ''){
-		str_clubName = '클럽명은 필수입력입니다.';
+		str_clubName = '북클럽명은 필수입력입니다.';
 		result_clubName = false;
 	}
 	else if(club_name.length > 10){
-		str_clubName = '클럽명은 10글자 이내로 작성해주세요.';
+		str_clubName = '북클럽명은 10글자 이내로 작성해주세요.';
 		result_clubName = false;
 	}
 	
 	//클럽 소개
 	const club_intro = document.querySelector('#clubIntro').value;
 	if(club_intro == ''){
-		str_clubIntro = '클럽소개는 필수입력입니다.';
+		str_clubIntro = '북클럽소개는 필수입력입니다.';
 		result_clubIntro = false;
 	}
 	else if(club_intro.length < 10){
-		str_clubIntro = '클럽소개는 10글자 이상 작성해주세요.';
+		str_clubIntro = '북클럽소개는 10글자 이상 작성해주세요.';
 		result_clubIntro = false;
 	}
 	
 	//클럽 인원수
 	const club_memCnt = document.querySelector('#clubMemCnt').value;
 	if(club_memCnt == ''){
-		str_clubCnt = '클럽인원수 설정은 필수입니다.';
+		str_clubCnt = '인원수 설정은 필수입니다.';
 		result_clubCnt = false;
 	}
 	else if(club_memCnt < 4 || club_memCnt > 10){
-		str_clubCnt = '클럽인원은 최소 4명 최대 10명 입니다.';
+		str_clubCnt = '인원은 최소 4명 최대 10명 입니다.';
 		result_clubCnt = false;
 	}
 
-	
 	//클럽 한줄소개
 	const club_short_info = document.querySelector('#clubShortInfo').value;
 	if(club_short_info == ''){
-		str_clubShortInfo = '클럽소개는 필수입력입니다.';
+		str_clubShortInfo = '한 줄 소개는 필수입력입니다.';
 		result_clubShortInfo = false;
 	}
-	else if(club_intro.length > 100){
-		str_clubShortInfo = '클럽소개는 30글자 이내로 작성해주세요.';
+	else if(club_short_info.length > 40){
+		str_clubShortInfo = '한 줄 소개는 40글자 이내로 작성해주세요.';
 		result_clubShortInfo = false;
 	}
 	
@@ -134,7 +133,7 @@ function regClubValidate(){
 	//클럽이미지
 	const club_image = document.querySelector('#clubImg').value;
 	if(club_image == ''){
-		str_clubImg = '클럽이미지는 필수입니다.';
+		str_clubImg = '이미지는 필수입니다.';
 		result_clubImg = false;
 	}
 	

@@ -1,16 +1,17 @@
 @charset "UTF-8";
 
-.club-name-div{
-	margin-bottom: 5rem; 
-	margin-top: 3rem; 
-	margin-left: 2rem;  
-	margin-right: 2rem;
-	font-size: 20px; 
-	font-weight: bold;
+.title-div{
+	font-weight: bold; 
+	font-size: x-large; 
+	margin-top: 4rem; 
+	margin-left: 3rem;
+	margin-bottom: 5rem;
+	margin-right: 7rem;
 	display: flex;
     align-items: center;
     justify-content: space-between;
 }
+
 
 span{
 	font-weight: bold;
@@ -24,6 +25,8 @@ span{
 
 .manage-div{
 	margin-top: 5rem;
+	text-align: right;
+	margin-right: 6rem;
 }
 .weather-div {
 	text-align: center;
@@ -225,5 +228,19 @@ border-radius: 50%;
 }
 
 
+.update-btn{
+	background-color: white;
+}
 
+.delete-btn{
+	background-color: white;
+	color: #b94e51;
+}
+
+.reg-btn{
+	border: none;
+	background-color: #6c96d8;
+	border-radius: 3%; 
+	color: white;
+}
 

@@ -59,7 +59,7 @@ public class MyBuyController {
 	
 	 @ResponseBody
 	  @PostMapping("/buysAjax") 
-	 public void buysAjax(@RequestBody HashMap<String, Object> mapData, GoodsBuyVO goodsBuyVO, Authentication authentication, GoodsOrderVO goodsOrderVO, String buyCode ) {
+	 public void buysAjax(@RequestBody HashMap<String, Object> mapData, GoodsBuyVO goodsBuyVO, Authentication authentication, GoodsOrderVO goodsOrderVO, String buyCode , SubMenuVO subMenuVO) {
 	  
 	  
 	  String nextBuyCode = buyService.getNextBuyCode();

@@ -53,7 +53,7 @@
    		<tr th:each=" qna, detailState : ${qnaList} ">
    		<!-- <td th:text="${#lists.size(qna) - detailState.index + 1}"></td> -->
 		<td th:text="${qna.getRowNumber}"></td> 
-   			<td> <a th:href="@{/info/qnaDetail(qnaCode=${qna.qnaCode})}"><span th:text="${qna.qnaTitle}"></span></a> </td>
+   			<td> <a th:href="@{/info/qnaDetail(qnaCode=${qna.qnaCode},mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}"><span th:text="${qna.qnaTitle}"></span></a> </td>
    			<td>[[${qna.memId}]]</td>
    			<td>[[${qna.qnaCreateDate}]]</td>
    			<td>[[${qna.qnaViewCnt}]]</td>
@@ -94,11 +94,11 @@
 		</div>
 		 	<div>
    		
-   		<button sec:authorize="isAnonymous()" type="button"  class="notLoginqBtn"
+   		<button sec:authorize="isAnonymous()" type="button"  class="btn custom-btn"
    		onclick="location.href='/member/loginForm'"><font color="white">로그인 후 질문 작성</font></button>
    		
-   		<button sec:authorize="isAuthenticated()" type="button" class="qBtn" 
-   		onclick="location.href='/info/questionForm'"><font color="white">질문 작성</font></button>
+   		<button sec:authorize="isAuthenticated()" type="button" class="btn custom-btn" 
+   		th:onclick="|location.href='@{/info/questionForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|"><font color="white">질문 작성</font></button>
    	</div>
   </div>
 </th:block>

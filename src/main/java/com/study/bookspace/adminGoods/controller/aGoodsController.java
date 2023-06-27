@@ -91,11 +91,11 @@ public class aGoodsController {
 	//굿즈 조회(굿즈 관리 페이지)
 	@RequestMapping("/goodsManage")
 	public String goodsManage(SubMenuVO subMenuVO, Model model, GoodsVO goodsVO) {
-		System.out.println(goodsVO.getGoodsSearchVO());
+		
 		
 		model.addAttribute("goodsCateList", goodsService.selectGoodsCateList());
 		model.addAttribute("goodsList", goodsService.selectGoodsListAdmin(goodsVO));
-		
+		System.out.println(goodsVO);
 		return "content/admin/goods_manage";
 	}
 	
@@ -169,7 +169,7 @@ public class aGoodsController {
 	
 	
 	//배송 정보 관리 
-	@GetMapping("/buyManage")
+	@RequestMapping("/buyManage")
 	public String goodsOrderManage( Model model, SubMenuVO subMenuVO) {
 		model.addAttribute("orderList", orderService.selectOrder());
 		
