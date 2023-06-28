@@ -61,7 +61,7 @@ public class ClubController {
 	}
 	
 	
-	//북클럽 이용안내
+	//북클럽 이용안내^_^
 	@GetMapping("/clubInfo")
 	public String clubInfo(SubMenuVO subMenuVO) {
 		return "content/club/club_guide";
