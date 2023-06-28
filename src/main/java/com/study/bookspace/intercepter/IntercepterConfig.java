@@ -13,6 +13,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(getPublicMenuIntercepter())
 			.addPathPatterns("/"
+							, "/chart"
 							, "/accessDeny"
 							, "/info/**"
 							, "/book/**"
@@ -62,6 +63,7 @@ public class IntercepterConfig implements WebMvcConfigurer {
 							, "/aClub/**"
 							, "/aGoods/**"
 							, "/aMember/**"
+							, "/aBuy/**"
 							, "/aLibrary/**")
 			.excludePathPatterns("/**/*Ajax"
 								, "/aGoods/deleteGoodsCategory"
