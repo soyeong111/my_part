@@ -73,7 +73,7 @@ function editBook() {
           'bookStockCnt': bookStockCnt
         },
         success: function(result) {
-		location.href = "/aBook/bookManage";
+		location.href = "/aBook/bookManage?mainMenuCode=MAIN_MENU_010&subMenuCode=SUB_MENU_025";
 		
         },
         error: function(error) {

@@ -98,13 +98,13 @@
 						</tr>
 
 						<tr th:each="borrow, state : ${borrowList}">
-							<td th:text="${#lists.size(borrowList) - state.index}"></td>
-							<td>[[${borrow.memId}]]</td>
-							<td><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
-							<td>[[${borrow.borrowDate}]]</td>
-							<td>[[${borrow.returnDueDate}]]</td>
-							<td>[[${borrow.returnDate}]]</td>
-							<td>
+							<td th:text="${#lists.size(borrowList) - state.index}" style="padding-top: 1rem;"></td>
+							<td style="padding-top: 1rem;">[[${borrow.memId}]]</td>
+							<td style="padding-top: 1rem;"><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
+							<td style="padding-top: 1rem;">[[${borrow.borrowDate}]]</td>
+							<td style="padding-top: 1rem;">[[${borrow.returnDueDate}]]</td>
+							<td style="padding-top: 1rem;">[[${borrow.returnDate}]]</td>
+							<td style="padding-top: 1rem;">
 							
 							<span th:if="${borrow.returnDate != NULL AND borrow.overDue == 'N'}"> 반납 </span>
 							<span th:if="${borrow.overDue == 'Y'}" style="color: #B94E51;"> 연체 </span>

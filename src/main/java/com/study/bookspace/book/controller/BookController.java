@@ -101,7 +101,7 @@ public class BookController {
 	
 //	도서 등록
 	@PostMapping("/regBookProcess")
-	public String regBook(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg, MultipartFile sideImg) {
+	public String regBook(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg, MultipartFile sideImg, SubMenuVO subMenuVO) {
 		
 		//--- 파일 첨부 ---//
 //		메인 이미지 업로드 (앞)
@@ -138,7 +138,7 @@ public class BookController {
 	    bookService.regBook(bookVO);
 		
 		
-	    return "redirect:/aBook/regBook";
+	    return "redirect:/aBook/regBook?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 		
 	}
 	

@@ -24,7 +24,7 @@ function updateQna(selectedTag,  qnaCode, mainMenuCode, subMenuCode){
 		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
 		str += `<input type="text" class="form-control" name="qnaTitle" value="${qnaTitle}">`;
 		//str += `<textarea class="form-control" required rows="2" cols="50" name="qnaTitle" style="resize: none;">${qnaTitle}</textarea>`;
-		str += `<textarea class="form-control" required  rows="10" cols="50" name="qnaContent" style="resize: none; margin-top:1rem; margin-bottom: 2rem;">${qnaContent}</textarea>`;
+		str += `<textarea class="form-control" required  rows="10" cols="70" name="qnaContent" style="resize: none; margin-top:1rem; margin-bottom: 2rem;">${qnaContent}</textarea>`;
 		str += `</form>`;
 		
 		

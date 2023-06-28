@@ -48,10 +48,6 @@ thead{
 	font-weight: lighter;
 }
 
-.table thead tr td {
-  border-bottom: 2px solid lightgray;
-}
-
 .com-btn{
 	margin-top: 1rem;
 	border: none;

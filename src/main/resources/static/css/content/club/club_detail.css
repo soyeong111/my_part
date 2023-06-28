@@ -84,6 +84,7 @@ span{
 .rank-div td {
 	padding: 5px; /* 글자와 border 사이의 공간을 조정할 패딩 값 */
     border-radius: 10px; /* 테두리의 둥글기를 조정할 값 */
+    font-weight: bold;
 }
 
 .this-book{

@@ -250,6 +250,7 @@ public class BookServiceImpl implements BookService {
 	public void overDue(BorrowVO borrowVO) {
 		sqlSession.update("bookMapper.overDue", borrowVO);
 		sqlSession.update("bookMapper.overDueMem", borrowVO);
+		sqlSession.update("bookMapper.returnBook", borrowVO);
 	}
 
 	@Override

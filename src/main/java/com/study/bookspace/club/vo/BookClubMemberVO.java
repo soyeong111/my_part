@@ -17,6 +17,8 @@ public class BookClubMemberVO {
 	private int clubMemStatus;
 	private String clubRole;
 	private String memStatus;
+	private int actCnt;
 	private BookClubVO bookClubVO;
 	private MemberVO memberVO;
+	private BookClubImageVO bookClubImageVO;
 }
