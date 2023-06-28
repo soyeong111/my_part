@@ -13,7 +13,7 @@
 <div style="font-weight: bold; font-size: x-large; margin-top: 4rem; margin-left: 3rem;" >Q & A</div> 
 <div class="public-title">Q & A</div>
    <div>
-		<form th:action="@{/info/searchQna}" method="post">
+		<form th:action="@{/info/searchQna(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})  }" method="post">
 		      <div class="qnaSearch">
 		         <input type="text" name="searchKeyword" style="width: 25rem; border-width:thin;  border-color: #9DB2BF; border-style: solid;  "
 		            th:value="${qnaVO != null and qnaVO.searchQnaVO != null ? qnaVO.searchQnaVO.searchKeyword : ''}">
