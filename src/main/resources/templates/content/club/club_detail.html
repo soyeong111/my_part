@@ -75,7 +75,10 @@
 				            	<img alt="" th:src="@{'/image/member/' + ${rank.memberVO.memImgUrl}}">
 				            </div>
 							<div class="mem-info1">[[${rank.memberVO.memName}]]</div>
-							<div class="mem-info2">점수  [[${rank.boardNum}]]</div>
+							<div class="mem-info2" style="font-weight: bold;">
+								<img src="/image/rank/pensil2.png" width="20px;">	
+								[[${rank.boardNum}]]
+							</div>
 			            </div>
 					</div>
 				</div>

@@ -32,7 +32,9 @@
 		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
 		<result column="CLUB_ROLE" 			property="clubRole"/>
 		<result column="MEM_STATUS" 		property="memStatus"/>
+		<result column="ACT_CNT" 			property="actCnt"/>
 		<association property="bookClubVO" resultMap="bookClub"></association>
+		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
 		<association property="memberVO" resultMap="memberMapper.member"></association>
 	</resultMap>
 	
@@ -350,6 +352,7 @@
 			, BOARD_TITLE
 			, BOARD_CONTENT
 			, BOARD_WRITER
+			, MEM_NAME
 			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 			, READ_CNT
 			, CLUB_CODE
@@ -395,6 +398,7 @@
 		SELECT REPLY_NUM
 			, REPLY_CONTENT
 			, REPLY_WRITER
+			, MEM_NAME
 			, MEM_IMG_URL
 			, TO_CHAR(REG_DATE, 'YYYY-MM-DD HH24:MI') AS REG_DATE
 		FROM COMMUNITY_REPLY REPLY, MEMBER M
@@ -420,9 +424,13 @@
 			, M.MEM_ID
 			, MEM_NAME
 			, TO_CHAR(CLUB_REG_DATE, 'YYYY-MM-DD') AS CLUB_REG_DATE
+			, MEM_IMG_URL
+            , (SELECT COUNT(BOARD_NUM)
+            FROM COMMUNITY_BOARD
+            WHERE COMMUNITY_BOARD.BOARD_WRITER = M.MEM_ID) AS ACT_CNT
 		FROM BOOK_CLUB_MEMBER CM, MEMBER M
 		WHERE CM.MEM_ID = M.MEM_ID
-		AND CLUB_CODE = #{clubCode}
+		AND CLUB_CODE = 'CLUB_001'
 		AND CLUB_MEM_STATUS = 2
 		ORDER BY ACCEPT_CODE
 	</select>
@@ -432,6 +440,7 @@
 			, CM.MEM_ID
 			, MEM_NAME
 			, TO_CHAR(CLUB_REG_DATE, 'YYYY-MM-DD') AS CLUB_REG_DATE
+			, MEM_IMG_URL
 		FROM BOOK_CLUB_MEMBER CM, MEMBER M
 		WHERE CM.MEM_ID = M.MEM_ID
 		AND CLUB_CODE = #{clubCode}
@@ -453,8 +462,10 @@
 			, TO_CHAR(CLUB_REG_DATE, 'YYYY-MM-DD') AS CLUB_REG_DATE
 			, CLUB_MEM_STATUS
 			, CLUB_MEM_CNT
-		FROM BOOK_CLUB_MEMBER CM, BOOK_CLUB CLUB
+			, BC_ATTACHED_FILE_NAME
+		FROM BOOK_CLUB_MEMBER CM, BOOK_CLUB CLUB, BOOK_CLUB_IMAGE IMG
 		WHERE CM.CLUB_CODE = CLUB.CLUB_CODE
+		AND CLUB.CLUB_CODE = IMG.CLUB_CODE
         AND CM.MEM_ID = #{memId}
         AND CLUB_MEM_STATUS != 3
         ORDER BY ACCEPT_CODE
@@ -564,12 +575,12 @@
 		        , CLUB_MEM_CNT
 		        , BC_ATTACHED_FILE_NAME
 		        , REG_DATE
-		        , ROW_NUMBER() OVER (PARTITION BY CLUB.CLUB_CODE ORDER BY REG_DATE DESC) AS rn
+		        , ROW_NUMBER() OVER (PARTITION BY CLUB.CLUB_CODE ORDER BY REG_DATE DESC) AS RN
 		    FROM BOOK_CLUB CLUB
 		    LEFT JOIN BOOK_CLUB_IMAGE IMG ON CLUB.CLUB_CODE = IMG.CLUB_CODE
 		    LEFT JOIN COMMUNITY_BOARD BOARD ON CLUB.CLUB_CODE = BOARD.CLUB_CODE
-		) subquery
-		WHERE rn = 1
+		) SUBQUERY
+		WHERE RN = 1
 	</select>
 	
 	<update id="updateClubBookCode">

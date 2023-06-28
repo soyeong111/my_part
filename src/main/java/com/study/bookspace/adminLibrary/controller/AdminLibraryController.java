@@ -34,11 +34,11 @@ public class AdminLibraryController {
 	
 	//전체퇴실 버튼 클릭 시
 	@GetMapping("/allCheckOut")
-	public String allCheckOut() {
+	public String allCheckOut(SubMenuVO subMenuVO) {
 		
 		roomService.allCheckOut();
 		
-		return "redirect:/aLibrary/readingRoomManage"; 
+		return "redirect:/aLibrary/readingRoomManage?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 		
 	
