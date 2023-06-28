@@ -1,6 +1,6 @@
 
 //승인 버튼 클릭 시
-function acceptMember(acceptCode, clubCode) {
+function acceptMember(acceptCode, clubCode, mainMenuCode, subMenuCode) {
   Swal.fire({
     title: '승인하시겠습니까?',
     icon: 'question',
@@ -24,7 +24,7 @@ function acceptMember(acceptCode, clubCode) {
             confirmButtonText: '확인',
             timer: 1500
           }).then(() => {
-            location.href = `/mClub/myCreatedClub?clubCode=${clubCode}`;
+            location.href = `/mClub/myCreatedClub?clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
           });
         },
         error: function () {
@@ -41,7 +41,7 @@ function acceptMember(acceptCode, clubCode) {
 }
 
 //거절 버튼 클릭 시
-function refuse(acceptCode, clubCode) {
+function refuse(acceptCode, clubCode, mainMenuCode, subMenuCode) {
   Swal.fire({
     title: '거절하시겠습니까?',
     icon: 'question',
@@ -65,7 +65,7 @@ function refuse(acceptCode, clubCode) {
             confirmButtonText: '확인',
             timer: 1500
           }).then(() => {
-            location.href = `/mClub/myCreatedClub?clubCode=${clubCode}`;
+            location.href = `/mClub/myCreatedClub?clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
           });
         },
         error: function () {
@@ -82,7 +82,7 @@ function refuse(acceptCode, clubCode) {
 }
 
 //강퇴 버튼 클릭 시
-function kickOut(acceptCode, clubCode) {
+function kickOut(acceptCode, clubCode, mainMenuCode, subMenuCode) {
   Swal.fire({
     title: '강퇴하시겠습니까?',
     icon: 'question',
@@ -105,7 +105,7 @@ function kickOut(acceptCode, clubCode) {
             showConfirmButton: true,
             confirmButtonText: '확인',
           }).then(() => {
-            location.href = `/mClub/myCreatedClub?clubCode=${clubCode}`;
+            location.href = `/mClub/myCreatedClub?clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
           });
         },
         error: function() {

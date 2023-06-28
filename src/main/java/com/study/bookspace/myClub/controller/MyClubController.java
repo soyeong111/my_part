@@ -69,7 +69,7 @@ public class MyClubController {
 	//북클럽 회원 승인
 	@ResponseBody
 	@PostMapping("/acceptMemberAjax")
-	public void acceptMemberAjax(String acceptCode, AlramVO alramVO) {
+	public void acceptMemberAjax(String acceptCode, AlramVO alramVO, SubMenuVO subMenuVO) {
 		
 		String alramId = clubService.acceptMember(acceptCode);
 		
@@ -83,7 +83,7 @@ public class MyClubController {
 	//북클럽 회원 거절
 	@ResponseBody
 	@PostMapping("/refuseMemberAjax")
-	public void refuseMemberAjax(String acceptCode, AlramVO alramVO) {
+	public void refuseMemberAjax(String acceptCode, AlramVO alramVO, SubMenuVO subMenuVO) {
 		
 		String alramId = clubService.kickOutMember(acceptCode);
 		
@@ -97,7 +97,7 @@ public class MyClubController {
 	//북클럽 회원 거절
 	@ResponseBody
 	@PostMapping("/kickOutMemberAjax")
-	public void kickOutMemberAjax(String acceptCode, AlramVO alramVO) {
+	public void kickOutMemberAjax(String acceptCode, AlramVO alramVO, SubMenuVO subMenuVO) {
 		
 		
 		String alramId = clubService.refuseApply(acceptCode);
@@ -112,7 +112,7 @@ public class MyClubController {
 	//북클럽 신청 취소
 	@ResponseBody
 	@PostMapping("/deleteBtnAjax")
-	public void cancelApplyAjax(String acceptCode) {
+	public void cancelApplyAjax(String acceptCode, SubMenuVO subMenuVO) {
 		clubService.cancelApply(acceptCode);
 	}
 	

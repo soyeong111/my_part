@@ -17,8 +17,8 @@
 		<div class="board-title-div">
 			<th:block th:if="${board.clubNotice == 'Y'}">
 				<span class="notice-btn">공지</span>
-				[[${board.boardTitle}]]
 			</th:block>
+				[[${board.boardTitle}]]
 			</div>
 		<div class="detail-body">
 			<div class="row">
@@ -29,9 +29,11 @@
 								<table>
 									<tr>
 										<td rowspan="2">
-											<img alt="" th:src="@{'/image/member/' + ${board.memberVO.memImgUrl}}" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
+											<th:block th:if="${board.memberVO.memImgUrl != null}">
+												<img alt="" th:src="@{'/image/member/' + ${board.memberVO.memImgUrl}}" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
+											</th:block>
 										</td>
-										<td>[[${board.boardWriter}]]</td>
+										<td>[[${board.memberVO.memName}]]</td>
 									</tr>
 									<tr>
 										<td>[[${board.regDate}]]  조회 [[${board.readCnt}]]</td>
@@ -82,9 +84,11 @@
 								<table>
 									<tr>
 										<td rowspan="2">
-											<img alt="" th:src="@{'/image/member/' + ${reply.memberVO.memImgUrl}}" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
+											<th:block th:if="${reply.memberVO.memImgUrl != null}">
+												<img alt="" th:src="@{'/image/member/' + ${reply.memberVO.memImgUrl}}" width="50px" height="50px" style="border-radius: 50%; margin-right: 2rem;">
+											</th:block>
 										</td>
-										<td>[[${reply.replyWriter}]]</td>
+										<td>[[${reply.memberVO.memName}]]</td>
 									</tr>
 									<tr>
 										<td style="font-weight: lighter;">[[${reply.regDate}]]</td>
@@ -96,12 +100,15 @@
 							<td></td>
 						</tr>
 						<tr>
-							<td>[[${reply.replyContent}]]</td>
+							<td style="padding-left: 1rem;">[[${reply.replyContent}]]</td>
 						</tr>
 						<tr>
-							<td th:if="${reply.replyWriter == #authentication.name}" class="offset-10" style="text-align: right;">
+							<td th:if="${reply.replyWriter == #authentication.name}" class="offset-10" style="text-align: right; padding-bottom: 1rem;">
 								<input type="button" class="btn update-btn" value="수정" th:onclick="updateReply(this, [[${reply.replyNum}]], [[${board.boardNum}]], [[${board.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 								<input type="button" class="btn delete-btn" value="삭제" th:onclick="deleteReply([[${reply.replyNum}]], [[${board.boardNum}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+							</td>
+							<td th:unless="${reply.replyWriter == #authentication.name}" style="padding-bottom: 2rem;">
+							
 							</td>
 						</tr>
 					</table>

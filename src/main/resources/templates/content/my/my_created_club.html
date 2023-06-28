@@ -37,22 +37,27 @@
 				<thead style="background-color: #BAD0E8;">
 					<tr>
 						<td>No</td>
-						<td>아이디</td>
 						<td>이름</td>
+						<td>아이디</td>
 						<td>가입날짜</td>
+						<td>활동 수</td>
 						<td>강퇴</td>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="member, state : ${memberList}">
 						<td style="padding-top:1rem;">[[${state.count}]]</td>
-						<td style="padding-top:0.8rem;">[[${member.memId}]]</td>
-						<td style="padding-top:0.9rem;">[[${member.memberVO.memName}]]</td>
-						<td style="padding-top:0.9rem;">[[${member.clubRegDate}]]</td>
-						<td th:if="${member.memId != bossId}">
-							<input type="button" class="btn custom-btn-del" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]], [[${clubCode}]]);">
+						<td>
+							<img width="40px;" th:src="${'/image/member/' + member.memberVO.memImgUrl}" height="40px" style="border-radius: 50%;">
+							[[${member.memberVO.memName}]]
 						</td>
-						<td th:if="${member.memId == bossId}">
+						<td style="padding-top:0.9rem;">[[${member.memId}]]</td>
+						<td style="padding-top:1rem;">[[${member.clubRegDate}]]</td>
+						<td style="padding-top:1rem;">[[${member.actCnt}]]</td>
+						<td th:if="${member.memId != bossId}">
+							<input type="button" class="btn custom-btn-del" value="강퇴" th:onclick="kickOut([[${member.acceptCode}]], [[${clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+						</td>
+						<td th:if="${member.memId == bossId}" style="padding-top:1rem;">
 							클럽장
 						</td>
 					</tr>
@@ -69,8 +74,8 @@
 					<thead style="background-color: #BAD0E8;">
 						<tr>
 							<td>No</td>
-							<td>아이디</td>
 							<td>이름</td>
+							<td>아이디</td>
 							<td>신청날짜</td>
 							<td>승인/거절</td>
 						</tr>
@@ -81,12 +86,15 @@
 						</th:block>
 						<tr th:each="apply, state : ${applyList}">
 							<td style="padding-top:0.9rem;">[[${#lists.size(applyList) - state.index}]]</td>
+							<td>
+								<img width="40px;" th:src="${'/image/member/' + apply.memberVO.memImgUrl}" height="40px" style="border-radius: 50%;">
+								[[${apply.memberVO.memName}]]
+							</td>
 							<td style="padding-top:0.9rem;">[[${apply.memId}]]</td>
-							<td style="padding-top:0.9rem;">[[${apply.memberVO.memName}]]</td>
 							<td style="padding-top:0.9rem;">[[${apply.clubRegDate}]]</td>
 							<td>
-								<input type="button" class="btn custom-btn" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]]);">
-								<input type="button" class="btn custom-btn-del" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]]);">
+								<input type="button" class="btn custom-btn" value="승인" th:onclick="acceptMember([[${apply.acceptCode}]], [[${clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+								<input type="button" class="btn custom-btn-del" value="거절" th:onclick="refuse([[${apply.acceptCode}]], [[${clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 							</td>
 						</tr>
 					</tbody>

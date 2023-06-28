@@ -38,7 +38,7 @@
 						</div>
 						<div class="col-2 px-0">
 							<input type="submit" class="btn custom-btn" value="검색">
-							<input type="button" class="btn custom-btn" value="초기화" th:onclick="|location.href='@{/aLibrary/readingRoomManage}';|">
+							<input type="button" class="btn custom-btn" value="초기화" th:onclick="|location.href='@{/aLibrary/readingRoomManage(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
 						</div>
 						<div class="col-1 px-0">
 							<input type="button" class="btn custom-btn-del" value="전체퇴실" th:onclick="allCheckOut([[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
