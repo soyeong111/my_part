@@ -3,20 +3,65 @@
     xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
     layout:decorate="~{fragment/main_layout}">
-
 <!-- 연결해야 할 외부 css파일 -->
 <th:block layout:fragment="content_css">
 	<!-- <link rel="stylesheet" href=""> -->
 </th:block>
-
 <!-- 본문 내용 -->
 <th:block layout:fragment="content">
-	차트 ㅋ
+	<div>
+		<h2 class="member-title">서울도서관 대출차트</h2>
+	</div>
+	<div class="python-chart-div w-75 m-auto pt-5">
+		<div class="list-data-div mt-5">
+			<div class="row">
+				<div class="col-8">
+					<h3 class="mb-5">도서별 대출횟수 탑10</h3>
+					<table id="my-list-table" class="w-100 text-center">
+						<colgroup>
+							<col width="8%">
+							<col width="*">
+							<col width="15%">
+							<col width="15%">
+							<col width="8%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th>순위</th>
+								<th>제목</th>
+								<th>저자</th>
+								<th>발행처</th>
+								<th>대출횟수</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-4">
+					<div class="doughnut-data-div">
+						<h3 class="mb-5">발행처별 대출횟수 탑10</h3>
+						<canvas id="my-doughnut-chart"></canvas>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="bar-data-div">
+						<h3 class="mb-5">도서분류별 대출횟수</h3>
+						<canvas id="my-bar-chart"></canvas>
+					</div>
+				</div>
+				<div class="col-12">
+					<div class="line-data-div">
+						<h3 class="mb-5">발행년도별 도서분류별 발행도서수</h3>
+						<canvas id="my-line-chart"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </th:block>
-
 <!-- 연결해야 할 외부 js파일 -->
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/chart/python_chart.js"></script>
 </th:block>
-
 </html>
