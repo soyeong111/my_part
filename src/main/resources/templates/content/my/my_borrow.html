@@ -45,17 +45,18 @@
       <tbody>	
       
         <tr th:each="borrow, state : ${myBorrowList}">
-          <td th:text="${#lists.size(myBorrowList) - state.index}"></td>
-          <td><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
-          <td>[[${borrow.borrowDate}]]</td>
-          <td class="dueDate">[[${borrow.returnDueDate}]]</td>
-          <td>[[${borrow.returnDate}]]</td>
+          <td th:text="${#lists.size(myBorrowList) - state.index}" style="padding-top: 1rem;"></td>
+          <td style="padding-top: 1rem;"><a href="javascript:void(0);">[[${borrow.bookTitle}]]</a></td>
+          <td style="padding-top: 1rem;">[[${borrow.borrowDate}]]</td>
+          <td class="dueDate" style="padding-top: 1rem;">[[${borrow.returnDueDate}]]</td>
+          <td style="padding-top: 1rem;">[[${borrow.returnDate}]]</td>
           <td> 
           	<span th:if="${borrow.extended == 'Y'}">완료</span>
-		       <input type="button" class="btn custom-btn"  
+		       <input type="button" class="btn custom-btn" 
 			  th:id="'exBtn-' + ${borrow.borrowCode}" value="연장"
 			  th:onclick="checkReserve(this,[[${#authentication.name}]], [[${borrow.borrowCode}]], [[${borrow.bookCode}]]);"
-			  th:if="${borrow.extended  == 'N'}"></td>
+			  th:if="${borrow.extended  == 'N'}">
+			  </td>
           <td>
           	<span th:if="${borrow.returnDate != NULL}">완료</span>
               <input type="button" class="btn custom-btn-del"  

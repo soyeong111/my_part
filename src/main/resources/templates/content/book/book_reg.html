@@ -21,6 +21,8 @@
 		<div class="row offset-3">
 			<div class="col-9">
 				<form id="regBookForm" class="row g-3" th:action="@{/book/regBookProcess}" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+	         		<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<div class="col-5">
 						<h5><label for="" class="form-label ts">카테고리</label> </h5>
 						<select id="" name="bookCateNo" class="form-select">

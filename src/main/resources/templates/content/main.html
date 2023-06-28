@@ -29,9 +29,7 @@
    		</form>
    		<div class="whole-div">
 	    <div class="row main-div" style="margin-top: 2rem;">
-	    	<div class="col-4" id="cal-div">
-	    		<div id="calendar"></div>
-	    	</div>
+	    	
 			<div class="col-8">
 				<div id="carouselExampleAutoplaying" class="carousel slide"
 					data-bs-ride="carousel">
@@ -50,7 +48,9 @@
 											<div class="card-body">
 												<div class="card-title">[[${record.bookVO.bookTitle}]]</div>
 												<div class="text-body-secondary">[[${record.bookVO.bookAuthor}]]</div>
-												<div class="card-text" style="font-weight: bold;">[[${record.bookReview}]]</div>
+												<div class="card-text" style="font-weight: bold;">
+													<span>“ </span>[[${record.bookReview}]]<span> ”</span>
+													</div>
 											</div>
 										</div>
 									</div>
@@ -70,7 +70,7 @@
 					</button>
 				</div>
 			</div>
-			
+			<div class="col-4" id="calendar"></div>
 	    </div>
 	    <hr>
 	    <div class="row main-div">

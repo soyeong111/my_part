@@ -6,6 +6,10 @@
 	margin: 0 auto;
 }
 
+span{
+	font-size: 37px;
+}
+
 .first-row{
 	margin-bottom: 4rem;
 }

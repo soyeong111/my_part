@@ -55,12 +55,12 @@
        	<td colspan="7"> 예약한 회원이 없습니다.</td>
        </tr>
         <tr th:each="reserve, state : ${reserveList}">
-          <td th:text="${#lists.size(reserveList) - state.index}"></td>
-          <td>[[${reserve.memId}]]</td>
-          <td><a href="javascript:void(0);">[[${reserve.bookTitle}]]</a></td>
-          <td>[[${reserve.reserveDate}]]</td>
-          <td>[[${reserve.bookAlramDate}]]</td>
-          <td>[[${reserve.reserveDueDate}]]</td>
+          <td th:text="${#lists.size(reserveList) - state.index}"  style="padding-top: 1rem;"></td>
+          <td style="padding-top: 1rem;">[[${reserve.memId}]]</td>
+          <td style="padding-top: 1rem;"><a href="javascript:void(0);">[[${reserve.bookTitle}]]</a></td>
+          <td style="padding-top: 1rem;">[[${reserve.reserveDate}]]</td>
+          <td style="padding-top: 1rem;">[[${reserve.bookAlramDate}]]</td>
+          <td style="padding-top: 1rem;">[[${reserve.reserveDueDate}]]</td>
           <td>
 	          <input type="button" class="btn custom-btn-del"  
 				   value="삭제"
