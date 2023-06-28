@@ -18,6 +18,7 @@ public class SecurityConfig {
 		security.csrf().disable()
 				.authorizeHttpRequests()
 					.requestMatchers("/"
+									, "/chart/**"
 									, "/accessDeny"
 									, "/book/bookList"
 									, "/book/newBook"

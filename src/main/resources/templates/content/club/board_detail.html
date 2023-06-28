@@ -71,7 +71,7 @@
 					<textarea rows="3" class="form-control" cols="100" name="replyContent" style="resize: none;"></textarea>
 				</div>
 				<div class="col btn-div">
-					<input sec:authorize="isAuthenticated()" class="btn com-btn" type="submit" value="댓글 등록">
+					<input sec:authorize="isAuthenticated()" class="btn custom-btn" type="submit" value="댓글 등록">
 				</div>
 			</form>
 			<th:block th:each="reply : ${replyList}">
