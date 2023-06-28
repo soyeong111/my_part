@@ -26,7 +26,7 @@ function updateNotice(selectedTag, noticeNo, mainMenuCode, subMenuCode){
 		str += `<input type="hidden" value="${noticeNo}" name="noticeNo">`;
 		str += `<input type="hidden" value="${mainMenuCode}" name="mainMenuCode">`;
 		str += `<input type="hidden" value="${subMenuCode}" name="subMenuCode">`;
-		str += `<input type="text" class="form-control" name="noticeTitle" value="${noticeTitle}">`;
+		str += `<input type="text" class="form-control" name="noticeTitle" value="${noticeTitle}" style="padding: 0;">`;
 		//str += `<textarea class="form-control" required rows="2" cols="50" name="noticeTitle" style="resize: none;">${noticeTitle}</textarea>`;
 		str += `<textarea class="form-control" required rows="10" cols="50" name="noticeContent" style="resize: none; margin-top:1rem;">${noticeContent}</textarea>`;
 		str += `</form>`;
