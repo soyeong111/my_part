@@ -21,14 +21,21 @@
     		베스트 상품
     	</div><hr >
     </div>
+     		
+		<th:block th:if="${#lists.size(bestGoodsList) == 0}">
+   				<div  style="text-align: center;"> 판매 중인 굿즈가 없습니다</div>
+		</th:block>
  	<div class="row" style="height: 30rem; " >
 	 	<div class="col-4 mt-4"  >
-	 		<div style="font-weight: bold; text-align: center; font-size: x-large; margin-top: 2rem;">
+	 
+	
+		 	<th:block  th:if="${#lists.size(bestGoodsList) != 0}">
+		 			<div style="font-weight: bold; text-align: center; font-size: x-large; margin-top: 2rem;">
 				가장 많이 <br>
 				  사랑받은 굿즈
 	 			<span class="material-symbols-outlined" >thumb_up</span>
 	 		</div>
-		 	<th:block  th:if="${#lists.size(bestGoodsList) != 0}">
+	
 				<div class="" th:each=" goods , state : ${bestGoodsList}" >
 					<div th:if="${state.count == 1}" >
 						<div class="" style="margin-top: 4rem; margin-bottom: 1rem; "><img width="100%;" style="border-radius: 2;" th:src="${'/image/goods/' + goods.goodsImgList[0].attachedFileName}"></div>
@@ -131,12 +138,6 @@
   
   
 
-		<th:block th:if="${#lists.size(bestGoodsList) == 0}">
-			 <tr>
-   				<td colspan="5"> 판매 중인 굿즈가 없습니다</td>
-   			</tr>
-		</th:block>
-	
 
 </th:block>
 
