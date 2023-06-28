@@ -4,14 +4,12 @@
 <mapper namespace="qnaAnswerMapper">
 	<resultMap type="com.study.bookspace.info.vo.AnswerVO" id="answer">
 		<id		  column="ANSWER_CODE"  							property="answerCode"/>
-		<result  column="ANSWER_CONTENT"  					property="answerContent"/>
-		<result  column="ANSWER_CREATE_DATE"  			property="answerCreateDate"/>
+		<result  column="ANSWER_CONTENT"  						property="answerContent"/>
+		<result  column="ANSWER_CREATE_DATE"  				property="answerCreateDate"/>
 		<result  column="MEM_ID"  										property="memId"/>
 		<result  column="QNA_CODE"  									property="qnaCode"/>
-		<result column="IS_ADMIN_ANSWER"  	 				property="isAdminAnswer"/>
+		<result column="IS_ADMIN_ANSWER"  	 					property="isAdminAnswer"/>
 	</resultMap>
-	
-	
 	
 	<!-- ADMIN -->
 	<insert id="insertAnswer">
@@ -32,8 +30,6 @@
 		)
 	</insert>
 	
-	
-	
 	<select id="selectAnswer" resultMap="answer">
 		SELECT ANSWER_CODE 
 			, ANSWER_CONTENT
@@ -43,7 +39,6 @@
 			, ANSWER_CODE
 		FROM QNA_ANSWER
 		WHERE QNA_CODE=#{qnaCode}
-	
 	</select>
 	
 	<update id="updateAnswer">
@@ -57,6 +52,5 @@
 		WHERE ANSWER_CODE = #{answerCode}
 	</delete>
 	
-
 	
 </mapper>

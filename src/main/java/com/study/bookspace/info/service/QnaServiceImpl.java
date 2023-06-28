@@ -19,7 +19,6 @@ public class QnaServiceImpl implements QnaService {
 	@Override
 	public void insertQna(QnaVO qnaVO) {
 		sqlSession.insert("qnaMapper.insertQna",qnaVO);
-		
 	}
 
 	//문의사항 리스트 조회
@@ -58,7 +57,6 @@ public class QnaServiceImpl implements QnaService {
 	public int updateIsAdminAnswer(String qnaCode) {
 		return sqlSession.update("qnaMapper.updateIsAdminAnswer", qnaCode);
 	}
-
 
 	public void insertQnaAnswer(AnswerVO answerVO) {
 		sqlSession.insert("qnaMapper.insertQnaAnswer", answerVO);		
