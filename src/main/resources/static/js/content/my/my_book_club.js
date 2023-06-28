@@ -1,7 +1,7 @@
 
 
 // 취소 버튼 클릭 시
-function deleteBtn(acceptCode, clubCode, clubMemStatus) {
+function deleteBtn(acceptCode, clubCode, clubMemStatus, mainMenuCode, subMenuCode) {
   if (clubMemStatus == 1) {
     Swal.fire({
       title: '신청을 취소하시겠습니까?',
@@ -11,7 +11,7 @@ function deleteBtn(acceptCode, clubCode, clubMemStatus) {
       cancelButtonText: '닫기',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteAjax(acceptCode, clubCode, clubMemStatus);
+        deleteAjax(acceptCode, clubCode, clubMemStatus, mainMenuCode, subMenuCode);
       }
     });
   }
@@ -25,13 +25,13 @@ function deleteBtn(acceptCode, clubCode, clubMemStatus) {
       cancelButtonText: '닫기',
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteAjax(acceptCode, clubCode, clubMemStatus);
+        deleteAjax(acceptCode, clubCode, clubMemStatus, mainMenuCode, subMenuCode);
       }
     });
   }
 }
 
-function deleteAjax(acceptCode, clubCode, clubMemStatus) {
+function deleteAjax(acceptCode, clubCode, clubMemStatus, mainMenuCode, subMenuCode) {
   //ajax start
   $.ajax({
     url: '/mClub/deleteBtnAjax', //요청경로
@@ -48,7 +48,7 @@ function deleteAjax(acceptCode, clubCode, clubMemStatus) {
           confirmButtonText: '확인',
           timer: 1500
         }).then(() => {
-          location.href = `/mClub/myBookClub?clubCode=${clubCode}`;
+          location.href = `/mClub/myBookClub?clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
         });
       } else if (clubMemStatus == 2) {
         Swal.fire({
@@ -58,7 +58,7 @@ function deleteAjax(acceptCode, clubCode, clubMemStatus) {
           confirmButtonText: '확인',
           timer: 1500
         }).then(() => {
-          location.href = `/mClub/myBookClub?clubCode=${clubCode}`;
+          location.href = `/mClub/myBookClub?clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
         });
       }
     },

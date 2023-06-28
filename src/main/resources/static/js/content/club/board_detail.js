@@ -5,8 +5,6 @@ function deleteBoard(boardNum, clubCode, mainMenuCode, subMenuCode) {
     text: '게시글을 삭제하시겠습니까?',
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: '삭제',
     cancelButtonText: '취소'
   }).then((result) => {
@@ -14,7 +12,7 @@ function deleteBoard(boardNum, clubCode, mainMenuCode, subMenuCode) {
       Swal.fire(
         '게시글 삭제됨',
         '게시글이 삭제되었습니다.',
-        'success'
+        'info'
       ).then(() => {
         location.href = `/club/deleteBoard?boardNum=${boardNum}&clubCode=${clubCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
       });
@@ -64,8 +62,6 @@ function deleteReply(replyNum, boardNum, mainMenuCode, subMenuCode) {
     text: '댓글을 삭제하시겠습니까?',
     icon: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
     confirmButtonText: '삭제',
     cancelButtonText: '취소'
   }).then((result) => {

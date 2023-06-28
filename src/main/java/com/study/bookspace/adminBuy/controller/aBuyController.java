@@ -35,7 +35,7 @@ public class aBuyController {
 	
 	@ResponseBody
 	@PostMapping("/getSaleStatusByCategoryAjax")
-	public List<Map<String, Object>> getSaleStatusByCategoryAjax() {
+	public List<Map<String, Object>> getSaleStatusByCategoryAjax(SubMenuVO subMenuVO) {
 		List<Map<String, Object>> mapList = aBuyService.getSaleStatueByCategory();
 		
 		return mapList;

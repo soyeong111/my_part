@@ -27,7 +27,9 @@ import com.study.bookspace.club.vo.CommunityReplyVO;
 import com.study.bookspace.club.vo.CommunityVO;
 import com.study.bookspace.info.service.AnswerService;
 import com.study.bookspace.info.vo.NoticeVO;
+import com.study.bookspace.member.service.MemberService;
 import com.study.bookspace.menu.vo.SubMenuVO;
+import com.study.bookspace.myMember.service.MyMemberService;
 import com.study.bookspace.util.ConstVariable;
 import com.study.bookspace.util.DateUtil;
 import com.study.bookspace.util.PageVO;
@@ -46,6 +48,9 @@ public class ClubController {
 	
 	@Resource(name = "bookService")
 	private BookService bookService;
+	
+	@Resource(name = "myMemberService")
+	private MyMemberService myMemberService;
 	
 	//메인 테스트
 	@GetMapping("/maintest")
@@ -307,8 +312,11 @@ public class ClubController {
 	
 	//글 작성 페이지 이동
 	@GetMapping("/regBoardForm")
-	public String regBoardForm(String clubCode, Model model, SubMenuVO subMenuVO) {
+	public String regBoardForm(String clubCode, Model model, SubMenuVO subMenuVO, Authentication authentication) {
+		User user = (User)authentication.getPrincipal();
+		String memId = user.getUsername();
 		
+		model.addAttribute("member", myMemberService.getMemberInfo(memId));
 		model.addAttribute("clubCode", clubCode);
 		model.addAttribute("bossId", clubService.getClubBossId(clubCode));
 		return "content/club/board_write";

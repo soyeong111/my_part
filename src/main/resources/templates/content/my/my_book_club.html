@@ -42,12 +42,15 @@
 			            <th:block th:if="${hasApprovedClubs}">
 			                <th:block th:each="club, state : ${myClubDetail}">
 			                    <tr th:if="${club.clubMemStatus == 2}">
-			                    	<td style="padding-top:0.9rem;">[[${state.count}]]</td>
-			                        <td style="padding-top:0.9rem;">[[${club.bookClubVO.clubName}]]</td>
+			                    	<td style="padding-top:1rem;">[[${state.count}]]</td>
+			                        <td>
+			                        	<img width="40px;" th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}">
+			                        	[[${club.bookClubVO.clubName}]]
+			                        </td>
 			                        <td style="padding-top:0.9rem;">[[${club.clubRegDate}]]</td>
 			                        <td>
 	                                <input type="button" class="btn custom-btn" value="이동" th:onclick="|location.href='@{/club/clubDetail(clubCode=${club.clubCode}, mainMenuCode=MAIN_MENU_004, subMenuCode=SUB_MENU_011)}';|">
-	                                <input type="button" class="btn custom-btn-del" th:attr="disabled=${club.memId == #authentication.name}" value="탈퇴" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]]);">
+	                                <input type="button" class="btn custom-btn-del" th:attr="disabled=${club.memId == #authentication.name}" value="탈퇴" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 	                            </td>
 			                    </tr>
 			                </th:block>
@@ -73,13 +76,16 @@
 			            <th:block th:each="club, state : ${myClubDetail}">
 			                <tr th:if="${club.clubMemStatus == 1}">
 			                	<td style="padding-top:0.9rem;">[[${state.count}]]</td>
-			                    <td style="padding-top:0.9rem;">[[${club.bookClubVO.clubName}]]</td>
+			                    <td>
+			                    	<img width="40px;" th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}">
+			                    	[[${club.bookClubVO.clubName}]]
+			                    </td>
 			                    <td style="padding-top:0.9rem;">
 								    <span th:if="${club.clubMemStatus == 1}">승인대기</span>
 								    <span th:if="${club.clubMemStatus == 3}">거절</span>
 								</td>
 			                    <td>
-			                        <input type="button" class="btn custom-btn-del" value="취소" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]]);">
+			                        <input type="button" class="btn custom-btn-del" value="취소" th:onclick="deleteBtn([[${club.acceptCode}]], [[${club.clubCode}]], [[${club.clubMemStatus}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
 			                    </td>
 			                </tr>
 			            </th:block>
