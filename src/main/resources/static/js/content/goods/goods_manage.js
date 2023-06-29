@@ -29,8 +29,10 @@ function goodsDetail(goodsCode, mainMenuCode, subMenuCode){
 			
 			let str = '';
 			                                                                                    
-			str += `	<form th:action="@{/aGoods/updateGoods(mainMenuCode=${mainMenuCode},subMenuCode=${subMenuCode})}" method="post">                                                                      `;
+			str += `	<form action="/aGoods/updateGoods" method="post">                                                                      `;
 	        str += `	<input type="hidden" name="goodsCode" value="${result['goods'].goodsCode}">`;
+	        str += `	<input type="hidden" name="mainMenuCode" value="${mainMenuCode}">`;
+	        str += `	<input type="hidden" name="subMenuCode" value="${subMenuCode}">`;
 	        str += `    <div class="row">                                                           `;
 	        str += `       <div class="col-9 sub-title">                                            `;
 	        str += `                                                                 `;
@@ -47,7 +49,7 @@ function goodsDetail(goodsCode, mainMenuCode, subMenuCode){
 	        str += `             <div class="col-9">                                                `;
 	        str += `                <select id="" name="goodsCateCode" class="form-select">                      `;
 	        for(const e of result['cateList']){
-				const selected = result['goods'].goodsCateCode == e.goosdCateCode ? 'selected' : '';
+				const selected = result['goods'].goodsCateCode == e.goodsCateCode ? 'selected' : '';
 		        str += `                   <option value="${e.goodsCateCode}" ${selected}>${e.goodsCateName}</option>                               `;
 			}
 	        str += `                </select>                                                       `;

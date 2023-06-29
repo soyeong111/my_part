@@ -131,7 +131,9 @@ public class aGoodsController {
 	//굿즈 정보 수정(굿즈 상세 조회 페이지)
 	@PostMapping("/updateGoods")
 	public String updateGoods(GoodsVO goodsVO, SubMenuVO subMenuVO) {
+		System.out.println(1);
 		goodsService.updateGoods(goodsVO);
+		System.out.println(goodsVO);
 		return "redirect:/aGoods/goodsManage?mainMenuCode="+subMenuVO.getMainMenuCode()+"&subMenuCode="+subMenuVO.getSubMenuCode();
 	}
 
