@@ -3,12 +3,19 @@ setFinalPrice();
 //장바구니 버튼 클릭 시 실행
 function regCart(memId, goodsCode, cartRegCnt, mainMenuCode, subMenuCode){
 	if(memId == 'anonymousUser'){
-		const result = confirm('먼저 로그인 해야 합니다.\n로그인 하시겠습니까?');
-		
-		if(result){
-			const loginModal = new bootstrap.Modal('#loginModal');
-			loginModal.show();
-		}
+		Swal.fire({
+  title: '먼저 로그인 해야 합니다.',
+  text: '로그인 하시겠습니까?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonText: '예',
+  cancelButtonText: '아니오',
+}).then((result) => {
+  if (result.isConfirmed) {
+    location.href = '/member/loginForm';
+  }
+});
+
 		
 		return ;
 	}
@@ -27,11 +34,19 @@ function regCartAjax(goodsCode, mainMenuCode, subMenuCode){
 	   type: 'post',
 	   data: {'goodsCode' : goodsCode, 'cartRegCnt' : cartCnt}, //필요한 데이터
 	   success: function(result) {
-			const result1 = confirm('장바구니에 상품을 추가했습니다.\n장바구니 목록 페이지로 가시겠습니까?');
-			
-			if(result1){
-				location.href = `/mCart/cartList?mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
-			}
+			Swal.fire({
+				  title: '장바구니에 상품을 추가했습니다.',
+				  text: '장바구니 목록 페이지로 가시겠습니까?',
+				  icon: 'question',
+				  showCancelButton: true,
+				  confirmButtonText: '예',
+				  cancelButtonText: '아니오',
+				}).then((result) => {
+				  if (result.isConfirmed) {
+				    location.href = `/mCart/cartList?mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+				  }
+				});
+
 			
 	   },
 	   error: function() {
@@ -45,11 +60,18 @@ function regCartAjax(goodsCode, mainMenuCode, subMenuCode){
 
 //굿즈 삭제
 function deleteCart(cartCode, mainMenuCode, subMenuCode){
-	const result = confirm('해당 상품을 삭제할까요?');
-	
-	if(result){
-		location.href = `/mCart/deleteCart?cartCode=${cartCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
-	}
+	Swal.fire({
+  title: '해당 상품을 삭제할까요?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonText: '예',
+  cancelButtonText: '아니오',
+}).then((result) => {
+  if (result.isConfirmed) {
+    location.href = `/mCart/deleteCart?cartCode=${cartCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+  }
+});
+
 	
 }
 
@@ -160,8 +182,12 @@ function deleteCarts(mainMenuCode, subMenuCode){
 	const chks = document.querySelectorAll('.chk:checked');
 	
 	if(chks.length == 0){
-		alert('선택한 상품이 없습니다.');
-		return ;
+		Swal.fire({
+  icon: 'warning',
+  title: '선택한 상품이 없습니다.',
+});
+return;
+
 		
 		
 	}
@@ -238,11 +264,14 @@ function buyKakao(){
 function buys(){
 	const checked_checkboxes = document.querySelectorAll('.chk:checked');
 	
-	if(checked_checkboxes.length == 0){
-		alert('구매할 상품을 선택하세요.');
-		return ; 
-	}
-	
+	if (checked_checkboxes.length === 0) {
+  Swal.fire({
+    title: '구매할 상품을 선택하세요.',
+    icon: 'warning',
+  });
+  return;
+}
+
 	//넘길 데이터
 	const detail_info_arr = [];
 	for(let i = 0 ; i < checked_checkboxes.length ; i++){

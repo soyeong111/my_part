@@ -34,7 +34,6 @@ function login() {
 					localStorage.removeItem('local_mem_id');
 				}
 				check_mem_status(mem_id_input.value);
-				
 			} else {
 				Swal.fire({
 					icon: 'error',
@@ -72,6 +71,8 @@ function check_mem_status(mem_id) {
 						location.href = '/member/logout';
 					}
 				});
+			} else {
+				update_login_date(mem_id);
 			}
 		},
 		error: function() {
