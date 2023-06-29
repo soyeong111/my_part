@@ -61,9 +61,9 @@ public class aGoodsController {
 	
 	//카테고리 삭제
 	@GetMapping("/deleteGoodsCategory")
-	public String deleteGoodsCategory(String goodsCateCode) {
+	public String deleteGoodsCategory(String goodsCateCode,SubMenuVO subMenuVO) {
 		goodsService.deleteGoodsCategory(goodsCateCode);
-		return "redirect:/aGoods/goodsCateManage";
+		return "redirect:/aGoods/goodsCateManage?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//카테고리명 중복 확인
@@ -99,7 +99,7 @@ public class aGoodsController {
 	
 	//굿즈 등록 프로세스
 	@PostMapping("/regGoodsProcess")
-	public String regGoodsProcess(GoodsVO goodsVO, MultipartFile mainImg, MultipartFile[] subImg) {
+	public String regGoodsProcess(GoodsVO goodsVO, MultipartFile mainImg, MultipartFile[] subImg, SubMenuVO subMenuVO) {
 		GoodsImgVO attachedImgVO = UploadUtil.goodsUploadFile(mainImg);
 		List<GoodsImgVO> attachedImgList = UploadUtil.goodsMultiFileUpload(subImg);
 		//등록될 상품 코드 조회
@@ -113,13 +113,13 @@ public class aGoodsController {
 		goodsVO.setGoodsImgList(goodsImgList);
 		//굿즈 등록
 		goodsService.insertGoods(goodsVO);
-		return "redirect:/aGoods/regGoods";
+		return "redirect:/aGoods/regGoods?mainMenuCode="+subMenuVO.getMainMenuCode()+"&subMenuCode="+subMenuVO.getSubMenuCode();
 	}
 	
 	//굿즈 상세 조회
 	@ResponseBody
 	@PostMapping("goodsDetailAjax")
-	public Map<String, Object> goodsDetailAjax(String goodsCode){
+	public Map<String, Object> goodsDetailAjax(String goodsCode, SubMenuVO subMenuVO){
 		List<GoodsCategoryVO> cateList = goodsService.cateListInUse();
 		GoodsVO goods = goodsService.selectGoodsDetailAdmin(goodsCode);
 		Map<String, Object> mapData = new HashMap<>();
@@ -130,16 +130,16 @@ public class aGoodsController {
 	
 	//굿즈 정보 수정(굿즈 상세 조회 페이지)
 	@PostMapping("/updateGoods")
-	public String updateGoods(GoodsVO goodsVO) {
+	public String updateGoods(GoodsVO goodsVO, SubMenuVO subMenuVO) {
 		goodsService.updateGoods(goodsVO);
-		return "redirect:/aGoods/goodsManage";
+		return "redirect:/aGoods/goodsManage?mainMenuCode="+subMenuVO.getMainMenuCode()+"&subMenuCode="+subMenuVO.getSubMenuCode();
 	}
 
 	//굿즈 삭제(굿즈 관리 페이지)
 	@GetMapping("/deleteGoods")
-	public String deleteGoods(String goodsCode) {
+	public String deleteGoods(String goodsCode, SubMenuVO subMenuVO) {
 		goodsService.deleteGoods(goodsCode);
-		return "redirect:/aGoods/goodsManage";
+		return "redirect:/aGoods/goodsManage?mainMenuCode="+subMenuVO.getMainMenuCode()+"&subMenuCode="+subMenuVO.getSubMenuCode();
 	}
 	
 	//배송 정보 관리 
@@ -150,11 +150,11 @@ public class aGoodsController {
 	}
 	
 	@GetMapping("/updateOrder")
-	public String  updateOrder(String orderCode, String buyCode, GoodsBuyVO goodsBuyVO, GoodsOrderVO goodsOrderVO) {
+	public String  updateOrder(String orderCode, String buyCode, GoodsBuyVO goodsBuyVO, GoodsOrderVO goodsOrderVO, SubMenuVO subMenuVO) {
 		orderService.updateOrder(orderCode);		
 		goodsBuyVO.setBuyCode(buyCode);
 		buyService.updateBuyOrder(buyCode);
-		return "redirect:/aGoods/buyManage";
+		return "redirect:/aGoods/buyManage?mainMenuCode="+subMenuVO.getMainMenuCode()+"&subMenuCode="+subMenuVO.getSubMenuCode();
 	}
 	
 }
