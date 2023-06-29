@@ -70,8 +70,8 @@ public class MyMemberServiceImpl implements MyMemberService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getMyBorrowCntListForChart(String nowYear) {
-		return sqlSession.selectList("memberMapper.getMyBorrowCntListForChart", nowYear);
+	public List<Map<String, Object>> getMyBorrowCntListForChart(Map<String, String> mapData) {
+		return sqlSession.selectList("memberMapper.getMyBorrowCntListForChart", mapData);
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.study.bookspace.myMember.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -67,8 +68,11 @@ public class MyMemberController {
 	// 차트 데이터 받기
 	@ResponseBody
 	@PostMapping("/getChartDataAjax")
-	public List<Map<String, Object>> getChartDataAjax(String nowYear) {
-		return myMemberService.getMyBorrowCntListForChart(nowYear);
+	public List<Map<String, Object>> getChartDataAjax(String nowYear, Authentication authentication) {
+		Map<String, String> mapData = new HashMap<>();
+		mapData.put("nowYear", nowYear);
+		mapData.put("memId", ((User)authentication.getPrincipal()).getUsername());
+		return myMemberService.getMyBorrowCntListForChart(mapData);
 	}
 	
 	// 내 프로필 사진 등록
