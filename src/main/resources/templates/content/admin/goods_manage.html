@@ -55,7 +55,7 @@
 	</div>
 	<div class="goodsManageDiv  m-auto mt-5 mb-5">
 		<div class=" m-auto">
-			<form th:action="@{/aGoods/goodsManage}" method="post">
+			<form th:action="@{/aGoods/goodsManage(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}" method="post">
 				<div class="row w-75 m-auto">
 					<div class="col-2">
 						<select id="" name="goodsSearchVO.searchGoodsStatus" class="form-select">
@@ -118,11 +118,11 @@
 						</colgroup>
 						<tbody>           
 							<tr th:each="goods, state : ${goodsList}" style="text-align: center; ">
-								<td style="padding-top: 2rem; "><a href="javascript:void(0);" th:onclick="goodsDetail([[${goods.goodsCode}]]);">[[${goods.goodsName}]]</a></td>
+								<td style="padding-top: 2rem; "><a href="javascript:void(0);" th:onclick="goodsDetail([[${goods.goodsCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]] );">[[${goods.goodsName}]]</a></td>
 								<td style="padding-top: 2rem; ">[[${goods.goodsStatusStr}]]</td>
 								<td style="padding-top: 2rem; ">[[${goods.goodsStockCnt}]]</td>
 								<td style="padding-top: 2rem; ">
-									<a  class="btn custom-btn-del"  th:href="@{/aGoods/deleteGoods?(goodsCode=${goods.goodsCode})}">삭제</a>
+									<a  class="btn custom-btn-del"  th:href="@{/aGoods/deleteGoods?(goodsCode=${goods.goodsCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode}  )}">삭제</a>
 								</td>
 							</tr>
 						</tbody>

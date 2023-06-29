@@ -1,6 +1,6 @@
 
 //카테고리 생성
-function regCategory(){
+function regCategory(mainMenuCode, subMenuCode){
 	//카테고리명이 빈 값인지 확인
 	const goodsCateNameTag = document.querySelector('#goodsCateName');
 	
@@ -27,7 +27,7 @@ function regCategory(){
 	      alert('카테고리 등록 완료');
 	      
 	      //카테고리 목록 데이터 다시 조회
-	      selectGoodsCateListAjax();
+	      selectGoodsCateListAjax(mainMenuCode, subMenuCode);
 	      goodsCateNameTag.value = '';
 	      
 	   },
@@ -65,7 +65,7 @@ function checkCateName(goodsCateName){
 }
 
 //카테고리 등록 후 실행되는 목록 조회 기능
-function selectGoodsCateListAjax(){
+function selectGoodsCateListAjax(mainMenuCode, subMenuCode){
 	//ajax start
 	$.ajax({
 	   url: '/aGoods/selectGoodsCateListAjax', //요청경로
@@ -104,7 +104,7 @@ function selectGoodsCateListAjax(){
 				str += `	</div>`;
 				str += `</td>`;
 				str += `<td>${result[i].goodsCateOrderNo}</td>`;
-				str += `<td><input type="button" value="삭제" class="btn custom-btn-del" onclick="location.href='/goods/deleteGoodsCategory?goodsCateCode=${result[i].goodsCateCode}';"></td>`;
+				str += `<td><input type="button" value="삭제" class="btn custom-btn-del" onclick="location.href='/aGoods/deleteGoodsCategory?goodsCateCode=${result[i].goodsCateCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}';"></td>`;
 				str += '</tr>';
 			}
 			
