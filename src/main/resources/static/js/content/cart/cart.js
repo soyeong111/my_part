@@ -44,11 +44,11 @@ function regCartAjax(goodsCode, mainMenuCode, subMenuCode){
 
 
 //굿즈 삭제
-function deleteCart(cartCode){
+function deleteCart(cartCode, mainMenuCode, subMenuCode){
 	const result = confirm('해당 상품을 삭제할까요?');
 	
 	if(result){
-		location.href = `/mCart/deleteCart?cartCode=${cartCode}`;
+		location.href = `/mCart/deleteCart?cartCode=${cartCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
 	}
 	
 }
@@ -155,7 +155,7 @@ function setFinalPrice (){
 
 
 //선택삭제 버튼 클릭 시 실행
-function deleteCarts(){
+function deleteCarts(mainMenuCode, subMenuCode){
 	//체크한 체크박스
 	const chks = document.querySelectorAll('.chk:checked');
 	
@@ -173,7 +173,7 @@ function deleteCarts(){
 		cartCodeArr[index] = chk.value;
 	});
 	
-	location.href = `/mCart/deleteCarts?cartCodes=${cartCodeArr}`;	
+	location.href = `/mCart/deleteCarts?cartCodes=${cartCodeArr}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;	
 }
 
 
@@ -183,7 +183,6 @@ function buyKakao(){
 		IMP.init('imp04555812'); 
 		// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
 		// ''안에 띄어쓰기 없이 가맹점 식별코드를 붙여넣어주세요. 안그러면 결제창이 안뜹니다.
-		alert(1);
 		IMP.request_pay({
 			
 			pg: 'kakaopay',

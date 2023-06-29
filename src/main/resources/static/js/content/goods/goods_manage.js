@@ -13,7 +13,7 @@ function openImgModal(atachedFileName, originFileName){
 
 
 
-function goodsDetail(goodsCode){
+function goodsDetail(goodsCode, mainMenuCode, subMenuCode){
 	//ajax start
 	$.ajax({
 	   url: '/aGoods/goodsDetailAjax', //요청경로
@@ -29,7 +29,7 @@ function goodsDetail(goodsCode){
 			
 			let str = '';
 			                                                                                    
-			str += `	<form action="/aGoods/updateGoods" method="post">                                                                      `;
+			str += `	<form th:action="@{/aGoods/updateGoods(mainMenuCode=${mainMenuCode},subMenuCode=${subMenuCode})}" method="post">                                                                      `;
 	        str += `	<input type="hidden" name="goodsCode" value="${result['goods'].goodsCode}">`;
 	        str += `    <div class="row">                                                           `;
 	        str += `       <div class="col-9 sub-title">                                            `;

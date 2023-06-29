@@ -29,7 +29,7 @@
 									<input id="goodsCateName" name="goodsCateName" type="text" class="form-control" placeholder="추가할 카테고리명 입력">
 								</div>
 								<div class="col-2 d-grid">
-									<button onclick="regCategory();" type="button" class="btn custom-btn mb-3">
+									<button th:onclick="regCategory([[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);" type="button" class="btn custom-btn mb-3">
 										등 록
 									</button>
 								</div>
@@ -80,7 +80,7 @@
 										<td>[[${category.goodsCateOrderNo}]]</td>
 										<td>
 											<input type="button" value="삭제" class="btn custom-btn-del" 
-											th:onclick="|location.href='@{/aGoods/deleteGoodsCategory(goodsCateCode=${category.goodsCateCode})}';|">
+											th:onclick="|location.href='@{/aGoods/deleteGoodsCategory(goodsCateCode=${category.goodsCateCode} , mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode} )}   ';|">
 										</td>
 									</tr>
 								</th:block>
