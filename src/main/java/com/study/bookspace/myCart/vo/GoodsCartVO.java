@@ -19,8 +19,6 @@ public class GoodsCartVO {
 	private int cartRegCnt;
 	private int totalPrice;
 	private GoodsVO goodsVO;
-	
 	private List<String>cartCodeList;
-	
 	
 }

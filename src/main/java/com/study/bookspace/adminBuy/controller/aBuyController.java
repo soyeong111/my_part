@@ -15,21 +15,14 @@ import com.study.bookspace.menu.vo.SubMenuVO;
 
 import jakarta.annotation.Resource;
 
-
-
 @Controller
 @RequestMapping("/aBuy")
 public class aBuyController {
 	@Resource(name="aBuyService")
 	private aBuyService aBuyService;
 	
-	
-	
-	
-	
 	@GetMapping("/buySales")
 	public String buySales (SubMenuVO subMenuVO){
-		
 		return "content/admin/buy_sales";
 	}
 	
@@ -37,12 +30,7 @@ public class aBuyController {
 	@PostMapping("/getSaleStatusByCategoryAjax")
 	public List<Map<String, Object>> getSaleStatusByCategoryAjax(SubMenuVO subMenuVO) {
 		List<Map<String, Object>> mapList = aBuyService.getSaleStatueByCategory();
-		
 		return mapList;
-		
-	
-}
-	
-	
+	}
 	
 }

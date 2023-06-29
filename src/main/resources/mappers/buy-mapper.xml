@@ -3,24 +3,25 @@
 
 <mapper namespace="buyMapper">
 	<resultMap type="com.study.bookspace.myBuy.vo.GoodsBuyVO" id="buy">
-		<id	 column="BUY_CODE"	property="buyCode" />
-		<result	 column="MEM_ID"	property="memId" />
-		<result	 column="BUY_PRICE"	property="buyPrice" />
-		<result	 column="BUY_DATE"	property="buyDate" />
-		<result	 column="ORDER_NO"	property="orderNo" />
-		<result	 column="ORDER_STR"	property="orderStr" />
-		<result	 column="ETC"	property="etc" />
+		<id 		column="BUY_CODE"			property="buyCode" />
+		<result	 column="MEM_ID"				property="memId" />
+		<result	 column="BUY_PRICE"			property="buyPrice" />
+		<result	 column="BUY_DATE"			property="buyDate" />
+		<result	 column="ORDER_NO"			property="orderNo" />
+		<result	 column="ORDER_STR"		property="orderStr" />
+		<result	 column="ETC"						property="etc" />
 		<collection property="buyDetailList" resultMap="buyDetail"></collection>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.myBuy.vo.GoodsBuyDetailVO" id="buyDetail">
 		<id			column="BUY_DETAIL_CODE" 			property="buyDetailCode"	/>
-		<result		column="GOODS_CODE" 				property="goodsCode"	/>
+		<result		column="GOODS_CODE" 					property="goodsCode"	/>
 		<result		column="BUY_DETAIL_CNT" 			property="buyDetailCnt"	/>
 		<result		column="BUY_DETAIL_PRICE" 		property="buyDetailPrice"	/>
 		<result		column="BUY_CODE" 						property="buyCode"	/>
 		<association property="goodsVO"	resultMap="goodsMapper.goods"></association>
 	</resultMap>
+	
 	
 		<select id="getBuyList" resultMap="buy">
 		SELECT BUY.BUY_CODE
