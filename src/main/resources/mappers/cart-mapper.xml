@@ -4,12 +4,12 @@
 <mapper namespace="cartMapper">
 	<resultMap type="com.study.bookspace.myCart.vo.GoodsCartVO" id="cart">
 		<id	 	 column="CART_CODE"	 			property="cartCode"	/>
-		<result	 column="GOODS_CODE"	 		property="goodsCode"	/>
+		<result	 column="GOODS_CODE"	 			property="goodsCode"	/>
 		<result	 column="MEM_ID"	 					property="memId"	/>
 		<result	 column="CART_REG_DATE"	 	property="cartRegDate"	/>
-		<result	 column="CART_REG_CNT"	 	property="cartRegCnt"	/>
-		<result	 column="TOTAL_PRICE"	 		property="totalPrice"	/>
-		<association property="goodsVO" resultMap="goodsMapper.goods"></association>
+		<result	 column="CART_REG_CNT"	 		property="cartRegCnt"	/>
+		<result	 column="TOTAL_PRICE"	 			property="totalPrice"	/>
+		<association property="goodsVO" 		resultMap="goodsMapper.goods"></association>
 	</resultMap>
 	
 	<!-- 장바구니 생성 -->
