@@ -50,9 +50,10 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional(rollbackFor =  Exception.class)
-	public void regBook(BookVO bookVO) {
-		sqlSession.insert("bookMapper.regBook", bookVO);
+	public int regBook(BookVO bookVO) {
+		int result = sqlSession.insert("bookMapper.regBook", bookVO);
 		sqlSession.insert("bookMapper.insertImges", bookVO);
+		return result;
 	}
 
 	@Override

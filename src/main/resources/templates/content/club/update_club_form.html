@@ -22,16 +22,20 @@
 					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
 					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<div class="col-12">
-						<label for="clubName" class="form-label">클럽명</label>
+						<label for="clubName" class="form-label">북클럽명</label>
 						<input type="text" class="form-control" id="clubName" name="clubName" th:value="${club.clubName}" disabled>
+					</div>
+					<div class="col-12">
+						<label for="clubShortInfo" class="form-label">북클럽 한 줄 소개</label> 
+						<input type="text" class="form-control" name="clubShortInfo" id="clubShortInfo" th:value="${club.clubShortInfo}">
+					</div>
+					<div class="col-12">
+						<label for="clubMemCnt" class="form-label">북클럽 인원</label>
+						<input type="number" class="form-control" id="clubMemCnt" name="clubMemCnt" th:value="${club.clubMemCnt}" min="1" max="10">
 					</div>
 					<div class="col-12">
 						<label for="clubImg" class="form-label">북클럽 이미지</label>
 						<input type="file" class="form-control" name="clubImg" id="clubImg">
-					</div>
-					<div class="col-12">
-						<label for="clubShortInfo" class="form-label">한 줄 소개</label> 
-						<input type="text" class="form-control" name="clubShortInfo" id="clubShortInfo" th:value="${club.clubShortInfo}">
 					</div>
 					<div class="col-12">
 						<label for="clubIntro" class="form-label">북클럽 소개</label> 

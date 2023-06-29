@@ -8,7 +8,6 @@ function init() {
 		data: {},
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		success: function(result) {
-			console.log(result);
 			draw_list_table(result['list_data']);
 			draw_doughnut_chart(result['doughnut_data']);
 			draw_bar_chart(result['bar_data']);

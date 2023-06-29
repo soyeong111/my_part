@@ -14,11 +14,20 @@ function check_pw() {
 		data: {'memPw':mem_pw_input.value},
 		success: function(result) {
 			if (result) {
-				if (confirm('정말 탈퇴 하시겠습니까?')) {
-					withdrawal();
-				} else {
-					location.reload();
-				}
+				Swal.fire({
+					icon: 'question',
+					title: '탈퇴 확인',
+					text: '정말 탈퇴 하시겠습니까?',
+					showCancelButton: true,
+					confirmButtonText: '확인',
+					cancelButtonText: '취소',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						withdrawal();
+					} else {
+						location.reload();
+					}
+				});
 			} else {
 				mem_pw_input.classList.add('is-invalid');
 				mem_pw_input.focus();
@@ -39,10 +48,18 @@ function withdrawal() {
 		data: {},
 		success: function(result) {
 			if (result) {
-				alert('탈퇴 되었습니다.');
-				location.href = '/member/logout';
+				Swal.fire({
+					icon: 'success',
+					title: '탈퇴 완료',
+					text: '탈퇴 되었습니다.',
+				}).then(() => {
+					location.href = '/member/logout';
+				});
 			} else {
-				alert('탈퇴 실패');
+				Swal.fire({
+					icon: 'error',
+					title: '탈퇴 실패',
+				});
 			}
 		},
 		error: function() {

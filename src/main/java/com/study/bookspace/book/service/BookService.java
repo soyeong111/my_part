@@ -29,7 +29,7 @@ public interface BookService {
 	String getNextBookCode();
 	
 //	도서 등록
-	void regBook(BookVO bookVO);
+	int regBook(BookVO bookVO);
 	
 //	예약 취소
 	void cancelReserve(ReserveVO reserveVO);

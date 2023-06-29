@@ -36,7 +36,10 @@
 							<td style="text-align: left; padding-left: 3rem;">
 								<img width="40px;" th:src="${'/image/club/' + club.bookClubImageVO.bcAttachedFileName}">
 							[[${club.clubName}]]</td>
-							<td style="padding-top:1rem;">[[${club.memId}]]</td>
+							<td>
+								<img width="40px;" th:src="${'/image/member/' + club.memberVO.memImgUrl}">
+								[[${club.memId}]] ([[${club.memberVO.memName}]])
+							</td>
 							<td style="padding-top:1rem;">[[${club.clubCreateDate}]]</td>
 							<td style="padding-top:1rem;">[[${club.communityVO.regDate}]]</td>
 							<td>
