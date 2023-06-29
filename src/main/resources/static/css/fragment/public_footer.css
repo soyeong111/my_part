@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 .footerDiv{
+	margin-top: 5rem;
 	margin-bottom: 0; 
 	padding-bottom:0; 
 	background-color: #ECECEC;

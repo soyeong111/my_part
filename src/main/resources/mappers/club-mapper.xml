@@ -589,6 +589,7 @@
             LEFT JOIN MEMBER M ON CLUB.MEM_ID = M.MEM_ID
 		) SUBQUERY
 		WHERE RN = 1
+		ORDER BY CLUB_CREATE_DATE DESC
 	</select>
 	
 	<update id="updateClubBookCode">
