@@ -25,16 +25,11 @@ public class AdminClubController {
 	
 	//북클럽 관리 페이지
 	@GetMapping("/clubManage")
-	public String clubManage(SubMenuVO subMenuVO, Model model, Authentication authentication) {
+	public String clubManage(SubMenuVO subMenuVO, Model model) {
 		
-		User user = (User)authentication.getPrincipal();
-		String memId = user.getUsername();
 		
-		String clubCode = clubService.getClubCode(memId);
 		
 		model.addAttribute("clubList", clubService.getBookClubListForAdmin());
-		//클럽 활동 중인 회원수
-		model.addAttribute("clubMemCnt", clubService.countMemCnt(clubCode));
 		
 		return "content/admin/club_manage";
 	}
