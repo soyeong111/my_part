@@ -93,10 +93,10 @@
 		</div>
 		 	<div style="text-align: right;">
    		
-   		<button sec:authorize="isAnonymous()" type="button"  class="btn custom-btn"
+   		<button sec:authorize="isAnonymous()" type="button"  class="btn custom-btn" style="margin-right: 5rem;"
    		onclick="location.href='/member/loginForm'"><font color="white">로그인 후 질문 작성</font></button>
    		
-   		<button sec:authorize="isAuthenticated()" type="button" class="btn custom-btn" 
+   		<button sec:authorize="isAuthenticated()" type="button" class="btn custom-btn" style="margin-right: 5rem;"
    		th:onclick="|location.href='@{/info/questionForm(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|"><font color="white">질문 작성</font></button>
    	</div>
   </div>

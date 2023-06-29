@@ -14,52 +14,51 @@
 	<div class="row">
 		<div class="col">
 			<table class="table orderT" style="margin-top: 8rem;">
-			<thead>
-				<tr style="text-align: center; font-weight: bold;">
-					<td>구매 코드</td>
-					<td>ID</td>
-					<td>결제금액</td>
-					<td>구매일</td>
-					<td>배송상태</td>
-				</tr>
-			</thead>
-			<tbody>
-			<th:block th:if="${#lists.size(orderList) == 0 }">
-				<tr style="text-align: center;">
-					<td colspan="6">주문 내역이 없습니다</td>
-				</tr>
-			</th:block>
-			<th:block th:unless="${#lists.size(orderList) == 0 }">
-				<tr th:each="order  : ${orderList}"  style="text-align: center; ">
-			    <td style="padding-top: 1rem;"  th:text="${order.orderCode}"></td>
-			    <td style="padding-top: 1rem;" th:text="${order.memId}"></td>
-			    <td style="padding-top: 1rem;" th:text="${order.buyPrice}"></td>
-			    <td style="padding-top: 1rem;" th:text="${order.buyDate}"></td>
-		
-			   	<td>
-				   	<th:block  th:if="${order.orderStr == '주문접수'}">
-					   	<a  class="button btnBorder btnLightOrder1" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
-					   	[[${order.orderStr}]]
-					   	</a>
-				   	</th:block>
-				   	<th:block  th:if="${order.orderStr == '배송준비'}">
-					   	<a class="button btnBorder btnLightOrder2" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
-					   	[[${order.orderStr}]]
-					   	</a>
-				   	</th:block>
-				   	<th:block  th:if="${order.orderStr == '배송중'}">
-					   	<a class="button btnBorder btnLightOrder3" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
-					   	[[${order.orderStr}]]
-					   	</a>
-				   	</th:block>
-				   	<th:block  th:if="${order.orderStr == '배송완료'}">
-					   	<a class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
-						   	[[${order.orderStr}]]
-						   	</a>
-					   	</th:block>
-				   	</td>
-				</tr>
-				</th:block>
+				<thead>
+					<tr style="text-align: center; font-weight: bold;">
+						<td>구매 코드</td>
+						<td>ID</td>
+						<td>결제금액</td>
+						<td>구매일</td>
+						<td>배송상태</td>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:if="${#lists.size(orderList) == 0 }">
+						<tr style="text-align: center;">
+							<td colspan="6">주문 내역이 없습니다</td>
+						</tr>
+					</th:block>
+					<th:block th:unless="${#lists.size(orderList) == 0 }">
+						<tr th:each="order  : ${orderList}"  style="text-align: center; ">
+						    <td style="padding-top: 1rem;"  th:text="${order.orderCode}"></td>
+						    <td style="padding-top: 1rem;" th:text="${order.memId}"></td>
+						    <td style="padding-top: 1rem;" th:text="${order.buyPrice}"></td>
+						    <td style="padding-top: 1rem;" th:text="${order.buyDate}"></td>
+						   	<td>
+							   	<th:block  th:if="${order.orderStr == '주문접수'}">
+								   	<a  class="button btnBorder btnLightOrder1" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+								   	[[${order.orderStr}]]
+								   	</a>
+							   	</th:block>
+							   	<th:block  th:if="${order.orderStr == '배송준비'}">
+								   	<a class="button btnBorder btnLightOrder2" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+								   	[[${order.orderStr}]]
+								   	</a>
+							   	</th:block>
+							   	<th:block  th:if="${order.orderStr == '배송중'}">
+								   	<a class="button btnBorder btnLightOrder3" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+								   	[[${order.orderStr}]]
+								   	</a>
+							   	</th:block>
+							   	<th:block  th:if="${order.orderStr == '배송완료'}">
+								   	<a class="button btnBorder btnLightBlue" style="width: 5rem; height: 3rem;" th:href="@{/aGoods/updateOrder(orderCode=${order.orderCode}, buyCode=${order.buyCode})}">
+									   	[[${order.orderStr}]]
+									   	</a>
+								   	</th:block>
+							  </td>
+						</tr>
+					</th:block>
 				</tbody>
 			</table>
 		</div>
