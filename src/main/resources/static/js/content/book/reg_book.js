@@ -74,10 +74,31 @@ function regBook() {
     return;
   }
 
-  const regBook_form = document.querySelector('#regBookForm');
-		regBook_form.submit();
-		
-		  // 등록 성공 알림창 표시
+  
+   $.ajax({
+        url: '/book/regBookProcessAjax',
+        type: 'post',
+        //cache: false,
+        processData: false,
+        contentType: false,
+        //data: $('#regBookForm').serialize(),
+        data: new FormData($('#regBookForm')[0]),
+        success: function(result) {
+			if(result == 1){
+				 Swal.fire("도서 등록이 완료되었습니다.").then(() => {
+				 	location.reload();
+				 });
+			}
+			else{
+				Swal.fire("도서 등록이 실패했습니다.");
+			}
+        },
+        error: function() {
+           alert('ajax 통신 실패');
+        }
+     });
+
+  
  
 }
 
