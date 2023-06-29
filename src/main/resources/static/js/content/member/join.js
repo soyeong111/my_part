@@ -346,7 +346,11 @@ function require_check() {
 	if (tags.length == 11) {
 		join();
 	} else {
-		alert('생년월일과 성별을 제외한\n모든 정보는 필수 입력 사항입니다.');
+		Swal.fire({
+			icon: 'info',
+			title: '알림',
+			text: '생년월일과 성별을 제외한\n모든 정보는 필수 입력 사항입니다.',
+		});
 	}
 }
 
@@ -359,10 +363,18 @@ function join() {
 		data: $('#join-form').serialize(),
 		success: function(result) {
 			if (result) {
-				alert('회원 가입 되었습니다!\n로그인 페이지로 이동합니다.');
-				location.href = '/member/loginForm';
+				Swal.fire({
+					icon: 'success',
+					title: '회원 가입 되었습니다!',
+					text: '로그인 페이지로 이동합니다.',
+				}).then(() => {
+					location.href = '/member/loginForm';
+				});
 			} else {
-				alert('회원 가입 실패');
+				Swal.fire({
+					icon: 'error',
+					title: '회원 가입 실패',
+				});
 			}
 		},
 		error: function() {

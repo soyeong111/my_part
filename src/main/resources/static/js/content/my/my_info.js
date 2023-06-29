@@ -329,10 +329,18 @@ function update_member() {
 			const main_menu_code = document.querySelector('#main-menu-code').value;
 			const sub_menu_code = document.querySelector('#sub-menu-code').value;
 			if (result) {
-				alert('내 정보가 변경되었습니다.');
-				location.href = `/mMember/myInfo?mainMenuCode=${main_menu_code}&subMenuCode=${sub_menu_code}`;
+				Swal.fire({
+					icon: 'success',
+					title: '내 정보 변경',
+					text: '내 정보가 변경되었습니다.',
+				}).then(() => {
+					location.href = `/mMember/myInfo?mainMenuCode=${main_menu_code}&subMenuCode=${sub_menu_code}`;
+				});
 			} else {
-				alert('내 정보 변경 실패');
+				Swal.fire({
+					icon: 'error',
+					title: '내 정보 변경 실패',
+				});
 			}
 		},
 		error: function() {
