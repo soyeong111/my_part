@@ -3,6 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{fragment/member_layout}">
+	
 <th:block layout:fragment="content_css">
 	 <link rel="stylesheet" href="/css/content/goods/goods.css">
 	<style>
@@ -47,118 +48,107 @@
 		}
 	</style>
 </th:block>
+
 <th:block layout:fragment="content">
-<div class="member-title">
-	상품 관리
-</div>
-<div class="goodsManageDiv  m-auto mt-5 mb-5">
+	<div class="member-title">
+		상품 관리
+	</div>
+	<div class="goodsManageDiv  m-auto mt-5 mb-5">
 		<div class=" m-auto">
 			<form th:action="@{/aGoods/goodsManage}" method="post">
 				<div class="row w-75 m-auto">
 					<div class="col-2">
-								<select id="" name="goodsSearchVO.searchGoodsStatus" class="form-select">
-								
-								<option value="0" th:selected="${goodsVO.goodsSearchVO == null}">전체</option>
-								<option value="1" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 1}">판매중</option>
-								<option value="2" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 2}">준비중</option>
-								<option value="3" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 3}">매진</option>
+						<select id="" name="goodsSearchVO.searchGoodsStatus" class="form-select">
+							<option value="0" th:selected="${goodsVO.goodsSearchVO == null}">전체</option>
+							<option value="1" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 1}">판매중</option>
+							<option value="2" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 2}">준비중</option>
+							<option value="3" th:selected="${goodsVO.goodsSearchVO != null and goodsVO.goodsSearchVO.searchGoodsStatus  == 3}">매진</option>
 							</select>
-					</div>
-					<div class="col-7">
-						<input type="text" placeholder="상품명을 입력하세요." class="form-control" name="goodsSearchVO.searchGoodsName" th:value="${goodsVO.goodsSearchVO == null ? '' : goodsVO.goodsSearchVO.searchGoodsName}">
-					</div>
-					<div class="col-3 d-grid">
-						<input type="submit" value="검 색" class="btn button btnBorder btnLightBlue-search " style="color: white;" >
-					</div>
-				</div>
-					<div class="col mt-3 mb-1">
-								<input class="form-check-input" value="all" type="checkbox" style="margin-left: 27px;" id="checkAll" name="goodsSearchVO.searchCateCode" th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, 'all')}">
-								<label class="form-check-label" for="">카테고리 전체 체크</label>
-			
-					</div>
-						<div class="col" >
-										<th:block th:each="category : ${goodsCateList}">
-								<div class="form-check form-check-inline m-auto"  >
-									<input class="form-check-input chk"  th:value="${category.goodsCateCode}" style="margin-left: 4px; margin-right: 3px;"  type="checkbox" id="" name="goodsSearchVO.searchCateCode" 
-										th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, category.goodsCateCode)}">
-										[[${category.goodsCateName}]]
-										<span th:if="${category.goodsCateIsUse == 'N'}">(미사용)</span>
-								</div>
-						</th:block>
 						</div>
-			</form>
-		</div>
-
-	
-	
-	
-	<!-- 상품목록 영역 -->
-	<div class="row mb-3 mt-5">
-		<div class="col">
-			<table class="table table-hover text-center" style="margin-bottom: 0rem;">
-				<colgroup>
-					<col width="*">
-					<col width="25%">
-					<col width="25%">
-					<col width="20%">
-				</colgroup>
-				<thead class="table-head">
-					<tr>
-						<td>상품명</td>
-						<td>상품 상태</td>
-						<td>재고량</td>
-						<td></td>
-					</tr>
-				</thead>
-			</table>
-			<div class=" table-scroll">
-			<table class="table table-hover text-center">
-				<colgroup>
-					<col width="*">
-					<col width="25%">
-					<col width="25%">
-					<col width="20%">
-				</colgroup>
-				<tbody>           
-					<tr th:each="goods, state : ${goodsList}" style="text-align: center; ">
-						<td style="padding-top: 2rem; "><a href="javascript:void(0);" th:onclick="goodsDetail([[${goods.goodsCode}]]);">[[${goods.goodsName}]]</a></td>
-						<td style="padding-top: 2rem; ">[[${goods.goodsStatusStr}]]</td>
-						<td style="padding-top: 2rem; ">[[${goods.goodsStockCnt}]]</td>
-						<td style="padding-top: 2rem; ">
-							<a  class="btn custom-btn-del"  th:href="@{/aGoods/deleteGoods?(goodsCode=${goods.goodsCode})}">삭제</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+						<div class="col-7">
+							<input type="text" placeholder="상품명을 입력하세요." class="form-control" name="goodsSearchVO.searchGoodsName" th:value="${goodsVO.goodsSearchVO == null ? '' : goodsVO.goodsSearchVO.searchGoodsName}">
+						</div>
+						<div class="col-3 d-grid">
+							<input type="submit" value="검 색" class="btn button btnBorder btnLightBlue-search " style="color: white;" >
+						</div>
+					</div>
+					<div class="col mt-3 mb-1">
+						<input class="form-check-input" value="all" type="checkbox" style="margin-left: 27px;" id="checkAll" name="goodsSearchVO.searchCateCode" th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, 'all')}">
+						<label class="form-check-label" for="">카테고리 전체 체크</label>
+					</div>
+					<div class="col" >
+						<th:block th:each="category : ${goodsCateList}">
+							<div class="form-check form-check-inline m-auto"  >
+								<input class="form-check-input chk"  th:value="${category.goodsCateCode}" style="margin-left: 4px; margin-right: 3px;"  type="checkbox" id="" name="goodsSearchVO.searchCateCode" 
+									th:checked="${goodsVO.goodsSearchVO == null or #arrays.contains(goodsVO.goodsSearchVO.searchCateCode, category.goodsCateCode)}">
+										[[${category.goodsCateName}]]
+								<span th:if="${category.goodsCateIsUse == 'N'}">(미사용)</span>
+							</div>
+						</th:block>
+					</div>
+				</form>
 			</div>
-		</div>
-		<div class="col" id="goodsDetailDiv" style=" margin-left: 2rem; margin-top: 4rem;">
-			
-		</div>
-	</div>
+		
+	<!-- 상품목록 영역 -->
+		<div class="row mb-3 mt-5">
+			<div class="col">
+				<table class="table table-hover text-center" style="margin-bottom: 0rem;">
+					<colgroup>
+						<col width="*">
+						<col width="25%">
+						<col width="25%">
+						<col width="20%">
+					</colgroup>
+					<thead class="table-head">
+						<tr>
+							<td>상품명</td>
+							<td>상품 상태</td>
+							<td>재고량</td>
+							<td></td>
+						</tr>
+					</thead>
+				</table>
+				<div class=" table-scroll">
+					<table class="table table-hover text-center">
+						<colgroup>
+							<col width="*">
+							<col width="25%">
+							<col width="25%">
+							<col width="20%">
+						</colgroup>
+						<tbody>           
+							<tr th:each="goods, state : ${goodsList}" style="text-align: center; ">
+								<td style="padding-top: 2rem; "><a href="javascript:void(0);" th:onclick="goodsDetail([[${goods.goodsCode}]]);">[[${goods.goodsName}]]</a></td>
+								<td style="padding-top: 2rem; ">[[${goods.goodsStatusStr}]]</td>
+								<td style="padding-top: 2rem; ">[[${goods.goodsStockCnt}]]</td>
+								<td style="padding-top: 2rem; ">
+									<a  class="btn custom-btn-del"  th:href="@{/aGoods/deleteGoods?(goodsCode=${goods.goodsCode})}">삭제</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col" id="goodsDetailDiv" style=" margin-left: 2rem; margin-top: 4rem;"></div>
+		</div>	
+	</div>	
 	
-	
-	
-	
-	
-	
-	
-</div>	
 	<!-- img Modal -->
 	<div class="modal fade" id="imgModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" >Modal Title</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	      	<img src="" width="100%;">
-	      </div>
-	    </div>
-	  </div>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				 <div class="modal-header">
+				 	<h1 class="modal-title fs-5" >Modal Title</h1>
+				   	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				 </div>
+				<div class="modal-body">
+					<img src="" width="100%;">
+				</div>
+			</div>
+		</div>
 	</div>
 </th:block>
+
 <th:block layout:fragment="content_js">
 	<script type="text/javascript" src="/js/content/goods/goods_manage.js"></script> 
 </th:block>

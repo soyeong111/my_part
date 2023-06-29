@@ -11,32 +11,31 @@
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.goods.vo.GoodsVO" id="goods">
-		<id		 column="GOODS_CODE"					property="goodsCode"/>
+		<id		 column="GOODS_CODE"						property="goodsCode"/>
 		<result column="GOODS_CATE_CODE"			property="goodsCateCode"/>
-		<result column="GOODS_NUM"			property="goodsNum"/>
-		<result column="GOODS_NAME"					property="goodsName"/>
-		<result column="GOODS_PRICE"					property="goodsPrice"/>
+		<result column="GOODS_NUM"						property="goodsNum"/>
+		<result column="GOODS_NAME"						property="goodsName"/>
+		<result column="GOODS_PRICE"						property="goodsPrice"/>
 		<result column="GOODS_STOCK_CNT"			property="goodsStockCnt"/>
-		<result column="GOODS_INTRO"					property="goodsIntro"/>
-		<result column="GOODS_STATUS"				property="goodsStatus"/>
-		<result column="GOODS_STATUS_STR"		property="goodsStatusStr"/>
-		<result column="ROW_NUM"  					 property="rowNum"/>
-		<result column="ROW_NUMBER"  			 property="rowNumber"/>
-		<result column="BEST_BUY_CNT"  			 property="bestBuyCnt"/>
-		<result column="GOODS_REG_DATE"  			 property="goodsRegDate"/>
-		<association property="goodsCategoryVO" 	resultMap="goodsCategory"></association>
+		<result column="GOODS_INTRO"						property="goodsIntro"/>
+		<result column="GOODS_STATUS"					property="goodsStatus"/>
+		<result column="GOODS_STATUS_STR"			property="goodsStatusStr"/>
+		<result column="ROW_NUM"  					 		property="rowNum"/>
+		<result column="ROW_NUMBER"  			 		property="rowNumber"/>
+		<result column="BEST_BUY_CNT"  			 		property="bestBuyCnt"/>
+		<result column="GOODS_REG_DATE"  			property="goodsRegDate"/>
+		<association property="goodsCategoryVO" 		resultMap="goodsCategory"></association>
 		<collection property="goodsImgList"   			resultMap="goodsImg" ></collection>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.goods.vo.GoodsImgVO" id="goodsImg">
-		<id  column="GOODS_IMG_CODE"  				property="goodsImgCode"/>
-		<result  column="ORIGIN_FILE_NAME"  		property="originFileName"/>
-		<result  column="ATTACHED_FILE_NAME"  	property="attachedFileName"/>
+		<id  column="GOODS_IMG_CODE"  					property="goodsImgCode"/>
+		<result  column="ORIGIN_FILE_NAME"  			property="originFileName"/>
+		<result  column="ATTACHED_FILE_NAME"  		property="attachedFileName"/>
 		<result  column="IS_MAIN"  							property="isMain"/>
-		<result  column="GOODS_CODE"  				property="goodsCode"/>
+		<result  column="GOODS_CODE"  					property="goodsCode"/>
 	</resultMap>
 	
-
 	
 	<!-- 굿즈 카테고리 관리페이지에서 목록 조회(관리자) -->
 	<select id="selectGoodsCateList" resultMap="goodsCategory">
@@ -60,7 +59,6 @@
 		    , #{goodsCateName}
 		    , (SELECT NVL(MAX(GOODS_CATE_ORDER_NO), 0) + 1 FROM GOODS_CATEGORY)
 		)
-
 	</insert>
 	
 	<!-- 카테고리명 중복 체크 -->
@@ -84,12 +82,6 @@
 		WHERE GOODS_CATE_CODE = #{goodsCateCode}
 	</update>
 	
-	
-	
-	
-	
-
-	
 		<!-- 굿즈 목록 조회(굿즈 관리 페이지의 첫 화면) -->
 	<select id="selectGoodsListAdmin" resultMap="goods">
 		SELECT GOODS_CODE
@@ -111,8 +103,6 @@
 		<if test="goodsSearchVO != null and goodsSearchVO.searchGoodsStatus != 0">
 		AND GOODS_STATUS = #{goodsSearchVO.searchGoodsStatus}
 		</if>
-		
-		
 	</select>
 	
 	<!-- 굿즈 생성  -->
@@ -133,7 +123,6 @@
 			, #{goodsStockCnt}
 			, #{goodsIntro}
 			, #{goodsStatus}
-		
 		)
 	</insert>
 	
@@ -209,7 +198,6 @@
 		WHERE GOODS_CODE =#{goodsCode}
 	</delete>
 	
-	
 	<!--굿즈 리스트 (퍼블릭)  -->
 	<select id="goodsListForPublic" resultMap="goods">
 		SELECT G.GOODS_CODE
@@ -255,9 +243,6 @@
 		ORDER BY GOODS_REG_DATE
 	</select>
 	
-
-	
-	
 	<!-- 굿즈 상세 조회(퍼블릭) -->
 	<select id="goodsDetailForPublic" resultMap="goods">
 		SELECT GOODS.GOODS_CODE
@@ -271,11 +256,6 @@
 		AND GOODS.GOODS_CODE = #{goodsCode}
 		</select>
 		
-		
-		
-		
-
-	
 	
 	
 </mapper>
