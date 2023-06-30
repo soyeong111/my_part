@@ -3,11 +3,12 @@ package com.study.bookspace.myBuy.service;
 import java.util.List;
 
 import com.study.bookspace.myBuy.vo.GoodsBuyVO;
+import com.study.bookspace.myCart.vo.GoodsCartVO;
 
 public interface BuyService {
 	
 	//굿즈 구매
-	void buyFromCart(GoodsBuyVO goodsBuyVO);
+	void buyFromCart(GoodsBuyVO goodsBuyVO, GoodsCartVO goodsCartVO);
 	
 	//다음 buyCode 조회
 	String getNextBuyCode();

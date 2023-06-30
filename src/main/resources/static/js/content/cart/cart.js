@@ -1,7 +1,7 @@
 setFinalPrice();
 
 //장바구니 버튼 클릭 시 실행
-function regCart(memId, goodsCode, cartRegCnt, mainMenuCode, subMenuCode){
+function regCart(memId, goodsCode, cartRegCnt){
 	if(memId == 'anonymousUser'){
 		Swal.fire({
   title: '먼저 로그인 해야 합니다.',
@@ -20,12 +20,12 @@ function regCart(memId, goodsCode, cartRegCnt, mainMenuCode, subMenuCode){
 		return ;
 	}
 	
-	regCartAjax(goodsCode, mainMenuCode, subMenuCode);
+	regCartAjax(goodsCode);
 }
 
 
 //장바구니 등록 ajax
-function regCartAjax(goodsCode, mainMenuCode, subMenuCode){
+function regCartAjax(goodsCode){
 	const cartCnt = document.querySelector('#goodsCnt').value;
 
 	//ajax start
@@ -43,7 +43,7 @@ function regCartAjax(goodsCode, mainMenuCode, subMenuCode){
 				  cancelButtonText: '아니오',
 				}).then((result) => {
 				  if (result.isConfirmed) {
-				    location.href = `/mCart/cartList?mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+				    location.href = `/mCart/cartList?mainMenuCode=MAIN_MENU_009&subMenuCode=SUB_MENU_024`;
 				  }
 				});
 
@@ -181,7 +181,7 @@ function deleteCarts(mainMenuCode, subMenuCode){
 	//체크한 체크박스
 	const chks = document.querySelectorAll('.chk:checked');
 	
-	if(chks.length == 0){
+		if(chks.length == 0){
 		Swal.fire({
   icon: 'warning',
   title: '선택한 상품이 없습니다.',
@@ -191,6 +191,7 @@ return;
 		
 		
 	}
+
 	
 	//cartCode를 여러개 담을 수 있는 배열 생성
 	const cartCodeArr = [];
@@ -205,6 +206,17 @@ return;
 
 
 function buyKakao(){
+	
+	const checked_checkboxes = document.querySelectorAll('.chk:checked');
+		
+	if (checked_checkboxes.length === 0) {
+		Swal.fire({
+			title: '구매할 상품을 선택하세요.',
+			icon: 'warning',
+		});
+		return;
+	}
+	
 		var IMP = window.IMP; // 생략가능
 		IMP.init('imp04555812'); 
 		// i'mport 관리자 페이지 -> 내정보 -> 가맹점식별코드
@@ -233,20 +245,18 @@ function buyKakao(){
 			
 			}, function (rsp) {
 				console.log(rsp);
-			if (rsp.success) {
-				var msg = '결제가 완료되었습니다.';
-				msg;
-				
-			buys();
-  				
-				// success.submit();
-				// 결제 성공 시 정보를 넘겨줘야한다면 body에 form을 만든 뒤 위의 코드를 사용하는 방법이 있습니다.
-				// 자세한 설명은 구글링으로 보시는게 좋습니다.
-			} else {
-				var msg = '결제에 실패하였습니다.';
-				msg += '에러내용 : ' + rsp.error_msg;
-			}
-			alert(msg);
+				if (rsp.success) {
+					buys();
+					// success.submit();
+					// 결제 성공 시 정보를 넘겨줘야한다면 body에 form을 만든 뒤 위의 코드를 사용하는 방법이 있습니다.
+					// 자세한 설명은 구글링으로 보시는게 좋습니다.
+				} else {
+					Swal.fire({
+						icon: 'warning',
+  						title: '결제를 실패했습니다.',
+					});
+				}
+
 		});
 	
 }
@@ -264,14 +274,6 @@ function buyKakao(){
 function buys(){
 	const checked_checkboxes = document.querySelectorAll('.chk:checked');
 	
-	if (checked_checkboxes.length === 0) {
-  Swal.fire({
-    title: '구매할 상품을 선택하세요.',
-    icon: 'warning',
-  });
-  return;
-}
-
 	//넘길 데이터
 	const detail_info_arr = [];
 	for(let i = 0 ; i < checked_checkboxes.length ; i++){
@@ -293,9 +295,15 @@ function buys(){
 	const regex = /[^0-9]/g;
 	final_price = final_price.replace(regex, '');
 	
+	const cart_code_arr = []
+	checked_checkboxes.forEach((checkBox) => {
+		cart_code_arr.push(checkBox.value);
+	});
+	
 	data = {
 		'final_price':final_price,
-		'detail_info_arr' : detail_info_arr
+		'detail_info_arr' : detail_info_arr,
+		'cartCodeArr' : cart_code_arr
 	};
 	
 	//ajax start
@@ -307,8 +315,12 @@ function buys(){
 	   //contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	   data: JSON.stringify(data), //필요한 데이터
 	   success: function(result) {
-	      deleteCarts();
-	      window.location.href = '/mBuy/buyList';
+		Swal.fire({
+			icon: 'success',
+			title: '구매가 완료되었습니다.',
+		}).then((result) => {
+  			  location.href = `/mBuy/buyList?mainMenuCode=MAIN_MENU_009&subMenuCode=SUB_MENU_023`;
+		});
 	   },
 	   error: function() {
 	      alert('실패');
