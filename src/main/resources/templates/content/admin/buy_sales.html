@@ -12,10 +12,18 @@
 <th:block layout:fragment="content">
 	<div class="member-title">매출 현황</div>
   	<div class="row saleDiv">
-		<div class="col-7">
-			<canvas id="categoryPieChart"></canvas>
+		<div class="col">
+			<div class="row">
+				<div class="col">
+					<canvas id="categoryPieChart" style="height: 37rem; margin: auto; margin-bottom: 5rem;"></canvas>
+				</div>
+			</div>
+			<div class="row"  style="margin-top: 14rem; width: 60%; margin: auto;">
+				<div class="col">
+					<div class="tableDiv"></div>
+				</div>
+			</div>
 		</div>
-		<div class="col-5 tableDiv" style="margin-top: 4rem;"></div>
 	</div>
 </th:block>
 
