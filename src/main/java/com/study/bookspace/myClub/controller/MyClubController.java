@@ -85,25 +85,26 @@ public class MyClubController {
 	@PostMapping("/refuseMemberAjax")
 	public void refuseMemberAjax(String acceptCode, AlramVO alramVO, SubMenuVO subMenuVO) {
 		
-		String alramId = clubService.kickOutMember(acceptCode);
-		
-		alramVO.setMemId(alramId);
-		alramVO.setAContent("가입한 북클럽에서 강퇴당했습니다.");
-		alramVO.setSection(2);
-		alramService.insertAlram(alramVO);
-		
-	}
-	
-	//북클럽 회원 거절
-	@ResponseBody
-	@PostMapping("/kickOutMemberAjax")
-	public void kickOutMemberAjax(String acceptCode, AlramVO alramVO, SubMenuVO subMenuVO) {
-		
 		
 		String alramId = clubService.refuseApply(acceptCode);
 		
 		alramVO.setMemId(alramId);
 		alramVO.setAContent("북클럽 가입신청이 거절되었습니다.");
+		alramVO.setSection(2);
+		alramService.insertAlram(alramVO);
+		
+	}
+	
+	//북클럽 회원 강퇴
+	@ResponseBody
+	@PostMapping("/kickOutMemberAjax")
+	public void kickOutMemberAjax(String acceptCode, AlramVO alramVO, SubMenuVO subMenuVO) {
+		
+		String alramId = clubService.kickOutMember(acceptCode);
+		
+		
+		alramVO.setMemId(alramId);
+		alramVO.setAContent("가입한 북클럽에서 강퇴당했습니다.");
 		alramVO.setSection(2);
 		alramService.insertAlram(alramVO);
 		

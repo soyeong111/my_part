@@ -434,7 +434,7 @@
 		WHERE CM.MEM_ID = M.MEM_ID
 		AND CLUB_CODE = #{CLUB_CODE}
 		AND CLUB_MEM_STATUS = 2
-		ORDER BY ACCEPT_CODE
+		ORDER BY CLUB_REG_DATE
 	</select>
 	
 	<select id="getApplyMemberList" resultMap="bookClubMember">
@@ -589,6 +589,7 @@
             LEFT JOIN MEMBER M ON CLUB.MEM_ID = M.MEM_ID
 		) SUBQUERY
 		WHERE RN = 1
+		ORDER BY CLUB_CREATE_DATE
 	</select>
 	
 	<update id="updateClubBookCode">
