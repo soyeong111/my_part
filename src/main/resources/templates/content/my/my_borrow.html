@@ -51,11 +51,11 @@
           <td class="dueDate" style="padding-top: 1rem;">[[${borrow.returnDueDate}]]</td>
           <td style="padding-top: 1rem;">[[${borrow.returnDate}]]</td>
           <td> 
-          	<span th:if="${borrow.extended == 'Y'}">완료</span>
+          	<span th:if="${borrow.extended == 'Y'} or ${borrow.returnDate != NULL}" >완료</span>
 		       <input type="button" class="btn custom-btn" 
 			  th:id="'exBtn-' + ${borrow.borrowCode}" value="연장"
 			  th:onclick="checkReserve(this,[[${#authentication.name}]], [[${borrow.borrowCode}]], [[${borrow.bookCode}]]);"
-			  th:if="${borrow.extended  == 'N'}">
+			  th:if="${borrow.extended  == 'N'}  and ${borrow.returnDate == NULL}">
 			  </td>
           <td>
           	<span th:if="${borrow.returnDate != NULL}">완료</span>
