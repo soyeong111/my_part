@@ -118,7 +118,7 @@
 		<if test='searchId != null and !searchId.equals("")'>
 		AND UPPER(MEM_ID) LIKE '%' || UPPER(#{searchId})||'%'
 		</if>	
-		ORDER BY SEAT_USE_CODE DESC
+		ORDER BY SEAT_IN_DATE DESC
 	</select>
 	
 	<update id="allCheckOut">
