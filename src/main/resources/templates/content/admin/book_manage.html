@@ -17,6 +17,8 @@
 				</div>
 
 				<form th:action="@{/aBook/bookManage}" method="post">
+					<input type="hidden" name="mainMenuCode" th:value="${subMenuVO.mainMenuCode}">
+					<input type="hidden" name="subMenuCode" th:value="${subMenuVO.subMenuCode}">
 					<table class="table table-bordered align-middle text-center">
 						<colgroup>
 							<col width="10%">
