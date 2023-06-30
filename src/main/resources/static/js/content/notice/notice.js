@@ -45,12 +45,23 @@ function updateNotice(selectedTag, noticeNo, mainMenuCode, subMenuCode){
 
 //공지사항 삭제 버튼 클릭 시
 function deleteNotice(noticeNo, mainMenuCode, subMenuCode){
-	const result = confirm('공지를 삭제하시겠습니까?');
-	if(result){
-		alert('공지가 삭제되었습니다.');
-		location.href = `/info/deleteNotice?noticeNo=${noticeNo}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
-	}
-	
+	Swal.fire({
+  title: '공지를 삭제하시겠습니까?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonText: '삭제',
+  cancelButtonText: '취소',
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: '공지가 삭제되었습니다.',
+      icon: 'success',
+    }).then(() => {
+      location.href = `/info/deleteNotice?noticeNo=${noticeNo}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+    });
+  }
+});
+
 	
 }
 

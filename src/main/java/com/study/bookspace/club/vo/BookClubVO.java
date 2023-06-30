@@ -2,6 +2,7 @@ package com.study.bookspace.club.vo;
 
 import java.util.List;
 
+import com.study.bookspace.member.vo.MemberVO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,5 @@ public class BookClubVO {
 	private BookClubImageVO bookClubImageVO;
 	private BookClubMemberVO bookClubMemberVO;
 	private CommunityVO communityVO;
+	private MemberVO memberVO;
 }

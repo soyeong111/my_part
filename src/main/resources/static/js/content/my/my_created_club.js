@@ -93,7 +93,7 @@ function kickOut(acceptCode, clubCode, mainMenuCode, subMenuCode) {
     if (result.isConfirmed) {
       // Ajax request
       $.ajax({
-        url: '/mClub/refuseMemberAjax',
+        url: '/mClub/kickOutMemberAjax',
         type: 'post',
         async: true,
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',

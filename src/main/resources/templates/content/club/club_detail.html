@@ -25,9 +25,15 @@
 						<input type="button" class="btn custom-btn" value="신청 마감" disabled>
 					</th:block>
 				</th:block>
-				<input type="button" class="btn custom-btn"
-					th:value="${club.clubName} + ' 커뮤니티'"
-					th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+				<th:block sec:authorize="hasRole('ROLE_USER')">
+					<input type="button" class="btn custom-btn"
+						th:value="${club.clubName} + ' 커뮤니티'"
+						th:onclick="memberOnly([[${#authentication.name}]], [[${club.clubCode}]], [[${subMenuVO.mainMenuCode}]], [[${subMenuVO.subMenuCode}]]);">
+				</th:block>
+				<th:block sec:authorize="hasRole('ROLE_ADMIN')">
+					<input type="button" class="btn custom-btn"
+						th:value="${club.clubName} + ' 커뮤니티'" th:onclick="|location.href='@{/club/community(clubCode=${club.clubCode}, mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode})}';|">
+				</th:block>
 			</div>
 		</div>
 

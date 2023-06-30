@@ -22,6 +22,11 @@ h1 {
 	margin: 0
 }
 
+pre{
+	font-family: 'S-CoreDream-3Light';
+	font-size: 1rem;
+}
+
 .custom-btn {
 	color: white;
 	background-color: #4e68b9;

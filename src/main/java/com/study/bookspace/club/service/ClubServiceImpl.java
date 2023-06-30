@@ -283,7 +283,7 @@ public class ClubServiceImpl implements ClubService{
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public String refuseApply(String acceptCode) {
-		sqlSession.delete("clubMapper.refuseApply", acceptCode);
+		sqlSession.update("clubMapper.kickOutMember", acceptCode);
 		return sqlSession.selectOne("clubMapper.getAlramId", acceptCode);
 	}
 

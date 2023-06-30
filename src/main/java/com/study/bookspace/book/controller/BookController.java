@@ -100,16 +100,16 @@ public class BookController {
 	
 	
 //	도서 등록
-	@PostMapping("/regBookProcess")
-	public String regBook(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg, MultipartFile sideImg, SubMenuVO subMenuVO) {
-		
+	@ResponseBody
+	@PostMapping("/regBookProcessAjax")
+	public int regBookProcessAjax(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg, MultipartFile sideImg) {
+
 		//--- 파일 첨부 ---//
 //		메인 이미지 업로드 (앞)
 		ImgVO mainImgVO = UploadUtil.uploadFile(mainImg);
 	    
 // 		옆 이미지 업로드
 	    ImgVO subImgVO = UploadUtil.uploadFile(subImg);
-	    
 	    
 //	    등록될 도서코드 조회
 	    String bookCode = bookService.getNextBookCode();
@@ -128,17 +128,14 @@ public class BookController {
 //		BOOK_CODE 데이터 추가
 		for(ImgVO img : imgList) {
 			img.setBookCode(bookCode);
-			
 		}
 	    
 //		모든 이미지정보를 갖고 있는 imgList를 bookVO에 집어넣기
 	    bookVO.setImgList(imgList);
 	    
 //	    도서 등록쿼리
-	    bookService.regBook(bookVO);
-		
-		
-	    return "redirect:/aBook/regBook?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
+	   
+	    return bookService.regBook(bookVO);
 		
 	}
 	

@@ -361,15 +361,27 @@ function change_pw() {
 		data: $('#find-pw-form').serialize(),
 		success: function(result) {
 			if (result == 2) {
-				alert('현재 사용중인 비밀번호로는 변경할 수 없습니다.');
+				Swal.fire({
+					icon: 'error',
+					title: '변경 실패',
+					text: '현재 사용중인 비밀번호로는 변경할 수 없습니다.',
+				});
 			}
 			if (result == 1) {
 				clearInterval(timer);
-				alert('비밀번호가 변경되었습니다.\n로그인 페이지로 이동합니다.');
-				location.href = '/member/logout';
+				Swal.fire({
+					icon: 'success',
+					title: '비밀번호 변경',
+					text: '비밀번호가 변경되었습니다. 로그인 페이지로 이동합니다.',
+				}).then(() => {
+					location.href = '/member/logout';
+				});
 			}
 			if (result == 0) {
-				alert('비밀번호 변경 실패');
+				Swal.fire({
+					icon: 'error',
+					title: '비밀번호 변경 실패',
+				});
 			}
 		},
 		error: function() {

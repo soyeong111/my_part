@@ -4,8 +4,6 @@ function searchQna(){
 	const searchOption = document.getElementsByName('searchOption')[0].value;
 	const searchText = document.getElementsByName('searchText')[0].value;
 	
-	alert(searchOption);
-	alert(searchText);
 	
 	//검색된 문의사항으로 채운 테이블 다시 생성
 	//ajax start
@@ -20,7 +18,6 @@ function searchQna(){
 			
 		}, //필요한 데이터
 		success: function(data) {
-			alert('ajax 통신 성공');
 		},
 		error: function() {
 			alert('실패');

@@ -47,25 +47,25 @@ public class MyCartController {
 	
 	//상품 수량 변경
 	@PostMapping("/updateCartRegCnt")
-	public String updateCartRegCnt(GoodsCartVO goodsCartVO) {
+	public String updateCartRegCnt(GoodsCartVO goodsCartVO,SubMenuVO subMenuVO) {
 		cartService.updateCartRegCnt(goodsCartVO);
-		return "redirect:/mCart/cartList";
+		return "redirect:/mCart/cartList?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//상품 삭제
 	@GetMapping("/deleteCart")
-	public String deleteCart(String cartCode) {
+	public String deleteCart(String cartCode, SubMenuVO subMenuVO) {
 		cartService.deleteCart(cartCode);
-		return "redirect:/mCart/cartList";
+		return "redirect:/mCart/cartList?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 	//선택 삭제 
 	@GetMapping("/deleteCarts")
-	public String deleteCarts(String[] cartCodes, GoodsCartVO goodsCartVO) {
+	public String deleteCarts(String[] cartCodes, GoodsCartVO goodsCartVO, SubMenuVO subMenuVO) {
 		List<String> cartCodeList = Arrays.asList(cartCodes); 
 		goodsCartVO.setCartCodeList(cartCodeList);
 		cartService.deleteCarts(goodsCartVO);
-		return "redirect:/mCart/cartList";
+		return "redirect:/mCart/cartList?mainMenuCode=" + subMenuVO.getMainMenuCode() + "&subMenuCode=" + subMenuVO.getSubMenuCode();
 	}
 	
 }

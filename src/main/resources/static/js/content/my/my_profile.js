@@ -87,10 +87,18 @@ function mem_img_change() {
 				data: formData,
 				success: function(result) {
 					if (result == 1) {
-						alert('사진이 등록되었습니다.');
-						location.reload();
+						Swal.fire({
+							icon: 'success',
+							title: '사진 등록',
+							text: '사진이 등록되었습니다.',
+						}).then(() => {
+							location.reload();
+						});
 					} else {
-						alert('사진 등록 실패');
+						Swal.fire({
+							icon: 'error',
+							title: '사진 등록 실패',
+						});
 					}
 				},
 				error: function() {
@@ -98,14 +106,26 @@ function mem_img_change() {
 				}
 			});
 		} else {
-			alert('이미지를 선택해주세요.');
+			Swal.fire({
+				icon: 'info',
+				title: '알림',
+				text: '이미지를 선택해주세요.',
+			});
 		}
 	}
 }
 
 // 사진 엑스 눌렀을 때
 function del_icon_click(memImgUrl) {
-	if (confirm('사진을 삭제 하시겠습니까?')) {
+Swal.fire({
+	icon: 'question',
+	title: '사진 삭제 확인',
+	text: '사진을 삭제 하시겠습니까?',
+	showCancelButton: true,
+	confirmButtonText: '확인',
+	cancelButtonText: '취소',
+}).then((res) => {
+	if (res.isConfirmed) {
 		$.ajax({
 			url: '/mMember/deleteMemImgAjax',
 			type: 'post',
@@ -113,10 +133,18 @@ function del_icon_click(memImgUrl) {
 			data: {'memImgUrl':memImgUrl},
 			success: function(result) {
 				if (result == 1) {
-					alert('사진이 삭제되었습니다.');
-					location.reload();
+					Swal.fire({
+						icon: 'success',
+						title: '사진 삭제',
+						text: '사진이 삭제되었습니다.',
+					}).then(() => {
+						location.reload();
+					});
 				} else {
-					alert('사진 삭제 실패');
+					Swal.fire({
+						icon: 'error',
+						title: '사진 삭제 실패',
+					});
 				}
 			},
 			error: function() {
@@ -124,4 +152,5 @@ function del_icon_click(memImgUrl) {
 			}
 		});
 	}
+});
 }

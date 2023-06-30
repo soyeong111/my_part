@@ -34,9 +34,11 @@ function login() {
 					localStorage.removeItem('local_mem_id');
 				}
 				check_mem_status(mem_id_input.value);
-				
 			} else {
-				alert('아이디와 비밀번호를 확인해주세요.');
+				Swal.fire({
+					icon: 'error',
+					title: '아이디와 비밀번호를 확인해주세요.',
+				});
 				mem_pw_input.value = '';
 			}
 		},
@@ -55,12 +57,23 @@ function check_mem_status(mem_id) {
 		data: {'memId':mem_id},
 		success: function(result) {
 			if (result == '휴면') {
-				if (!confirm('휴면 계정입니다.\로그인 하시겠습니까?')) {
-					location.href = '/member/logout';
-					return;
-				}
+				Swal.fire({
+					icon: 'question',
+					title: '휴면 계정',
+					text: '휴면 계정입니다. 로그인 하시겠습니까?',
+					showCancelButton: true,
+					confirmButtonText: '로그인',
+					cancelButtonText: '취소',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						update_login_date(mem_id);
+					} else {
+						location.href = '/member/logout';
+					}
+				});
+			} else {
+				update_login_date(mem_id);
 			}
-			update_login_date(mem_id);
 		},
 		error: function() {
 			alert('ajax 통신 실패');
@@ -76,8 +89,12 @@ function update_login_date(mem_id) {
 		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
 		data: {'memId':mem_id},
 		success: function(result) {
-			alert('로그인되었습니다.');
-			location.href = '/';
+			Swal.fire({
+				icon: 'success',
+				title: '로그인되었습니다.',
+			}).then(() => {
+				location.href = '/';
+			});
 		},
 		error: function() {
 			alert('ajax 통신 실패');

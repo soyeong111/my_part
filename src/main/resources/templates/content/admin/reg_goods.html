@@ -10,11 +10,9 @@
 </th:block>
 
 <th:block layout:fragment="content">
-<div class="member-title">상품 등록</div>
+	<div class="member-title">상품 등록</div>
 	<div class="regGoodsDiv w-75 m-auto mt-5 mb-5">
-	
-		<form th:action="@{/aGoods/regGoodsProcess}" method="post" enctype="multipart/form-data">
-		
+		<form th:action="@{/aGoods/regGoodsProcess(mainMenuCode=${subMenuVO.mainMenuCode}, subMenuCode=${subMenuVO.subMenuCode} )}" method="post" enctype="multipart/form-data">
 			<div class="row mt-5">
 				<div class="col-3">
 					<select id="" name="goodsCateCode" class="form-select">
@@ -24,73 +22,57 @@
 					</select>
 				</div>
 				<div class="col-9">
-					<input type="text" placeholder="상품명을 입력하세요." class="form-control"
-						id="" name="goodsName" required>
+					<input type="text" placeholder="상품명을 입력하세요." class="form-control" id="" name="goodsName" required>
 				</div>
 			</div>
-			
 			<div class="row mt-4">
 				<div class="col">
 					<div class="row ">
 						<div class="col">
-						<div class="col">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" value="1" type="radio" id=""
-									name="goodsStatus" checked> <label class="form-check-label"
-									for="">판매중</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" value="2" type="radio" id=""
-									name="goodsStatus"> <label class="form-check-label" for="">준비중</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" value="3" type="radio" id=""
-									name="goodsStatus"> <label class="form-check-label" for="">매진</label>
+							<div class="col">
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" value="1" type="radio" id="" name="goodsStatus" checked> <label class="form-check-label" for="">판매중</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" value="2" type="radio" id="" name="goodsStatus"> <label class="form-check-label" for="">준비중</label>
+								</div>
+								<div class="form-check form-check-inline">
+									<input class="form-check-input" value="3" type="radio" id="" name="goodsStatus"> <label class="form-check-label" for="">매진</label>
+								</div>
 							</div>
 						</div>
-						</div>
-					
 						<div class="col">
 							<div class="row">
-						<div class="col-3">
-							<span>재고: </span>
+								<div class="col-3">
+									<span>재고: </span>
+								</div>
+								<div class="col-7">
+									<input type="number" class="form-control" value="10" min="1" name="goodsStockCnt">
+								</div>
+							</div>
 						</div>
-						<div class="col-7">
-							<input type="number" class="form-control" value="10" min="1" name="goodsStockCnt">
-						
-						</div>
-					</div>
-						</div>
-					
 						<div class="col">
 							<div class="col">
-					<div class="row">
-						<div class="col-3">
-							<span>가격:</span>							
-						</div>
-						<div class="col-9">
-							<input type="number" class="form-control" name="goodsPrice" required>
+								<div class="row">
+									<div class="col-3">
+										<span>가격:</span>							
+									</div>
+									<div class="col-9">
+										<input type="number" class="form-control" name="goodsPrice" required>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
+					<div></div>
 				</div>
-						</div>
-					
-					
-					</div>
-					<div>
-						
-					</div>
-					
-				
-				</div>
-				
 			</div>
-				<div class="row">
-						<div class="col mt-2">
-						  <label for="exampleFormControlTextarea1" class="form-label">상품 소개글</label>
-						  <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" style="resize: none;" name="goodsIntro"></textarea>
-						</div>
+			<div class="row">
+					<div class="col mt-2">
+					  <label for="exampleFormControlTextarea1" class="form-label">상품 소개글</label>
+					  <textarea class="form-control" id="exampleFormControlTextarea1" rows="7" style="resize: none;" name="goodsIntro"></textarea>
 					</div>
+			</div>
 			<div class="row">
 				<div class="col">
 					<div class="row">
@@ -113,9 +95,7 @@
 				</div>
 			</div>
 		</form>
-
 	</div>
-
 </th:block>
 
 <!--연결해야 할 외부 js 파일  -->

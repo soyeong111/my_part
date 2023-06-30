@@ -221,24 +221,26 @@ function find_id() {
 			document.querySelector('#find-id-value-input').value = '';
 			let str = '';
 			if (result.length == 0) {
-				str += '<div class="col-12 text-center">';
+				str += '<div class="col-12 text-center mem-none-div">';
 				str += '가입된 회원이 없습니다.';
 				str += '</div>';
 			} else {
-				str += '<div class="col-3 p-1 text-end">';
-				str += '아이디';
-				str += '</div>';
-				str += '<div class="col-9 p-1 text-center">';
-				str += '가입날짜';
-				str += '</div>';
+				str += `<table class="table table-hover text-center w-100">`;
+				str += `<thead class="thead-bg-color">`;
+				str += `<tr>`;
+				str += `<th>아이디</th>`;
+				str += `<th>가입날짜</th>`;
+				str += `</tr>`;
+				str += `</thead>`;
+				str += `<tbody>`;
 				result.forEach((member) => {
-					str += '<div class="col-3 p-1 text-end">';
-					str += `${member['memId']}`;
-					str += '</div>';
-					str += '<div class="col-9 p-1 text-center">';
-					str += `${member['memJoinDate']}`;
-					str += '</div>';
+					str += `<tr>`;
+					str += `<td>${member['memId']}</td>`;
+					str += `<td>${member['memJoinDate']}</td>`;
+					str += `</tr>`;
 				});
+				str += `</tbody>`;
+				str += `</table>`;
 			}
 			str += '<div class="col-12 mt-5 text-center">';
 			str += '<a href="/member/findIdForm">아이디 찾기</a>';

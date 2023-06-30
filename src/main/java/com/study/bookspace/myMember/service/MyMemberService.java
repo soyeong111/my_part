@@ -35,6 +35,6 @@ public interface MyMemberService {
 	int withdrawal(String memId);
 	
 	// 내 프로필 차트 데이터 받기
-	List<Map<String, Object>> getMyBorrowCntListForChart(String nowYear);
+	List<Map<String, Object>> getMyBorrowCntListForChart(Map<String, String> mapData);
 	
 }

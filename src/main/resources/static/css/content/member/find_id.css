@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+.pb-80 {
+	padding-bottom: 80px;
+}
+
+.mem-none-div {
+	padding: 10px;
+	background-color: #e7f0ff;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+.thead-bg-color {
+	background-color: #e7f0ff;
+}

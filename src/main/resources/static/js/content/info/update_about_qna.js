@@ -82,21 +82,45 @@ function updateAnswer(selectedTag, answerCode, qnaCode, mainMenuCode, subMenuCod
 
 //qna 삭제, 강제삭제 버튼 클릭시
 function deleteQna(qnaCode, mainMenuCode, subMenuCode){
-	const result = confirm('삭제하시겠습니까?');
-	if(result){
-		alert('삭제되었습니다.');
-		location.href = `/info/deleteQna?qnaCode=${qnaCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
-	}
+Swal.fire({
+  title: '삭제하시겠습니까?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonText: '삭제',
+  cancelButtonText: '취소',
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: '삭제되었습니다.',
+      icon: 'success',
+    }).then(() => {
+      location.href = `/info/deleteQna?qnaCode=${qnaCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+    });
+  }
+});
+
 	
 }
 
 //qna 답변 삭제 버튼 클릭 시
 function deleteAnswer(qnaCode, answerCode, mainMenuCode, subMenuCode){
-	const result = confirm('삭제하시겠습니까?');
-	if(result){
-		alert('삭제되었습니다.');
-		location.href = `/info/deleteAnswer?qnaCode=${qnaCode}&answerCode=${answerCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
-	}
+	Swal.fire({
+  title: '삭제하시겠습니까?',
+  icon: 'question',
+  showCancelButton: true,
+  confirmButtonText: '삭제',
+  cancelButtonText: '취소',
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: '삭제되었습니다.',
+      icon: 'success',
+    }).then(() => {
+      location.href = `/info/deleteAnswer?qnaCode=${qnaCode}&answerCode=${answerCode}&mainMenuCode=${mainMenuCode}&subMenuCode=${subMenuCode}`;
+    });
+  }
+});
+
 }
 
 

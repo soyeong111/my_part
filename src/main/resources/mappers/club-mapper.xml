@@ -3,18 +3,19 @@
 
 <mapper namespace="clubMapper">
 	<resultMap type="com.study.bookspace.club.vo.BookClubVO" id="bookClub">
-		<id		 column="CLUB_CODE" 		property="clubCode"/>
-		<result column="CLUB_NAME" 			property="clubName"/>
-		<result column="CLUB_INTRO"		 	property="clubIntro"/>
-		<result column="CLUB_SHORT_INFO"	property="clubShortInfo"/>
-		<result column="CLUB_CREATE_DATE" 	property="clubCreateDate"/>
-		<result column="CLUB_MEM_CNT" 		property="clubMemCnt"/>
-		<result column="CLUB_STATUS_NO" 	property="clubStatusNo"/>
-		<result column="MEM_ID" 			property="memId"/>
-		<result column="THIS_BOOK_CODE" 	property="thisBookCode"/>
+		<id		 column="CLUB_CODE" 			  property="clubCode"/>
+		<result column="CLUB_NAME" 				  property="clubName"/>
+		<result column="CLUB_INTRO"		 	 	  property="clubIntro"/>
+		<result column="CLUB_SHORT_INFO"		  property="clubShortInfo"/>
+		<result column="CLUB_CREATE_DATE" 		  property="clubCreateDate"/>
+		<result column="CLUB_MEM_CNT" 			  property="clubMemCnt"/>
+		<result column="CLUB_STATUS_NO" 		  property="clubStatusNo"/>
+		<result column="MEM_ID" 				  property="memId"/>
+		<result column="THIS_BOOK_CODE" 		  property="thisBookCode"/>
 		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
 		<association property="bookClubMemberVO" resultMap="bookClubMember"></association>
-		<association property="communityVO" resultMap="community"></association>
+		<association property="communityVO" 	  resultMap="community"></association>
+		<association property="memberVO" 		  resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.BookClubImageVO" id="bookClubImage">
@@ -25,33 +26,33 @@
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.BookClubMemberVO" id="bookClubMember">
-		<id		 column="ACCEPT_CODE" 		property="acceptCode"/>
-		<result	 column="CLUB_CODE" 		property="clubCode"/>
-		<result column="MEM_ID" 			property="memId"/>
-		<result column="CLUB_REG_DATE" 		property="clubRegDate"/>
-		<result column="CLUB_MEM_STATUS" 	property="clubMemStatus"/>
-		<result column="CLUB_ROLE" 			property="clubRole"/>
-		<result column="MEM_STATUS" 		property="memStatus"/>
-		<result column="ACT_CNT" 			property="actCnt"/>
-		<association property="bookClubVO" resultMap="bookClub"></association>
-		<association property="bookClubImageVO"  resultMap="bookClubImage"></association>
-		<association property="memberVO" resultMap="memberMapper.member"></association>
+		<id		 column="ACCEPT_CODE" 				property="acceptCode"/>
+		<result	 column="CLUB_CODE" 				property="clubCode"/>
+		<result column="MEM_ID" 					property="memId"/>
+		<result column="CLUB_REG_DATE" 				property="clubRegDate"/>
+		<result column="CLUB_MEM_STATUS" 			property="clubMemStatus"/>
+		<result column="CLUB_ROLE" 					property="clubRole"/>
+		<result column="MEM_STATUS" 				property="memStatus"/>
+		<result column="ACT_CNT" 					property="actCnt"/>
+		<association property="bookClubVO" 		resultMap="bookClub"></association>
+		<association property="bookClubImageVO" 	resultMap="bookClubImage"></association>
+		<association property="memberVO" 			resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityVO" id="community">
-		<id		 column="BOARD_NUM" 		property="boardNum"/>
-		<result column="BOARD_TITLE" 		property="boardTitle"/>
-		<result column="BOARD_CONTENT"	 	property="boardContent"/>
-		<result column="BOARD_WRITER" 		property="boardWriter"/>
-		<result column="REG_DATE" 			property="regDate"/>
-		<result column="READ_CNT" 			property="readCnt"/>
-		<result column="REPLY_CNT" 			property="replyCnt"/>
-		<result column="CLUB_CODE" 			property="clubCode"/>
-		<result column="CLUB_NOTICE" 		property="clubNotice"/>
-		<result column="ROW_NUM" 		 	property="rowNum"/>
-		<result column="ROW_NUMBER" 	 	property="rowNumber"/>
-		<association property="communityImageVO" resultMap="communityImage"></association>
-		<association property="memberVO" resultMap="memberMapper.member"></association>
+		<id		 column="BOARD_NUM" 				property="boardNum"/>
+		<result column="BOARD_TITLE" 				property="boardTitle"/>
+		<result column="BOARD_CONTENT"	 			property="boardContent"/>
+		<result column="BOARD_WRITER" 				property="boardWriter"/>
+		<result column="REG_DATE" 					property="regDate"/>
+		<result column="READ_CNT" 					property="readCnt"/>
+		<result column="REPLY_CNT" 					property="replyCnt"/>
+		<result column="CLUB_CODE" 					property="clubCode"/>
+		<result column="CLUB_NOTICE" 				property="clubNotice"/>
+		<result column="ROW_NUM" 		 			property="rowNum"/>
+		<result column="ROW_NUMBER" 	 			property="rowNumber"/>
+		<association property="communityImageVO" 	resultMap="communityImage"></association>
+		<association property="memberVO" 			resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityReplyVO" id="communityReply">
@@ -61,7 +62,7 @@
 		<result column="REG_DATE" 			property="regDate"/>
 		<result column="BOARD_NUM" 			property="boardNum"/>
 		<result column="CLUB_CODE" 			property="clubCode"/>
-		<association property="memberVO" resultMap="memberMapper.member"></association>
+		<association property="memberVO" 	resultMap="memberMapper.member"></association>
 	</resultMap>
 	
 	<resultMap type="com.study.bookspace.club.vo.CommunityImageVO" id="communityImage">
@@ -241,6 +242,7 @@
 		SET
 			CLUB_SHORT_INFO = #{clubShortInfo}
 			, CLUB_INTRO = #{clubIntro}
+			, CLUB_MEM_CNT = #{clubMemCnt}
 		WHERE CLUB_CODE = #{clubCode}
 	</update>
 	
@@ -432,7 +434,7 @@
 		WHERE CM.MEM_ID = M.MEM_ID
 		AND CLUB_CODE = #{CLUB_CODE}
 		AND CLUB_MEM_STATUS = 2
-		ORDER BY ACCEPT_CODE
+		ORDER BY CLUB_REG_DATE
 	</select>
 	
 	<select id="getApplyMemberList" resultMap="bookClubMember">
@@ -555,6 +557,7 @@
 		INNER JOIN BOOK_CLUB_MEMBER CM ON BB.MEM_ID = CM.MEM_ID
 		INNER JOIN MEMBER M ON CM.MEM_ID = M.MEM_ID
 		WHERE CM.CLUB_CODE = #{clubCode}
+		AND CM.CLUB_MEM_STATUS = 2
 		GROUP BY CM.MEM_ID, M.MEM_NAME, M.MEM_IMG_URL
 		ORDER BY COUNT(BB.BORROW_CODE) DESC
 	</select>
@@ -564,6 +567,8 @@
 		    , CLUB_NAME
 		    , TO_CHAR(CLUB_CREATE_DATE, 'YYYY-MM-DD') AS CLUB_CREATE_DATE
 		    , MEM_ID
+            , MEM_NAME
+            , MEM_IMG_URL
 		    , CLUB_MEM_CNT
 		    , BC_ATTACHED_FILE_NAME
 		    , TO_CHAR(REG_DATE, 'YYYY-MM-DD') AS REG_DATE
@@ -571,7 +576,9 @@
 		    SELECT CLUB.CLUB_CODE
 		        , CLUB_NAME
 		        , CLUB_CREATE_DATE
-		        , MEM_ID
+		        , M.MEM_ID
+                , MEM_NAME
+                , MEM_IMG_URL
 		        , CLUB_MEM_CNT
 		        , BC_ATTACHED_FILE_NAME
 		        , REG_DATE
@@ -579,8 +586,10 @@
 		    FROM BOOK_CLUB CLUB
 		    LEFT JOIN BOOK_CLUB_IMAGE IMG ON CLUB.CLUB_CODE = IMG.CLUB_CODE
 		    LEFT JOIN COMMUNITY_BOARD BOARD ON CLUB.CLUB_CODE = BOARD.CLUB_CODE
+            LEFT JOIN MEMBER M ON CLUB.MEM_ID = M.MEM_ID
 		) SUBQUERY
 		WHERE RN = 1
+		ORDER BY CLUB_CREATE_DATE
 	</select>
 	
 	<update id="updateClubBookCode">
