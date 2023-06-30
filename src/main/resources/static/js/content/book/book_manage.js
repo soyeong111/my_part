@@ -249,7 +249,7 @@ function getBookDetail(bookCode) {
 		// 메인 이미지 처리
 		str += `    <div class="row">                                                           `;
 		str += `       <div class="offset-1 col-5 sub-title">                                              `;
-		str += `          <h5>도서 이미지</h5>                                                   `;
+		str += `          <span><h5>도서 이미지</h5>                                                   `;
 		str += `       </div>                                                                   `;
 		str += `       <div class="col sub-title">                                              `;
 		str += `          <h5>도서 소개</h5>                                                   `;
