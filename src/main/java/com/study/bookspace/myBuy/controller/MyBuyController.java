@@ -19,6 +19,7 @@ import com.study.bookspace.myBuy.service.BuyService;
 import com.study.bookspace.myBuy.vo.GoodsBuyDetailVO;
 import com.study.bookspace.myBuy.vo.GoodsBuyVO;
 import com.study.bookspace.myCart.service.CartService;
+import com.study.bookspace.myCart.vo.GoodsCartVO;
 import com.study.bookspace.util.DateUtil;
 import jakarta.annotation.Resource;
 
@@ -37,7 +38,8 @@ public class MyBuyController {
 	 @ResponseBody
 	 @PostMapping("/buysAjax") 
 	 public void buysAjax(@RequestBody HashMap<String, Object> mapData, GoodsBuyVO goodsBuyVO, Authentication authentication, GoodsOrderVO goodsOrderVO, String buyCode , SubMenuVO subMenuVO) {
-		  String nextBuyCode = buyService.getNextBuyCode();
+		 System.out.println(mapData); 
+		 String nextBuyCode = buyService.getNextBuyCode();
 		 User user = (User)authentication.getPrincipal(); 
 		 String memId = user.getUsername();
 		  int buyPrice = Integer.parseInt(mapData.get("final_price").toString());
@@ -54,7 +56,9 @@ public class MyBuyController {
 		  goodsOrderVO.setMemId(memId);
 		  goodsOrderVO.setBuyPrice(buyPrice);
 		  goodsOrderVO.setBuyCode(buyCode);
-		  buyService.buyFromCart(goodsBuyVO); 
+		  GoodsCartVO goodsCartVO = new GoodsCartVO();
+		  goodsCartVO.setCartCodeList((List<String>) mapData.get("cartCodeArr"));
+		  buyService.buyFromCart(goodsBuyVO, goodsCartVO); 
 	}
 	
 	@RequestMapping("/buyList")

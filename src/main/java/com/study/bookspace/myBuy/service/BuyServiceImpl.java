@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.study.bookspace.myBuy.vo.GoodsBuyVO;
+import com.study.bookspace.myCart.vo.GoodsCartVO;
 
 @Service("buyService")
 public class BuyServiceImpl implements BuyService {
@@ -16,11 +17,12 @@ public class BuyServiceImpl implements BuyService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void buyFromCart(GoodsBuyVO goodsBuyVO) {
+	public void buyFromCart(GoodsBuyVO goodsBuyVO, GoodsCartVO goodsCartVO) {
 		sqlSession.insert("buyMapper.buyFromCart", goodsBuyVO);
 		sqlSession.insert("buyMapper.getNextBuyCode");
 		sqlSession.insert("buyMapper.buyDetails", goodsBuyVO);
 		sqlSession.insert("orderMapper.insertOrder", goodsBuyVO);
+		sqlSession.delete("cartMapper.deleteCarts", goodsCartVO);
 	}
 
 	@Override
