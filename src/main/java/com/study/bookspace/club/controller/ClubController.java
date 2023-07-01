@@ -99,7 +99,7 @@ public class ClubController {
 		return clubService.isDuplicateClubName(clubName);
 	}
 	
-	//북 클럽 생성
+	//북 클럽 생성!
 	@PostMapping("/regClub")
 	public String regClub(BookClubVO bookClubVO, BookClubImageVO bookClubImageVO, BookClubMemberVO bookClubMemberVO, MultipartFile clubImg, Authentication authentication, SubMenuVO subMenuVO) {
 		
