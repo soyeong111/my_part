@@ -20,7 +20,7 @@ public class AlramController {
 	private AlramService alramService;
 	
 	
-	//알람 목록 조회 Ajax
+	//알람 목록 조회 Ajax~~
 	@ResponseBody
 	@RequestMapping("/alramListAjax")
 	public List<AlramVO> alramListAjax(Authentication authentication) {
