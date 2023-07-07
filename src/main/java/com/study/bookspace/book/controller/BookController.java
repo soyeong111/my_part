@@ -50,11 +50,7 @@ public class BookController {
 //	도서 목록 조회
 	@RequestMapping("/bookList")
 	public String bookList(Model model, SubMenuVO subMenuVO,SearchBookVO searchBookVO) {
-		
-		// 나중에 삭제 System.out.println(bookService.getBookListForUser());
-	
-		
-		
+
 		//전체 게시글 수 조회
 		int totalDataCnt = bookService.getBookCnt(searchBookVO);
 		
@@ -162,16 +158,6 @@ public class BookController {
 		
 	}
 	
-	
-//	도서 관리 페이지
-//	@RequestMapping("/bookManage")
-//	public String bookManage(Model model, SubMenuVO subMenuVO, BookVO bookVO) {
-//		
-//		model.addAttribute("cate)
-//		
-//	}
-	
-	
 
 //	도서 대여
 	@ResponseBody
@@ -231,8 +217,6 @@ public class BookController {
 		
 //	도서 대여
 	 bookService.borrowBook(borrowVO, checkMem);	
-
-
 		 return 532;
 		 
 	}
@@ -258,11 +242,6 @@ public class BookController {
 			return 100;
 			
 		}
-		
-		
-	
-		System.out.println(borrowVO + "DDDDDDDDDDDDDDDDDDDDD");
-		
 
 		
 //		 중복 예약
@@ -390,17 +369,7 @@ public class BookController {
 		
 //		카테고리 목록 (전체)
 		model.addAttribute("categoryList", bookService.getCateListForAdmin());
-		
-		
-		//전체 게시글 수 조회
-		//int totalDataCnt = bookService.getBoardCnt(bookVO.getBookCode());
-		
-		//전체 데이터 수 세팅
-		//bookVO.setTotalDataCnt(totalDataCnt);
-		
-		//페이징 정보 세팅
-		//bookVO.setPageInfo();
-		
+
 //		도서 목록 조회
 		model.addAttribute("bookList", bookService.getBookListForAdminManage(bookVO));
 		
@@ -448,7 +417,6 @@ public class BookController {
 	@ResponseBody
 	@PostMapping("/deleteImgAjax")
 	public boolean deleteImgAjax(String bookImgCode, String attachedFileName) {
-		System.out.println("삭제~~~~~~~~~~~~~~~~~~~~");
 		boolean result = bookService.deleteImg(bookImgCode) == 1;
 		
 		if(result) {
@@ -466,7 +434,6 @@ public class BookController {
 	@PostMapping("/updateBookDetailAjax")
 	public boolean updateBookDetailAjax(BookVO bookVO ,MultipartFile mainImg, MultipartFile subImg) {
 		List<ImgVO> imgList = new ArrayList<>();
-		System.out.println(imgList + "!!!!!!!!!!!!!!!!!!!!!");
 
 		//--- 파일 첨부 ---//
 //		메인 이미지 업로드 (앞)
@@ -475,7 +442,6 @@ public class BookController {
 				imgList.add(mainImgVO);
 			}
 		
-		System.out.println(imgList + ".......................");
 		
 //		서브 이미지 업로드 (뒤)
 		  // 서브 이미지 업로드 (뒤)
@@ -484,11 +450,6 @@ public class BookController {
 	        	subImgVO.setIsMainImg("N");
 	        	imgList.add(subImgVO);
 	        }
-	    
-	    
-
-	    System.out.println(imgList + "~~~~~~~~~~~");
-	    
 	    
 		
 //		------도서 이미지 DB 등록-------
@@ -515,24 +476,6 @@ public class BookController {
 
 	
 
-	
-	
-////	도서 대여 개수
-//	@ResponseBody
-//	@PostMapping("/getBorrowCntAjax")
-//	public Map<String, Object> getBorrowCntAjax(BorrowVO borrowVO, HttpSession session) {
-//		
-//	    borrowVO.setMemId(SecurityContextHolder.getContext().getAuthentication().getName());
-//	    Map<String, Object> response = bookService.getBorrowAndStockCnt(borrowVO.getBookCode());
-//	    
-//	    return response;
-//	}
-//
-//
-//
-//	
-	
-	
 
 	
 }
